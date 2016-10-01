@@ -12,3 +12,7 @@
         manage.py ........工程管理文件，运行服务器用这个      
     - imgs ...............之后可能要用到的图片资源      
     README.md
+              
+### 管理页面：
+    username: admin
+    password: whynotdance
