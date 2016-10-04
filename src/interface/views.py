@@ -13,6 +13,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils import timezone
 import session
+import _database
 from database import backend
 
 # Create your views here.
@@ -24,46 +25,38 @@ def legalUser(request):
     return legalUser_dashboard(request)
 
 def legalUser_dashboard(request):
-    #pending_applications = backend.get_pending_applications()
-    #pending_count = pending_applications.count()
+    pending_applications = _database.get_pending_applications()
+    pending_count = len(pending_applications)
 
-    #show_all_pending_applications = False
-    #if pending_count > 10:
-    #    show_all_pending_applications = True
-    #    pending_applications = pending_applications[0:10]
-    #
-    #official_accounts = backend.get_official_accounts().order_by('-wci')[0:10]
-    #
-    #articles_count, articles = backend.get_articles(sortby=SortBy.Views, filter={
-    #    'posttime_begin': timezone.now().date() - timedelta(days=7)
-    #})
-    #
-    #category = MessageCategory.ToAdmin
-    #
-    #unprocessed_account = backend.get_official_accounts_with_unprocessed_messages(category)
-    #
-    #announcement = backend.get_announcement()
-
-    articles = []
-    official_accounts = []
-    category = []
-    articles_count = 0
     show_all_pending_applications = False
-    unprocessed_account = []
-    announcement = []
-    pending_applications = []
+    if pending_count > 10:
+        show_all_pending_applications = True
+        pending_applications = pending_applications[0:10]
 
-   # return render_ajax(request, 'legalUser/dashboard.html', {
-   #     'pending_applications': pending_applications,
-   #     'official_accounts': official_accounts,
-   #     'articles': articles,
-   #     'articles_count': articles_count,
-   #     'unprocessed_account': unprocessed_account,
-   #     'category': category,
-   #     'announcement': announcement,
-   #     'show_all_pending_applications': show_all_pending_applications
-   # }, 'dashboard-item')
-    return render(request, 'legalUser/dashboard.html')
+    official_accounts = _database.get_official_accounts()
+
+    activities = _database.get_activities()
+    articles_count = len(activities)
+
+    #category = MessageCategory.ToAdmin
+
+    unprocessed_account = _database.get_official_accounts_with_unprocessed_messages()
+
+    announcement = _database.get_announcement()
+
+
+    category = 1
+
+    return render_ajax(request, 'legalUser/dashboard.html', {
+        'pending_applications': pending_applications,
+        'official_accounts': official_accounts,
+        'activities': activities,
+        'articles_count': articles_count,
+        'unprocessed_account': unprocessed_account,
+        'category': category,
+        'announcement': announcement,
+        'show_all_pending_applications': show_all_pending_applications
+    }, 'dashboard-item')
 
 
 def test(request):
@@ -75,7 +68,7 @@ def render_ajax(request, url, params, item_id=''):
     else:
         identity = session.get_identity(request)
         name = get_realname(request)
-        params['username'] = name
+        params['username'] = "王晨阳"
         if item_id != '':
             params['active_item'] = item_id
         if identity == 'admin':

@@ -8,7 +8,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-    <title>{% block title %}清华大学微信公众号备案平台{% endblock title %}</title>
+    <title>{% block title %}清华大学信息化统计平台{% endblock title %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!--[if lt IE 9]>
         <script src="{% static 'ie/html5shiv.js' %}"></script>
@@ -51,10 +51,10 @@
         </div>
         <![endif]-->
         <div class="nav navbar-nav navbar-left visible-xs">
-            <a class="fake-link-scroll navbar-brand">清华大学微信公众号备案平台</a>
+            <a class="fake-link-scroll navbar-brand">清华大学信息化统计平台</a>
         </div>
         <div class="nav navbar-nav navbar-left hidden-xs">
-            <a class="fake-link-scroll navbar-brand">清华大学微信公众号备案平台</a>
+            <a class="fake-link-scroll navbar-brand">清华大学信息化统计平台</a>
             {% block subtitle %}
                 <!-- example
                 <a class="navbar-brand">&gt;</a>
@@ -68,14 +68,14 @@
                     <i class="fa fa-navicon fa-fw"></i>
                 </a>
             </li>
-            <li class="pull-right dropdown">
-                <a class="fake-link dropdown-toggle" role="button" data-toggle="dropdown" data-target="#">
+            <li class="dropdown">
+                <a class="pull-right fake-link dropdown-toggle" role="button" data-toggle="dropdown" data-target="#">
                     <i class="glyphicon glyphicon-user"></i> {{ username }} <span class="caret"></span>
                 </a>
                 <ul id="g-account-menu" class="dropdown-menu" role="menu">
                     {% block user-menu %}
                         <li>
-                            <i class="glyphicon glyphicon-log-out"></i>　登出</a>
+                            <a> <i class="glyphicon glyphicon-log-out"></i>　登出</a>
                         </li>
                     {% endblock user-menu %}
                 </ul>
@@ -85,6 +85,8 @@
     <!-- /container -->
 </div>
 <!-- /Header -->
+
+
 <!-- Main -->
 <div class="container-fluid main">
     {% block main-frame %}
@@ -127,7 +129,7 @@
 </div>
 <!-- /Main -->
 
-<footer class="text-center">清华大学公众号管理系统</footer>
+<footer class="text-center">清华大学信息化统计平台</footer>
 
 {% block modals %}
 {% endblock modals %}

@@ -10,15 +10,15 @@
     <div class="col-md-9">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4>待审批申请<span class="badge pull-right">{{ pending_applications|length }}</span></h4></div>
+                <h4>待发布报名<span class="badge pull-right">{{ pending_applications|length }}</span></h4></div>
             <div class="panel-body">
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th style="width: 15%; min-width: 150px">公众号名称</th>
-                            <th style="width: 15%; min-width: 110px">公众号负责人</th>
-                            <th style="width: 10000px">公众号简介</th>
+                            <th style="width: 15%; min-width: 150px">活动名称</th>
+                            <th style="width: 15%; min-width: 110px">上次修改</th>
+                            <th style="width: 10000px">活动说明</th>
                             <th>
                                 <div style="width: 55px"></div>
                             </th>
@@ -28,20 +28,23 @@
                         {% if pending_applications %}
                             {% for app in pending_applications %}
                                 <tr>
-                                    <td>{{ app.name }}</td>
+                                    <td><a class="ajax-link"
+                                           data-url="{% url 'test' %}">
+                                        {{ app.name }} </a>
+                                    </td>
                                     <td>{{ app.manager_name }}</td>
                                     <td>{{ app.description|linebreaksbr|truncatechars:100 }}</td>
                                     <td>
                                         <a class="fake-link"
                                            href="javascript:showModal('{% url 'test' %}', 'application-modal')">
-                                            <span class="fa fa-check-square-o fa-fw"></span> 审批
+                                            <span class="fa fa-check-square-o fa-fw"></span> 发布
                                         </a>
                                     </td>
                                 </tr>
                             {% endfor %}
                         {% else %}
                             <tr>
-                                <td colspan="10000" style="text-align: center">无待审批申请</td>
+                                <td colspan="10000" style="text-align: center">无待发布报名</td>
                             </tr>
                         {% endif %}
                         </tbody>
@@ -60,7 +63,7 @@
         <hr>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4>最近一周的热门文章</h4>
+                <h4>我发布的报名</h4>
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
@@ -68,36 +71,34 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th style="width: 15%; min-width: 100px">公众号名称</th>
-                            <th style="width: 25%; min-width: 100px; max-width: 200px;">文章标题</th>
-                            <th style="max-width: 500px;">文章简介</th>
-                            <th style="width: 85px"><span class="fa fa-eye fa-fw"></span> 阅览数</th>
-                            <th style="width: 85px"><span class="fa fa-thumbs-o-up fa-fw"></span> 点赞数</th>
+                            <th style="min-width: 110px; max-width: 120px">活动名称</th>
+                            <th style="min-width: 110px; max-width: 120px">发布时间</th>
+                            <th style="min-width: 100px; max-width: 200px">活动说明</th>
+                            <th style="min-width: 90px"><span class="fa fa-eye fa-fw"></span> 阅览数</th>
+                            <th style="min-width: 90px"><span class="fa fa-thumbs-o-up fa-fw"></span> 填写数</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% if articles %}
-                            {% for article in articles %}
+                        {% if activities %}
+                            {% for activity in activities %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
                                     <td><a class="ajax-link"
                                            data-url="{% url 'test' %}">
-                                        {{ article.official_account_name }}
+                                        {{ activity.activity_name|truncatechars:100 }}
                                     </a></td>
-                                    <td>
-                                        <a target="_blank" href="{{ article.url }}">
-                                            <div>{{ article.title|truncatechars:100 }}</div>
-                                        </a>
+                                    <td style="min-width: 120px; max-width: 120px">
+                                            <div>{{ activity.subscribe_time }}</div>
                                     </td>
-                                    <td>{{ article.description|linebreaksbr|truncatechars:150 }}</td>
-                                    <td align="right">
-                                        {% if article.views != 100001 %}
-                                            {{ article.views }}
+                                    <td style="min-width: 100px; max-width: 300px">{{ activity.description|linebreaksbr|truncatechars:100 }}</td>
+                                    <td align="center">
+                                        {% if activity.views >= 100001 %}
+                                            {{ activity.views }}
                                         {% else %}
                                             100000+
                                         {% endif %}
                                     </td>
-                                    <td align="right">{{ article.likes }}</td>
+                                    <td align="center">{{ activity.fillin }}</td>
                                 </tr>
                             {% endfor %}
                         {% else %}
@@ -132,7 +133,7 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4>未读站内消息</h4></div>
+                <h4>站内消息</h4></div>
             {% if unprocessed_account %}
                 <div class="panel-body">
                     {% for account in unprocessed_account %}
@@ -140,7 +141,7 @@
                             <a style="cursor:pointer;" class="message-link"
                                data-url="{% url 'test' %}">
                                 {{ account.name }}</a>
-                            <span class="badge pull-right">{{ account}}</span>
+                            <span class="badge pull-right">{{ account.message}}</span>
                         </p>
                     {% endfor %}
                 </div>
@@ -157,7 +158,7 @@
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4>公众号影响力排行</h4>
+                <h4>近期热门活动</h4>
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
@@ -166,18 +167,18 @@
                         <tr>
                             <th>#</th>
                             <th>名称</th>
-                            <th>WCI</th>
+                            <th style="min-width: 65px">填写数</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% if official_accounts %}
-                            {% for account in official_accounts %}
+                        {% if activities %}
+                            {% for activity in activities %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
                                     <td><a class="ajax-link" data-url="{% url 'test' %}">
-                                        {{ account.name }}
+                                        {{ activity.activity_name }}
                                     </a></td>
-                                    <td>{{ account}}</td>
+                                    <td>{{ activity.fillin}}</td>
                                 </tr>
                             {% endfor %}
                         {% else %}
