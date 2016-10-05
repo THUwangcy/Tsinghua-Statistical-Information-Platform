@@ -1,3 +1,5 @@
+
+
 // deal with csrf tokens when using ajax
 function getCookie(name) {
     var cookieValue = null;

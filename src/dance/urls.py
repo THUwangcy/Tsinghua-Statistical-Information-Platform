@@ -18,7 +18,10 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+
     url(r'student', 'interface.views.student', name='student'),
     url(r'test', 'interface.views.test', name='test'),
+
     url(r'legalUser', 'interface.views.legalUser', name='legalUser'),
+    url(r'legalUser/dashboard/?$', 'interface.views.legalUser_dashboard', name='legalUser/dashboard'),
 ]

@@ -1,4 +1,23 @@
 
+<script>
+    //处理折叠行
+    $(function(){
+    $("a.collapse-row").click(function(){
+        var _this= $(this).attr("href");
+        var _this_td = _this + "_td";
+        if($(_this).css("display")=="none"){
+            $(_this_td).slideDown("fast");
+            $(_this).slideDown("fast");
+        }else{
+            $(_this_td).slideUp("fast");
+            $(_this).slideUp("fast");
+        }
+        return false;
+    });
+
+});
+</script>
+
 <div class="top-row">
     <a>&nbsp</a>
     <a class="fake-link pull-right">
@@ -35,12 +54,43 @@
                                     <td>{{ app.manager_name }}</td>
                                     <td>{{ app.description|linebreaksbr|truncatechars:100 }}</td>
                                     <td>
-                                        <a class="fake-link"
-                                           href="javascript:showModal('{% url 'test' %}', 'application-modal')">
-                                            <span class="fa fa-check-square-o fa-fw"></span> 发布
+                                        <a class="fake-link collapse-row" href="#pending{{forloop.counter}}">
+                                            <span class="fa fa-check-square-o fa-fw"></span> 操作
                                         </a>
                                     </td>
                                 </tr>
+                                <tr></tr>
+
+                                <tr class="collapse-row" >
+                                    <td  colspan="4" style="display:none;" id="pending{{forloop.counter}}_td">
+                                        <div id="pending{{forloop.counter}}" class="operation" style="display:none; width: 100%">
+                                            <ul>
+                                                <li style="width: 25%" align="left">
+                                                    <a href="#" >
+                                                        <i class="fa fa-pencil-square-o fa-fw fa-2x" aria-hidden="true"></i> 修改
+                                                    </a>
+                                                </li>
+                                                <li style="width: 25%" align="left">
+                                                    <a href="#" >
+                                                        <i class="fa fa-file-text-o fa-fw fa-2x" aria-hidden="true"></i> 发布
+                                                    </a>
+                                                </li>
+                                                <li style="width: 25%" align="left">
+                                                    <a href="#" >
+                                                        <i class="fa fa-bar-chart-o fa-fw fa-2x" aria-hidden="true"></i> 结果
+                                                    </a>
+                                                </li>
+                                                <li style="width: 25%" align="left">
+                                                    <a href="#" >
+                                                        <i class="fa fa-trash fa-fw fa-2x" aria-hidden="true"></i> 删除
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr></tr> <tr></tr>
                             {% endfor %}
                         {% else %}
                             <tr>
@@ -74,8 +124,10 @@
                             <th style="min-width: 110px; max-width: 120px">活动名称</th>
                             <th style="min-width: 110px; max-width: 120px">发布时间</th>
                             <th style="min-width: 100px; max-width: 200px">活动说明</th>
-                            <th style="min-width: 90px"><span class="fa fa-eye fa-fw"></span> 阅览数</th>
-                            <th style="min-width: 90px"><span class="fa fa-thumbs-o-up fa-fw"></span> 填写数</th>
+                            <th style="min-width: 90px"><span class="fa fa-pencil fa-fw"></span> 填写数</th>
+                            <th>
+                                <div style="width: 55px"></div>
+                            </th>
                         </tr>
                         </thead>
                         <tbody>
@@ -92,14 +144,44 @@
                                     </td>
                                     <td style="min-width: 100px; max-width: 300px">{{ activity.description|linebreaksbr|truncatechars:100 }}</td>
                                     <td align="center">
-                                        {% if activity.views >= 100001 %}
-                                            {{ activity.views }}
+                                        {% if activity.fillin < 10001 %}
+                                            {{ activity.fillin }}
                                         {% else %}
-                                            100000+
+                                            10000+
                                         {% endif %}
                                     </td>
-                                    <td align="center">{{ activity.fillin }}</td>
+                                    <td>
+                                        <a class="fake-link collapse-row" href="#already{{forloop.counter}}">
+                                            <span class="fa fa-check-square-o fa-fw"></span> 操作
+                                        </a>
+                                    </td>
                                 </tr>
+
+                                <tr></tr>
+                                <tr class="collapse-row" >
+                                    <td  colspan="6" style="display:none;" id="already{{forloop.counter}}_td">
+                                        <div id="already{{forloop.counter}}" class="operation" style="display:none; width: 100%">
+                                            <ul>
+                                                <li style="width: 30%" align="center">
+                                                    <a href="#" >
+                                                        <i class="fa fa-share-square-o fa-fw fa-2x" aria-hidden="true"></i> 分享
+                                                    </a>
+                                                </li>
+                                                <li style="width: 30%" align="center">
+                                                    <a href="#" >
+                                                        <i class="fa fa-bar-chart-o fa-fw fa-2x" aria-hidden="true"></i> 结果
+                                                    </a>
+                                                </li>
+                                                <li style="width: 30%" align="center">
+                                                    <a href="#" >
+                                                        <i class="fa fa-trash fa-fw fa-2x" aria-hidden="true"></i> 删除
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr></tr><tr></tr>
                             {% endfor %}
                         {% else %}
                             <tr>
