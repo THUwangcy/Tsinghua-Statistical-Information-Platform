@@ -36,7 +36,7 @@ def legalUser_dashboard(request):
 
     official_accounts = _database.get_official_accounts()
 
-    activities = _database.get_activities()
+    activities = _database.get_already_applications()
     articles_count = len(activities)
 
     #category = MessageCategory.ToAdmin
@@ -62,14 +62,17 @@ def legalUser_dashboard(request):
 
 def legalUser_show_applications(request, type):
     if type == 'pending':
-        type_name = u'待审批申请'
+        type_name = u'待发布报名'
         type_icon = 'fa-tasks'
-    elif type == 'processed':
-        type_name = u'我处理的申请'
+    elif type == 'already':
+        type_name = u'我发布的报名'
         type_icon = 'fa-check'
     elif type == 'all':
-        type_name = u'所有申请'
+        type_name = u'所有报名'
         type_icon = 'fa-list-alt'
+    elif type == 'trash':
+        type_name = u'已删除报名'
+        type_icon = 'fa-trash'
     else:
         type_name = ''
         type_icon = ''
@@ -83,7 +86,7 @@ def legalUser_show_applications(request, type):
 
 
 def legalUser_show_applications_list(request, type):
-    applications = _database.get_applications();
+    applications = _database.get_all_applications();
     return render_sortable(request, applications,
                            'legalUser/applications/applications_content.html', {
                                'type': type
@@ -140,15 +143,18 @@ def render_sortable(request, items, url, params=None):
 
     #该句实现排序和搜索，根据sort_order和sort_by_keyword
   #  items = items.filter(**set_filter).order_by(sort_order + sort_by_keyword)
-    
-    items = sorted(items, key = operator.itemgetter('id'), reverse = sort_order)
 
+    #search操作，今后要在数据库中
     modify_items = []
     for item in items:
-        if search_keyword != 'delete':
+        if search_keyword in item['name'] or search_keyword in item['description']:
             modify_items.append(item)
 
     items = modify_items
+
+    #排序操作
+    items = sorted(items, key = operator.itemgetter(sort_by_keyword), reverse = sort_order)
+
     item_count = len(items)
     items = items[start_from:(start_from + items_per_page)]
 

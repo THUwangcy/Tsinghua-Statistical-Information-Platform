@@ -51,7 +51,7 @@
                                            data-url="{% url 'test' %}">
                                         {{ app.name }} </a>
                                     </td>
-                                    <td>{{ app.manager_name }}</td>
+                                    <td>{{ app.subscribe_time }}</td>
                                     <td>{{ app.description|linebreaksbr|truncatechars:100 }}</td>
                                     <td>
                                         <a class="fake-link collapse-row" href="#pending{{forloop.counter}}">
@@ -137,7 +137,7 @@
                                     <td>{{ forloop.counter }}</td>
                                     <td><a class="ajax-link"
                                            data-url="{% url 'test' %}">
-                                        {{ activity.activity_name|truncatechars:100 }}
+                                        {{ activity.name|truncatechars:100 }}
                                     </a></td>
                                     <td style="min-width: 120px; max-width: 120px">
                                             <div>{{ activity.subscribe_time }}</div>
@@ -258,7 +258,7 @@
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
                                     <td><a class="ajax-link" data-url="{% url 'test' %}">
-                                        {{ activity.activity_name }}
+                                        {{ activity.name }}
                                     </a></td>
                                     <td>{{ activity.fillin}}</td>
                                 </tr>
