@@ -23,22 +23,26 @@ def get_applications():
     item1 = {'name': '计四五微信平台',
              'description': '计45班的班级微信公众号平台。',
              'status': 'pending',
-             'operator_admin_name': ''
+             'operator_admin_name': '',
+             'id': 3
              }
     item2 = {'name': '通过示范',
              'description': '一个申请通过的微信公众号平台。',
              'status': 'approved',
-             'operator_admin_name': 'admin1'
+             'operator_admin_name': 'admin1',
+             'id': 2
              }
     item3 = {'name': '尚未提交示范',
              'description': '一个这边还没有提交上去的申请',
              'status': 'not_submitted',
-             'operator_admin_name': ''
+             'operator_admin_name': '',
+             'id': 1
              }
     item4 = {'name': '拒绝示范',
              'description': '一个申请被拒的微信公众号平台。',
              'status': 'rejected',
-             'operator_admin_name': 'admin3'
+             'operator_admin_name': 'admin3',
+             'id': 4
              }
     return [item1, item2, item3, item4]
 

@@ -28,13 +28,13 @@
         <hr>
         <ul class="nav nav-stacked collapse in nav-pills">
             <li id="pending-applications-item" class="nav-header left-column-item"
-                data-url="{% url 'test' %}">
+                data-url="{% url 'legalUser/applications' 'all' %}">
                 <a class="fake-link"><i class="fa fa-tasks fa-fw"></i>　报名/统计表
                     <span class="badge badge-info pull-right" data-source="{% url 'test' %}"></span>
                 </a>
             </li>
             <li id="processed-applications-item" class="nav-header left-column-item"
-                data-url="{% url 'test' %}">
+                data-url="{% url 'legalUser/dashboard' %}">
                 <a class="fake-link"><i class="fa fa-check fa-fw"></i>　实验室招募</a>
             </li>
             <li id="all-applications-item" class="nav-header left-column-item"
