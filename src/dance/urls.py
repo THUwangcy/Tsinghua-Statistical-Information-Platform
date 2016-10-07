@@ -18,4 +18,13 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'student', 'interface.views.student', name='student'),
+    url(r'test', 'interface.views.test', name='test'),
+
+    url(r'^legalUser/?$', 'interface.views.legalUser', name='legalUser'),
+    url(r'^legalUser/dashboard/?$', 'interface.views.legalUser_dashboard', name='legalUser/dashboard'),
+    url(r'^legalUser/applications/(\w+)/?$', 'interface.views.legalUser_show_applications', name='legalUser/applications'),
+    url(r'^legalUser/applications/(\w+)/list/?$', 'interface.views.legalUser_show_applications_list',
+        name='legalUser/applications-list'),
 ]

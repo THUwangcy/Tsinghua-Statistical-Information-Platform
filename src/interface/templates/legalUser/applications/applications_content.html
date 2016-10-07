@@ -1,0 +1,114 @@
+{% extends 'common/sortable_content.html' %}
+
+{% block no-data-info %}
+    {% if params.type == 'pending' %}
+        暂无待发布报名
+    {% elif params.type == 'already' %}
+        尚未发布过报名
+    {% elif params.type == 'all' %}
+        暂无报名
+    {% elif params.type == 'trash' %}
+        暂无删除报名
+    {% endif %}
+{% endblock no-data-info %}
+
+{% block content %}
+    {% for app in items %}
+        <tr>
+            <td>
+                {% if app.status == 'already' %}
+                    <a class="ajax-link" data-url="{% url 'test'%}">
+                        {{ app.name }}
+                    </a>
+                {% else %}
+                    {{ app.name }}
+                {% endif %}
+            </td>
+            <td>{{ app.subscribe_time }}</td>
+            <td>{{ app.description|linebreaksbr|truncatechars:100 }}</td>
+            {% if params.type != 'pending' %}
+                <td>
+                    <span class="label label-{{ app.status_display.colorclass }}">
+                        <span class="fa {{ app.status_display.icon }} fa-fw"></span> {{ app.status_display.name }}
+                    </span>
+                </td>
+            {% endif %}
+            {% if params.type != 'trash' %}
+            <td style="text-align: right">
+                <a class="fake-link collapse-row" href="#app_all{{forloop.counter}}">
+                    <span class="fa fa-check-square-o fa-fw"></span> 操作
+                </a>
+            </td>
+            {% endif %}
+        </tr>
+        <tr></tr>
+
+        <tr class="collapse-row" >
+            <td  colspan="10" style="display:none;" id="app_all{{forloop.counter}}_td">
+                <div id="app_all{{forloop.counter}}" class="operation" style="display:none; width: 100%">
+                    <ul>
+                        {% if app.status == 'pending' %}
+                            <li style="width: 25%" align="left">
+                                <a href="#" >
+                                    <i class="fa fa-pencil-square-o fa-fw fa-2x" aria-hidden="true"></i> 修改
+                                </a>
+                            </li>
+                            <li style="width: 25%" align="left">
+                                <a href="#" >
+                                    <i class="fa fa-file-text-o fa-fw fa-2x" aria-hidden="true"></i> 发布
+                                </a>
+                            </li>
+                            <li style="width: 25%" align="left">
+                                <a href="#" >
+                                    <i class="fa fa-bar-chart-o fa-fw fa-2x" aria-hidden="true"></i> 结果
+                                </a>
+                            </li>
+                            <li style="width: 25%" align="left">
+                                <a href="#" >
+                                    <i class="fa fa-trash fa-fw fa-2x" aria-hidden="true"></i> 删除
+                                </a>
+                            </li>
+                        {% elif app.status == 'already' %}
+                            <li style="width: 30%" align="center">
+                                <a href="#" >
+                                    <i class="fa fa-share-square-o fa-fw fa-2x" aria-hidden="true"></i> 分享
+                                </a>
+                            </li>
+                            <li style="width: 30%" align="center">
+                                <a href="#" >
+                                    <i class="fa fa-bar-chart-o fa-fw fa-2x" aria-hidden="true"></i> 结果
+                                </a>
+                            </li>
+                            <li style="width: 30%" align="center">
+                                <a href="#" >
+                                    <i class="fa fa-trash fa-fw fa-2x" aria-hidden="true"></i> 删除
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </td>
+        </tr>
+
+        <tr></tr> <tr></tr>
+    {% endfor %}
+
+    <script>
+    //处理折叠行
+    $(function(){
+    $("a.collapse-row").click(function(){
+        var _this= $(this).attr("href");
+        var _this_td = _this + "_td";
+        if($(_this).css("display")=="none"){
+            $(_this_td).slideDown("fast");
+            $(_this).slideDown("fast");
+        }else{
+            $(_this_td).slideUp("fast");
+            $(_this).slideUp("fast");
+        }
+        return false;
+    });
+
+});
+</script>
+{% endblock content %}
