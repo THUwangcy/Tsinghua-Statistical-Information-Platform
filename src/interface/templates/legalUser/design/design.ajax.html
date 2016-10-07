@@ -1,0 +1,94 @@
+
+<script>
+    $(".right-column").ready(function () {
+        var $this = $(".right-column");
+
+        var questions_params = {};
+
+        //刷新中间问卷的最后一个问题
+        refreshTable = function (callback) {
+
+            loadContentOn($(".last-question"), "{% url 'legalUser/design/question' type%}", questions_params, {anim: false, scroll: false}, callback);
+            $(".last-question").removeClass("last-question");
+            $(".questions-list").append('<div class="last-question">\
+                                            \
+                                         </div>');
+        };
+
+        //设置各个题型的点击事件
+        $this.find("#single-question").click(function () {
+            questions_params['questions_type'] = "single";
+            refreshTable();
+        })
+        $this.find("#multi-question").click(function () {
+            questions_params['questions_type'] = "multi";
+            refreshTable();
+        })
+        $this.find("#fillin-question").click(function () {
+            questions_params['questions_type'] = "fillin";
+            refreshTable();
+        })
+        $this.find("#vote-question").click(function () {
+            questions_params['questions_type'] = "vote";
+            refreshTable();
+        })
+        $this.find("#mark-question").click(function () {
+            questions_params['questions_type'] = "mark";
+            refreshTable();
+        })
+        $this.find("#sort-question").click(function () {
+            questions_params['questions_type'] = "sort";
+            refreshTable();
+        })
+
+    })
+</script>
+
+
+<div class="top-row">
+    <a>&nbsp;</a>
+    <a class="fake-link pull-right">
+        <strong>{{ design_type }}　<i class="fa {{ design_icon }} fa-fw"></i></strong>
+    </a>
+</div>
+<hr>
+
+<div class="row">
+    <div class="col-md-10">
+        {% include 'legalUser/design/design_list.html' %}
+    </div>
+    <div class="col-md-2 container right-column">
+
+        <ul class="nav nav-stacked nav-pills">
+            <li id="single-question" class="nav-header ">
+                <a class="fake-link"><i class="fa fa-dot-circle-o fa-fw"></i>　单选题</a>
+            </li>
+            <hr>
+            <li id="multi-question" class="nav-header">
+                <a class="fake-link"><i class="fa fa-check-square-o fa-fw"></i>　多选题</a>
+            </li>
+            <hr>
+            <li id="fillin-question" class="nav-header">
+                <a class="fake-link"><i class="fa fa-edit fa-fw"></i>　填空题</a>
+            </li>
+            <hr>
+            <li id="vote-question" class="nav-header"
+                data-url="{% url 'test' %}">
+                <a class="fake-link"><i class="fa fa-list-alt fa-fw"></i>　投票题</a>
+            </li>
+            <hr>
+            <li id="mark-question" class="nav-header"
+                data-url="{% url 'legalUser/applications' 'all' %}">
+                <a class="fake-link"><i class="fa fa-heart-o fa-fw"></i>　评分题</a>
+            </li>
+            <hr>
+            <li id="sort-question" class="nav-header"
+                data-url="{% url 'test' %}">
+                <a class="fake-link"><i class="fa fa-list-ol fa-fw"></i>　排序题</a>
+            </li>
+            <hr>
+
+        </ul>
+
+    </div>
+</div>

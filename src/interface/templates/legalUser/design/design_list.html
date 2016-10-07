@@ -1,0 +1,38 @@
+<script>
+
+
+</script>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+            <h4 class="col-xs-12" align="center">
+                {% block title %}
+                    {% if type == 'enroll' %}
+                        XX活动报名
+                    {% elif type == 'recruit' %}
+                        XX实验志愿者招募
+                    {% elif type == 'vote' %}
+                        票选最XXXX
+                    {% endif %}
+                {% endblock title %}
+            </h4>
+
+            <div class="col-xs-12" >
+                {% block description %}假装有活动说明{% endblock description %}
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        {% block content-before %}
+        {% endblock content-before %}
+        <div class="questions-list">
+            <div class="last-question">
+
+            </div>
+        </div>
+        {% block content-after %}
+        {% endblock content-after %}
+    </div>
+</div>

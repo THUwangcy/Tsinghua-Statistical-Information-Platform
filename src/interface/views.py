@@ -18,8 +18,9 @@ import _database
 from database import backend
 
 # Create your views here.
-def student(request):
-    return render(request, 'student/index.html')
+
+def test(request):
+    return HttpResponse("new")
 
 
 def legalUser(request):
@@ -69,7 +70,7 @@ def legalUser_show_applications(request, type):
         type_icon = 'fa-check'
     elif type == 'all':
         type_name = u'所有报名'
-        type_icon = 'fa-list-alt'
+        type_icon = 'fa-th-list'
     elif type == 'trash':
         type_name = u'已删除报名'
         type_icon = 'fa-trash'
@@ -86,15 +87,37 @@ def legalUser_show_applications(request, type):
 
 
 def legalUser_show_applications_list(request, type):
-    applications = _database.get_all_applications();
+    applications = _database.get_all_applications()
     return render_sortable(request, applications,
                            'legalUser/applications/applications_content.html', {
                                'type': type
                            })
 
 
-def test(request):
-    return HttpResponse("WTF")
+def legalUser_design(request, type):
+    if type == 'enroll':
+        type_name = u'报名/统计表'
+        type_icon = 'fa-tasks'
+    elif type == 'recruit':
+        type_name = u'实验室招募'
+        type_icon = 'fa-check'
+    elif type == 'vote':
+        type_name = u'投票'
+        type_icon = 'fa-list-alt'
+    item_id = type + '-design-item'
+    return render_ajax(request, 'legalUser/design/design.html', {
+        'type': type,
+        'design_type': type_name,
+        'design_icon': type_icon
+    }, item_id)
+
+
+def legalUser_design_question(request, type):
+    question_url = 'legalUser/design/questions/' + request.GET.get('questions_type') + '.html'
+    return render(request, question_url)
+
+
+
 
 def render_ajax(request, url, params, item_id=''):
     if request.is_ajax():
