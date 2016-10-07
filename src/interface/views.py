@@ -142,7 +142,7 @@ def render_sortable(request, items, url, params=None):
     start_from = (page_current - 1) * items_per_page
 
     #该句实现排序和搜索，根据sort_order和sort_by_keyword
-  #  items = items.filter(**set_filter).order_by(sort_order + sort_by_keyword)
+    #items = items.filter(**set_filter).order_by(sort_order + sort_by_keyword)
 
     #search操作，今后要在数据库中
     modify_items = []
