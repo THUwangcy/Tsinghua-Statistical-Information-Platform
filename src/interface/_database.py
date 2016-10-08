@@ -90,6 +90,7 @@ def get_all_applications():
     trash = get_trash_applications()
     pending += already
     pending += trash
+    pending += pending
     return pending
 
 def get_official_accounts_with_unprocessed_messages():

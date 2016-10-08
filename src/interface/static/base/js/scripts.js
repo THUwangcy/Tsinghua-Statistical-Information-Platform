@@ -233,6 +233,7 @@ function loadContentOn(container, url, params, load_params, callback) {
                 </div>');
         }
     }, 1000);
+    
 
     $.ajax({
         type: "GET",
