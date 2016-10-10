@@ -33,4 +33,8 @@ urlpatterns = [
     #design
     url(r'^legalUser/design/(\w+)/?$', 'interface.views.legalUser_design', name='legalUser/design'),
     url(r'^legalUser/design/(\w+)/question/?$', 'interface.views.legalUser_design_question', name='legalUser/design/question'),
+
+    #userlist
+    url(r'^legalUser/login/$', 'interface.views.login_page', name='legalUser/login'),
+    url(r'^legalUser/information/$', 'interface.views.user_information', name='legalUser/information'),
 ]

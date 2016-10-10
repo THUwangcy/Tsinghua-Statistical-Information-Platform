@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}用户后台 - 清华大学信息化统计平台{% endblock %}
+
+{% block subtitle %}
+    <a class="navbar-brand">&gt;</a>
+    <a class="fake-link-scroll navbar-brand">用户后台</a>
+{% endblock subtitle %}
+
+{% block itemtitle %}
+    用户后台
+{% endblock itemtitle %}
+
+{% block user-menu %}
+    <li>
+        <a href="{% url 'legalUser/information' %}"> <i class="glyphicon glyphicon-info-sign" id="main_user_info"></i>　用户信息</a>
+        <a href="{% url 'legalUser/login' %}"> <i class="glyphicon glyphicon-log-out" id="main_log_agin" ></i>　注销</a>
+    </li>
+{% endblock user-menu %}
+
+{% block main-page %}
+
+{% endblock main-page %}
+
+{% block modals %}
+{% endblock modals %}

@@ -217,3 +217,25 @@ def get_pagination(item_total, item_per_page, cur):
             'current': cur,
             'pages': pages}
     return page
+
+
+def login_page(request):
+    log_page_html = 'legalUser/log_page.html'
+    return render(request, log_page_html)
+
+
+def user_information(request):
+    identity = session.get_identity(request)
+    params = {
+        'username': '王晨阳'
+    }
+    if identity == 'admin':
+        params['pending_applications_count'] = len(_database.get_pending_applications())
+    elif identity == 'student':
+        username = session.get_username(request)
+        applications = backend.get_applications_by_user(username)
+        official_accounts = applications.filter(status__exact='approved')
+        params['official_accounts'] = official_accounts
+
+    user_information_html = 'legalUser/user_information.html'
+    return render(request, user_information_html, params)
