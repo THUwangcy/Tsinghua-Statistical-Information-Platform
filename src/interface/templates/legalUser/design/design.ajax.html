@@ -3,16 +3,18 @@
     $(".right-column").ready(function () {
         var $this = $(".right-column");
 
-        var questions_params = {};
+        var questions_params = {
+            
+        };
 
         //刷新中间问卷的最后一个问题
         refreshTable = function (callback) {
-
+            
             loadContentOn($(".last-question"), "{% url 'legalUser/design/question' type%}", questions_params, {anim: false, scroll: false}, callback);
             $(".last-question").removeClass("last-question");
-            $(".questions-list").append('<div class="last-question">\
+            $(".questions-list").append('<li class="question last-question">\
                                             \
-                                         </div>');
+                                         </li>');
         };
 
         //设置各个题型的点击事件
@@ -41,7 +43,10 @@
             refreshTable();
         })
 
+
     })
+
+
 </script>
 
 

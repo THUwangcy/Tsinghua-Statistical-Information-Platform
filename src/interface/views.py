@@ -22,7 +22,6 @@ from database import backend
 def test(request):
     return HttpResponse("new")
 
-
 def legalUser(request):
     return legalUser_dashboard(request)
 
@@ -114,7 +113,20 @@ def legalUser_design(request, type):
 
 def legalUser_design_question(request, type):
     question_url = 'legalUser/design/questions/' + request.GET.get('questions_type') + '.html'
-    return render(request, question_url)
+    params = {}
+    params['questions_type'] = request.GET.get('questions_type')
+    params['rank'] = request.GET.get('rank')
+    return render(request, question_url, params)
+
+
+def show_modal(request):
+    application = []
+
+   #   return HttpResponse("WTF")
+    return render(request, 'legalUser/activity_modal.html', {
+            'type': 'test',
+            'app': application
+        })
 
 
 

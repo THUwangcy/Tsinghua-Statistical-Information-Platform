@@ -339,6 +339,7 @@ function handleFormPost(form_selector, post_url, params) {
                 url: post_url,
                 data: form.serialize(),
                 success: function (data) {
+                    alert(form.serialize())
                     msg.removeClass("alert-danger alert-success");
                     if (data.status === "ok") msg.addClass("alert-success");
                     else msg.addClass("alert-danger");
@@ -371,6 +372,7 @@ function handleFormPost(form_selector, post_url, params) {
                     success_callback(data);
                 },
                 error: function (xhr, textStatus, errorThrown) {
+                    alert(xhr.responseText.substr(0, 500));
                     console.log("post error");
                     msg_text.html("提交申请遇到错误：" + textStatus + ": " + errorThrown);
                     console.log(xhr.responseText.substr(0, 500));

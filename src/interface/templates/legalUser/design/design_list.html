@@ -1,11 +1,8 @@
-<script>
 
 
-</script>
 
-
-<div class="panel panel-default">
-    <div class="panel-heading">
+<div class="panel panel-default hover_heading" style="border='0'">
+    <div class="panel-body heading">
         <div class="row">
             <h4 class="col-xs-12" align="center">
                 {% block title %}
@@ -23,16 +20,44 @@
                 {% block description %}假装有活动说明{% endblock description %}
             </div>
         </div>
-    </div>
-    <div class="panel-body">
-        {% block content-before %}
-        {% endblock content-before %}
-        <div class="questions-list">
-            <div class="last-question">
-
-            </div>
+        <div style="display:none;" id="collapse-heading">
+            <hr>
+            <a class="fake-link collapse-row pull-right" href="#">
+                <span class="fa fa-check-square-o fa-fw"></span> 编辑&emsp;
+            </a>
         </div>
-        {% block content-after %}
-        {% endblock content-after %}
     </div>
 </div>
+        {% block content-before %}
+        {% endblock content-before %}
+        <ol class="questions-list">
+            <li class="question last-question">
+
+            </li>
+        </ol>
+        {% block content-after %}
+        {% endblock content-after %}
+   
+
+
+
+<script>
+    var $heading_panel = $(".hover_heading");
+    var heading = $(".heading");
+
+    $heading_panel.ready(function() {
+        heading.hover(function(){
+            $heading_panel.removeClass("panel-default");
+            $heading_panel.addClass("panel-success");
+            $("#collapse-heading").slideDown("fast");
+        }, 
+        function(){
+            $heading_panel.removeClass("panel-success");
+            $heading_panel.addClass("panel-default");
+            $("#collapse-heading").slideUp("fast");
+        })
+      
+    })
+
+
+</script>

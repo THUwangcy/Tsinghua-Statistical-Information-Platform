@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
+# coding=utf-8
 from operator import itemgetter
+import os
 
 
 def get_pending_applications():
@@ -37,7 +39,21 @@ def get_pending_applications():
                 'name': u'待发布'
              }
              }
-    return [item1, item2, item3]
+
+    file_object = open(os.path.abspath('.') + '/interface/static_database.txt' , 'r')
+    item_change = {'name': file_object.readline(),
+                   'subscribe_time': file_object.readline(),
+                   'status': file_object.readline(),
+                   'id': file_object.readline(),
+                   'description': file_object.readline(),
+                   'status_display': {
+                        'colorclass': file_object.readline(),
+                        'icon': file_object.readline(),
+                        'name': file_object.readline()
+                    }
+                }
+    file_object.close()
+    return [item1, item2, item3, item_change]
 
 
 def get_already_applications():
