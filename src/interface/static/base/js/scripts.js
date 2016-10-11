@@ -276,7 +276,7 @@ function loadContentOfItem(item, load_params, callback) {
         $.ajax({
             type: "POST",
             url: post_url,
-            data: "&act_type=" + act_id + "&time=2016",
+            data: "&act_type=" + act_id + "&time=2016" + "&user_id=1111111111",
             success: function(data) {
                 if(data['status'] == 'ok'){
                     append = data['id'];

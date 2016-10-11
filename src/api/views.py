@@ -39,6 +39,7 @@ def create_new_act(request):
 	#可用POST参数有 
 	#	act_type: 问卷类型
 	#	time    : 时间  
+	#   user_id : 所属用户的id，int
 	Act_id = request.POST['time']
 	return JsonResponse({
 			'status': 'ok', 
@@ -48,7 +49,7 @@ def create_new_act(request):
 
 def create_new_qst(request):
 	#这里从后端get问题id
-	
+
 	#可用POST参数有：
 	#	act_id:   问卷id
 	#	qst_type: 问题类型
