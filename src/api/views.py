@@ -21,18 +21,40 @@ from interface import _database
 
 # Create your views here.
 
-def modify_something(request, modal_type):
+def modify_name(request):
 	file_object = open(os.path.abspath('.') + '/interface/static_database.txt' , 'w')
-	content_list = ['测试修改\n',
-					'2016.10.01\n',
-					'pending\n',
-					'1235\n',
-					'已修改\n',
-					'warning\n',
-					'fa-cogs\n',
-					'待发布\n']
-	for line in content_list:
-		file_object.writelines(line)
+
+	dict = request.POST.dict()
+	for key in dict:
+		file_object.writelines(key + ": " + dict[key] + "\n")
 	file_object.close()
-	return HttpResponse("ok")
+	return JsonResponse({
+			'status': 'ok',
+		})
+
+
+def create_new_act(request):
+	#这里从后端get问卷id
+
+	#可用POST参数有 
+	#	act_type: 问卷类型
+	#	time    : 时间  
+	Act_id = request.POST['time']
+	return JsonResponse({
+			'status': 'ok', 
+			'id': Act_id,
+		})
+
+
+def create_new_qst(request):
+	#这里从后端get问题id
+	
+	#可用POST参数有：
+	#	act_id:   问卷id
+	#	qst_type: 问题类型
+	Qst_id = request.POST['act_id'] + " " + request.POST['qst_type']
+	return JsonResponse({
+			'status': 'ok',
+			'id': Qst_id,
+		})
 	

@@ -109,7 +109,7 @@ function displayContent(data, params, container, callback) {
 // load page content using ajax
 function loadContent(url, params, item_selector, load_params, callback) {
     var main = $("#main-page");
-
+  //  alert(url);
     var replace = false, anim = true;
     if (typeof load_params != "undefined") {
         if (load_params.hasOwnProperty("replace"))
@@ -175,6 +175,7 @@ function loadContent(url, params, item_selector, load_params, callback) {
         },
         error: function (xhr, textStatus, errorThrown) {
             clearTimeout(loadSpinnerTimer);
+            alert(xhr.responseText.substr(0, 500));
             displayContent('\
                 <div class="alert alert-danger" role="alert">\
                     <strong>页面载入出错。</strong>\
@@ -264,7 +265,34 @@ function loadContentOn(container, url, params, load_params, callback) {
 }
 
 function loadContentOfItem(item, load_params, callback) {
-    loadContent($(item).data("url"), {}, item, load_params, callback);
+    var act_id = $(item).attr("id");
+    var is_design = act_id.indexOf("design-item");
+    var append = "";
+    if(is_design > 0)
+    {
+        act_id = act_id.substr(0, is_design - 1);
+        var post_url;
+        post_url = $(item).data("source");
+        $.ajax({
+            type: "POST",
+            url: post_url,
+            data: "&act_type=" + act_id + "&time=2016",
+            success: function(data) {
+                if(data['status'] == 'ok'){
+                    append = data['id'];
+                    loadContent($(item).data("url") + '/' + append, {}, item, load_params, callback);
+                }
+                    
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert(xhr.responseText.substr(0, 500));
+
+            }
+        });
+        
+    }
+    else
+        loadContent($(item).data("url"), {}, item, load_params, callback);
 }
 
 function removePx(str) {

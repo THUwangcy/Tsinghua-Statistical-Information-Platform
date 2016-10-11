@@ -60,7 +60,7 @@ def get_pending_applications():
                     }
                 }
     file_object.close()
-    return [item1, item2, item3, item_change]
+    return [item1, item2, item3]
 
 
 def get_already_applications():

@@ -93,7 +93,7 @@ def legalUser_show_applications_list(request, type):
                            })
 
 
-def legalUser_design(request, type):
+def legalUser_design(request, type, act_id):
     if type == 'enroll':
         type_name = u'报名/统计表'
         type_icon = 'fa-tasks'
@@ -107,25 +107,25 @@ def legalUser_design(request, type):
     return render_ajax(request, 'legalUser/design/design.html', {
         'type': type,
         'design_type': type_name,
-        'design_icon': type_icon
+        'design_icon': type_icon,
+        'act_id': act_id
     }, item_id)
 
 
-def legalUser_design_question(request, type):
+def legalUser_design_question(request, type, act_id):
     question_url = 'legalUser/design/questions/' + request.GET.get('questions_type') + '.html'
     params = {}
     params['questions_type'] = request.GET.get('questions_type')
-    params['rank'] = request.GET.get('rank')
+    params['questions_id'] = request.GET.get('questions_id')
+    params['act_type'] = type
+    params['act_id'] = act_id
     return render(request, question_url, params)
 
 
-def show_modal(request, qst_type):
-    application = []
-
-   #   return HttpResponse("WTF")
+def show_modal(request, qst_type, act_id):
     return render(request, 'legalUser/design/modal/' + qst_type + '_modal.html', {
-            'type': qst_type,
-            'app': application
+            'qst_type': qst_type,
+            'act_id': act_id
         })
 
 

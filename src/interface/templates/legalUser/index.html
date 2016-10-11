@@ -11,6 +11,11 @@
     用户后台
 {% endblock itemtitle %}
 
+{% block scripts %}
+    <script>
+    </script>
+{% endblock scripts %}
+
 {% block left-column %}
     <a class="fake-link left-column-menu" data-toggle="collapse" data-target="#dashboard-menu">
         <strong><i class="fa fa-dashboard fa-fw"></i>　信息概览</strong>
@@ -30,17 +35,26 @@
     </a>
     <ul class="nav nav-stacked collapse in" id="application-menu">
         <hr>
+        <!-- 
+             data-source是创建新问卷的api链接 
+             data-url是指向显示页面的interface链接
+         -->
         <ul class="nav nav-stacked collapse in nav-pills">
             <li id="enroll-design-item" class="nav-header left-column-item"
-                data-url="{% url 'legalUser/design' 'enroll' %}">
-                <a class="fake-link"><i class="fa fa-tasks fa-fw"></i>　报名/统计表</a>
+                data-url="{% url 'legalUser/design' 'enroll' %}"
+                data-source="{% url 'api/create_new_act' %}">
+                <a class="fake-link" >
+                    <i class="fa fa-tasks fa-fw"></i>　报名/统计表
+                </a>
             </li>
-            <li id="recuit-design-item" class="nav-header left-column-item"
-                data-url="{% url 'legalUser/design' 'recruit' %}">
+            <li id="recruit-design-item" class="nav-header left-column-item"
+                data-url="{% url 'legalUser/design' 'recruit' %}"
+                data-source="{% url 'api/create_new_act' %}">
                 <a class="fake-link"><i class="fa fa-check fa-fw"></i>　实验室招募</a>
             </li>
             <li id="vote-design-item" class="nav-header left-column-item"
-                data-url="{% url 'legalUser/design' 'vote' %}">
+                data-url="{% url 'legalUser/design' 'vote' %}"
+                data-source="{% url 'api/create_new_act' %}">
                 <a class="fake-link"><i class="fa fa-list-alt fa-fw"></i>　投票</a>
             </li>
         </ul>

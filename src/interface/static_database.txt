@@ -1,8 +1,5 @@
-测试修改
-2016.10.01
-pending
-1235
-已修改
-warning
-fa-cogs
-待发布
+status: none
+act_id: 2016
+csrfmiddlewaretoken: OCDyXLxQshofsiTLEHqdpOuhCLzRjLqC
+description: 假装有活动说明
+title: XX活动报名

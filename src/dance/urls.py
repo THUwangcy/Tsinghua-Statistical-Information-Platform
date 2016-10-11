@@ -31,12 +31,15 @@ urlpatterns = [
         name='legalUser/applications-list'),
 
     #design
-    url(r'^legalUser/design/(\w+)/?$', 'interface.views.legalUser_design', name='legalUser/design'),
-    url(r'^legalUser/design/(\w+)/question/?$', 'interface.views.legalUser_design_question', name='legalUser/design/question'),
+    url(r'^legalUser/design/(\w+)/?$', 'interface.views.legalUser_show_applications', name='legalUser/design'),
+    url(r'^legalUser/design/(\w+)/([0-9]+)/?$', 'interface.views.legalUser_design'),
+    url(r'^legalUser/design/(\w+)/([0-9]+)/question/?$', 'interface.views.legalUser_design_question', name='legalUser/design/question'),
 
     #modal
-    url(r'^legalUser/modal/(\w+)/?$', 'interface.views.show_modal', name='legalUser/modal'),
+    url(r'^legalUser/modal/(\w+)/([0-9]+)/?$', 'interface.views.show_modal', name='legalUser/modal'),
 
     #api
-    url(r'^legalUser/modal/(\w+)/api/?$', 'api.views.modify_something', name='api/modify_something'),
+    url(r'^legalUser/api/modify_name?$', 'api.views.modify_name', name='api/modify_name'),
+    url(r'^legalUser/api/create_new_act/?$', 'api.views.create_new_act', name='api/create_new_act'),
+    url(r'^legalUser/api/create_new_qst/?$', 'api.views.create_new_qst', name='api/create_new_qst'),
 ]

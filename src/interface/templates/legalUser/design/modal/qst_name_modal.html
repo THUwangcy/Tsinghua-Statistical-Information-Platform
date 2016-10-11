@@ -13,7 +13,7 @@
                     <form id="create-activity-form" class="form form-vertical" role="form" data-toggle="validator">
                         {% csrf_token %}
                         <input name="status" value="none" type="text" style="display: none;">
-                        <input name="id" type="text" style="display: none;" value="">
+                        <input name="act_id" type="text" style="display: none;" value="{{act_id}}">
 
                         <div class="row" style="text-align: left;">
                             <div class="col-xs-12 form-group">
@@ -54,9 +54,9 @@
             title_field.val($("#qst_title").text().trim());
             description_field.val($("#qst_description").text().trim());
 
-            handleFormPost("#create-activity-form", "{% url 'api/modify_something' 'qst_name'%}", {
+            handleFormPost("#create-activity-form", "{% url 'api/modify_name' %}", {
                 success_callback: function (data) {
-                    if (data === 'ok') {
+                    if (data['status'] === 'ok') {
                         $("#qst_title").html(title_field.val());
                         $("#qst_description").html(description_field.val());
 
