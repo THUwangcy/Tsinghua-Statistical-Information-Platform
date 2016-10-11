@@ -229,3 +229,40 @@ def get_pagination(item_total, item_per_page, cur):
             'current': cur,
             'pages': pages}
     return page
+
+
+def login_page(request):
+    log_page_html = 'legalUser/log_page.html'
+    return render(request, log_page_html)
+
+
+def user_information(request):
+    params = {
+        'username': '王晨阳',
+        'real_name': '王晨阳',
+        'identity': '本科生',
+        'email': 'thuwangcy@gmail.com',
+        'telephone_number': '17888802343',
+        'age': '20',
+        'gender': '男',
+        'address': '清华大学紫荆公寓二号楼411B',
+        'status': '做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心',
+    }
+
+    user_information_html = 'legalUser/user_information.html'
+    return render_ajax(request, user_information_html, params, 'info-item-1')
+
+def user_information_change(request):
+    params = {
+        'username': '王晨阳',
+        'real_name': '王晨阳',
+        'identity': '本科生',
+        'email': 'thuwangcy@gmail.com',
+        'telephone_number': '17888802343',
+        'age': '20',
+        'gender': '男',
+        'address': '清华大学紫荆公寓二号楼411B',
+        'status': '做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心',
+    }
+    user_information_change_html = 'legalUser/user_information_change.html'
+    return render_ajax(request, user_information_change_html, params, 'info-item-2')

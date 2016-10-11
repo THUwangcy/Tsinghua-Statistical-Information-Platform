@@ -42,4 +42,11 @@ urlpatterns = [
     url(r'^legalUser/api/modify_name?$', 'api.views.modify_name', name='api/modify_name'),
     url(r'^legalUser/api/create_new_act/?$', 'api.views.create_new_act', name='api/create_new_act'),
     url(r'^legalUser/api/create_new_qst/?$', 'api.views.create_new_qst', name='api/create_new_qst'),
+
+
+    #userlist
+    url(r'^legalUser/login/$', 'interface.views.login_page', name='legalUser/login'),
+    url(r'^legalUser/information/$', 'interface.views.user_information', name='legalUser/information'),
+    url(r'^legalUser/information/change$', 'interface.views.user_information_change', name='legalUser/information_change'),
+
 ]
