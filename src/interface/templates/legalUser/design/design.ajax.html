@@ -1,5 +1,7 @@
 
 <script>
+    
+
     $(".right-column").ready(function () {
         var $this = $(".right-column");
 
@@ -20,6 +22,7 @@
         //设置各个题型的点击事件
         $this.find("#single-question").click(function () {
             questions_params['questions_type'] = "single";
+            
             refreshTable();
         })
         $this.find("#multi-question").click(function () {

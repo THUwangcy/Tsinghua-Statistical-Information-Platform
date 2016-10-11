@@ -21,7 +21,7 @@ from interface import _database
 
 # Create your views here.
 
-def modify_something(request):
+def modify_something(request, modal_type):
 	file_object = open(os.path.abspath('.') + '/interface/static_database.txt' , 'w')
 	content_list = ['测试修改\n',
 					'2016.10.01\n',

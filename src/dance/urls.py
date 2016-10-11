@@ -35,8 +35,8 @@ urlpatterns = [
     url(r'^legalUser/design/(\w+)/question/?$', 'interface.views.legalUser_design_question', name='legalUser/design/question'),
 
     #modal
-    url(r'^modal/legalUser/modal/?$', 'interface.views.show_modal', name='legalUser/modal'),
+    url(r'^legalUser/modal/(\w+)/?$', 'interface.views.show_modal', name='legalUser/modal'),
 
     #api
-    url(r'^legalUser/modal/api/?$', 'api.views.modify_something', name='api/modify_something'),
+    url(r'^legalUser/modal/(\w+)/api/?$', 'api.views.modify_something', name='api/modify_something'),
 ]

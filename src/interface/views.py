@@ -119,12 +119,12 @@ def legalUser_design_question(request, type):
     return render(request, question_url, params)
 
 
-def show_modal(request):
+def show_modal(request, qst_type):
     application = []
 
    #   return HttpResponse("WTF")
-    return render(request, 'legalUser/activity_modal.html', {
-            'type': 'test',
+    return render(request, 'legalUser/design/modal/' + qst_type + '_modal.html', {
+            'type': qst_type,
             'app': application
         })
 
@@ -162,8 +162,8 @@ def render_sortable(request, items, url, params=None):
     sort_order_keyword = request.GET.get('sort_order', 'desc')
     #sort_order_keyword为desc时对sort_by_keyword取负
     sort_order = {
-        'asc': False,
-        'desc': True
+        u'asc': False,
+        u'desc': True
     }[sort_order_keyword]
 
     sort_by_keyword = request.GET.get('sort_by', '')

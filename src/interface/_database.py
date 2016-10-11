@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 # coding=utf-8
+# encoding:utf-8
+
+#处理中文需要
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+
 from operator import itemgetter
 import os
 
