@@ -18,10 +18,9 @@ class Admin(models.Model):
         return "%s: %s" % (self.username, self.description)
 
 
-class Student(models.Model):
+class User(models.Model):
     student_id = models.CharField(max_length = 20, primary_key = True)
     real_name = models.CharField(max_length = 20)
-    dept = models.CharField(max_length = 40)
     tel = models.CharField(
         max_length = 20,
         validators = [
@@ -41,7 +40,27 @@ class Student(models.Model):
     )
 
     def __unicode__(self):
-        return u'%s(%s)' % (self.student_id, self.real_name)
+        return u'%s(%s)' % (self.user_id, self.real_name)
+
+class Questionaire(models.Model):
+    VOTE = "VO"
+    LAB_WANTED = "LW"
+    SIGN_UP = "SU"
+    TYPES = (
+        (VOTE, "vote"),
+        (LAB_WANTED, "lab wanted"),
+        (SIGN_UP, "sign up")
+        )
+    user = models.ForeignKey(User)
+    questionaire_title = models.CharField(max_length = 40)
+    questionaire_introduction = models.TextField(default = u"没有说明")
+    questionaire_type = models.CharField(max_length = 2, choices = TYPES, default = SIGN_UP)
+    questionaire_time = models.DateTimeField()
+    questionaire_ip = models.GenericIPAddressField(null = True)
+    questionaire_numOfQues = models.IntegerField(default = 0)
+    questionaire_numOfFilled = models.IntegerField(default = 0)
+    questionaire_haveMaxTime = models.BooleanField(default = False)
+    questionaire_maxTime = models.IntegerField(default = 0)
 
 
 class Question(models.Model):
@@ -50,7 +69,6 @@ class Question(models.Model):
 
     def __unicode__(self):
         return self.question_text
-
 
 class Choice(models.Model):
     question = models.ForeignKey(Question)
