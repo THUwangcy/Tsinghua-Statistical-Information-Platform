@@ -37,4 +37,5 @@ urlpatterns = [
     #userlist
     url(r'^legalUser/login/$', 'interface.views.login_page', name='legalUser/login'),
     url(r'^legalUser/information/$', 'interface.views.user_information', name='legalUser/information'),
+    url(r'^legalUser/information/change$', 'interface.views.user_information_change', name='legalUser/information_change'),
 ]

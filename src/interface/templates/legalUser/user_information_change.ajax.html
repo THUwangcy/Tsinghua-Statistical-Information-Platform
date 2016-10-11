@@ -1,0 +1,104 @@
+<style>
+    .submit {
+	float: right;
+	background:#2c3e50;
+	border: none;
+	outline: none;
+	padding:8px 30px;
+	cursor: pointer;
+	color: #FFF;
+	font-size: 0.9em;
+	border-radius: .3em;
+	-webkit-border-radius: .3em;
+	-moz-border-radius: .3em;
+	-o-border-radius: .3em;
+	transition: 0.5s all;
+	-webkit-transition: 0.5s all;
+	-moz-transition: 0.5s all;
+	-o-transition: 0.5s all;
+	font-weight: 600;
+	margin: 0 auto;
+}
+</style>
+
+{% block main-page %}
+<div class="top-row hidden-xs">
+    <a>&nbsp</a>
+    <a class="fake-link pull-right">
+        <strong>用户信息修改　<i class="fa fa-wrench fa-fw"></i></strong>
+    </a>
+</div>
+<hr class="hidden-xs">
+<form method="get">
+    <div class="panel-default">
+        <div class="panel-heading">
+            <h4>基本信息</h4></div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th style="width: 15%; min-width: 150px">项目</th></th>
+                        <th style="width: 10000px">信息</th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>用户名:</td>
+                        <td>{{username}}</td>
+                    </tr>
+                    <tr>
+                        <td>真实姓名:</td>
+                        <td>{{real_name}}</td>
+                    </tr>
+                    <tr>
+                        <td>用户类别:</td>
+                        <td>{{identity}}</td>
+                    </tr>
+                    <tr>
+                        <td>邮箱:</td>
+                        <td><input  style="width:40%" maxlength="40"  value={{email}} required="required"></td>
+                    </tr>
+                    <tr>
+                        <td>联系方式:</td>
+                        <td><input  style="width:40%" maxlength="20" value={{telephone_number}} required="required"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel-default">
+        <div class="panel-heading">
+            <h4>其它信息</h4></div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th style="width: 15%; min-width: 150px">项目</th></th>
+                        <th style="width: 10000px">信息</th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>年龄:</td>
+                        <td><input  style="width:40%"  maxlength="20"  value={{age}} required="required"></td>
+                    </tr>
+                    <tr>
+                        <td>性别:</td>
+                        <td><input  style="width:40%" maxlength="5" value={{gender}} required="required"></td>
+                    </tr>
+                    <tr>
+                        <td>住址:</td>
+                        <td><input  style="width:91%" maxlength="50" value={{address}} required="required"></td>
+                    </tr>
+                    <tr>
+                        <td>状态:</td>
+                        <td><textarea rows="4" cols="100" maxlength="180" >{{status}}</textarea></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <input type="submit" value="确定" class="submit" />
+</form>
+{% endblock main-page %}
