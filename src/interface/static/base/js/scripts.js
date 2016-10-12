@@ -274,7 +274,7 @@ function loadContentOfItem(item, load_params, callback) {
         var post_url;
         post_url = $(item).data("source");
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: post_url,
             data: "&act_type=" + act_id + "&time=2016" + "&user_id=1111111111",
             success: function(data) {

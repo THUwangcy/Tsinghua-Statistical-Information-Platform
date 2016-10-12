@@ -12,7 +12,7 @@
 
         function createNewQst(qst_type) {
             $.ajax({
-                type: "POST",
+                type: "GET",
                 url: "{% url 'api/create_new_qst' %}",
                 data: "&act_id=" + "{{act_id}}" + "&qst_type=" + qst_type,
                 success: function(data) {

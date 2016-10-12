@@ -40,7 +40,7 @@ def create_new_act(request):
 	#	act_type: 问卷类型
 	#	time    : 时间  
 	#   user_id : 所属用户的id，int
-	Act_id = request.POST['time']
+	Act_id = request.GET['time']
 	return JsonResponse({
 			'status': 'ok', 
 			'id': Act_id,
@@ -53,7 +53,7 @@ def create_new_qst(request):
 	#可用POST参数有：
 	#	act_id:   问卷id
 	#	qst_type: 问题类型
-	Qst_id = request.POST['act_id'] + " " + request.POST['qst_type']
+	Qst_id = request.GET['act_id'] + " " + request.GET['qst_type']
 	return JsonResponse({
 			'status': 'ok',
 			'id': Qst_id,
