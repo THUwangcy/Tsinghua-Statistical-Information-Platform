@@ -19,6 +19,8 @@ from django.utils import timezone
 from interface import session
 from interface import _database
 
+from database import api
+
 # Create your views here.
 
 def modify_name(request):
@@ -28,8 +30,9 @@ def modify_name(request):
 	for key in dict:
 		file_object.writelines(key + ": " + dict[key] + "\n")
 	file_object.close()
+	status = saveQuestionaireInfo(dict)
 	return JsonResponse({
-			'status': 'ok',
+			'status': status,
 		})
 
 
@@ -38,11 +41,12 @@ def create_new_act(request):
 
 	#可用POST参数有 
 	#	act_type: 问卷类型
-	#	time    : 时间  
-	Act_id = request.POST['time']
+	#	time    : 时间
+	dict = createNewQuestionaire(request.POST.dict())
+	
 	return JsonResponse({
-			'status': 'ok', 
-			'id': Act_id,
+			'status': dict["status"],
+			'id': dict["id"],
 		})
 
 
@@ -52,9 +56,9 @@ def create_new_qst(request):
 	#可用POST参数有：
 	#	act_id:   问卷id
 	#	qst_type: 问题类型
-	Qst_id = request.POST['act_id'] + " " + request.POST['qst_type']
+	dict = createNewQuestion(request.POST.dict())
 	return JsonResponse({
-			'status': 'ok',
-			'id': Qst_id,
+			'status': dict["status"],
+			'id': dict["id"],
 		})
 	

@@ -51,20 +51,39 @@ class Questionaire(models.Model):
         (LAB_WANTED, "lab wanted"),
         (SIGN_UP, "sign up")
         )
-    user = models.ForeignKey(User)
+    questionaire_user = models.ForeignKey(User)
     questionaire_title = models.CharField(max_length = 40)
     questionaire_introduction = models.TextField(default = u"没有说明")
     questionaire_type = models.CharField(max_length = 2, choices = TYPES, default = SIGN_UP)
-    questionaire_time = models.DateTimeField()
+    questionaire_time = models.IntegerField()
     questionaire_ip = models.GenericIPAddressField(null = True)
     questionaire_numOfQues = models.IntegerField(default = 0)
     questionaire_numOfFilled = models.IntegerField(default = 0)
     questionaire_haveMaxTime = models.BooleanField(default = False)
     questionaire_maxTime = models.IntegerField(default = 0)
 
+    def __unicode__(self):
+        return self.id + self.questionaire_title
+
 
 class Question(models.Model):
+    SINGLE = "SI"
+    MULTI = "MU"
+    FILLIN = "FI"
+    VOTE = "VO"
+    MARK = "MA"
+    SORT = "SO"
+    TYPES = (
+        (VOTE, "vote"),
+        (SINGLE, "single"),
+        (FILLIN, "fillin"),
+        (MULTI, "multi"),
+        (MARK, "mark"),
+        (SORT, "sort")
+        )
+    questionaire_id = models.ForeignKey(Questionaire)
     question_text = models.CharField(max_length = 200)
+    questionaire_type = models.CharField(max_length = 2, choices = TYPES, default = FILLIN)
     pub_date = models.DateTimeField('date published')
 
     def __unicode__(self):
