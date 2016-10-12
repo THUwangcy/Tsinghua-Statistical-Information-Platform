@@ -16,5 +16,35 @@ class createNewQuestionaireTest(TestCase):
 		self.assertEqual(return_dict["status"], "ok")
 		self.assertEqual(return_dict["id"], 2)
 		
+class createNewQuestionTest(TestCase):
+	def setUp(self):
+		createDefaultUser()
+		createDefaultQuestionaire()
+
+	def test_use(self):
+		dict = {
+		"act_id" : 1,
+		"qst_type" : "single",
+		}
+		return_dict = createNewQuestion(dict)
+		return_dict = createNewQuestion(dict)
+		self.assertEqual(return_dict["status"], "ok")
+		self.assertEqual(return_dict["id"], 2)
+
+class saveQuestionaireInfoTest(TestCase):
+	def setUp(self):
+		createDefaultUser()
+		createDefaultQuestionaire()
+
+	def test_use(self):
+		dict = {
+		"act_id" : 1,
+		"title" : "title",
+		"description" : "description",
+		}
+		status = saveQuestionaireInfo(dict)
+		self.assertEqual(status, "ok")
+		
+		
 
 # Create your tests here.

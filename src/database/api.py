@@ -9,6 +9,14 @@ def createDefaultUser():
 		)
 	defaultUser.save()
 
+def createDefaultQuestionaire():
+	defaultQuestionaire = Questionaire(
+		questionaire_time = 2016,
+		questionaire_type = "VO",
+		questionaire_user = User.objects.get(student_id = "1111111111")
+		)
+	defaultQuestionaire.save()
+
 def createNewQuestionaire(dict):
 	TYPE = dict["act_type"]
 	switcher = {
@@ -34,7 +42,9 @@ def saveQuestionaireInfo(dict):
 	currentQuestionaire.title = dict["title"]
 	currentQuestionaire.introduction = dict["description"]
 	currentQuestionaire.save()
-	return "ok"
+	if (currentQuestionaire.introduction == dict["description"]) & (currentQuestionaire.title == dict["title"]):
+		return "ok"
+	return "error"
 
 def createNewQuestion(dict):
 	TYPE = dict["qst_type"]
@@ -47,12 +57,12 @@ def createNewQuestion(dict):
 		"sort" : "SO"
 	}
 	currentQuestion = Question(
-		questionaire_id = dict["act_id"],
+		questionaire_id = Questionaire.objects.get(id = dict["act_id"]),
 		questionaire_type = switcher[TYPE]
 		)
 	currentQuestion.save()
 	return_dict = {
 		"status" : "ok",
-		"id" : currentQuestion.i
+		"id" : currentQuestion.id
 	}
 	return return_dict

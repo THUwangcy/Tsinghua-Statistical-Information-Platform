@@ -85,7 +85,7 @@ class Question(models.Model):
     questionaire_id = models.ForeignKey(Questionaire)
     question_text = models.CharField(max_length = 200)
     questionaire_type = models.CharField(max_length = 2, choices = TYPES, default = FILLIN)
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField('date published', null = True)
 
     def __unicode__(self):
         return self.question_text
