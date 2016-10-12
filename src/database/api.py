@@ -1,4 +1,13 @@
-import models
+from models import *
+ 
+def createDefaultUser():
+	defaultUser = User(
+		student_id = "1111111111",
+		real_name = "default",
+		tel = "88888888888",
+		email = "default@ggmail.com"
+		)
+	defaultUser.save()
 
 def createNewQuestionaire(dict):
 	TYPE = dict["act_type"]
@@ -10,12 +19,12 @@ def createNewQuestionaire(dict):
 	currentQuestionaire = Questionaire(
 		questionaire_time = dict["time"],
 		questionaire_type = switcher[TYPE],
-		questionaire_user = dict["user_id"]
+		questionaire_user = User.objects.get(student_id = dict["user_id"])
 		)
 	currentQuestionaire.save();
 	return_dict = {
 		"status" : "ok",
-		"id" : currentQuestionaire.id()
+		"id" : currentQuestionaire.id
 	}
 
 	return return_dict

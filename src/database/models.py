@@ -52,7 +52,7 @@ class Questionaire(models.Model):
         (SIGN_UP, "sign up")
         )
     questionaire_user = models.ForeignKey(User)
-    questionaire_title = models.CharField(max_length = 40)
+    questionaire_title = models.CharField(max_length = 30)
     questionaire_introduction = models.TextField(default = u"没有说明")
     questionaire_type = models.CharField(max_length = 2, choices = TYPES, default = SIGN_UP)
     questionaire_time = models.IntegerField()
@@ -64,6 +64,7 @@ class Questionaire(models.Model):
 
     def __unicode__(self):
         return self.id + self.questionaire_title
+
 
 
 class Question(models.Model):
