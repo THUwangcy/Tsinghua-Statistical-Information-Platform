@@ -73,3 +73,12 @@ def operation_qst(request):
     return JsonResponse({
         'status': 'ok',
     })
+
+
+def remove_act(request):
+	file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
+	Act_id = request.GET['act_id']
+	file_object.writelines(Act_id + "\n")
+	return JsonResponse({
+			'status': 'ok',
+		})

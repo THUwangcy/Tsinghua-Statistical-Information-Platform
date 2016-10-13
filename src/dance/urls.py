@@ -43,6 +43,7 @@ urlpatterns = [
     url(r'^api/create_new_act/?$', 'api.views.create_new_act', name='api/create_new_act'),
     url(r'^api/create_new_qst/?$', 'api.views.create_new_qst', name='api/create_new_qst'),
     url(r'^api/operation_qst/?$', 'api.views.operation_qst', name='api/operation_qst'),
+    url(r'^api/remove_act/?$', 'api.views.remove_act', name='api/remove_act'),
 
 
     #userlist

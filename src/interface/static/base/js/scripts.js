@@ -1,4 +1,22 @@
 
+//删除问卷
+function remove_act(act_id, url) {
+    var callback = function() {
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: "&act_id=" + act_id,
+            success: function(data) {
+
+
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert(xhr.responseText);
+            }
+        });
+    }
+    showConfirmModal('删除报名', '确定要删除吗？', false, callback);
+}
 
 // deal with csrf tokens when using ajax
 function getCookie(name) {
