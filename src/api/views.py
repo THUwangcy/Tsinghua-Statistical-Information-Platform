@@ -53,9 +53,23 @@ def create_new_qst(request):
 	#可用POST参数有：
 	#	act_id:   问卷id
 	#	qst_type: 问题类型
-	Qst_id = request.GET['act_id'] + " " + request.GET['qst_type']
-	return JsonResponse({
+    file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
+    Qst_id = request.GET['act_id'] + " " + request.GET['qst_type']
+    file_object.writelines(request.GET['qst_rank'])
+    return JsonResponse({
 			'status': 'ok',
 			'id': Qst_id,
 		})
 	
+
+def operation_qst(request):
+    file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
+    Act_id = request.GET['act_id']
+    Qst_id = request.GET['qst_id']
+    operation = request.GET['operation']
+    file_object.writelines(Act_id + "\n")
+    file_object.writelines(Qst_id + "\n")
+    file_object.writelines(operation + "\n")
+    return JsonResponse({
+        'status': 'ok',
+    })

@@ -36,12 +36,13 @@ urlpatterns = [
     url(r'^legalUser/design/(\w+)/([0-9]+)/question/?$', 'interface.views.legalUser_design_question', name='legalUser/design/question'),
 
     #modal
-    url(r'^legalUser/modal/(\w+)/([0-9]+)/?$', 'interface.views.show_modal', name='legalUser/modal'),
+    url(r'^modal/(\w+)/([0-9]+)/?$', 'interface.views.show_modal', name='legalUser/modal'),
 
     #api
-    url(r'^legalUser/api/modify_name?$', 'api.views.modify_name', name='api/modify_name'),
-    url(r'^legalUser/api/create_new_act/?$', 'api.views.create_new_act', name='api/create_new_act'),
-    url(r'^legalUser/api/create_new_qst/?$', 'api.views.create_new_qst', name='api/create_new_qst'),
+    url(r'^api/modify_name?$', 'api.views.modify_name', name='api/modify_name'),
+    url(r'^api/create_new_act/?$', 'api.views.create_new_act', name='api/create_new_act'),
+    url(r'^api/create_new_qst/?$', 'api.views.create_new_qst', name='api/create_new_qst'),
+    url(r'^api/operation_qst/?$', 'api.views.operation_qst', name='api/operation_qst'),
 
 
     #userlist

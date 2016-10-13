@@ -1,5 +1,3 @@
-status: none
-act_id: 2016
-csrfmiddlewaretoken: OCDyXLxQshofsiTLEHqdpOuhCLzRjLqC
-description: 假装有活动说明
-title: XX实验志愿者招募
+2016
+2016 vote
+REMOVE

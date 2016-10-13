@@ -9,7 +9,7 @@
     
 	    <div style="display:none;" class="question-collapse">
 	    	<hr>
-		    <a class="fake-link collapse-row pull-right" href="#" id="remove_btn">
+		    <a class="fake-link collapse-row pull-right" href="#" onclick="return RemoveLi(this);" id="remove_btn">
 		        <span class="fa fa-trash fa-fw"></span> 删除&emsp;
 		    </a>
 		    <a class="fake-link collapse-row pull-right" href="#" onclick="return DownLi(this);" id="down_btn">
@@ -40,6 +40,22 @@
     	})
 	}
 
+	function operation_qst(operation)
+    {
+        $.ajax({
+            type: "GET",
+            url: "{% url 'api/operation_qst' %}",
+            data: "&act_id=" + "{{act_id}}" + "&qst_id=" + "{{questions_id}}" + "&operation=" + operation,
+            success: function(data) {
+
+
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert(xhr.responseText.substr(0, 500));
+            }
+        });
+    }
+
 	//上移
     function UpLi(obj)
     {
@@ -50,6 +66,7 @@
         else {
         	var getup = $(obj).parent().parent().parent().parent().prev();
         	$(getup).before(onthis);
+            operation_qst("UP");
         }
     
     }
@@ -63,8 +80,21 @@
         else {
         	var getdown = $(obj).parent().parent().parent().parent().next();
         	$(getdown).after(onthis);
+            operation_qst("DOWN");
         }
     }
+
+    //删除
+	function RemoveLi(obj)
+	{
+		var onthis = $(obj).parent().parent().parent().parent();
+
+		onthis.remove();
+
+		reloadRank();
+
+        operation_qst("REMOVE");
+	}
 
 	//对于每一个问题添加事件
     $("ol.questions-list li").find(".hover_question").each(function() {
@@ -89,14 +119,7 @@
             $(this).find(".question-collapse").slideUp("fast");
         })
       	
-        //删除按钮事件
-        $(this).find("#remove_btn").click(function(){
-        	var $panel = $(this).parent().parent().parent();
-        	var this_li = $panel.parent();
-        	this_li.remove();
-        	reloadRank();
-        	
-        })	
+
         displayContent(index + ". ", {'anim': false, 'scroll': false}, rank);
     })
     
