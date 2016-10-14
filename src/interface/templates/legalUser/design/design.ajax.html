@@ -11,7 +11,7 @@
         };
 
         function createNewQst(qst_type) {
-            var rank = $(".last-question").index();
+            var rank = $(".last-question").index() + 1;
             $.ajax({
                 type: "GET",
                 url: "{% url 'api/create_new_qst' %}",
