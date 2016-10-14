@@ -119,13 +119,16 @@ def legalUser_design_question(request, type):
 
 
 
-def render_ajax(request, url, params, item_id=''):
+def render_ajax(request, url, params, item_id='', legal=0 ):
     if request.is_ajax():
         url = '.'.join(url.split('.')[:-1]) + '.ajax.html'
     else:
         identity = session.get_identity(request)
         name = get_realname(request)
-        params['username'] = "王晨阳"
+        if legal == 0:
+            params['username'] = "王晨阳"
+        else:
+            params['username'] = "guest"
         if item_id != '':
             params['active_item'] = item_id
         if identity == 'admin':
@@ -255,5 +258,39 @@ def user_information_change(request):
     user_information_change_html = 'legalUser/user_information_change.html'
     return render_ajax(request, user_information_change_html, params, 'info-item-2')
 
-def guset(request):
-    return render(request, 'guest/guest_index.html')
+def guest(request):
+    return guest_dashboard(request)
+
+def guest_dashboard(request):
+    pending_applications = _database.get_pending_applications()
+    pending_count = len(pending_applications)
+
+    show_all_pending_applications = False
+    if pending_count > 10:
+        show_all_pending_applications = True
+        pending_applications = pending_applications[0:10]
+
+    official_accounts = _database.get_official_accounts()
+
+    activities = _database.get_already_applications()
+    articles_count = len(activities)
+
+    # category = MessageCategory.ToAdmin
+
+    unprocessed_account = _database.get_official_accounts_with_unprocessed_messages()
+
+    announcement = _database.get_announcement()
+
+    category = 1
+
+    return render_ajax(request, 'guest/dashboard_guest.html', {
+        'pending_applications': pending_applications,
+        'official_accounts': official_accounts,
+        'activities': activities,
+        'articles_count': articles_count,
+        'unprocessed_account': unprocessed_account,
+        'category': category,
+        'announcement': announcement,
+        'show_all_pending_applications': show_all_pending_applications
+    }, 'dashboard-item', 1)
+    return

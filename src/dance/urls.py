@@ -40,5 +40,6 @@ urlpatterns = [
     url(r'^legalUser/information/change$', 'interface.views.user_information_change', name='legalUser/information_change'),
 
     #guest
-    url(r'^guest/$', 'interface.views.guset', name='guest'),
+    url(r'^guest/$', 'interface.views.guest', name='guest'),
+    url(r'^guest/dashboard/$', 'interface.views.guest_dashboard', name='guest/dashboard'),
 ]
