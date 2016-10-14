@@ -47,7 +47,6 @@ urlpatterns = [
     url(r'^api/save_act/?$', 'api.views.save_act', name='api/save_act'),
     url(r'^api/publish_act/?$', 'api.views.publish_act', name='api/publish_act'),
 
-
     #userlist
     url(r'^legalUser/login/$', 'interface.views.login_page', name='legalUser/login'),
     url(r'^legalUser/information/$', 'interface.views.user_information', name='legalUser/information'),
@@ -56,4 +55,7 @@ urlpatterns = [
     #questionnaire
     url(r'^questionnaire/([0-9]+)/?$', 'interface.views.questionnaire', name='questionnaire'),
 
+    #guest
+    url(r'^guest/$', 'interface.views.guest', name='guest'),
+    url(r'^guest/dashboard/$', 'interface.views.guest_dashboard', name='guest/dashboard'),
 ]

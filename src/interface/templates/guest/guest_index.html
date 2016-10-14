@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}游客界面 - 清华大学信息化统计平台{% endblock %}
+
+{% block subtitle %}
+    <a class="navbar-brand">&gt;</a>
+    <a class="fake-link-scroll navbar-brand">游客界面</a>
+{% endblock subtitle %}
+
+{% block itemtitle %}
+    游客界面
+{% endblock itemtitle %}
+
+{% block left-column %}
+    <a class="fake-link left-column-menu" data-toggle="collapse" data-target="#dashboard-menu">
+        <strong><i class="fa fa-dashboard fa-fw"></i>　信息概览</strong>
+    </a>
+    <ul class="nav nav-stacked collapse in" id="dashboard-menu">
+        <hr>
+        <ul class="nav nav-stacked collapse in nav-pills">
+            <li id="dashboard-item" class="nav-header left-column-item"
+                data-url="{% url 'guest/dashboard' %}">
+                <a class="fake-link"><i class="fa fa-dashboard fa-fw"></i>　信息概览</a>
+            </li>
+        </ul>
+    </ul>
+    <hr>
+    <a class="fake-link left-column-menu" data-toggle="collapse" data-target="#application-menu">
+        <strong><i class="fa fa-wrench fa-fw"></i>　发布活动</strong>
+    </a>
+    <ul class="nav nav-stacked collapse in" id="application-menu">
+        <hr>
+        <ul class="nav nav-stacked collapse in nav-pills">
+            <li id="enroll-design-item" class="nav-header left-column-item"
+                data-url="{% url 'legalUser/design' 'enroll' %}">
+                <a class="fake-link"><i class="fa fa-tasks fa-fw"></i>　报名/统计表</a>
+            </li>
+            <li id="recuit-design-item" class="nav-header left-column-item"
+                data-url="{% url 'legalUser/design' 'recruit' %}">
+                <a class="fake-link"><i class="fa fa-check fa-fw"></i>　实验室招募</a>
+            </li>
+            <li id="vote-design-item" class="nav-header left-column-item"
+                data-url="{% url 'legalUser/design' 'vote' %}">
+                <a class="fake-link"><i class="fa fa-list-alt fa-fw"></i>　投票</a>
+            </li>
+        </ul>
+    </ul>
+    <hr>
+{% endblock left-column %}
+
+{% block user-menu %}
+    <li>
+        <a href="{% url 'legalUser' %}"> <i class="glyphicon glyphicon-log-in" id="back_main"></i>　返回</a>
+        <a href="{% url 'legalUser/login' %}"> <i class="glyphicon glyphicon-log-out" id="main_log_agin" ></i>　登陆</a>
+    </li>
+{% endblock user-menu %}
+
+{% block main-page %}
+
+{% endblock main-page %}
+
+{% block modals %}
+{% endblock modals %}
