@@ -32,15 +32,18 @@
         <hr>
         <ul class="nav nav-stacked collapse in nav-pills">
             <li id="enroll-design-item" class="nav-header left-column-item"
-                data-url="{% url 'legalUser/design' 'enroll' %}">
+                data-url="{% url 'legalUser/design' 'enroll' %}"
+                data-source="{% url 'api/create_new_act' %}">
                 <a class="fake-link"><i class="fa fa-tasks fa-fw"></i>　报名/统计表</a>
             </li>
             <li id="recuit-design-item" class="nav-header left-column-item"
-                data-url="{% url 'legalUser/design' 'recruit' %}">
+                data-url="{% url 'legalUser/design' 'recruit' %}"
+                data-source="{% url 'api/create_new_act' %}">
                 <a class="fake-link"><i class="fa fa-check fa-fw"></i>　实验室招募</a>
             </li>
             <li id="vote-design-item" class="nav-header left-column-item"
-                data-url="{% url 'legalUser/design' 'vote' %}">
+                data-url="{% url 'legalUser/design' 'vote' %}"
+                data-source="{% url 'api/create_new_act' %}">
                 <a class="fake-link"><i class="fa fa-list-alt fa-fw"></i>　投票</a>
             </li>
         </ul>

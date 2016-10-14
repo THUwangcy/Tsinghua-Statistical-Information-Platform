@@ -286,6 +286,7 @@ function loadContentOfItem(item, load_params, callback) {
     var act_id = $(item).attr("id");
     var is_design = act_id.indexOf("design-item");
     var append = "";
+
     if(is_design > 0)
     {
         act_id = act_id.substr(0, is_design - 1);

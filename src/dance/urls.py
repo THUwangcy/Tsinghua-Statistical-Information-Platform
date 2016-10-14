@@ -39,7 +39,7 @@ urlpatterns = [
     url(r'^modal/(\w+)/([0-9]+)/?$', 'interface.views.show_modal', name='legalUser/modal'),
 
     #api
-    url(r'^api/modify_name?$', 'api.views.modify_name', name='api/modify_name'),
+    url(r'^api/modify_name/?$', 'api.views.modify_name', name='api/modify_name'),
     url(r'^api/create_new_act/?$', 'api.views.create_new_act', name='api/create_new_act'),
     url(r'^api/create_new_qst/?$', 'api.views.create_new_qst', name='api/create_new_qst'),
     url(r'^api/operation_qst/?$', 'api.views.operation_qst', name='api/operation_qst'),
@@ -48,14 +48,14 @@ urlpatterns = [
     url(r'^api/publish_act/?$', 'api.views.publish_act', name='api/publish_act'),
 
     #userlist
-    url(r'^legalUser/login/$', 'interface.views.login_page', name='legalUser/login'),
-    url(r'^legalUser/information/$', 'interface.views.user_information', name='legalUser/information'),
-    url(r'^legalUser/information/change$', 'interface.views.user_information_change', name='legalUser/information_change'),
+    url(r'^legalUser/login/?$', 'interface.views.login_page', name='legalUser/login'),
+    url(r'^legalUser/information/?$', 'interface.views.user_information', name='legalUser/information'),
+    url(r'^legalUser/information/change/?$', 'interface.views.user_information_change', name='legalUser/information_change'),
 
     #questionnaire
     url(r'^questionnaire/([0-9]+)/?$', 'interface.views.questionnaire', name='questionnaire'),
 
     #guest
-    url(r'^guest/$', 'interface.views.guest', name='guest'),
-    url(r'^guest/dashboard/$', 'interface.views.guest_dashboard', name='guest/dashboard'),
+    url(r'^guest/?$', 'interface.views.guest', name='guest'),
+    url(r'^guest/dashboard/?$', 'interface.views.guest_dashboard', name='guest/dashboard'),
 ]
