@@ -1,4 +1,3 @@
-
 ### 项目目录：       
     - .git ...............git管理目录       
     - .idea ..............使用PyCharm自动生成的目录，不用管       
@@ -15,4 +14,7 @@
 
 ### 管理页面：
     username: admin
-    password: whynotdance
+    password: whynotdance     
+    
+### 注意：     
+    pull下来后先运行python manage.py migrate
