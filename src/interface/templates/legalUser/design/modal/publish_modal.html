@@ -1,0 +1,49 @@
+<div class="modal fade" id="publish-modal" tabindex="-1" role="dialog" aria-labelledby="publish-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">发布活动</h4>
+            </div>
+
+
+            <div class="modal-footer">
+
+                    <form id="create-activity-form" class="form form-vertical" role="form" data-toggle="validator">
+                        {% csrf_token %}
+                        <input name="status" value="none" type="text" style="display: none;">
+                        <input name="act_id" type="text" style="display: none;" value="{{act_id}}">
+
+                        <div class="row" style="text-align: left;">
+                            <div class="col-xs-12 form-group">
+                                <label class="control-label" for="publish_url">问卷链接</label>
+                                <input id="publish_url" name="title" class="form-control" style="resize: vertical;"></input>
+                            </div>
+                        </div>
+                        <br>
+                        <div id="submit-button-field">
+                            <button type="submit" class="btn btn-primary form-btn">
+                                确认
+                            </button>
+                        </div>
+                    </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var modal = $("#publish-modal");
+
+    var url_field = modal.find("#publish_url");
+
+
+    modal.ready(function () {
+
+        url_field.val("{% url 'questionnaire' act_id %}");
+
+    });
+</script>
+

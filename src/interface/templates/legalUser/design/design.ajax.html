@@ -72,6 +72,40 @@
             refreshTable();
         })
 
+        //设置保存和发布按钮点击事件
+        $this.find("#save_btn").click(function() {
+            $.ajax({
+                type: "GET",
+                url: "{% url 'api/save_act' %}",
+                data: "&act_id=" + "{{act_id}}",
+                success: function(data) {
+                    if(data['status'] == 'ok') {
+                        showConfirmModal("提示", "保存成功！", true);
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert(xhr.responseText.substr(0, 500));
+                }
+            });
+        })
+        $this.find("#publish_btn").click(function() {
+            var publish_callback = function() {
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'api/publish_act' %}",
+                    data: "&act_id=" + "{{act_id}}",
+                    success: function(data) {
+                        showModal("{% url 'legalUser/modal' 'publish' act_id %}", 'publish-modal');
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        alert(xhr.responseText.substr(0, 500));
+                    }
+                });
+            }
+
+            showConfirmModal("提示", "确定要发布吗？", false, publish_callback);
+        })
+
 
     })
 
@@ -106,21 +140,26 @@
                 <a class="fake-link"><i class="fa fa-edit fa-fw"></i>　填空题</a>
             </li>
             <hr>
-            <li id="vote-question" class="nav-header"
-                data-url="{% url 'test' %}">
+            <li id="vote-question" class="nav-header">
                 <a class="fake-link"><i class="fa fa-list-alt fa-fw"></i>　投票题</a>
             </li>
             <hr>
-            <li id="mark-question" class="nav-header"
-                data-url="{% url 'legalUser/applications' 'all' %}">
+            <li id="mark-question" class="nav-header">
                 <a class="fake-link"><i class="fa fa-heart-o fa-fw"></i>　评分题</a>
             </li>
             <hr>
-            <li id="sort-question" class="nav-header"
-                data-url="{% url 'test' %}">
+            <li id="sort-question" class="nav-header">
                 <a class="fake-link"><i class="fa fa-list-ol fa-fw"></i>　排序题</a>
             </li>
             <hr>
+            <br>
+            <li align="center">
+                <button type="button" class="btn btn-info btn-block btn-lg" id="save_btn" style="font-size: 15px">保存</button>
+            </li>
+            <br>
+            <li align="center">
+                <button type="button" class="btn btn-success btn-block btn-lg" id="publish_btn" style="font-size: 15px">发布</button>
+            </li>
 
         </ul>
 

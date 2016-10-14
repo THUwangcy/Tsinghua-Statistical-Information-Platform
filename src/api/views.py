@@ -82,3 +82,21 @@ def remove_act(request):
 	return JsonResponse({
 			'status': 'ok',
 		})
+
+
+def save_act(request):
+	file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
+	Act_id = request.GET['act_id']
+	file_object.writelines("Save: " + Act_id + "\n")
+	return JsonResponse({
+		'status': 'ok',
+	})
+
+
+def publish_act(request):
+	file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
+	Act_id = request.GET['act_id']
+	file_object.writelines("Publish: " + Act_id + "\n")
+	return JsonResponse({
+		'status': 'ok',
+	})

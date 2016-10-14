@@ -44,11 +44,16 @@ urlpatterns = [
     url(r'^api/create_new_qst/?$', 'api.views.create_new_qst', name='api/create_new_qst'),
     url(r'^api/operation_qst/?$', 'api.views.operation_qst', name='api/operation_qst'),
     url(r'^api/remove_act/?$', 'api.views.remove_act', name='api/remove_act'),
+    url(r'^api/save_act/?$', 'api.views.save_act', name='api/save_act'),
+    url(r'^api/publish_act/?$', 'api.views.publish_act', name='api/publish_act'),
 
 
     #userlist
     url(r'^legalUser/login/$', 'interface.views.login_page', name='legalUser/login'),
     url(r'^legalUser/information/$', 'interface.views.user_information', name='legalUser/information'),
     url(r'^legalUser/information/change$', 'interface.views.user_information_change', name='legalUser/information_change'),
+
+    #questionnaire
+    url(r'^questionnaire/([0-9]+)/?$', 'interface.views.questionnaire', name='questionnaire'),
 
 ]
