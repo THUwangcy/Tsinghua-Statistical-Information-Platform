@@ -254,3 +254,6 @@ def user_information_change(request):
     }
     user_information_change_html = 'legalUser/user_information_change.html'
     return render_ajax(request, user_information_change_html, params, 'info-item-2')
+
+def guset(request):
+    return render(request, 'guest/guest_index.html')

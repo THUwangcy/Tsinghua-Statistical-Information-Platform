@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %}用户后台 - 清华大学信息化统计平台{% endblock %}
+{% block title %}游客界面 - 清华大学信息化统计平台{% endblock %}
 
 {% block subtitle %}
     <a class="navbar-brand">&gt;</a>
-    <a class="fake-link-scroll navbar-brand">用户后台</a>
+    <a class="fake-link-scroll navbar-brand">游客界面</a>
 {% endblock subtitle %}
 
-{% block itemtitle %} 
-    用户后台
+{% block itemtitle %}
+    游客界面
 {% endblock itemtitle %}
 
 {% block left-column %}
@@ -46,37 +46,12 @@
         </ul>
     </ul>
     <hr>
-    <a class="fake-link left-column-menu" data-toggle="collapse" data-target="#analyse-menu">
-        <strong><i class="fa fa-signal fa-fw"></i>　分析统计</strong>
-    </a>
-    <ul class="nav nav-stacked collapse in" id="analyse-menu">
-        <hr>
-        <ul class="nav nav-stacked collapse in nav-pills">
-            <li id="all-applications-item" class="nav-header left-column-item"
-                data-url="{% url 'legalUser/applications' 'all' %}">
-                <a class="fake-link"><i class="fa fa-th-list fa-fw"></i>　我的报名
-                    <span class="badge badge-info pull-right" data-source="{% url 'test' %}"></span>
-                </a>
-            </li>
-            <li id="statistics-list-item" class="nav-header left-column-item"
-                data-url="{% url 'test' %}">
-                <a class="fake-link"><i class="fa fa-bar-chart fa-fw"></i>　统计信息</a>
-            </li>
-            <li id="empty-item1" class="nav-header left-column-item">
-                <a class="fake-link"></a>
-            </li>
-            
-        </ul>
-    </ul>
-    <hr>
-
 {% endblock left-column %}
 
 {% block user-menu %}
     <li>
-        <a href="{% url 'legalUser/information' %}"> <i class="glyphicon glyphicon-info-sign" id="main_user_info"></i>　用户信息</a>
         <a href="{% url 'legalUser' %}"> <i class="glyphicon glyphicon-log-in" id="back_main"></i>　返回</a>
-        <a href="{% url 'guest' %}"> <i class="glyphicon glyphicon-log-out" id="main_log_agin" ></i>　注销</a>
+        <a href="{% url 'legalUser/login' %}"> <i class="glyphicon glyphicon-log-out" id="main_log_agin" ></i>　登陆</a>
     </li>
 {% endblock user-menu %}
 

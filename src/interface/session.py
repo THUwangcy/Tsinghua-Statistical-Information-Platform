@@ -1,4 +1,4 @@
-# identity=['student','admin','superuser']
+# identity=['guest','legalUser','admin','superuser']
 
 
 def add_session(request, *args, **kw):
