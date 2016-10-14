@@ -4,8 +4,17 @@
 
 {% block subtitle %}
     <a class="navbar-brand">&gt;</a>
-    <a class="fake-link-scroll navbar-brand">活动发布</a>
+    <a class="fake-link-scroll navbar-brand">用户后台</a>
 {% endblock subtitle %}
+
+{% block itemtitle %} 
+    用户后台
+{% endblock itemtitle %}
+
+{% block scripts %}
+    <script>
+    </script>
+{% endblock scripts %}
 
 {% block left-column %}
     <a class="fake-link left-column-menu" data-toggle="collapse" data-target="#dashboard-menu">
@@ -26,19 +35,26 @@
     </a>
     <ul class="nav nav-stacked collapse in" id="application-menu">
         <hr>
+        <!-- 
+             data-source是创建新问卷的api链接 
+             data-url是指向显示页面的interface链接
+         -->
         <ul class="nav nav-stacked collapse in nav-pills">
-            <li id="pending-applications-item" class="nav-header left-column-item"
-                data-url="{% url 'test' %}">
-                <a class="fake-link"><i class="fa fa-tasks fa-fw"></i>　报名/统计表
-                    <span class="badge badge-info pull-right" data-source="{% url 'test' %}"></span>
+            <li id="enroll-design-item" class="nav-header left-column-item"
+                data-url="{% url 'legalUser/design' 'enroll' %}"
+                data-source="{% url 'api/create_new_act' %}">
+                <a class="fake-link" >
+                    <i class="fa fa-tasks fa-fw"></i>　报名/统计表
                 </a>
             </li>
-            <li id="processed-applications-item" class="nav-header left-column-item"
-                data-url="{% url 'legalUser/dashboard' %}">
+            <li id="recruit-design-item" class="nav-header left-column-item"
+                data-url="{% url 'legalUser/design' 'recruit' %}"
+                data-source="{% url 'api/create_new_act' %}">
                 <a class="fake-link"><i class="fa fa-check fa-fw"></i>　实验室招募</a>
             </li>
-            <li id="all-applications-item" class="nav-header left-column-item"
-                data-url="{% url 'test' %}">
+            <li id="vote-design-item" class="nav-header left-column-item"
+                data-url="{% url 'legalUser/design' 'vote' %}"
+                data-source="{% url 'api/create_new_act' %}">
                 <a class="fake-link"><i class="fa fa-list-alt fa-fw"></i>　投票</a>
             </li>
         </ul>
@@ -50,9 +66,11 @@
     <ul class="nav nav-stacked collapse in" id="analyse-menu">
         <hr>
         <ul class="nav nav-stacked collapse in nav-pills">
-            <li id="official-accounts-list-item" class="nav-header left-column-item"
+            <li id="all-applications-item" class="nav-header left-column-item"
                 data-url="{% url 'legalUser/applications' 'all' %}">
-                <a class="fake-link"><i class="fa fa-th-list fa-fw"></i>　我的报名</a>
+                <a class="fake-link"><i class="fa fa-th-list fa-fw"></i>　我的报名
+                    <span class="badge badge-info pull-right" data-source="{% url 'test' %}"></span>
+                </a>
             </li>
             <li id="statistics-list-item" class="nav-header left-column-item"
                 data-url="{% url 'test' %}">
@@ -61,14 +79,20 @@
             <li id="empty-item1" class="nav-header left-column-item">
                 <a class="fake-link"></a>
             </li>
-            <li id="empty-item2" class="nav-header left-column-item">
-                <a class="fake-link"></a>
-            </li>
+
         </ul>
     </ul>
     <hr>
 
 {% endblock left-column %}
+
+{% block user-menu %}
+    <li>
+        <a href="{% url 'legalUser/information' %}"> <i class="glyphicon glyphicon-info-sign" id="main_user_info"></i>　用户信息</a>
+        <a href="{% url 'legalUser' %}"> <i class="glyphicon glyphicon-log-in" id="back_main"></i>　返回</a>
+        <a href="{% url 'legalUser/login' %}"> <i class="glyphicon glyphicon-log-out" id="main_log_agin" ></i>　注销</a>
+    </li>
+{% endblock user-menu %}
 
 {% block main-page %}
 

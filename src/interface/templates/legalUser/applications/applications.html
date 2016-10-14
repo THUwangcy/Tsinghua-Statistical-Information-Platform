@@ -1,5 +1,7 @@
-{% extends 'admin/index.html' %}
+{% extends 'legalUser/index.html' %}
+
+{% block itemtitle %} 所有报名 {% endblock itemtitle %}
 
 {% block main-page %}
-    {% include 'admin/applications/applications.ajax.html' %}
+    {% include 'legalUser/applications/applications.ajax.html' %}
 {% endblock main-page %}

@@ -18,13 +18,13 @@
 });
 </script>
 
-<div class="top-row">
+<div class="top-row hidden-xs">
     <a>&nbsp</a>
     <a class="fake-link pull-right">
         <strong>信息概览　<i class="fa fa-dashboard fa-fw"></i></strong>
     </a>
 </div>
-<hr>
+<hr class="hidden-xs">
 <div class="row">
     <div class="col-md-9">
         <div class="panel panel-default">
@@ -47,7 +47,7 @@
                         {% if pending_applications %}
                             {% for app in pending_applications %}
                                 <tr>
-                                    <td><a class="ajax-link"
+                                    <td><a class="ajax-link fake-link"
                                            data-url="{% url 'test' %}">
                                         {{ app.name }} </a>
                                     </td>
@@ -62,26 +62,26 @@
                                 <tr></tr>
 
                                 <tr class="collapse-row" >
-                                    <td  colspan="4" style="display:none;" id="pending{{forloop.counter}}_td">
+                                    <td  colspan="6" style="display:none;" id="pending{{forloop.counter}}_td">
                                         <div id="pending{{forloop.counter}}" class="operation" style="display:none; width: 100%">
                                             <ul>
                                                 <li style="width: 25%" align="left">
-                                                    <a href="#" >
+                                                    <a class="fake-link" href="#" >
                                                         <i class="fa fa-pencil-square-o fa-fw fa-2x" aria-hidden="true"></i> 修改
                                                     </a>
                                                 </li>
                                                 <li style="width: 25%" align="left">
-                                                    <a href="#" >
+                                                    <a class="fake-link" href="#" >
                                                         <i class="fa fa-file-text-o fa-fw fa-2x" aria-hidden="true"></i> 发布
                                                     </a>
                                                 </li>
                                                 <li style="width: 25%" align="left">
-                                                    <a href="#" >
+                                                    <a class="fake-link" href="#" >
                                                         <i class="fa fa-bar-chart-o fa-fw fa-2x" aria-hidden="true"></i> 结果
                                                     </a>
                                                 </li>
                                                 <li style="width: 25%" align="left">
-                                                    <a href="#" >
+                                                    <a class="fake-link" href="javascript:remove_act('{{app.id}}', '{% url 'api/remove_act' %}')">
                                                         <i class="fa fa-trash fa-fw fa-2x" aria-hidden="true"></i> 删除
                                                     </a>
                                                 </li>
@@ -135,7 +135,7 @@
                             {% for activity in activities %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td><a class="ajax-link"
+                                    <td><a class="ajax-link fake-link"
                                            data-url="{% url 'test' %}">
                                         {{ activity.name|truncatechars:100 }}
                                     </a></td>
@@ -163,17 +163,17 @@
                                         <div id="already{{forloop.counter}}" class="operation" style="display:none; width: 100%">
                                             <ul>
                                                 <li style="width: 30%" align="center">
-                                                    <a href="#" >
+                                                    <a class="fake-link" href="#" >
                                                         <i class="fa fa-share-square-o fa-fw fa-2x" aria-hidden="true"></i> 分享
                                                     </a>
                                                 </li>
                                                 <li style="width: 30%" align="center">
-                                                    <a href="#" >
+                                                    <a class="fake-link" href="#" >
                                                         <i class="fa fa-bar-chart-o fa-fw fa-2x" aria-hidden="true"></i> 结果
                                                     </a>
                                                 </li>
                                                 <li style="width: 30%" align="center">
-                                                    <a href="#" >
+                                                    <a class="fake-link" href="javascript:showConfirmModal('删除报名', '确定要删除吗？')" >
                                                         <i class="fa fa-trash fa-fw fa-2x" aria-hidden="true"></i> 删除
                                                     </a>
                                                 </li>
@@ -220,7 +220,7 @@
                 <div class="panel-body">
                     {% for account in unprocessed_account %}
                         <p>
-                            <a style="cursor:pointer;" class="message-link"
+                            <a style="cursor:pointer;" class="message-link fake-link"
                                data-url="{% url 'test' %}">
                                 {{ account.name }}</a>
                             <span class="badge pull-right">{{ account.message}}</span>
@@ -257,7 +257,7 @@
                             {% for activity in activities %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td><a class="ajax-link" data-url="{% url 'test' %}">
+                                    <td><a class="ajax-link fake-link" data-url="{% url 'test' %}">
                                         {{ activity.name }}
                                     </a></td>
                                     <td>{{ activity.fillin}}</td>

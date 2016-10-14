@@ -17,7 +17,7 @@
         <tr>
             <td>
                 {% if app.status == 'already' %}
-                    <a class="ajax-link" data-url="{% url 'test'%}">
+                    <a class="ajax-link fake-link" data-url="{% url 'test'%}">
                         {{ app.name }}
                     </a>
                 {% else %}
@@ -49,38 +49,38 @@
                     <ul>
                         {% if app.status == 'pending' %}
                             <li style="width: 25%" align="left">
-                                <a href="#" >
+                                <a class="fake-link" href="#" >
                                     <i class="fa fa-pencil-square-o fa-fw fa-2x" aria-hidden="true"></i> 修改
                                 </a>
                             </li>
                             <li style="width: 25%" align="left">
-                                <a href="#" >
+                                <a class="fake-link" href="#" >
                                     <i class="fa fa-file-text-o fa-fw fa-2x" aria-hidden="true"></i> 发布
                                 </a>
                             </li>
                             <li style="width: 25%" align="left">
-                                <a href="#" >
+                                <a class="fake-link" href="#" >
                                     <i class="fa fa-bar-chart-o fa-fw fa-2x" aria-hidden="true"></i> 结果
                                 </a>
                             </li>
                             <li style="width: 25%" align="left">
-                                <a href="#" >
+                                <a class="fake-link" href="javascript:showConfirmModal('删除报名', '确定要删除吗？')" >
                                     <i class="fa fa-trash fa-fw fa-2x" aria-hidden="true"></i> 删除
                                 </a>
                             </li>
                         {% elif app.status == 'already' %}
                             <li style="width: 30%" align="center">
-                                <a href="#" >
+                                <a class="fake-link" href="#" >
                                     <i class="fa fa-share-square-o fa-fw fa-2x" aria-hidden="true"></i> 分享
                                 </a>
                             </li>
                             <li style="width: 30%" align="center">
-                                <a href="#" >
+                                <a class="fake-link" href="#" >
                                     <i class="fa fa-bar-chart-o fa-fw fa-2x" aria-hidden="true"></i> 结果
                                 </a>
                             </li>
                             <li style="width: 30%" align="center">
-                                <a href="#" >
+                                <a class="fake-link" href="javascript:showConfirmModal('删除报名', '确定要删除吗？')" >
                                     <i class="fa fa-trash fa-fw fa-2x" aria-hidden="true"></i> 删除
                                 </a>
                             </li>

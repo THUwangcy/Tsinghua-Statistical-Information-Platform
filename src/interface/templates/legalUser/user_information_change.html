@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}用户后台 - 清华大学信息化统计平台{% endblock %}
+
+{% block subtitle %}
+    <a class="navbar-brand">&gt;</a>
+    <a class="fake-link-scroll navbar-brand">用户后台</a>
+{% endblock subtitle %}
+
+{% block itemtitle %}
+    用户后台
+{% endblock itemtitle %}
+
+{% block left-column %}
+    <a class="fake-link left-column-menu" data-toggle="collapse" data-target="#info-menu">
+        <strong><i class="fa fa-dashboard fa-fw"></i>　用户信息</strong>
+    </a>
+    <ul class="nav nav-stacked collapse in" id="info-menu">
+        <hr>
+        <ul class="nav nav-stacked collapse in nav-pills">
+            <li id="info-item-1" class="nav-header left-column-item"
+                data-url="{% url 'legalUser/information' %}">
+                <a class="fake-link"><i class="fa fa-dashboard fa-fw"></i>　信息概览</a>
+            </li>
+            <li id="info-item-2" class="nav-header left-column-item"
+                data-url="{% url 'legalUser/information_change' %}">
+                <a class="fake-link"><i class="fa fa-wrench fa-fw"></i>　用户信息修改</a>
+        </ul>
+    </ul>
+    <hr>
+
+{% endblock left-column %}
+
+{% block user-menu %}
+    <li>
+        <a href="{% url 'legalUser/information' %}"> <i class="glyphicon glyphicon-info-sign" id="main_user_info"></i>　用户信息</a>
+        <a href="{% url 'legalUser' %}"> <i class="glyphicon glyphicon-log-in" id="back_main"></i>　返回</a>
+        <a href="{% url 'legalUser/login' %}"> <i class="glyphicon glyphicon-log-out" id="main_log_agin" ></i>　注销</a>
+    </li>
+{% endblock user-menu %}
+
+{% block main-page %}
+    {% include 'legalUser/user_information_change.ajax.html' %}
+{% endblock main-page %}
+
+{% block modals %}
+{% endblock modals %}

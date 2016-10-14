@@ -18,9 +18,9 @@ import _database
 from database import backend
 
 # Create your views here.
-def student(request):
-    return render(request, 'student/index.html')
 
+def test(request):
+    return HttpResponse("new")
 
 def legalUser(request):
     return legalUser_dashboard(request)
@@ -69,7 +69,7 @@ def legalUser_show_applications(request, type):
         type_icon = 'fa-check'
     elif type == 'all':
         type_name = u'所有报名'
-        type_icon = 'fa-list-alt'
+        type_icon = 'fa-th-list'
     elif type == 'trash':
         type_name = u'已删除报名'
         type_icon = 'fa-trash'
@@ -86,15 +86,93 @@ def legalUser_show_applications(request, type):
 
 
 def legalUser_show_applications_list(request, type):
-    applications = _database.get_all_applications();
+    applications = _database.get_all_applications()
     return render_sortable(request, applications,
                            'legalUser/applications/applications_content.html', {
                                'type': type
                            })
 
 
-def test(request):
-    return HttpResponse("WTF")
+def legalUser_design(request, type, act_id):
+    if type == 'enroll':
+        type_name = u'报名/统计表'
+        type_icon = 'fa-tasks'
+    elif type == 'recruit':
+        type_name = u'实验室招募'
+        type_icon = 'fa-check'
+    elif type == 'vote':
+        type_name = u'投票'
+        type_icon = 'fa-list-alt'
+    item_id = type + '-design-item'
+    return render_ajax(request, 'legalUser/design/design.html', {
+        'type': type,
+        'design_type': type_name,
+        'design_icon': type_icon,
+        'act_id': act_id
+    }, item_id)
+
+
+def legalUser_design_question(request, type, act_id):
+    question_url = 'legalUser/design/questions/' + request.GET.get('questions_type') + '.html'
+    params = {}
+    params['questions_type'] = request.GET.get('questions_type')
+    params['questions_id'] = request.GET.get('questions_id')
+    params['act_type'] = type
+    params['act_id'] = act_id
+    return render(request, question_url, params)
+
+
+def show_modal(request, modal_type, act_id):
+    return render(request, 'legalUser/design/modal/' + modal_type + '_modal.html', {
+            'qst_type': modal_type,
+            'act_id': act_id,
+        })
+
+def login_page(request):
+    log_page_html = 'legalUser/log_page.html'
+    return render(request, log_page_html)
+
+
+def user_information(request):
+    params = {
+        'username': '王晨阳',
+        'real_name': '王晨阳',
+        'identity': '本科生',
+        'email': 'thuwangcy@gmail.com',
+        'telephone_number': '17888802343',
+        'age': '20',
+        'gender': '男',
+        'address': '清华大学紫荆公寓二号楼411B',
+        'status': '做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心',
+    }
+
+    user_information_html = 'legalUser/user_information.html'
+    return render_ajax(request, user_information_html, params, 'info-item-1')
+
+def user_information_change(request):
+    params = {
+        'username': '王晨阳',
+        'real_name': '王晨阳',
+        'identity': '本科生',
+        'email': 'thuwangcy@gmail.com',
+        'telephone_number': '17888802343',
+        'age': '20',
+        'gender': '男',
+        'address': '清华大学紫荆公寓二号楼411B',
+        'status': '做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心',
+    }
+    user_information_change_html = 'legalUser/user_information_change.html'
+    return render_ajax(request, user_information_change_html, params, 'info-item-2')
+
+
+def questionnaire(request, act_id):
+    params = {
+        'act_id': act_id,
+    }
+    return render(request, 'questionnaire/questionnaire.html', params)
+
+
+#----------------------------分割线--------------------------------#
 
 def render_ajax(request, url, params, item_id=''):
     if request.is_ajax():
@@ -127,8 +205,8 @@ def render_sortable(request, items, url, params=None):
     sort_order_keyword = request.GET.get('sort_order', 'desc')
     #sort_order_keyword为desc时对sort_by_keyword取负
     sort_order = {
-        'asc': False,
-        'desc': True
+        u'asc': False,
+        u'desc': True
     }[sort_order_keyword]
 
     sort_by_keyword = request.GET.get('sort_by', '')

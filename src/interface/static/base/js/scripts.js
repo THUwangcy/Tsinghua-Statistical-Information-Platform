@@ -1,4 +1,22 @@
 
+//删除问卷
+function remove_act(act_id, url) {
+    var callback = function() {
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: "&act_id=" + act_id,
+            success: function(data) {
+
+
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert(xhr.responseText);
+            }
+        });
+    }
+    showConfirmModal('删除报名', '确定要删除吗？', false, callback);
+}
 
 // deal with csrf tokens when using ajax
 function getCookie(name) {
@@ -109,7 +127,7 @@ function displayContent(data, params, container, callback) {
 // load page content using ajax
 function loadContent(url, params, item_selector, load_params, callback) {
     var main = $("#main-page");
-
+  //  alert(url);
     var replace = false, anim = true;
     if (typeof load_params != "undefined") {
         if (load_params.hasOwnProperty("replace"))
@@ -175,6 +193,7 @@ function loadContent(url, params, item_selector, load_params, callback) {
         },
         error: function (xhr, textStatus, errorThrown) {
             clearTimeout(loadSpinnerTimer);
+            alert(xhr.responseText.substr(0, 500));
             displayContent('\
                 <div class="alert alert-danger" role="alert">\
                     <strong>页面载入出错。</strong>\
@@ -233,6 +252,7 @@ function loadContentOn(container, url, params, load_params, callback) {
                 </div>');
         }
     }, 1000);
+    
 
     $.ajax({
         type: "GET",
@@ -263,7 +283,34 @@ function loadContentOn(container, url, params, load_params, callback) {
 }
 
 function loadContentOfItem(item, load_params, callback) {
-    loadContent($(item).data("url"), {}, item, load_params, callback);
+    var act_id = $(item).attr("id");
+    var is_design = act_id.indexOf("design-item");
+    var append = "";
+    if(is_design > 0)
+    {
+        act_id = act_id.substr(0, is_design - 1);
+        var post_url;
+        post_url = $(item).data("source");
+        $.ajax({
+            type: "GET",
+            url: post_url,
+            data: "&act_type=" + act_id + "&time=2016" + "&user_id=1111111111",
+            success: function(data) {
+                if(data['status'] == 'ok'){
+                    append = data['id'];
+                    loadContent($(item).data("url") + '/' + append, {}, item, load_params, callback);
+                }
+                    
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert(xhr.responseText.substr(0, 500));
+
+            }
+        });
+        
+    }
+    else
+        loadContent($(item).data("url"), {}, item, load_params, callback);
 }
 
 function removePx(str) {
@@ -338,6 +385,7 @@ function handleFormPost(form_selector, post_url, params) {
                 url: post_url,
                 data: form.serialize(),
                 success: function (data) {
+                    alert(form.serialize())
                     msg.removeClass("alert-danger alert-success");
                     if (data.status === "ok") msg.addClass("alert-success");
                     else msg.addClass("alert-danger");
@@ -370,6 +418,7 @@ function handleFormPost(form_selector, post_url, params) {
                     success_callback(data);
                 },
                 error: function (xhr, textStatus, errorThrown) {
+                    alert(xhr.responseText.substr(0, 500));
                     console.log("post error");
                     msg_text.html("提交申请遇到错误：" + textStatus + ": " + errorThrown);
                     console.log(xhr.responseText.substr(0, 500));
