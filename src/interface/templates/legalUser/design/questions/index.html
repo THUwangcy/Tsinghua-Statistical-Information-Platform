@@ -1,0 +1,126 @@
+<div class="panel panel-default hover_question">
+    <div class="panel-body" align="center",>
+    	<div>
+    	<span id="rank" >  </span> 
+        {% block title%}
+        {% endblock title %}
+    	</div>
+    
+    
+	    <div style="display:none;" class="question-collapse">
+	    	<hr>
+		    <a class="fake-link collapse-row pull-right" href="#" onclick="return RemoveLi(this);" id="remove_btn">
+		        <span class="fa fa-trash fa-fw"></span> 删除&emsp;
+		    </a>
+		    <a class="fake-link collapse-row pull-right" href="#" onclick="return DownLi(this);" id="down_btn">
+		        <span class="fa fa-check-square-o fa-fw"></span> 下移&emsp;
+		    </a>
+		    <a class="fake-link collapse-row pull-right" href="#" onclick="return UpLi(this);" id="up_btn">
+		        <span class="fa fa-check-square-o fa-fw"></span> 上移&emsp;
+		    </a>
+		    <a class="fake-link collapse-row pull-right" href="#" id="edit_btn">
+		        <span class="fa fa-check-square-o fa-fw"></span> 编辑&emsp;
+		    </a>
+		</div>
+    </div> 
+    <form class="form form-vertical" role="form" data-toggle="validator">
+    	<input name="rank" type="text" style="display: none;" value="">     
+    </form>                              
+</div>
+
+<script>
+
+	//重新加载标号
+	reloadRank = function(){
+		$("ol.questions-list li").find(".hover_question").each(function() {
+    		var _index = $(this).parent().index() + 1;
+    		var _rank = $(this).find(".panel-body").find("#rank");
+    		displayContent(_index + ". ", {'anim': false, 'scroll': false}, _rank);
+
+    	})
+	}
+
+	function operation_qst(operation)
+    {
+        $.ajax({
+            type: "GET",
+            url: "{% url 'api/operation_qst' %}",
+            data: "&act_id=" + "{{act_id}}" + "&qst_id=" + "{{questions_id}}" + "&operation=" + operation,
+            success: function(data) {
+
+
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert(xhr.responseText.substr(0, 500));
+            }
+        });
+    }
+
+	//上移
+    function UpLi(obj)
+    {
+        var onthis = $(obj).parent().parent().parent().parent();
+
+        if(onthis.index() == 0)
+        	showConfirmModal("提示", "已经是第一题了O^O", true);
+        else {
+        	var getup = $(obj).parent().parent().parent().parent().prev();
+        	$(getup).before(onthis);
+            operation_qst("UP");
+        }
+    
+    }
+    //下移
+    function DownLi(obj)
+    {
+        var onthis = $(obj).parent().parent().parent().parent();
+
+        if(onthis.index() == $("ol.questions-list > li").size() - 2)
+        	showConfirmModal("提示", "已经是最后一题了O^O", true);
+        else {
+        	var getdown = $(obj).parent().parent().parent().parent().next();
+        	$(getdown).after(onthis);
+            operation_qst("DOWN");
+        }
+    }
+
+    //删除
+	function RemoveLi(obj)
+	{
+		var onthis = $(obj).parent().parent().parent().parent();
+
+		onthis.remove();
+
+		reloadRank();
+
+        operation_qst("REMOVE");
+	}
+
+	//对于每一个问题添加事件
+    $("ol.questions-list li").find(".hover_question").each(function() {
+    
+    	//标号
+    	var index = $(this).parent().index() + 1;
+    	//显示标号的容器
+    	var rank = $(this).find(".panel-body").find("#rank");
+
+    	//鼠标悬停事件
+        $(this).find(".panel-body").hover(
+        function(){
+        	var $panel = $(this).parent();
+            $panel.removeClass("panel-default");
+            $panel.addClass("panel-success");
+            $(this).find(".question-collapse").slideDown("fast");
+        }, 
+        function(){
+        	var $panel = $(this).parent();
+            $panel.removeClass("panel-success");
+            $panel.addClass("panel-default");
+            $(this).find(".question-collapse").slideUp("fast");
+        })
+      	
+
+        displayContent(index + ". ", {'anim': false, 'scroll': false}, rank);
+    })
+    
+</script>

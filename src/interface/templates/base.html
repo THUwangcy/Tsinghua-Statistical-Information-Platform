@@ -38,6 +38,23 @@
     {% endblock scripts %}
 </head>
 
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    html,body { height: 100%;}
+    .wrap{
+        min-height: 100%;
+    }
+    .main{
+        padding-bottom: 60px;
+    }
+    footer {
+        margin-top: -60px;
+    }
+</style>
+
 <body>
 <!-- header -->
 <div id="top-nav" class="navbar navbar-default navbar-static-top affix">
@@ -50,9 +67,7 @@
             </button>
         </div>
         <![endif]-->
-        <div class="nav navbar-nav navbar-left visible-xs">
-            <a class="fake-link-scroll navbar-brand">清华大学信息化统计平台</a>
-        </div>
+        
         <div class="nav navbar-nav navbar-left hidden-xs">
             <a class="fake-link-scroll navbar-brand">清华大学信息化统计平台</a>
             {% block subtitle %}
@@ -68,15 +83,29 @@
                     <i class="fa fa-navicon fa-fw"></i>
                 </a>
             </li>
+            <li class="pull-left visible-xs">
+                <a style="font-size: 18px; color: #18bc9c">
+                    <strong>
+                        {% block itemtitle %}
+                        {% endblock itemtitle %}
+                    </strong>
+                </a>
+            </li>
+            {% block right-toggle %}
+                <!--li class="pull-right visible-xs">
+                    <a id="left-column-toggle" class="fake-link">
+                        <i class="fa fa-navicon fa-fw"></i>
+                    </a>
+                </li-->
+            {% endblock right-toggle %}
+            
             <li class="dropdown">
                 <a class="pull-right fake-link dropdown-toggle" role="button" data-toggle="dropdown" data-target="#">
                     <i class="glyphicon glyphicon-user"></i> {{ username }} <span class="caret"></span>
                 </a>
                 <ul id="g-account-menu" class="dropdown-menu" role="menu">
                     {% block user-menu %}
-                        <li>
-                            <a> <i class="glyphicon glyphicon-log-out"></i>　登出</a>
-                        </li>
+
                     {% endblock user-menu %}
                 </ul>
             </li>
@@ -88,6 +117,7 @@
 
 
 <!-- Main -->
+<div class="wrap">
 <div class="container-fluid main">
     {% block main-frame %}
         <div class="row">
@@ -128,6 +158,7 @@
     {% endblock main-frame %}
 </div>
 <!-- /Main -->
+</div>
 
 <footer class="text-center">清华大学信息化统计平台</footer>
 
