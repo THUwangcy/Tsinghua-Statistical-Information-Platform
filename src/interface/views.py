@@ -312,6 +312,3 @@ def get_pagination(item_total, item_per_page, cur):
             'current': cur,
             'pages': pages}
     return page
-
-
-

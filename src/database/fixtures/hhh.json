@@ -1,0 +1,12 @@
+[
+  {
+    "model": "database.User",
+    "pk": 1,
+    "fields": {
+      "student_id": "1111111111",
+      "real_name": "default",
+      "tel": "88888888888",
+      "email": "default@ggmail.com"
+    }
+  }
+]
