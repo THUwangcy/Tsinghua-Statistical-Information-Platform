@@ -2,8 +2,8 @@
 # coding=utf-8
 
 import sys
-sys.path.append("..")
 
+from database import api
 
 from django.shortcuts import render
 import json
@@ -16,8 +16,8 @@ from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils import timezone
-from interface import session
-from interface import _database
+
+
 
 # Create your views here.
 
@@ -28,8 +28,9 @@ def modify_name(request):
 	for key in dict:
 		file_object.writelines(key + ": " + dict[key] + "\n")
 	file_object.close()
+	status = api.saveQuestionaireInfo(dict)
 	return JsonResponse({
-			'status': 'ok',
+			'status': status,
 		})
 
 
@@ -40,27 +41,27 @@ def create_new_act(request):
 	#	act_type: 问卷类型
 	#	time    : 时间  
 	#   user_id : 所属用户的id，int
-	Act_id = request.GET['time']
+	dict = api.createNewQuestionaire(request.GET.dict())
+	
 	return JsonResponse({
-			'status': 'ok', 
-			'id': Act_id,
+			'status': dict["status"],
+			'id': dict["id"],
 		})
 
 
 def create_new_qst(request):
 	#这里从后端get问题id
-
 	#可用POST参数有：
 	#	act_id:   问卷id
 	#	qst_type: 问题类型
-    file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
-    Qst_id = request.GET['act_id'] + " " + request.GET['qst_type']
-    file_object.writelines(request.GET['qst_rank'])
-    return JsonResponse({
-			'status': 'ok',
-			'id': Qst_id,
+	dict = api.createNewQuestion(request.GET.dict())
+	return JsonResponse({
+			'status': dict["status"],
+			'id': dict["id"],
 		})
-	
+
+#---------------------------------------------------------------------------#
+
 
 def operation_qst(request):
     file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
