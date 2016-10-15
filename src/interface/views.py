@@ -129,7 +129,7 @@ def show_modal(request, modal_type, act_id):
         })
 
 def login_page(request):
-    log_page_html = 'legalUser/log_page.html'
+    log_page_html = 'legalUser/login/log_page.html'
     return render(request, log_page_html)
 
 
@@ -146,7 +146,7 @@ def user_information(request):
         'status': '做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心',
     }
 
-    user_information_html = 'legalUser/user_information.html'
+    user_information_html = 'legalUser/information/user_information.html'
     return render_ajax(request, user_information_html, params, 'info-item-1')
 
 def user_information_change(request):
@@ -161,7 +161,7 @@ def user_information_change(request):
         'address': '清华大学紫荆公寓二号楼411B',
         'status': '做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心',
     }
-    user_information_change_html = 'legalUser/user_information_change.html'
+    user_information_change_html = 'legalUser/information/user_information_change.html'
     return render_ajax(request, user_information_change_html, params, 'info-item-2')
 
 
@@ -220,7 +220,7 @@ def render_ajax(request, url, params, item_id='', legal=0 ):
         if legal == 0:
             params['username'] = "王晨阳"
         else:
-            params['username'] = "guest"
+            params['username'] = "Guest"
         if item_id != '':
             params['active_item'] = item_id
         if identity == 'admin':

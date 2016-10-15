@@ -48,13 +48,12 @@
             </li>
         </ul>
     </ul>
-    <hr>
 {% endblock left-column %}
 
 {% block user-menu %}
     <li>
-        <a href="{% url 'legalUser' %}"> <i class="glyphicon glyphicon-log-in" id="back_main"></i>　返回</a>
-        <a href="{% url 'legalUser/login' %}"> <i class="glyphicon glyphicon-log-out" id="main_log_agin" ></i>　登陆</a>
+        <a href="{% url 'guest' %}"> <i class="glyphicon glyphicon-log-in" id="back_main"></i>　返回主页</a>
+        <a href="{% url 'legalUser/login' %}"> <i class="glyphicon glyphicon-log-out" id="main_log_agin" ></i>　用户登陆</a>
     </li>
 {% endblock user-menu %}
 
