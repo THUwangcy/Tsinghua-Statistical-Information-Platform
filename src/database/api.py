@@ -9,16 +9,24 @@ def createDefaultUser():
 		)
 	defaultUser.save()
 
+def hasDefaultUser():
+	count = len(User.objects.filter(student_id = "1111111111"))
+	if count != 0:
+		return True
+	return False
+
 def createDefaultQuestionaire():
-	defaultQuestionaire = Questionaire(
-		questionaire_time = 2016,
-		questionaire_type = "VO",
-		questionaire_user = User.objects.get(student_id = "1111111111")
-		)
-	defaultQuestionaire.save()
+	dict = {
+		"act_type" : "vote",
+		"time" : 2016,
+		"user_id" : "1111111111"	
+		}
+	createNewQuestionaire(dict)
 
 def createNewQuestionaire(dict):
-	createDefaultUser()
+	if dict["user_id"] == "1111111111":
+		if not hasDefaultUser():
+			createDefaultUser()
 	TYPE = dict["act_type"]
 	switcher = {
 		"enroll" : "SU",
