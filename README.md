@@ -1,10 +1,11 @@
 ### 问卷保存和发布api  
-   o	发GET请求（design.ajax中的script）
+    o	发GET请求（design.ajax中的script）
         •	参数列表：
             	act_id：int类型，表示要操作的问卷id
     o	分别连接到api的save_act(request)和publish_act(request)函数
         •	需要返回JSON：
-            	status：string类型，需要为“ok”   
+            	status：string类型，需要为“ok”
+
             
 ### 单选题编辑api
     o	发POST请求（single_modal中的script）：
