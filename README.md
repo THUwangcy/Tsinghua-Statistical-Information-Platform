@@ -1,4 +1,4 @@
-### 问卷保存和发布api     
+### 问卷保存和发布api  
    o	发GET请求（design.ajax中的script）
         •	参数列表：
             	act_id：int类型，表示要操作的问卷id
