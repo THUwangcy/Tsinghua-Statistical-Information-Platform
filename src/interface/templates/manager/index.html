@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}管理员界面 - 清华大学信息化统计平台{% endblock %}
+
+{% block subtitle %}
+    <a class="navbar-brand">&gt;</a>
+    <a class="fake-link-scroll navbar-brand">管理员界面</a>
+{% endblock subtitle %}
+
+{% block itemtitle %}
+    管理员界面
+{% endblock itemtitle %}
+
+{% block left-column %}
+    <a class="fake-link left-column-menu" data-toggle="collapse" data-target="#dashboard-menu">
+        <strong><i class="fa fa-dashboard fa-fw"></i>　信息概览</strong>
+    </a>
+    <ul class="nav nav-stacked collapse in" id="dashboard-menu">
+        <hr>
+        <ul class="nav nav-stacked collapse in nav-pills">
+            <li id="dashboard-item" class="nav-header left-column-item"
+                data-url="{% url 'manager/dashboard' %}">
+                <a class="fake-link"><i class="fa fa-dashboard fa-fw"></i>　信息概览</a>
+            </li>
+        </ul>
+    </ul>
+    <hr>
+    <a class="fake-link left-column-menu" data-toggle="collapse" data-target="#dashboard-menu">
+        <strong><i class="fa fa-dashboard fa-fw"></i>　发布公告</strong>
+    </a>
+    <ul class="nav nav-stacked collapse in" id="application-menu">
+        <hr>
+        <ul class="nav nav-stacked collapse in nav-pills">
+            <li id="notice-design-item" class="nav-header left-column-item"
+                data-url="{% url 'manager/design' 'notice' %}"
+                data-source="{% url 'api/create_new_act' %}">
+                <a class="fake-link" >
+                    <i class="fa fa-tasks fa-fw"></i>　发布公告
+                </a>
+            </li>
+        </ul>
+    </ul>
+    <hr>
+{% endblock left-column %}
+
+{% block user-menu %}
+    <li>
+        <a href="{% url 'manager' %}"> <i class="glyphicon glyphicon-info-sign" id="main_user_info"></i>　用户信息</a>
+        <a href="{% url 'manager' %}"> <i class="glyphicon glyphicon-log-in" id="back_main"></i>　返回</a>
+        <a href="{% url 'guest' %}"> <i class="glyphicon glyphicon-log-out" id="main_log_agin" ></i>　注销</a>
+    </li>
+{% endblock user-menu %}
+
+{% block main-page %}
+
+{% endblock main-page %}
+
+{% block modals %}
+{% endblock modals %}
