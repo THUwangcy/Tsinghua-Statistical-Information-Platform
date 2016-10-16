@@ -25,18 +25,17 @@
         </ul>
     </ul>
     <hr>
-    <a class="fake-link left-column-menu" data-toggle="collapse" data-target="#dashboard-menu">
-        <strong><i class="fa fa-dashboard fa-fw"></i>　发布公告</strong>
+     <a class="fake-link left-column-menu" data-toggle="collapse" data-target="#application-menu">
+        <strong><i class="fa fa-wrench fa-fw"></i>　发布公告</strong>
     </a>
     <ul class="nav nav-stacked collapse in" id="application-menu">
         <hr>
         <ul class="nav nav-stacked collapse in nav-pills">
             <li id="notice-design-item" class="nav-header left-column-item"
                 data-url="{% url 'manager/design' 'notice' %}"
-                data-source="{% url 'api/create_new_act' %}">
+                data-source="{% url 'api/create_new_notice' %}">
                 <a class="fake-link" >
-                    <i class="fa fa-tasks fa-fw"></i>　发布公告
-                </a>
+                    <i class="fa fa-tasks fa-fw"></i>　发布公告</a>
             </li>
         </ul>
     </ul>

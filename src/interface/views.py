@@ -312,3 +312,82 @@ def get_pagination(item_total, item_per_page, cur):
             'current': cur,
             'pages': pages}
     return page
+
+#----------------------------分割线--------------------------------#
+
+#manageUser
+def manager(request):
+    return manager_dashboard(request)
+
+def manager_dashboard(request):
+    pending_applications = _database.get_pending_applications()
+    pending_count = len(pending_applications)
+
+    show_all_pending_applications = False
+    if pending_count > 10:
+        show_all_pending_applications = True
+        pending_applications = pending_applications[0:10]
+
+    official_accounts = _database.get_official_accounts()
+
+    activities = _database.get_already_applications()
+    articles_count = len(activities)
+
+    # category = MessageCategory.ToAdmin
+
+    unprocessed_account = _database.get_official_accounts_with_unprocessed_messages()
+
+    announcement = _database.get_announcement()
+
+    category = 1
+
+    return render_ajax(request, 'manager/dashboard_manager.html', {
+        'pending_applications': pending_applications,
+        'official_accounts': official_accounts,
+        'activities': activities,
+        'articles_count': articles_count,
+        'unprocessed_account': unprocessed_account,
+        'category': category,
+        'announcement': announcement,
+        'show_all_pending_applications': show_all_pending_applications
+    }, 'dashboard-item', 1)
+
+
+def manager_show_applications(request, type):
+    if type == 'pending':
+        type_name = u'待发布报名'
+        type_icon = 'fa-tasks'
+    elif type == 'already':
+        type_name = u'我发布的报名'
+        type_icon = 'fa-check'
+    elif type == 'all':
+        type_name = u'所有报名'
+        type_icon = 'fa-th-list'
+    elif type == 'trash':
+        type_name = u'已删除报名'
+        type_icon = 'fa-trash'
+    else:
+        type_name = ''
+        type_icon = ''
+    item_id = type + '-applications-item'
+
+    return render_ajax(request, 'legalUser/applications/applications.html', {
+        'type': type,
+        'application_type': type_name,
+        'application_icon': type_icon
+    }, item_id)
+
+
+
+def manager_design(request, type, act_id):
+    if type == 'notice':
+        type_name = u'公告'
+        type_icon = 'fa-tasks'
+    item_id = type + '-design-item'
+    return render_ajax(request, 'manager/design/design.html', {
+        'type': type,
+        'design_type': type_name,
+        'design_icon': type_icon,
+        'act_id': act_id
+    }, item_id)
+
