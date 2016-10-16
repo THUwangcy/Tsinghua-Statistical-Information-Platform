@@ -1,3 +1,9 @@
+###   去掉了所有的.pyc
+    请各位在本地运行
+    git rm -r --cached .
+    git add .
+    并确认没有.pyc加到库里
+
 ### 问卷保存和发布api  
     o	发GET请求（design.ajax中的script）
         •	参数列表：
