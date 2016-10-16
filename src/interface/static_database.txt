@@ -1,1 +1,7 @@
-Publish: 2016
+status: none
+option1_field: 选项 1
+qst_type: single
+questions_id: 254
+option_num: 1
+csrfmiddlewaretoken: bBpDLepGQmlv5c949dZEaHxmwRZROtW1
+qst_title: 请在此输入问题标题

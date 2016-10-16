@@ -101,3 +101,14 @@ def publish_act(request):
 	return JsonResponse({
 		'status': 'ok',
 	})
+
+def modify_qst(request):
+	file_object = open(os.path.abspath('.') + '/interface/static_database.txt' , 'w')
+
+	dict = request.POST.dict()
+	for key in dict:
+		file_object.writelines(key + ": " + dict[key] + "\n")
+	file_object.close()
+	return JsonResponse({
+			'status': 'ok',
+		})

@@ -1,0 +1,171 @@
+<!-- 传入参数： qst_type：single、id：题目id -->
+
+<div class="modal fade" id="single-modal" tabindex="-1" role="dialog" aria-labelledby="single-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">修改单选题内容</h4>
+            </div>
+
+
+            <div class="modal-footer">
+
+                    <form id="single-form" class="form form-vertical" role="form" data-toggle="validator">
+                        {% csrf_token %}
+                        <input name="status" value="none" type="text" style="display: none;">
+                        <input name="questions_id" type="text" style="display: none;" value="{{id}}">
+                        <input name="qst_type" type="text" style="display: none;" value="{{qst_type}}">
+                        <input name="option_num" type="text" style="display: none;" value="">
+
+
+                        <div class="row" style="text-align: left;">
+                            <div class="col-xs-12 form-group">
+                                <label class="control-label" for="single_title">标题</label>
+                                <textarea id="single_title_field" name="qst_title" class="form-control"
+                                          style="resize: vertical;"></textarea>
+                            </div>
+                        </div>
+                        <hr>
+                        <div id="option_list">
+                            <div>
+                                <div class="row option" style="text-align: left;">
+                                    <div class="col-xs-12 form-group">
+                                        <label class="control-label pull-left" >选项</label>
+                                        <a class="fake-link pull-left" href="#" onclick="return Add(this);">
+                                            &emsp;<span class="fa fa-plus-circle fa-fw"></span> 在下面添加&emsp;
+                                        </a>
+                                        <a class="fake-link pull-left" href="#" onclick="return Remove(this);">
+                                            <span class="fa fa-minus-circle fa-fw"></span> 删除&emsp;
+                                        </a>
+                                        <input id="option1_field" name="title" class="form-control"
+                                                      style="resize: vertical;">
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+
+                        </div>
+                        <div id="submit-button-field">
+                            <button type="submit" class="btn btn-primary form-btn">
+                                完成
+                            </button>
+                        </div>
+                    </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var modal = $("#single-modal");
+
+    var status_input = modal.find("input[name=status]");
+    var submit_button = modal.find("#submit-button-field");
+    var title_field = modal.find("#single_title_field")
+    var option_field1 = modal.find("#option1_field");
+
+    //重新加载每个选项输入框的id和name，方便之后表单serilize
+    function reloadID() {
+        var num = $(".option").parent().size();
+        modal.find("input[name=option_num]").val(num);
+        $("form#single-form").find(".option").each(function() {
+            var input_field = $(this).find(".form-control");
+            var rank = $(this).parent().index() + 1;
+            var id = 'option' + rank + '_field';
+            input_field.attr('name', id);
+            input_field.attr('id', id);
+        })
+    }
+
+    //在指定问题后面添加一个问题
+    function Add(obj) {
+        var this_option = $(obj).parent().parent().parent();
+        this_option.after('<div>\
+                                <div class="row option" style="text-align: left;">\
+                                    <div class="col-xs-12 form-group">\
+                                        <label class="control-label pull-left" >选项</label>\
+                                        <a class="fake-link pull-left" href="#" onclick="return Add(this);">\
+                                            &emsp;<span class="fa fa-plus-circle fa-fw"></span> 在下面添加&emsp;\
+                                        </a>\
+                                        <a class="fake-link pull-left" href="#" onclick="return Remove(this);">\
+                                            <span class="fa fa-minus-circle fa-fw"></span> 删除&emsp;\
+                                        </a>\
+                                        <input name="title" class="form-control"\
+                                                      style="resize: vertical;">\
+                                    </div>\
+                                </div>\
+                                <br>\
+                            </div>');
+        reloadID();
+    }
+
+    //删除指定问题
+    function Remove(obj) {
+        var this_option = $(obj).parent().parent().parent();
+        if($(".option").parent().size() == 1)
+            showConfirmModal("提示", "至少要保留一个选项", true);
+        else {
+            this_option.remove();
+            reloadID();
+        }
+    }
+
+    //根据输入的内容改变原网页上对应题目的内容，方法是先把原来的全删掉，再重新一个一个加入
+    function modify_page() {
+        //这个一定要有，找到是从哪个题目点进来的
+        var source_panel_body = $("#qst{{ id }}");
+        var option_size = $(".option").parent().size();
+
+        //全删除
+        source_panel_body.find(".radio").each(function() {
+            $(this).remove();
+        });
+
+        //题目
+        source_panel_body.find("#single_title").html(title_field.val());
+        var prefix = '<div class="radio">\
+                        &emsp;\
+                        <label>\
+                        <input type="radio" name="optionsRadios" id=';
+        //一个一个加选项
+        for(i = 1; i <= option_size; i ++) {
+            var option_field = modal.find("#option" + i + "_field").val();
+            var radio_id = "optionsRadios" + i;
+            var radio_value = "option" + i;
+            var to_append = prefix + radio_id + ' value=' + radio_value + '>\
+                                <label for=' + radio_id + '>' + option_field + '</label\
+                                </lable>\
+                            </div>';
+            source_panel_body.find("#radio-list").append(to_append);
+        }
+    }
+
+
+    modal.ready(function () {
+        var source_panel_body = $("#qst{{ id }}");
+        title_field.val(source_panel_body.find("#single_title").text().trim());
+        option_field1.val(source_panel_body.find("#optionsRadios1").next().html().trim());
+
+        //将现有题目的选项内容放到文本框中
+        var size = source_panel_body.find(".radio").size();
+        for(i = 2; i <= size; i ++) {
+            var current_rank = i - 1;
+            var current_id = '#option' + current_rank + '_field';
+            Add($(current_id));
+            modal.find("#option" + i + "_field").val(source_panel_body.find("#optionsRadios" + i).next().html().trim());
+        }
+
+        handleFormPost("#single-form", "{% url 'api/modify_qst' %}", {
+            success_callback: function (data) {
+                if (data['status'] === 'ok') {
+                    modify_page();
+                    modal.modal('hide');
+                }
+            }
+        });
+
+    });
+</script>

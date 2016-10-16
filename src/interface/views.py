@@ -122,10 +122,12 @@ def legalUser_design_question(request, type, act_id):
     return render(request, question_url, params)
 
 
-def show_modal(request, modal_type, act_id):
+def show_modal(request):
+    modal_type = request.GET['modal_type']
+    id = request.GET['id']
     return render(request, 'legalUser/design/modal/' + modal_type + '_modal.html', {
             'qst_type': modal_type,
-            'act_id': act_id,
+            'id': id,
         })
 
 def login_page(request):

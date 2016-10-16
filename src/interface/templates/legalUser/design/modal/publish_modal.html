@@ -13,12 +13,12 @@
                     <form id="create-activity-form" class="form form-vertical" role="form" data-toggle="validator">
                         {% csrf_token %}
                         <input name="status" value="none" type="text" style="display: none;">
-                        <input name="act_id" type="text" style="display: none;" value="{{act_id}}">
+                        <input name="act_id" type="text" style="display: none;" value="{{id}}">
 
                         <div class="row" style="text-align: left;">
                             <div class="col-xs-12 form-group">
                                 <label class="control-label" for="publish_url">问卷链接</label>
-                                <input id="publish_url" name="title" class="form-control" style="resize: vertical;"></input>
+                                <input id="publish_url" name="title" class="form-control" style="resize: vertical;">
                             </div>
                         </div>
                         <br>
@@ -42,7 +42,7 @@
 
     modal.ready(function () {
 
-        url_field.val("{% url 'questionnaire' act_id %}");
+        url_field.val("{% url 'questionnaire' id %}");
 
     });
 </script>

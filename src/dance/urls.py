@@ -36,7 +36,7 @@ urlpatterns = [
     url(r'^legalUser/design/(\w+)/([0-9]+)/question/?$', 'interface.views.legalUser_design_question', name='legalUser/design/question'),
 
     #modal
-    url(r'^modal/(\w+)/([0-9]+)/?$', 'interface.views.show_modal', name='legalUser/modal'),
+    url(r'^modal/?$', 'interface.views.show_modal', name='legalUser/modal'),
 
     #api
     url(r'^api/modify_name/?$', 'api.views.modify_name', name='api/modify_name'),
@@ -46,6 +46,7 @@ urlpatterns = [
     url(r'^api/remove_act/?$', 'api.views.remove_act', name='api/remove_act'),
     url(r'^api/save_act/?$', 'api.views.save_act', name='api/save_act'),
     url(r'^api/publish_act/?$', 'api.views.publish_act', name='api/publish_act'),
+    url(r'^api/modify_qst/?$', 'api.views.modify_qst', name='api/modify_qst'),
 
     #userlist
     url(r'^legalUser/login/?$', 'interface.views.login_page', name='legalUser/login'),

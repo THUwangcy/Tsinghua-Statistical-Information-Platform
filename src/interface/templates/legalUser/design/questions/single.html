@@ -1,3 +1,25 @@
 {% extends 'legalUser/design/questions/index.html' %}
 
-{% block title%}单选题{% endblock title %}
+{% block title%}
+
+    <label for="name" id="single_title">请在此输入问题标题</label>
+    <div id="radio-list">
+        <div class="radio">
+            &emsp;
+            <label>
+            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">
+                <label for="optionsRadios1">选项 1</label>
+            </label>
+        </div>
+
+        <div class="radio">
+            &emsp;
+            <label>
+            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                <label for="optionsRadios2">选项 2</label>
+            </label>
+        </div>
+    </div>
+
+
+{% endblock title %}

@@ -21,7 +21,7 @@
         <div style="display:none;" id="collapse-heading">
             <hr>
             <a class="fake-link collapse-row pull-right" 
-               href="javascript:showModal('{% url 'legalUser/modal' 'qst_name' act_id %}', 'activity-modal')">
+               href="#" onclick="return Edit_title();">
                 <span class="fa fa-check-square-o fa-fw"></span> 编辑&emsp;
             </a>
         </div>
@@ -44,6 +44,14 @@
 <script>
     var $heading_panel = $(".hover_heading");
     var heading = $(".heading");
+
+    function Edit_title() {
+        params = {
+            'modal_type': 'qst_name',
+            'id': '{{ act_id }}',
+        }
+        showModal('{% url 'legalUser/modal' %}', 'activity-modal', params);
+    }
 
     $heading_panel.ready(function() {
         heading.hover(function(){
