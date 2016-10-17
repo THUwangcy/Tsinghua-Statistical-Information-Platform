@@ -20,13 +20,46 @@
             </label>
         </div>
     </div>
+
     <script>
         $(document).ready(function(){
-          $('input').iCheck({
+
+            var source_panel_body = $("#qst{{ questions_id }}");
+            if('{{questions_title}}' != 'None')
+                source_panel_body.find("#single_title").html('{{questions_title}}');
+
+            if('{{option}}' != 'None')
+            {
+                //全删除
+                source_panel_body.find(".radio").each(function() {
+                    $(this).remove();
+                });
+                
+                var option_name = 'option' + '{{ questions_id }}';
+                var prefix = '<div class="radio">\
+                                &emsp;\
+                                <label>\
+                                <input type="radio" name=' + option_name + ' id=';
+                //一个一个加选项
+                for(i = 1; i <= '{{option_num}}'; i ++) {
+                    var option_field = '{{option}}'.split('###')[(i - 1) * 2 + 1];
+                    var radio_id = "optionsRadios" + i;
+                    var radio_value = "option" + i;
+                    var to_append = prefix + radio_id + ' value=' + radio_value + '>\
+                                        <label for="this.prev();">' + option_field + '</label\
+                                        </lable>\
+                                    </div>';
+                    source_panel_body.find("#radio-list").append(to_append);
+                }
+
+            }
+
+            //加载选框样式
+            $('input').iCheck({
               checkboxClass: 'icheckbox_flat-green',
               radioClass: 'iradio_flat-green',
               increaseArea: '20%'
-          });
+            });
         });
     </script>
 

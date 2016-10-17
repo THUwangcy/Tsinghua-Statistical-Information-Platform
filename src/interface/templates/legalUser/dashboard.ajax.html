@@ -67,7 +67,7 @@
                                         <div id="pending{{forloop.counter}}" class="operation" style="display:none; width: 100%">
                                             <ul>
                                                 <li style="width: 25%" align="center">
-                                                    <a class="fake-link" href="#" >
+                                                    <a class="fake-link" href="javascript:loadContent('{% url 'legalUser/design/id' app.type app.id %}', {}, '#' + '{{app.type}}' + '-design-item')" >
                                                         <i class="fa fa-pencil-square-o fa-fw fa-2x" aria-hidden="true"></i> 修改
                                                     </a>
                                                 </li>

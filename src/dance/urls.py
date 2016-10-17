@@ -32,7 +32,7 @@ urlpatterns = [
 
     #design
     url(r'^legalUser/design/(\w+)/?$', 'interface.views.legalUser_show_applications', name='legalUser/design'),
-    url(r'^legalUser/design/(\w+)/([0-9]+)/?$', 'interface.views.legalUser_design'),
+    url(r'^legalUser/design/(\w+)/([0-9]+)/?$', 'interface.views.legalUser_design', name='legalUser/design/id'),
     url(r'^legalUser/design/(\w+)/([0-9]+)/question/?$', 'interface.views.legalUser_design_question', name='legalUser/design/question'),
 
     #modal

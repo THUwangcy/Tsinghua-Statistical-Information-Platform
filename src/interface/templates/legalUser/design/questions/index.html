@@ -88,6 +88,7 @@
         	var getup = $(obj).parent().parent().parent().parent().prev();
         	$(getup).before(onthis);
             operation_qst(obj, "UP");
+            reloadRank();
         }
     
     }
@@ -102,6 +103,7 @@
         	var getdown = $(obj).parent().parent().parent().parent().next();
         	$(getdown).after(onthis);
             operation_qst(obj, "DOWN");
+            reloadRank();
         }
     }
 

@@ -59,7 +59,7 @@
                 success_callback: function (data) {
                     if (data['status'] === 'ok') {
                         $("#qst_title").html(title_field.val());
-                        $("#qst_description").html(description_field.val());
+                        $("#qst_description").html('<br>' + description_field.val().replace(/\n/g,'<br/>'));
 
                         modal.modal('hide');
                         
