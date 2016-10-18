@@ -1,9 +1,28 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
 <head>
 <title>注册用户登陆</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <script src="{% static 'jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'jquery/jquery.history.min.js' %}"></script>
+    <script src="{% static 'jquery/jquery.scrollto.min.js' %}"></script>
+    <script src="{% static 'jquery/jquery.fixer.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+    <script src="{% static 'base/js/scripts.js' %}"></script>
+
+    <script src="{% static 'md5/md5.min.js' %}"></script>
+    <script src="{% static 'validator/validator.min.js' %}"></script>
+    {% block scripts %}
+    {% endblock scripts %}
+</head>
 
 <style>
     html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, dl, dt, dd, ol, nav ul, nav li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video,input {
@@ -206,7 +225,7 @@ h1 {
 	<div class="main">
 		<div class="login">
 			<div class="inset">
-				<form method="post" >
+				<form method="post" id="login_form">
 					{% csrf_token %}
 			         <div>
 			         	<h2>注册用户登录</h2>
@@ -223,8 +242,20 @@ h1 {
 					</form>
 				</div>
 			</div>
-
 		</div>
-
 </body>
-</html>>  
+</html>
+
+<script>
+
+    $(document).ready(function () {
+            handleFormPost("#login_form", "{% url 'api/login_act' %}", {
+                success_callback: function (data) {
+                    if (data['status'] === 'ok') {
+                        window.location.href = '{% url 'legalUser' %}';
+                    }
+                }
+            });
+
+        });
+</script>

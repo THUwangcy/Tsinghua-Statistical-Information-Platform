@@ -1,7 +1,7 @@
 <style>
     .submit {
 	float: right;
-	background:#2c3e50;
+	background:#18bc9c;
 	border: none;
 	outline: none;
 	padding:8px 30px;
@@ -25,11 +25,12 @@
 <div class="top-row hidden-xs">
     <a>&nbsp</a>
     <a class="fake-link pull-right">
-        <strong>用户信息修改　<i class="fa fa-wrench fa-fw"></i></strong>
+        <strong>信息修改　<i class="fa fa-wrench fa-fw"></i></strong>
     </a>
 </div>
 <hr class="hidden-xs">
-<form method="get">
+<form method="post" id="info_change_form">
+    {% csrf_token %}
     <div class="panel-default">
         <div class="panel-heading">
             <h4>基本信息</h4></div>
@@ -56,11 +57,11 @@
                     </tr>
                     <tr>
                         <td>邮箱:</td>
-                        <td><input  style="width:40%" maxlength="40"  value={{email}} required="required"></td>
+                        <td><input  style="width:40%" maxlength="40"  value={{email}} required="required" name="email"></td>
                     </tr>
                     <tr>
                         <td>联系方式:</td>
-                        <td><input  style="width:40%" maxlength="20" value={{telephone_number}} required="required"></td>
+                        <td><input  style="width:40%" maxlength="20" value={{telephone_number}} required="required" name="telephone_number"></td>
                     </tr>
                 </tbody>
             </table>
@@ -81,19 +82,19 @@
                 <tbody>
                     <tr>
                         <td>年龄:</td>
-                        <td><input  style="width:40%"  maxlength="20"  value={{age}} required="required"></td>
+                        <td><input  style="width:40%"  maxlength="20"  value={{age}} required="required" name="age"></td>
                     </tr>
                     <tr>
                         <td>性别:</td>
-                        <td><input  style="width:40%" maxlength="5" value={{gender}} required="required"></td>
+                        <td><input  style="width:40%" maxlength="5" value={{gender}} required="required" name="gender"></td>
                     </tr>
                     <tr>
                         <td>住址:</td>
-                        <td><input  style="width:91%" maxlength="50" value={{address}} required="required"></td>
+                        <td><input  style="width:91%" maxlength="50" value={{address}} required="required" name="address"></td>
                     </tr>
                     <tr>
                         <td>状态:</td>
-                        <td><textarea rows="4" cols="100" maxlength="180" >{{status}}</textarea></td>
+                        <td><textarea rows="4" cols="100" maxlength="180"  name="status">{{status}}</textarea></td>
                     </tr>
                 </tbody>
             </table>
@@ -102,3 +103,15 @@
     <input type="submit" value="确定" class="submit" />
 </form>
 {% endblock main-page %}
+
+<script>
+    $(document).ready(function () {
+            handleFormPost("#info_change_form", "{% url 'api/info_change_act' %}", {
+                success_callback: function (data) {
+                    if (data['status'] === 'ok') {
+                    }
+                }
+            });
+
+        });
+</script>
