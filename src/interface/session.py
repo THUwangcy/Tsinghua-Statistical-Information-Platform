@@ -1,6 +1,3 @@
-# identity=['guest','legalUser','admin','superuser']
-
-
 def add_session(request, *args, **kw):
     # request.session.set_expiry()
     print 'add_session: ', kw

@@ -4,6 +4,8 @@
 import sys
 
 from database import api
+from interface import session
+
 
 from django.shortcuts import render
 import json
@@ -16,7 +18,6 @@ from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils import timezone
-
 
 # Create your views here.
 
@@ -73,12 +74,18 @@ def info_change_act(request):
 
 def login_act(request):
     dicts = request.POST.dict()
-    output = open('login_info.txt', 'w')
+    output = open('log_info.txt', 'w')
     infomations = ""
     for key, value in dicts.items():
         infomations += "\"%s\":\"%s\"" % (key, value)
         infomations += "\n"
     output.write(infomations)
+    username=dicts['log_username']
+    password=dicts['log_password']
+    if username == 'admin' and password == '123456':
+        session.add_session(request, username='admin', password='123456')
+    else:
+        return JsonResponse(dict(status='wrong username or password'))
     return JsonResponse(dict(status='ok'))
 
 # ---------------------------------------------------------------------------#

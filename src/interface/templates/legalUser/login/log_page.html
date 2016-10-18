@@ -237,7 +237,7 @@ h1 {
 			         <div>
 			         	<h2>注册用户登录</h2>
 						<span><label>用户名:</label></span>
-						<span><input type="text" class="textbox" name='log_username:' placeholder="username" onfocus="this.placeholder=''" onblur="this.placeholder='username'" required="required"></span>
+						<span><input type="text" class="textbox" name='log_username' placeholder="username" onfocus="this.placeholder=''" onblur="this.placeholder='username'" required="required"></span>
 					 </div>
 					 <div>
 						<span><label>密码:</label></span>
@@ -260,6 +260,9 @@ h1 {
                 success_callback: function (data) {
                     if (data['status'] === 'ok') {
                         window.location.href = '{% url 'legalUser' %}';
+                    }
+                    else{
+                        alert("wrong username or password")
                     }
                 }
             });
