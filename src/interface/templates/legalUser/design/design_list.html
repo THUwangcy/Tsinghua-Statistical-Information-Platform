@@ -49,7 +49,9 @@
                     'questions_title': '{{qst.qst_title}}',
                     'questions_id': '{{qst.qst_id}}',
                     'option_num': '{{qst.option_num}}',
-                    'option': '{{qst.option}}'
+                    'option': '{{qst.option}}',
+                    'rows': '{{qst.rows}}',
+                    'hint': '{{qst.hint}}'
                 }
 
                 loadContentOn($(".last-question"), "{% url 'legalUser/design/question' type act_id%}", pre_info_param, {anim: false, scroll: false});

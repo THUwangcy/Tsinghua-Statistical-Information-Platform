@@ -186,7 +186,12 @@ def get_questionnaire_byID(act_id):
                 'option_num': 3,
                 'option': [u'###选项 1###', u'###选项 2###', u'###选项 3###']
                 }
-        qst3 = {'qst_type': 'multi'}
+        qst3 = {'qst_type': 'multi',
+                'qst_title': u'第三道多选题',
+                'qst_id': 3,
+                'option_num': 3,
+                'option': [u'###选项一###', u'###选项二###', u'###选项三###']
+                }
 
         questions = [qst1, qst2, qst3]
 
@@ -210,8 +215,15 @@ def get_questionnaire_byID(act_id):
                 'option_num': 2,
                 'option': [u'###对，太对了###', u'###什么玩意...###']
                 }
+        qst2 = {'qst_type': 'fillin',
+                'qst_title': u'你怎么看？',
+                'qst_id': 2, 
+                'rows': 1,
+                'hint': u'元芳',
+                'check': u'文本'
+                }
 
-        questions = [qst1]
+        questions = [qst1, qst2]
 
         result = {'act_type': act_type,
                   'act_status': act_status,

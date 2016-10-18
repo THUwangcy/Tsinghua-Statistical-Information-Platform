@@ -1,3 +1,66 @@
 {% extends 'legalUser/design/questions/index.html' %}
 
-{% block title%}多选题{% endblock title %}
+{% block title%}
+
+	<label for="name" id="multi_title">请在此输入问题标题</label>
+    <div id="checkbox-list">
+        <div class="checkbox">
+            &emsp;
+            <label>
+            <input type="checkbox" name="option{{ questions_id }}" id="optionsCheckbox1" value="option1">
+                <label for="this.prev();">选项 1</label>
+            </label>
+        </div>
+
+        <div class="checkbox">
+            &emsp;
+            <label>
+            <input type="checkbox" name="option{{ questions_id }}" id="optionsCheckbox2" value="option2">
+                <label for="this.prev();">选项 2</label>
+            </label>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+
+            var source_panel_body = $("#qst{{ questions_id }}");
+            if('{{questions_title}}' != 'None')
+                source_panel_body.find("#multi_title").html('{{questions_title}}');
+
+            if('{{option}}' != 'None')
+            {
+                //全删除
+                source_panel_body.find(".checkbox").each(function() {
+                    $(this).remove();
+                });
+                
+                var option_name = 'option' + '{{ questions_id }}';
+                var prefix = '<div class="checkbox">\
+                                &emsp;\
+                                <label>\
+                                <input type="checkbox" name=' + option_name + ' id=';
+                //一个一个加选项
+                for(i = 1; i <= '{{option_num}}'; i ++) {
+                    var option_field = '{{option}}'.split('###')[(i - 1) * 2 + 1];
+                    var radio_id = "optionsCheckbox" + i;
+                    var radio_value = "option" + i;
+                    var to_append = prefix + radio_id + ' value=' + radio_value + '>\
+                                        <label for="this.prev();">' + option_field + '</label\
+                                        </lable>\
+                                    </div>';
+                    source_panel_body.find("#checkbox-list").append(to_append);
+                }
+
+            }
+
+            //加载选框样式
+            $('input').iCheck({
+              checkboxClass: 'icheckbox_flat-green',
+              radioClass: 'iradio_flat-green',
+              increaseArea: '20%'
+            });
+        });
+    </script>
+
+{% endblock title %}

@@ -131,7 +131,9 @@ def legalUser_design_question(request, type, act_id):
         'questions_title': request.GET.get('questions_title'),
         'questions_id': request.GET.get('questions_id'),
         'option_num': request.GET.get('option_num'),
-        'option': request.GET.get('option')
+        'option': request.GET.get('option'),
+        'rows': request.GET.get('rows'),
+        'hint': request.GET.get('hint')
     }
     
     params['act_type'] = type
