@@ -1,0 +1,87 @@
+
+<script>
+    //处理折叠行
+    $(function(){
+    $("a.collapse-row").click(function(){
+        var _this= $(this).attr("href");
+        var _this_td = _this + "_td";
+        if($(_this).css("display")=="none"){
+            $(_this_td).slideDown("fast");
+            $(_this).slideDown("fast");
+        }else{
+            $(_this_td).slideUp("fast");
+            $(_this).slideUp("fast");
+        }
+        return false;
+    });
+
+});
+</script>
+
+<div class="top-row hidden-xs">
+    <a>&nbsp</a>
+    <a class="fake-link pull-right">
+        <strong>信息概览　<i class="fa fa-dashboard fa-fw"></i></strong>
+    </a>
+</div>
+<hr class="hidden-xs">
+<div class="row">
+    <div class="col-md-9">
+        <div class="panel panel-default">
+             <div class="panel-heading">
+                <h4>近期热门活动</h4>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>名称</th>
+                            <th style="min-width: 65px">填写数</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if activities %}
+                            {% for activity in activities %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td><a class="ajax-link fake-link" data-url="{% url 'test' %}">
+                                        {{ activity.name }}
+                                    </a></td>
+                                    <td>{{ activity.fillin}}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="10000" style="text-align: center">暂无公众号</td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <!--/col-->
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>公告</h4>
+            </div>
+            {% if announcement %}
+                <div class="panel-body">
+                    <div class="alert alert-info" role="alert" style="word-wrap: break-word;">
+                        {{ announcement|linebreaksbr }}
+                    </div>
+                </div>
+            {% else %}
+                <div class="panel-body" style="text-align: center">
+                    暂无管理员公告
+                </div>
+            {% endif %}
+        </div>
+        <hr>
+    </div>
+</div>
