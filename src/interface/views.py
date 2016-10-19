@@ -135,7 +135,7 @@ def legalUser_design_question(request, type, act_id):
         'rows': request.GET.get('rows'),
         'hint': request.GET.get('hint')
     }
-    
+
     params['act_type'] = type
     params['act_id'] = act_id
     return render(request, question_url, params)
@@ -164,9 +164,9 @@ def login_page(request):
 
 def user_information(request):
     params = {
-        'username': '王晨阳',
+        'username': session.get_username(request),
         'real_name': '王晨阳',
-        'identity': '本科生',
+        'identity': session.get_identity(request),
         'email': 'thuwangcy@gmail.com',
         'telephone_number': '17888802343',
         'age': '20',
@@ -180,9 +180,9 @@ def user_information(request):
 
 def user_information_change(request):
     params = {
-        'username': '王晨阳',
+        'username': session.get_username(request),
         'real_name': '王晨阳',
-        'identity': '本科生',
+        'identity': session.get_identity(request),
         'email': 'thuwangcy@gmail.com',
         'telephone_number': '17888802343',
         'age': '20',
@@ -202,7 +202,7 @@ def questionnaire(request, act_id):
 
 
 def guest(request):
-    request.session.del_session(request)
+    session.del_session(request)
     return guest_dashboard(request)
 
 
@@ -250,7 +250,7 @@ def render_ajax(request, url, params, item_id='', legal=0 ):
         identity = session.get_identity(request)
         name = get_realname(request)
         if legal == 0:
-            params['username'] = "王晨阳"
+            params['username'] = session.get_username(request)
         else:
             params['username'] = "Guest"
         if item_id != '':
