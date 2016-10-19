@@ -140,7 +140,6 @@ def legalUser_design_question(request, type, act_id):
     params['act_id'] = act_id
     return render(request, question_url, params)
 
-
 def show_modal(request):
     modal_type = request.GET['modal_type']
     id = request.GET['id']
@@ -152,7 +151,6 @@ def show_modal(request):
 def login_page(request):
     log_page_html = 'legalUser/login/log_page.html'
     return render(request, log_page_html)
-
 
 def user_information(request):
     params = {
@@ -185,18 +183,9 @@ def user_information_change(request):
     user_information_change_html = 'legalUser/information/user_information_change.html'
     return render_ajax(request, user_information_change_html, params, 'info-item-2')
 
-
-def questionnaire(request, act_id):
-    params = {
-        'act_id': act_id,
-    }
-    return render(request, 'questionnaire/questionnaire.html', params)
-
-
 def guest(request):
     request.session.set_expiry(1)
     return guest_dashboard(request)
-
 
 def guest_dashboard(request):
     pending_applications = _database.get_pending_applications()
@@ -231,9 +220,7 @@ def guest_dashboard(request):
         'show_all_pending_applications': show_all_pending_applications
     }, 'dashboard-item', 1)
 
-
 #----------------------------分割线--------------------------------#
-
 
 def render_ajax(request, url, params, item_id='', legal=0 ):
     if request.is_ajax():
@@ -256,7 +243,6 @@ def render_ajax(request, url, params, item_id='', legal=0 ):
             params['official_accounts'] = official_accounts
 
     return render(request, url, params)
-
 
 def render_sortable(request, items, url, params=None):
     #这里来的request是调用loadContent系列函数时传的，里面有各种param
@@ -311,7 +297,6 @@ def render_sortable(request, items, url, params=None):
         'params': params
     })
 
-
 def get_realname(request):
     username = session.get_username(request)
     identity = session.get_identity(request)
@@ -320,7 +305,6 @@ def get_realname(request):
     else:
         realname = username
     return realname
-
 
 def get_pagination(item_total, item_per_page, cur):
     page_count = (item_total + item_per_page - 1) // item_per_page
@@ -336,3 +320,49 @@ def get_pagination(item_total, item_per_page, cur):
             'current': cur,
             'pages': pages}
     return page
+
+def questionnaire_publish_question(request, type, act_id):
+    question_url = 'questionnaire/publish_qst/' + request.GET.get('questions_type') + '.html'
+    params = {}
+    params = {
+        'questions_type': request.GET.get('questions_type'),
+        'questions_title': request.GET.get('questions_title'),
+        'questions_id': request.GET.get('questions_id'),
+        'option_num': request.GET.get('option_num'),
+        'option': request.GET.get('option'),
+        'rows': request.GET.get('rows'),
+        'hint': request.GET.get('hint')
+    }
+
+    params['act_type'] = type
+    params['act_id'] = act_id
+    return render(request, question_url, params)
+
+def questionnaire(request, act_id):
+    act_info = _database.get_questionnaire_byID(act_id)
+
+    if act_info['act_status'] == 'pending':
+        type = act_info['act_type']
+    else:
+        type = 'wrong' #需添加未发布问卷错误处理
+
+    if type == 'enroll':
+        type_name = u'报名/统计表'
+        type_icon = 'fa-tasks'
+    elif type == 'recruit':
+        type_name = u'实验室招募'
+        type_icon = 'fa-check'
+    elif type == 'vote':
+        type_name = u'投票'
+        type_icon = 'fa-list-alt'
+
+    item_id = type + '-design-item'
+
+    return render_ajax(request, 'questionnaire/questionnaire.html', {
+        'type': type,
+        'design_type': type_name,
+        'design_icon': type_icon,
+        'act_id': act_id,
+        'act_info': act_info
+    }, item_id)
+

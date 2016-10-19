@@ -2,19 +2,177 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3e46abdd-da44-4872-8884-f3c804230040" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/interface/templates/questionnaire/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/interface/templates/questionnaire/publish_qst/fillin.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/interface/templates/questionnaire/publish_qst/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/interface/templates/questionnaire/publish_qst/mark.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/interface/templates/questionnaire/publish_qst/multi.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/interface/templates/questionnaire/publish_qst/single.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/interface/templates/questionnaire/publish_qst/sort.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/interface/templates/questionnaire/publish_qst/vote.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/interface/templates/questionnaire/questionnaire.ajax.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/interface/templates/questionnaire/questionnaire_list.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/.gitkeep" afterPath="$PROJECT_DIR$/doc/.gitkeep" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/迭代开发计划_whyNotDance.xlsx" afterPath="$PROJECT_DIR$/doc/迭代开发计划_whyNotDance.xlsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imgs/.gitkeep" afterPath="$PROJECT_DIR$/imgs/.gitkeep" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/fonts/Montserrat-Bold.woff2" afterPath="$PROJECT_DIR$/src/interface/static/base/fonts/Montserrat-Bold.woff2" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/fonts/Montserrat-Regular.woff2" afterPath="$PROJECT_DIR$/src/interface/static/base/fonts/Montserrat-Regular.woff2" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/fonts/SourceSansPro-Light-Latin.woff2" afterPath="$PROJECT_DIR$/src/interface/static/base/fonts/SourceSansPro-Light-Latin.woff2" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/fonts/SourceSansPro-Light-LatinExt.woff2" afterPath="$PROJECT_DIR$/src/interface/static/base/fonts/SourceSansPro-Light-LatinExt.woff2" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/fonts/SourceSansPro-Light-Viet.woff2" afterPath="$PROJECT_DIR$/src/interface/static/base/fonts/SourceSansPro-Light-Viet.woff2" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/fonts/SourceSansPro-LightIt-Latin.woff2" afterPath="$PROJECT_DIR$/src/interface/static/base/fonts/SourceSansPro-LightIt-Latin.woff2" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/fonts/SourceSansPro-LightIt-LatinExt.woff2" afterPath="$PROJECT_DIR$/src/interface/static/base/fonts/SourceSansPro-LightIt-LatinExt.woff2" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/fonts/SourceSansPro-LightIt-Viet.woff2" afterPath="$PROJECT_DIR$/src/interface/static/base/fonts/SourceSansPro-LightIt-Viet.woff2" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/fonts/SourceSansPro-SemiBold-Latin.woff2" afterPath="$PROJECT_DIR$/src/interface/static/base/fonts/SourceSansPro-SemiBold-Latin.woff2" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/fonts/SourceSansPro-SemiBold-LatinExt.woff2" afterPath="$PROJECT_DIR$/src/interface/static/base/fonts/SourceSansPro-SemiBold-LatinExt.woff2" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/fonts/SourceSansPro-SemiBold-Viet.woff2" afterPath="$PROJECT_DIR$/src/interface/static/base/fonts/SourceSansPro-SemiBold-Viet.woff2" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/bootstrap/fonts/glyphicons-halflings-regular.eot" afterPath="$PROJECT_DIR$/src/interface/static/bootstrap/fonts/glyphicons-halflings-regular.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/bootstrap/fonts/glyphicons-halflings-regular.ttf" afterPath="$PROJECT_DIR$/src/interface/static/bootstrap/fonts/glyphicons-halflings-regular.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/bootstrap/fonts/glyphicons-halflings-regular.woff" afterPath="$PROJECT_DIR$/src/interface/static/bootstrap/fonts/glyphicons-halflings-regular.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/bootstrap/fonts/glyphicons-halflings-regular.woff2" afterPath="$PROJECT_DIR$/src/interface/static/bootstrap/fonts/glyphicons-halflings-regular.woff2" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/fonts/FontAwesome.otf" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/fonts/FontAwesome.otf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/fonts/fontawesome-webfont.eot" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/fonts/fontawesome-webfont.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/fonts/fontawesome-webfont.ttf" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/fonts/fontawesome-webfont.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/fonts/fontawesome-webfont.woff" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/fonts/fontawesome-webfont.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/fonts/fontawesome-webfont.woff2" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/fonts/fontawesome-webfont.woff2" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/image/logo.png" afterPath="$PROJECT_DIR$/src/interface/static/image/logo.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/image/logo_small.png" afterPath="$PROJECT_DIR$/src/interface/static/image/logo_small.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/image/scroll-edge-bottom.png" afterPath="$PROJECT_DIR$/src/interface/static/image/scroll-edge-bottom.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/image/scroll-edge-top.png" afterPath="$PROJECT_DIR$/src/interface/static/image/scroll-edge-top.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/notfound/images/404.png" afterPath="$PROJECT_DIR$/src/interface/static/notfound/images/404.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/notfound/images/404_msg.png" afterPath="$PROJECT_DIR$/src/interface/static/notfound/images/404_msg.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/notfound/images/404_to_index.png" afterPath="$PROJECT_DIR$/src/interface/static/notfound/images/404_to_index.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/notfound/images/error_bg.jpg" afterPath="$PROJECT_DIR$/src/interface/static/notfound/images/error_bg.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/notfound/images/error_cloud.png" afterPath="$PROJECT_DIR$/src/interface/static/notfound/images/error_cloud.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/__init__.py" afterPath="$PROJECT_DIR$/src/api/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/admin.py" afterPath="$PROJECT_DIR$/src/api/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/migrations/__init__.py" afterPath="$PROJECT_DIR$/src/api/migrations/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/models.py" afterPath="$PROJECT_DIR$/src/api/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/tests.py" afterPath="$PROJECT_DIR$/src/api/tests.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/views.py" afterPath="$PROJECT_DIR$/src/api/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dance/__init__.py" afterPath="$PROJECT_DIR$/src/dance/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dance/settings.py" afterPath="$PROJECT_DIR$/src/dance/settings.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dance/urls.py" afterPath="$PROJECT_DIR$/src/dance/urls.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dance/wsgi.py" afterPath="$PROJECT_DIR$/src/dance/wsgi.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/database/__init__.py" afterPath="$PROJECT_DIR$/src/database/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/database/admin.py" afterPath="$PROJECT_DIR$/src/database/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/database/backend.py" afterPath="$PROJECT_DIR$/src/database/backend.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/database/migrations/0001_initial.py" afterPath="$PROJECT_DIR$/src/database/migrations/0001_initial.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/database/migrations/__init__.py" afterPath="$PROJECT_DIR$/src/database/migrations/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/database/models.py" afterPath="$PROJECT_DIR$/src/database/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/database/tests.py" afterPath="$PROJECT_DIR$/src/database/tests.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/database/views.py" afterPath="$PROJECT_DIR$/src/database/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/__init__.py" afterPath="$PROJECT_DIR$/src/interface/__init__.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/_database.py" afterPath="$PROJECT_DIR$/src/interface/_database.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/admin.py" afterPath="$PROJECT_DIR$/src/interface/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/migrations/__init__.py" afterPath="$PROJECT_DIR$/src/interface/migrations/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/models.py" afterPath="$PROJECT_DIR$/src/interface/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/session.py" afterPath="$PROJECT_DIR$/src/interface/session.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/animate/css/animate.css" afterPath="$PROJECT_DIR$/src/interface/static/animate/css/animate.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/animate/css/animate.min.css" afterPath="$PROJECT_DIR$/src/interface/static/animate/css/animate.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/css/comment.css" afterPath="$PROJECT_DIR$/src/interface/static/base/css/comment.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/css/comment.min.css" afterPath="$PROJECT_DIR$/src/interface/static/base/css/comment.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/css/eden.css" afterPath="$PROJECT_DIR$/src/interface/static/base/css/eden.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/css/eden.min.css" afterPath="$PROJECT_DIR$/src/interface/static/base/css/eden.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/css/fonts.css" afterPath="$PROJECT_DIR$/src/interface/static/base/css/fonts.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/css/fonts.min.css" afterPath="$PROJECT_DIR$/src/interface/static/base/css/fonts.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/css/styles.css" afterPath="$PROJECT_DIR$/src/interface/static/base/css/styles.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/css/styles.min.css" afterPath="$PROJECT_DIR$/src/interface/static/base/css/styles.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/js/charts.js" afterPath="$PROJECT_DIR$/src/interface/static/base/js/charts.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/js/charts.min.js" afterPath="$PROJECT_DIR$/src/interface/static/base/js/charts.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/js/referrer-killer.js" afterPath="$PROJECT_DIR$/src/interface/static/base/js/referrer-killer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/js/referrer-killer.min.js" afterPath="$PROJECT_DIR$/src/interface/static/base/js/referrer-killer.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/base/js/scripts.js" afterPath="$PROJECT_DIR$/src/interface/static/base/js/scripts.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/bootstrap/css/bootstrap-theme.css" afterPath="$PROJECT_DIR$/src/interface/static/bootstrap/css/bootstrap-theme.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/bootstrap/css/bootstrap-theme.css.map" afterPath="$PROJECT_DIR$/src/interface/static/bootstrap/css/bootstrap-theme.css.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/bootstrap/css/bootstrap-theme.min.css" afterPath="$PROJECT_DIR$/src/interface/static/bootstrap/css/bootstrap-theme.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/bootstrap/css/bootstrap.css" afterPath="$PROJECT_DIR$/src/interface/static/bootstrap/css/bootstrap.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/bootstrap/css/bootstrap.css.map" afterPath="$PROJECT_DIR$/src/interface/static/bootstrap/css/bootstrap.css.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/bootstrap/css/bootstrap.min.css" afterPath="$PROJECT_DIR$/src/interface/static/bootstrap/css/bootstrap.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/bootstrap/fonts/glyphicons-halflings-regular.svg" afterPath="$PROJECT_DIR$/src/interface/static/bootstrap/fonts/glyphicons-halflings-regular.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/bootstrap/js/bootstrap.js" afterPath="$PROJECT_DIR$/src/interface/static/bootstrap/js/bootstrap.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/bootstrap/js/bootstrap.min.js" afterPath="$PROJECT_DIR$/src/interface/static/bootstrap/js/bootstrap.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/bootstrap/js/npm.js" afterPath="$PROJECT_DIR$/src/interface/static/bootstrap/js/npm.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/css/font-awesome.css" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/css/font-awesome.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/css/font-awesome.min.css" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/css/font-awesome.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/fonts/fontawesome-webfont.svg" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/fonts/fontawesome-webfont.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/less/animated.less" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/less/animated.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/less/bordered-pulled.less" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/less/bordered-pulled.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/less/core.less" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/less/core.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/less/fixed-width.less" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/less/fixed-width.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/less/font-awesome.less" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/less/font-awesome.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/less/icons.less" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/less/icons.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/less/larger.less" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/less/larger.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/less/list.less" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/less/list.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/less/mixins.less" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/less/mixins.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/less/path.less" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/less/path.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/less/rotated-flipped.less" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/less/rotated-flipped.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/less/stacked.less" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/less/stacked.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/less/variables.less" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/less/variables.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_animated.scss" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_animated.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_bordered-pulled.scss" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_bordered-pulled.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_core.scss" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_core.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_fixed-width.scss" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_fixed-width.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_icons.scss" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_icons.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_larger.scss" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_larger.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_list.scss" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_list.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_mixins.scss" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_mixins.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_path.scss" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_path.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_rotated-flipped.scss" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_rotated-flipped.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_stacked.scss" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_stacked.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_variables.scss" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/_variables.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/font-awesome.scss" afterPath="$PROJECT_DIR$/src/interface/static/font-awesome/scss/font-awesome.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/fusioncharts/fusioncharts-jquery-plugin.js" afterPath="$PROJECT_DIR$/src/interface/static/fusioncharts/fusioncharts-jquery-plugin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/fusioncharts/fusioncharts-jquery-plugin.min.js" afterPath="$PROJECT_DIR$/src/interface/static/fusioncharts/fusioncharts-jquery-plugin.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/fusioncharts/fusioncharts.charts.js" afterPath="$PROJECT_DIR$/src/interface/static/fusioncharts/fusioncharts.charts.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/fusioncharts/fusioncharts.js" afterPath="$PROJECT_DIR$/src/interface/static/fusioncharts/fusioncharts.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/fusioncharts/startrender.js" afterPath="$PROJECT_DIR$/src/interface/static/fusioncharts/startrender.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/fusioncharts/themes/fusioncharts.theme.carbon.js" afterPath="$PROJECT_DIR$/src/interface/static/fusioncharts/themes/fusioncharts.theme.carbon.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/fusioncharts/themes/fusioncharts.theme.fint.js" afterPath="$PROJECT_DIR$/src/interface/static/fusioncharts/themes/fusioncharts.theme.fint.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/fusioncharts/themes/fusioncharts.theme.ocean.js" afterPath="$PROJECT_DIR$/src/interface/static/fusioncharts/themes/fusioncharts.theme.ocean.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/fusioncharts/themes/fusioncharts.theme.zune.js" afterPath="$PROJECT_DIR$/src/interface/static/fusioncharts/themes/fusioncharts.theme.zune.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/ie/css3-mediaqueries.js" afterPath="$PROJECT_DIR$/src/interface/static/ie/css3-mediaqueries.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/ie/html5shiv.js" afterPath="$PROJECT_DIR$/src/interface/static/ie/html5shiv.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/ie/jquery-1.11.3.min.js" afterPath="$PROJECT_DIR$/src/interface/static/ie/jquery-1.11.3.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/jquery/jquery.fixer.js" afterPath="$PROJECT_DIR$/src/interface/static/jquery/jquery.fixer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/jquery/jquery.fixer.min.js" afterPath="$PROJECT_DIR$/src/interface/static/jquery/jquery.fixer.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/jquery/jquery.history.js" afterPath="$PROJECT_DIR$/src/interface/static/jquery/jquery.history.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/jquery/jquery.history.min.js" afterPath="$PROJECT_DIR$/src/interface/static/jquery/jquery.history.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/jquery/jquery.js" afterPath="$PROJECT_DIR$/src/interface/static/jquery/jquery.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/jquery/jquery.min.js" afterPath="$PROJECT_DIR$/src/interface/static/jquery/jquery.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/jquery/jquery.scrollto.js" afterPath="$PROJECT_DIR$/src/interface/static/jquery/jquery.scrollto.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/jquery/jquery.scrollto.min.js" afterPath="$PROJECT_DIR$/src/interface/static/jquery/jquery.scrollto.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/jquery/jquery.scrollto.old.js" afterPath="$PROJECT_DIR$/src/interface/static/jquery/jquery.scrollto.old.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/login/css/styles.css" afterPath="$PROJECT_DIR$/src/interface/static/login/css/styles.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/md5/md5.js" afterPath="$PROJECT_DIR$/src/interface/static/md5/md5.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/md5/md5.min.js" afterPath="$PROJECT_DIR$/src/interface/static/md5/md5.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/notfound/css/error.css" afterPath="$PROJECT_DIR$/src/interface/static/notfound/css/error.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/uikit/uikit.css" afterPath="$PROJECT_DIR$/src/interface/static/uikit/uikit.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/validator/validator.js" afterPath="$PROJECT_DIR$/src/interface/static/validator/validator.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static/validator/validator.min.js" afterPath="$PROJECT_DIR$/src/interface/static/validator/validator.min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/static_database.txt" afterPath="$PROJECT_DIR$/src/interface/static_database.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/templates/base.html" afterPath="$PROJECT_DIR$/src/interface/templates/base.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/templates/legalUser/dashboard.ajax.html" afterPath="$PROJECT_DIR$/src/interface/templates/legalUser/dashboard.ajax.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/templates/legalUser/dashboard.html" afterPath="$PROJECT_DIR$/src/interface/templates/legalUser/dashboard.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/templates/legalUser/design/design.ajax.html" afterPath="$PROJECT_DIR$/src/interface/templates/legalUser/design/design.ajax.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/templates/legalUser/design/design.html" afterPath="$PROJECT_DIR$/src/interface/templates/legalUser/design/design.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/templates/legalUser/design/design_list.html" afterPath="$PROJECT_DIR$/src/interface/templates/legalUser/design/design_list.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/templates/legalUser/design/modal/publish_modal.html" afterPath="$PROJECT_DIR$/src/interface/templates/legalUser/design/modal/publish_modal.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/templates/legalUser/design/modal/qst_name_modal.html" afterPath="$PROJECT_DIR$/src/interface/templates/legalUser/design/modal/qst_name_modal.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/templates/legalUser/design/modal/single_modal.html" afterPath="$PROJECT_DIR$/src/interface/templates/legalUser/design/modal/single_modal.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/templates/legalUser/design/questions/fillin.html" afterPath="$PROJECT_DIR$/src/interface/templates/legalUser/design/questions/fillin.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/templates/legalUser/design/questions/index.html" afterPath="$PROJECT_DIR$/src/interface/templates/legalUser/design/questions/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/templates/legalUser/design/questions/mark.html" afterPath="$PROJECT_DIR$/src/interface/templates/legalUser/design/questions/mark.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/templates/legalUser/design/questions/multi.html" afterPath="$PROJECT_DIR$/src/interface/templates/legalUser/design/questions/multi.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/templates/legalUser/design/questions/single.html" afterPath="$PROJECT_DIR$/src/interface/templates/legalUser/design/questions/single.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/templates/legalUser/design/questions/sort.html" afterPath="$PROJECT_DIR$/src/interface/templates/legalUser/design/questions/sort.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/templates/legalUser/design/questions/vote.html" afterPath="$PROJECT_DIR$/src/interface/templates/legalUser/design/questions/vote.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/templates/legalUser/index.html" afterPath="$PROJECT_DIR$/src/interface/templates/legalUser/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/templates/legalUser/information/user_information.ajax.html" afterPath="$PROJECT_DIR$/src/interface/templates/legalUser/information/user_information.ajax.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/templates/legalUser/information/user_information.html" afterPath="$PROJECT_DIR$/src/interface/templates/legalUser/information/user_information.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/templates/legalUser/information/user_information_change.ajax.html" afterPath="$PROJECT_DIR$/src/interface/templates/legalUser/information/user_information_change.ajax.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/templates/legalUser/information/user_information_change.html" afterPath="$PROJECT_DIR$/src/interface/templates/legalUser/information/user_information_change.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/templates/legalUser/login/log_page.html" afterPath="$PROJECT_DIR$/src/interface/templates/legalUser/login/log_page.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/templates/questionnaire/questionnaire.html" afterPath="$PROJECT_DIR$/src/interface/templates/questionnaire/questionnaire.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/tests.py" afterPath="$PROJECT_DIR$/src/interface/tests.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/interface/views.py" afterPath="$PROJECT_DIR$/src/interface/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/manage.py" afterPath="$PROJECT_DIR$/src/manage.py" />
     </list>
     <ignored path="prj1_whynotdance.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -35,90 +193,8 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="log_page.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/login/log_page.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="596">
-              <caret line="261" column="56" selection-start-line="261" selection-start-column="56" selection-end-line="261" selection-end-column="56" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="session.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/interface/session.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="4" column="36" selection-start-line="4" selection-start-column="36" selection-end-line="4" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/api/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2036">
-              <caret line="126" column="43" selection-start-line="126" selection-start-column="43" selection-end-line="126" selection-end-column="43" />
-              <folding>
-                <element signature="e#40#50#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_database.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/interface/_database.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1780">
-              <caret line="218" column="38" selection-start-line="218" selection-start-column="38" selection-end-line="218" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/interface/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-260">
-              <caret line="106" column="27" selection-start-line="106" selection-start-column="27" selection-end-line="106" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="469">
-              <caret line="85" column="0" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/dance/urls.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="47" column="63" selection-start-line="47" selection-start-column="63" selection-end-line="47" selection-end-column="63" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="qst_name_modal.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/modal/qst_name_modal.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1020">
-              <caret line="51" column="8" selection-start-line="51" selection-start-column="8" selection-end-line="51" selection-end-column="8" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="publish_modal.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/modal/publish_modal.html">
+      <file leaf-file-name="questionnaire.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/interface/templates/questionnaire/questionnaire.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -127,8 +203,79 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/interface/models.py">
+      <file leaf-file-name="dashboard.ajax.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/dashboard.ajax.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="171">
+              <caret line="69" column="126" selection-start-line="69" selection-start-column="126" selection-end-line="69" selection-end-column="126" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/dance/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="115">
+              <caret line="34" column="41" selection-start-line="34" selection-start-column="41" selection-end-line="34" selection-end-column="112" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/interface/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="338">
+              <caret line="331" column="44" selection-start-line="331" selection-start-column="44" selection-end-line="331" selection-end-column="44" />
+              <folding>
+                <element signature="e#4133#4352#0" expanded="false" />
+                <element signature="e#4383#4472#0" expanded="false" />
+                <element signature="e#4509#5037#0" expanded="false" />
+                <element signature="e#5081#5629#0" expanded="false" />
+                <element signature="e#5655#5720#0" expanded="false" />
+                <element signature="e#5756#6843#0" expanded="false" />
+                <element signature="e#6977#7803#0" expanded="false" />
+                <element signature="e#7864#9436#0" expanded="false" />
+                <element signature="e#9469#9707#0" expanded="false" />
+                <element signature="e#9765#10099#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="questionnaire_list.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/interface/templates/questionnaire/questionnaire_list.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="426">
+              <caret line="50" column="39" selection-start-line="50" selection-start-column="39" selection-end-line="50" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="questionnaire.ajax.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/interface/templates/questionnaire/questionnaire.ajax.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1127">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/interface/templates/questionnaire/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-106">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dashboard.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/dashboard.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -145,7 +292,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/interface/templates/legalUser/design/design.ajax.html" />
         <option value="$PROJECT_DIR$/src/interface/templates/guest/guest_index.html" />
         <option value="$PROJECT_DIR$/src/interface/templates/legalUser/information/user_information.html" />
         <option value="$PROJECT_DIR$/src/interface/templates/legalUser/information/user_information.ajax.html" />
@@ -154,10 +300,17 @@
         <option value="$PROJECT_DIR$/src/interface/templates/legalUser/information/user_information_change.ajax.html" />
         <option value="$PROJECT_DIR$/src/interface/session.py" />
         <option value="$PROJECT_DIR$/src/interface/templates/legalUser/login/log_page.html" />
-        <option value="$PROJECT_DIR$/src/interface/views.py" />
         <option value="$PROJECT_DIR$/src/api/views.py" />
         <option value="$PROJECT_DIR$/src/interface/_database.py" />
         <option value="$PROJECT_DIR$/src/interface/templates/legalUser/index.html" />
+        <option value="$PROJECT_DIR$/src/interface/static_database.txt" />
+        <option value="$PROJECT_DIR$/src/interface/templates/legalUser/design/modal/single_modal.html" />
+        <option value="$PROJECT_DIR$/src/interface/templates/legalUser/design/design_list.html" />
+        <option value="$PROJECT_DIR$/src/interface/templates/legalUser/design/design.ajax.html" />
+        <option value="$PROJECT_DIR$/src/interface/templates/questionnaire/publish_qst/fillin.html" />
+        <option value="$PROJECT_DIR$/src/interface/templates/questionnaire/publish_qst/multi.html" />
+        <option value="$PROJECT_DIR$/src/interface/templates/questionnaire/questionnaire_list.html" />
+        <option value="$PROJECT_DIR$/src/interface/views.py" />
       </list>
     </option>
   </component>
@@ -170,8 +323,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1096" />
+    <option name="width" value="1382" />
+    <option name="height" value="784" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -198,6 +351,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -244,14 +399,104 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="interface" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="prj1_whynotdance" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="prj1_whynotdance" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="interface" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="prj1_whynotdance" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="prj1_whynotdance" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="interface" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="questionnaire" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="prj1_whynotdance" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="prj1_whynotdance" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="interface" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="legalUser" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="prj1_whynotdance" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="prj1_whynotdance" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="dance" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -482,10 +727,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1096" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18645833" sideWeight="0.49417636" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18594436" sideWeight="0.49417636" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -537,181 +782,18 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="jinja2-line">
+          <url>file://$PROJECT_DIR$/src/interface/templates/questionnaire/publish_qst/index.html</url>
+          <line>1</line>
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/information/user_information_change.ajax.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1836">
-          <caret line="108" column="45" selection-start-line="108" selection-start-column="45" selection-end-line="108" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/login/log_page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/information/user_information_change.ajax.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1836">
-          <caret line="108" column="45" selection-start-line="108" selection-start-column="45" selection-end-line="108" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dance/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="799">
-          <caret line="47" column="63" selection-start-line="47" selection-start-column="63" selection-end-line="47" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1275">
-          <caret line="75" column="33" selection-start-line="75" selection-start-column="33" selection-end-line="75" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/design.ajax.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2720">
-          <caret line="160" column="60" selection-start-line="160" selection-start-column="60" selection-end-line="160" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interface/templates/guest/dashboard_guest.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interface/templates/guest/dashboard_guest.ajax.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interface/templates/guest/guest_index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/design_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/design.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interface/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4165">
-          <caret line="245" column="47" selection-start-line="245" selection-start-column="47" selection-end-line="245" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/design.ajax.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/design_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/design.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interface/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4165">
-          <caret line="245" column="47" selection-start-line="245" selection-start-column="47" selection-end-line="245" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/design.ajax.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2720">
-          <caret line="160" column="60" selection-start-line="160" selection-start-column="60" selection-end-line="160" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/design_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/design.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/design.ajax.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2720">
-          <caret line="160" column="60" selection-start-line="160" selection-start-column="60" selection-end-line="160" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interface/templates/guest/dashboard_guest.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/information/user_information.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" column="72" selection-start-line="26" selection-start-column="72" selection-end-line="26" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/dashboard.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/dashboard.ajax.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/interface/templates/guest/guest_index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="25">
@@ -787,7 +869,7 @@
     <entry file="file://$PROJECT_DIR$/src/log_info.txt" />
     <entry file="file://$PROJECT_DIR$/src/interface/session.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
+        <state relative-caret-position="76">
           <caret line="4" column="36" selection-start-line="4" selection-start-column="36" selection-end-line="4" selection-end-column="36" />
           <folding />
         </state>
@@ -823,7 +905,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/modal/qst_name_modal.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1020">
+        <state relative-caret-position="969">
           <caret line="51" column="8" selection-start-line="51" selection-start-column="8" selection-end-line="51" selection-end-column="8" />
           <folding />
         </state>
@@ -839,7 +921,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/login/log_page.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="596">
+        <state relative-caret-position="4959">
           <caret line="261" column="56" selection-start-line="261" selection-start-column="56" selection-end-line="261" selection-end-column="56" />
           <folding />
         </state>
@@ -847,7 +929,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/api/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2036">
+        <state relative-caret-position="2090">
           <caret line="126" column="43" selection-start-line="126" selection-start-column="43" selection-end-line="126" selection-end-column="43" />
           <folding>
             <element signature="e#40#50#0" expanded="true" />
@@ -857,24 +939,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/interface/_database.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1780">
+        <state relative-caret-position="4142">
           <caret line="218" column="38" selection-start-line="218" selection-start-column="38" selection-end-line="218" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/interface/views.py">
+    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/design_list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-260">
-          <caret line="106" column="27" selection-start-line="106" selection-start-column="27" selection-end-line="106" selection-end-column="27" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dance/urls.py">
+    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/design.ajax.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="47" column="63" selection-start-line="47" selection-start-column="63" selection-end-line="47" selection-end-column="63" />
+        <state relative-caret-position="488">
+          <caret line="167" column="4" selection-start-line="167" selection-start-column="4" selection-end-line="167" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/modal/single_modal.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3382">
+          <caret line="178" column="0" selection-start-line="178" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -884,6 +974,207 @@
         <state relative-caret-position="469">
           <caret line="85" column="0" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/questions/mark.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/templates/questionnaire/publish_qst/mark.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/templates/questionnaire/publish_qst/multi.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1235">
+          <caret line="65" column="20" selection-start-line="65" selection-start-column="20" selection-end-line="65" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/questions/multi.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="41" column="41" selection-start-line="41" selection-start-column="41" selection-end-line="41" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/questions/single.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/templates/questionnaire/publish_qst/single.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/questions/sort.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/questions/vote.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/templates/questionnaire/publish_qst/sort.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/templates/questionnaire/publish_qst/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-790">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#div#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/questions/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1805">
+          <caret line="1" column="74" selection-start-line="1" selection-start-column="74" selection-end-line="1" selection-end-column="74" />
+          <folding>
+            <element signature="n#div#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/templates/questionnaire/publish_qst/fillin.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="5" column="28" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
+          <folding>
+            <element signature="e#156#219#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/modal/fillin_modal.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/design/questions/fillin.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="18" column="36" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/static_database.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/templates/questionnaire/questionnaire.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/templates/questionnaire/questionnaire.ajax.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1127">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/templates/questionnaire/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-106">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/dashboard.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/templates/legalUser/dashboard.ajax.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="69" column="126" selection-start-line="69" selection-start-column="126" selection-end-line="69" selection-end-column="126" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dance/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="34" column="41" selection-start-line="34" selection-start-column="41" selection-end-line="34" selection-end-column="112" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/templates/questionnaire/questionnaire_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="426">
+          <caret line="50" column="39" selection-start-line="50" selection-start-column="39" selection-end-line="50" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="331" column="44" selection-start-line="331" selection-start-column="44" selection-end-line="331" selection-end-column="44" />
+          <folding>
+            <element signature="e#4133#4352#0" expanded="false" />
+            <element signature="e#4383#4472#0" expanded="false" />
+            <element signature="e#4509#5037#0" expanded="false" />
+            <element signature="e#5081#5629#0" expanded="false" />
+            <element signature="e#5655#5720#0" expanded="false" />
+            <element signature="e#5756#6843#0" expanded="false" />
+            <element signature="e#6977#7803#0" expanded="false" />
+            <element signature="e#7864#9436#0" expanded="false" />
+            <element signature="e#9469#9707#0" expanded="false" />
+            <element signature="e#9765#10099#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
