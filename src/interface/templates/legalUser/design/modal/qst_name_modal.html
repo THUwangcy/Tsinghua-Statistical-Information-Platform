@@ -13,13 +13,13 @@
                     <form id="create-activity-form" class="form form-vertical" role="form" data-toggle="validator">
                         {% csrf_token %}
                         <input name="status" value="none" type="text" style="display: none;">
-                        <input name="act_id" type="text" style="display: none;" value="{{act_id}}">
+                        <input name="act_id" type="text" style="display: none;" value="{{id}}">
 
                         <div class="row" style="text-align: left;">
                             <div class="col-xs-12 form-group">
                                 <label class="control-label" for="activity_title">问卷名称</label>
                                 <input id="activity_title" name="title" class="form-control"
-                                              style="resize: vertical;"></input>
+                                              style="resize: vertical;">
                             </div>
                         </div>
                         <div class="row" style="text-align: left;">
@@ -39,6 +39,7 @@
             </div>
         </div>
     </div>
+</div>
 
     <script>
         var modal = $("#activity-modal");
@@ -58,7 +59,7 @@
                 success_callback: function (data) {
                     if (data['status'] === 'ok') {
                         $("#qst_title").html(title_field.val());
-                        $("#qst_description").html(description_field.val());
+                        $("#qst_description").html('<br>' + description_field.val().replace(/\n/g,'<br/>'));
 
                         modal.modal('hide');
                         

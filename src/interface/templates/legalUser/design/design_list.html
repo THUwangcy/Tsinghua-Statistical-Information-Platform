@@ -1,4 +1,5 @@
 
+
 <div class="panel panel-default hover_heading" style="border='0'">
     <div class="panel-body heading">
         <div class="row">
@@ -13,20 +14,21 @@
                     {% endif %}
                 {% endblock title %}
             </h4>
-
-            <div class="col-xs-12" id="qst_description">
-                {% block description %}假装有活动说明{% endblock description %}
+            
+            <div class="col-xs-12 textarea_display" id="qst_description" style="width:100%">
+                </br>{% block description %}假装有活动说明{% endblock description %}
             </div>
         </div>
         <div style="display:none;" id="collapse-heading">
             <hr>
             <a class="fake-link collapse-row pull-right" 
-               href="javascript:showModal('{% url 'legalUser/modal' 'qst_name' act_id %}', 'activity-modal')">
+               href="#" onclick="return Edit_title();">
                 <span class="fa fa-check-square-o fa-fw"></span> 编辑&emsp;
             </a>
         </div>
 
     </div>
+
 </div>
         {% block content-before %}
         {% endblock content-before %}
@@ -37,6 +39,29 @@
         </ol>
         {% block content-after %}
         {% endblock content-after %}
+
+        {% for qst in act_info.questions %}
+        
+            <script>
+                
+                pre_info_param = {
+                    'questions_type': '{{qst.qst_type}}',
+                    'questions_title': '{{qst.qst_title}}',
+                    'questions_id': '{{qst.qst_id}}',
+                    'option_num': '{{qst.option_num}}',
+                    'option': '{{qst.option}}',
+                    'rows': '{{qst.rows}}',
+                    'hint': '{{qst.hint}}'
+                }
+
+                loadContentOn($(".last-question"), "{% url 'legalUser/design/question' type act_id%}", pre_info_param, {anim: false, scroll: false});
+                $(".last-question").removeClass("last-question");
+                $(".questions-list").append('<li class="question last-question">\
+                                                \
+                                             </li>');
+            </script>
+        
+        {% endfor %}
    
 
 
@@ -44,6 +69,19 @@
 <script>
     var $heading_panel = $(".hover_heading");
     var heading = $(".heading");
+
+    if('{{act_info.act_title}}' != '')
+        $("#qst_title").html('{{act_info.act_title}}');
+    if('{{act_info.act_description}}' != '')
+        $("#qst_description").html('<br>{{act_info.act_description}}');
+
+    function Edit_title() {
+        params = {
+            'modal_type': 'qst_name',
+            'id': '{{ act_id }}',
+        }
+        showModal('{% url 'legalUser/modal' %}', 'activity-modal', params);
+    }
 
     $heading_panel.ready(function() {
         heading.hover(function(){

@@ -15,7 +15,8 @@ def get_pending_applications():
     item1 = {'name': u'诚招女友 欢迎报名',
              'subscribe_time': '2016.10.01',
              'status': 'pending',
-             'id': 1235,
+             'type': 'recruit',
+             'id': 12,
              'description': u'找个女朋友陪我过十一QAQ',
              'status_display': {
                 'colorclass': 'warning',
@@ -26,7 +27,8 @@ def get_pending_applications():
     item2 = {'name': u'名字一定要长名字一定要长名字一定要长',
              'subscribe_time': '2016.10.04',
              'status': 'pending',
-             'id': 1238,
+             'type': 'vote',
+             'id': 13,
              'status_display': {
                 'colorclass': 'warning',
                 'icon': 'fa-cogs',
@@ -38,7 +40,8 @@ def get_pending_applications():
     item3 = {'name': u'源：厉害了我的哥',
              'subscribe_time': '2016.10.05',
              'status': 'pending',
-             'id': 1274,
+             'type': 'enroll',
+             'id': 14,
              'description': u'半藏：当然了我的弟',
              'status_display': {
                 'colorclass': 'warning',
@@ -69,6 +72,7 @@ def get_already_applications():
              'id': 1234,
              'description': u'计算机系人工智能研究所搜索引擎相关实验，报酬优厚',
              'status': 'already',
+             'type': 'recruit',
              'fillin': 11232,
              'views': 343241,
              'status_display': {
@@ -82,6 +86,7 @@ def get_already_applications():
              'id': 1234,
              'description': u'每个班都有很多大腿，那么哪个是你最喜欢的呢？！',
              'status': 'already',
+             'type': 'recruit',
              'fillin': 6543,
              'views': 41234,
              'status_display': {
@@ -96,6 +101,7 @@ def get_trash_applications():
     item1 = {'name': u'卧槽被删除了',
              'subscribe_time': '2016.10.06',
              'status': 'trash',
+             'type': 'recruit',
              'id': 2333,
              'description': u'傻了吧',
              'status_display': {
@@ -128,6 +134,110 @@ def get_official_accounts_with_unprocessed_messages():
 
 def get_announcement():
     return u'你妈炸了！！'
+
+
+def get_questionnaire_byID(act_id):
+    result = {}
+    if act_id == '12':
+        act_type = 'recruit'
+        act_status = 'pending'
+        act_title = u'诚招女友 欢迎报名'
+        act_description = u'找个女朋友陪我过十一QAQ'
+        qst_num = 2
+
+        qst1 = {'qst_type': 'single',
+                'qst_title': u'第一道单选题',
+                'qst_id': 1, 
+                'option_num': 2,
+                'option': [u'###第一个选项###', u'###第二个选项###']
+                }
+        qst2 = {'qst_type': 'single',
+                'qst_title': u'第二道单选题',
+                'qst_id': 2,
+                'option_num': 3,
+                'option': [u'###选项 1###', u'###选项 2###', u'###选项 3###']
+                }
+
+        questions = [qst1, qst2]
+
+        result = {'act_type': act_type,
+                  'act_status': act_status,
+                  'act_title': act_title,
+                  'act_description': act_description,
+                  'qst_num': qst_num,
+                  'questions': questions
+                  }
+    elif act_id == '13':
+        act_type = 'vote'
+        act_status = 'pending'
+        act_title = u'名字一定要长名字一定要长名字一定要长'
+        act_description = u'你一定没见过这么标准的十五个字'
+        qst_num = 3
+
+        qst1 = {'qst_type': 'single',
+                'qst_title': u'第一道单选题',
+                'qst_id': 1, 
+                'option_num': 2,
+                'option': [u'###第一个选项###', u'###第二个选项###']
+                }
+        qst2 = {'qst_type': 'single',
+                'qst_title': u'第二道单选题',
+                'qst_id': 2,
+                'option_num': 3,
+                'option': [u'###选项 1###', u'###选项 2###', u'###选项 3###']
+                }
+        qst3 = {'qst_type': 'multi',
+                'qst_title': u'第三道多选题',
+                'qst_id': 3,
+                'option_num': 3,
+                'option': [u'###选项一###', u'###选项二###', u'###选项三###']
+                }
+
+        questions = [qst1, qst2, qst3]
+
+        result = {'act_type': act_type,
+                  'act_status': act_status,
+                  'act_title': act_title,
+                  'act_description': act_description,
+                  'qst_num': qst_num,
+                  'questions': questions
+                  }
+    elif act_id == '14':
+        act_type = 'enroll'
+        act_status = 'pending'
+        act_title = u'源：厉害了我的哥'
+        act_description = u'半藏：当然了我的弟'
+        qst_num = 1
+
+        qst1 = {'qst_type': 'single',
+                'qst_title': u'源氏说的对不对啊？',
+                'qst_id': 1, 
+                'option_num': 2,
+                'option': [u'###对，太对了###', u'###什么玩意...###']
+                }
+        qst2 = {'qst_type': 'fillin',
+                'qst_title': u'你怎么看？',
+                'qst_id': 2, 
+                'rows': 1,
+                'hint': u'元芳',
+                'check': u'文本'
+                }
+
+        questions = [qst1, qst2]
+
+        result = {'act_type': act_type,
+                  'act_status': act_status,
+                  'act_title': act_title,
+                  'act_description': act_description,
+                  'qst_num': qst_num,
+                  'questions': questions
+                  }
+    else:
+        result = {'act_status': 'new'}
+
+
+
+    return result
 
 
 

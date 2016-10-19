@@ -1,13 +1,13 @@
 
 <script>
-    
+
 
     $(".right-column").ready(function () {
         var $this = $(".right-column");
 
         var questions_params = {
             'questions_type': "default",
-            'questions_id': -1
+            'questions_id': 0
         };
 
         function createNewQst(qst_type) {
@@ -19,8 +19,8 @@
                 success: function(data) {
                     if(data['status'] == 'ok'){
                         questions_params['questions_id'] = data['id'];
+                        refreshTable();
                     }
-                        
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     alert(xhr.responseText.substr(0, 500));
@@ -44,32 +44,26 @@
         $this.find("#single-question").click(function () {
             questions_params['questions_type'] = "single";
             createNewQst("single");
-            refreshTable();
         })
         $this.find("#multi-question").click(function () {
             questions_params['questions_type'] = "multi";
             createNewQst("multi");
-            refreshTable();
         })
         $this.find("#fillin-question").click(function () {
             questions_params['questions_type'] = "fillin";
             createNewQst("fillin");
-            refreshTable();
         })
         $this.find("#vote-question").click(function () {
             questions_params['questions_type'] = "vote";
             createNewQst("vote");
-            refreshTable();
         })
         $this.find("#mark-question").click(function () {
             questions_params['questions_type'] = "mark";
             createNewQst("mark");
-            refreshTable();
         })
         $this.find("#sort-question").click(function () {
             questions_params['questions_type'] = "sort";
             createNewQst("sort");
-            refreshTable();
         })
 
         //设置保存和发布按钮点击事件
@@ -95,7 +89,11 @@
                     url: "{% url 'api/publish_act' %}",
                     data: "&act_id=" + "{{act_id}}",
                     success: function(data) {
-                        showModal("{% url 'legalUser/modal' 'publish' act_id %}", 'publish-modal');
+                        params = {
+                            'modal_type': 'publish',
+                            'id': '{{ act_id }}',
+                        }
+                        showModal("{% url 'legalUser/modal' %}", 'publish-modal', params);
                     },
                     error: function (xhr, textStatus, errorThrown) {
                         alert(xhr.responseText.substr(0, 500));
@@ -111,6 +109,10 @@
 
 
 </script>
+
+{% block css %}
+
+{% endblock css %}
 
 
 <div class="top-row hidden-xs">
@@ -154,11 +156,11 @@
             <hr>
             <br>
             <li align="center">
-                <button type="button" class="btn btn-success btn-block" id="save_btn" style="font-size: 15px">保存</button>
+                <button type="button" class="btn btn-block" id="save_btn" style="font-size: 15px;background: #18bc9c;color: #FFF;">保存</button>
             </li>
             <br>
             <li align="center">
-                <button type="button" class="btn btn-default btn-block" id="publish_btn" style="font-size: 15px">发布</button>
+                <button type="button" class="btn btn-default btn-block" id="publish_btn" style="font-size: 15px;">发布</button>
             </li>
 
         </ul>

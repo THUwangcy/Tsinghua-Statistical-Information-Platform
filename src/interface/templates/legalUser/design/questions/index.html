@@ -1,10 +1,10 @@
 
-<div class="panel panel-default hover_question">
-    <div class="panel-body" align="center",>
+<div class="panel panel-default hover_question" id="qst{{ questions_id }}">
+    <div class="panel-body" align="left",>
     	<div>
-    	<span id="rank" >  </span> 
-        {% block title%}
-        {% endblock title %}
+            <strong id="rank" >  </strong>&nbsp;
+            {% block title%}
+            {% endblock title %}
     	</div>
     
     
@@ -19,17 +19,19 @@
 		    <a class="fake-link collapse-row pull-right" href="#" onclick="return UpLi(this);" id="up_btn">
 		        <span class="fa fa-check-square-o fa-fw"></span> 上移&emsp;
 		    </a>
-		    <a class="fake-link collapse-row pull-right" href="#" id="edit_btn">
+		    <a class="fake-link collapse-row pull-right" onclick="return Edit(this);" id="edit_btn" href="#">
 		        <span class="fa fa-check-square-o fa-fw"></span> 编辑&emsp;
 		    </a>
 		</div>
     </div> 
     <form class="form form-vertical" role="form" data-toggle="validator">
-    	<input name="rank" type="text" style="display: none;" value="">     
+    	<input name="questions_type" type="text" style="display: none;" value="">
+        <input name="questions_id" type="text" style="display: none;" value="">
     </form>                              
 </div>
 
 <script>
+
 
 	//重新加载标号
 	reloadRank = function(){
@@ -41,12 +43,15 @@
     	})
 	}
 
-	function operation_qst(operation)
+	//点击各操作向后台发送消息
+	function operation_qst(obj, operation)
     {
+        var onthis = $(obj).parent().parent().parent().parent();
+        var questions_id = onthis.find("input[name=questions_id]").attr('value');
         $.ajax({
             type: "GET",
             url: "{% url 'api/operation_qst' %}",
-            data: "&act_id=" + "{{act_id}}" + "&qst_id=" + "{{questions_id}}" + "&operation=" + operation,
+            data: "&act_id=" + "{{act_id}}" + "&qst_id=" + questions_id + "&operation=" + operation,
             success: function(data) {
 
 
@@ -57,17 +62,33 @@
         });
     }
 
-	//上移
-    function UpLi(obj)
+	//编辑按钮
+	function Edit(obj)
     {
         var onthis = $(obj).parent().parent().parent().parent();
 
+        //先获得本题目的type和id
+        var qst_type = onthis.find("input[name=questions_type]").attr('value');
+        var qst_id = onthis.find("input[name=questions_id]").attr('value');
+        var params = {
+            'modal_type': qst_type,
+            'id': qst_id,
+        }
+        showModal('{% url 'legalUser/modal'%}', qst_type + '-modal', params);
+    }
+
+	//上移
+    function UpLi(obj)
+    {
+
+        var onthis = $(obj).parent().parent().parent().parent();
         if(onthis.index() == 0)
         	showConfirmModal("提示", "已经是第一题了O^O", true);
         else {
         	var getup = $(obj).parent().parent().parent().parent().prev();
         	$(getup).before(onthis);
-            operation_qst("UP");
+            operation_qst(obj, "UP");
+            reloadRank();
         }
     
     }
@@ -81,7 +102,8 @@
         else {
         	var getdown = $(obj).parent().parent().parent().parent().next();
         	$(getdown).after(onthis);
-            operation_qst("DOWN");
+            operation_qst(obj, "DOWN");
+            reloadRank();
         }
     }
 
@@ -94,7 +116,7 @@
 
 		reloadRank();
 
-        operation_qst("REMOVE");
+        operation_qst(obj, "REMOVE");
 	}
 
 	//对于每一个问题添加事件
@@ -107,19 +129,24 @@
 
     	//鼠标悬停事件
         $(this).find(".panel-body").hover(
-        function(){
-        	var $panel = $(this).parent();
-            $panel.removeClass("panel-default");
-            $panel.addClass("panel-success");
-            $(this).find(".question-collapse").slideDown("fast");
-        }, 
-        function(){
-        	var $panel = $(this).parent();
-            $panel.removeClass("panel-success");
-            $panel.addClass("panel-default");
-            $(this).find(".question-collapse").slideUp("fast");
+            function(){
+                var $panel = $(this).parent();
+                $panel.removeClass("panel-default");
+                $panel.addClass("panel-success");
+                $(this).find(".question-collapse").slideDown("fast");
+            },
+            function(){
+                var $panel = $(this).parent();
+                $panel.removeClass("panel-success");
+                $panel.addClass("panel-default");
+                $(this).find(".question-collapse").slideUp("fast");
         })
-      	
+
+        //给这个题目的页面隐藏表单赋值题目类型和id，防止之后添加题目变量被渲染改变
+        if($(this).find("input[name=questions_type]").attr('value') == "")
+            $(this).find("input[name=questions_type]").attr('value', '{{ questions_type }}');
+        if($(this).find("input[name=questions_id]").attr('value') == "")
+            $(this).find("input[name=questions_id]").attr('value', '{{ questions_id }}');
 
         displayContent(index + ". ", {'anim': false, 'scroll': false}, rank);
     })

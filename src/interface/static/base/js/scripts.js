@@ -499,10 +499,11 @@ function showConfirmModal(title, message, one_button, callback) {
     loadComplete();
 }
 
-function showModal(url, id) {
+function showModal(url, id, params) {
     $.ajax({
         type: "GET",
         url: url,
+        data: params,
         success: function (data) {
             $("body").append(data);
             var modal = $("#" + id);

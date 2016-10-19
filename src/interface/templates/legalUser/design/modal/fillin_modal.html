@@ -1,0 +1,115 @@
+<!-- 传入参数： qst_type：single、id：题目id -->
+
+<div class="modal fade" id="fillin-modal" tabindex="-1" role="dialog" aria-labelledby="fillin-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">修改填空题内容</h4>
+            </div>
+
+
+            <div class="modal-footer">
+
+                    <form id="fillin-form" class="form form-vertical" role="form" data-toggle="validator">
+                        {% csrf_token %}
+                        <input name="status" value="none" type="text" style="display: none;">
+                        <input name="questions_id" type="text" style="display: none;" value="{{id}}">
+                        <input name="qst_type" type="text" style="display: none;" value="{{qst_type}}">
+
+
+                        <div class="row" style="text-align: left;">
+                            <div class="col-xs-12 form-group">
+                                <label class="control-label" for="fillin_title_field">标题</label>
+                                <input id="fillin_title_field" name="qst_title" class="form-control"
+                                          style="resize: vertical;">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row" style="text-align: left;">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label">行数</label>
+                                <select id="fillin_row_field" name="fillin_row" class="form-control"
+                                          style="resize: vertical;">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                        
+                            <div class="col-md-6 form-group">
+                                <label class="control-label">验证</label>
+                                <select id="fillin_check_field" name="fillin_check" class="form-control"
+                                          style="resize: vertical;">
+                                    <option>文本</option>
+                                    <option>整数</option>
+                                    <option>小数</option>
+                                    <option>日期</option>
+                                    <option>手机</option>
+                                    <option>邮箱</option>
+                                    <option>身份证号</option>
+                                    <option>学号</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row" style="text-align: left;">
+                            
+
+                            <div class="col-md-12 form-group">
+                                <label class="control-label" for="fillin_hint_field">填写提示</label>
+                                <input id="fillin_hint_field" name="fillin_hint" class="form-control"
+                                          style="resize: vertical;">
+                            </div>
+                            
+                        </div>
+                        <br>
+                        <div id="submit-button-field">
+                            <button type="submit" class="btn btn-primary form-btn">
+                                完成
+                            </button>
+                        </div>
+                    </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var modal = $("#fillin-modal");
+
+    var submit_button = modal.find("#submit-button-field");
+    var title_field = modal.find("#fillin_title_field");
+    var row_field = modal.find("#fillin_row_field");
+    var check_field = modal.find("#fillin_check_field");
+    var hint_field = modal.find("#fillin_hint_field");
+
+    function modify_page() {
+        var source_panel_body = $("#qst{{ id }}");
+        source_panel_body.find("#fillin_title").html(title_field.val());
+        source_panel_body.find("#fillin_field").attr("rows", row_field.val());
+        source_panel_body.find("#fillin_field").attr("placeholder", hint_field.val());
+    }
+
+    modal.ready(function () {
+        var source_panel_body = $("#qst{{ id }}");
+        title_field.val(source_panel_body.find("#fillin_title").text().trim());
+        row_field.val(source_panel_body.find("#fillin_field").attr("rows"));
+        hint_field.val(source_panel_body.find("#fillin_field").attr("placeholder"));
+
+        handleFormPost("#fillin-form", "{% url 'api/modify_qst' %}", {
+            success_callback: function (data) {
+                if (data['status'] === 'ok') {
+                    modify_page();
+                    modal.modal('hide');
+                }
+            }
+        });
+
+    });
+</script>
+

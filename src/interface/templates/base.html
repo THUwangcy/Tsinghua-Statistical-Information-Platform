@@ -22,6 +22,8 @@
     <link href="{% static 'base/css/eden.min.css' %}" rel="stylesheet">
     <link href="{% static 'animate/css/animate.min.css' %}" rel="stylesheet">
     <link href="{% static 'base/css/styles.css' %}" rel="stylesheet">
+    <link href="{% static 'icheck-1.x/skins/all.css' %}" rel="stylesheet">
+
     {% block css %}
     {% endblock css %}
     <!-- script references -->
@@ -34,6 +36,9 @@
 
     <script src="{% static 'md5/md5.min.js' %}"></script>
     <script src="{% static 'validator/validator.min.js' %}"></script>
+
+
+    <script src="{% static 'icheck-1.x/icheck.js' %}"></script>
     {% block scripts %}
     {% endblock scripts %}
 </head>
@@ -152,6 +157,7 @@
             <div class="container-fluid" id="main-page">
                 <!-- Main page -->
                 {% block main-page %}
+
                 {% endblock main-page %}
             </div>
         </div>

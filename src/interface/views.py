@@ -6,6 +6,7 @@ sys.path.append("..")
 from django.shortcuts import render
 import json
 import operator
+import os
 from datetime import timedelta
 from django.http import HttpResponse
 from django.http import HttpResponseForbidden
@@ -94,6 +95,12 @@ def legalUser_show_applications_list(request, type):
 
 
 def legalUser_design(request, type, act_id):
+    
+    act_info = _database.get_questionnaire_byID(act_id)
+
+    if act_info['act_status'] == 'pending':
+        type = act_info['act_type'] 
+
     if type == 'enroll':
         type_name = u'报名/统计表'
         type_icon = 'fa-tasks'
@@ -103,29 +110,43 @@ def legalUser_design(request, type, act_id):
     elif type == 'vote':
         type_name = u'投票'
         type_icon = 'fa-list-alt'
+
+
     item_id = type + '-design-item'
+
     return render_ajax(request, 'legalUser/design/design.html', {
         'type': type,
         'design_type': type_name,
         'design_icon': type_icon,
-        'act_id': act_id
+        'act_id': act_id,
+        'act_info': act_info
     }, item_id)
 
 
 def legalUser_design_question(request, type, act_id):
     question_url = 'legalUser/design/questions/' + request.GET.get('questions_type') + '.html'
     params = {}
-    params['questions_type'] = request.GET.get('questions_type')
-    params['questions_id'] = request.GET.get('questions_id')
+    params = {
+        'questions_type': request.GET.get('questions_type'),
+        'questions_title': request.GET.get('questions_title'),
+        'questions_id': request.GET.get('questions_id'),
+        'option_num': request.GET.get('option_num'),
+        'option': request.GET.get('option'),
+        'rows': request.GET.get('rows'),
+        'hint': request.GET.get('hint')
+    }
+    
     params['act_type'] = type
     params['act_id'] = act_id
     return render(request, question_url, params)
 
 
-def show_modal(request, modal_type, act_id):
+def show_modal(request):
+    modal_type = request.GET['modal_type']
+    id = request.GET['id']
     return render(request, 'legalUser/design/modal/' + modal_type + '_modal.html', {
             'qst_type': modal_type,
-            'act_id': act_id,
+            'id': id,
         })
 
 def login_page(request):
