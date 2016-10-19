@@ -55,6 +55,7 @@ urlpatterns = [
 
     #questionnaire
     url(r'^questionnaire/([0-9]+)/?$', 'interface.views.questionnaire', name='questionnaire'),
+    url(r'^questionnaire/(\w+)/([0-9]+)/publish_qst/?$', 'interface.views.questionnaire_publish_question', name='questionnaire/publish_qst'),
 
     #guest
     url(r'^guest/?$', 'interface.views.guest', name='guest'),

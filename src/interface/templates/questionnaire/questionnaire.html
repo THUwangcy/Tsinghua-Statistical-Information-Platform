@@ -1,1 +1,9 @@
-{{act_id}}
+{% extends 'questionnaire/index.html' %}
+
+{% block main-page %}
+<div class="row">
+    <div class="col-md-10">
+        {% include 'questionnaire/questionnaire_list.html' %}
+    </div>
+</div>
+{% endblock main-page %}
