@@ -270,7 +270,12 @@ h1 {
             handleFormPost("#login_form", "{% url 'api/login_act' %}", {
                 success_callback: function (data) {
                     if (data['status'] === 'ok') {
-                        window.location.href = '{% url 'legalUser' %}';
+                        if(data['identity'] === 'legalUser'){
+                            window.location.href = '{% url 'legalUser' %}';
+                        }
+                        else if(data['identity'] === 'manager'){
+                            window.location.href = '{% url 'manager' %}'
+                        }
                     }
                     else{
                         alert("用户名或密码错误")

@@ -161,8 +161,13 @@ def login_act(request):
     username = dicts['log_username']
     password = dicts['log_password']
     if username == 'admin' and password == '123456':
-        session.add_session(request, username=username, identity='legalUser')
+        identity = 'legalUser'
+        session.add_session(request, username=username, identity=identity)
+    elif username == 'manager' and password == '123456':
+        identity = 'manager'
+        session.add_session(request, username=username, identity=identity)
     else:
         return JsonResponse(dict(status='wrong username or password'))
-    return JsonResponse(dict(status='ok'))
+    return JsonResponse(dict(status='ok', identity=identity))
+
 
