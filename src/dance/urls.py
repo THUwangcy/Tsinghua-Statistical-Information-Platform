@@ -48,6 +48,9 @@ urlpatterns = [
     url(r'^api/publish_act/?$', 'api.views.publish_act', name='api/publish_act'),
     url(r'^api/modify_qst/?$', 'api.views.modify_qst', name='api/modify_qst'),
 
+    url(r'^api/info_change_act/?$', 'api.views.info_change_act', name='api/info_change_act'),
+    url(r'^api/login_act/?$', 'api.views.login_act', name='api/login_act'),
+
     #userlist
     url(r'^legalUser/login/?$', 'interface.views.login_page', name='legalUser/login'),
     url(r'^legalUser/information/?$', 'interface.views.user_information', name='legalUser/information'),

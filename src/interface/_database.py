@@ -16,7 +16,7 @@ def get_pending_applications():
              'subscribe_time': '2016.10.01',
              'status': 'pending',
              'type': 'recruit',
-             'id': 12,
+             'id': 1,
              'description': u'找个女朋友陪我过十一QAQ',
              'status_display': {
                 'colorclass': 'warning',
@@ -28,7 +28,7 @@ def get_pending_applications():
              'subscribe_time': '2016.10.04',
              'status': 'pending',
              'type': 'vote',
-             'id': 13,
+             'id': 2,
              'status_display': {
                 'colorclass': 'warning',
                 'icon': 'fa-cogs',
@@ -41,7 +41,7 @@ def get_pending_applications():
              'subscribe_time': '2016.10.05',
              'status': 'pending',
              'type': 'enroll',
-             'id': 14,
+             'id': 3,
              'description': u'半藏：当然了我的弟',
              'status_display': {
                 'colorclass': 'warning',
@@ -138,7 +138,7 @@ def get_announcement():
 
 def get_questionnaire_byID(act_id):
     result = {}
-    if act_id == '12':
+    if act_id == '1':
         act_type = 'recruit'
         act_status = 'pending'
         act_title = u'诚招女友 欢迎报名'
@@ -167,7 +167,7 @@ def get_questionnaire_byID(act_id):
                   'qst_num': qst_num,
                   'questions': questions
                   }
-    elif act_id == '13':
+    elif act_id == '2':
         act_type = 'vote'
         act_status = 'pending'
         act_title = u'名字一定要长名字一定要长名字一定要长'
@@ -202,7 +202,7 @@ def get_questionnaire_byID(act_id):
                   'qst_num': qst_num,
                   'questions': questions
                   }
-    elif act_id == '14':
+    elif act_id == '3':
         act_type = 'enroll'
         act_status = 'pending'
         act_title = u'源：厉害了我的哥'

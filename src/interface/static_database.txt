@@ -1,8 +1,3 @@
-status: none
-qst_type: fillin
-questions_id: 2
-fillin_row: 1
-fillin_check: 文本
-fillin_hint: 元芳
-csrfmiddlewaretoken: OCDyXLxQshofsiTLEHqdpOuhCLzRjLqC
-qst_title: 你怎么看？
+14
+1
+REMOVE

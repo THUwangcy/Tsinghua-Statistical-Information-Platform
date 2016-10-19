@@ -194,7 +194,9 @@ def questionnaire(request, act_id):
 
 
 def guest(request):
+    request.session.set_expiry(1)
     return guest_dashboard(request)
+
 
 def guest_dashboard(request):
     pending_applications = _database.get_pending_applications()
@@ -231,6 +233,7 @@ def guest_dashboard(request):
 
 
 #----------------------------分割线--------------------------------#
+
 
 def render_ajax(request, url, params, item_id='', legal=0 ):
     if request.is_ajax():

@@ -4,6 +4,8 @@
 import sys
 
 from database import api
+from interface import session
+
 
 from django.shortcuts import render
 import json
@@ -17,13 +19,11 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils import timezone
 
-
-
 # Create your views here.
 
 
 def modify_name(request):
-    file_object = open(os.path.abspath('.') + '/interface/static_database.txt' , 'w')
+    file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
 
     dict = request.POST.dict()
     for key in dict:
@@ -31,14 +31,14 @@ def modify_name(request):
     file_object.close()
     status = api.saveQuestionaireInfo(dict)
     return JsonResponse({
-            'status': status,
-        })
+        'status': status,
+    })
 
 
 def create_new_act(request):
-    #这里从后端get问卷id
+    # 这里从后端get问卷id
 
-    #可用POST参数有
+    # 可用POST参数有
     #	act_type: 问卷类型
     #	time    : 时间
     #   user_id : 所属用户的id，int
@@ -51,17 +51,45 @@ def create_new_act(request):
 
 
 def create_new_qst(request):
-    #这里从后端get问题id
-    #可用POST参数有：
+    # 这里从后端get问题id
+    # 可用POST参数有：
     #	act_id:   问卷id
     #	qst_type: 问题类型
     dict = api.createNewQuestion(request.GET.dict())
     return JsonResponse({
-            'status': dict["status"],
-            'id': dict["id"],
-        })
+        'status': dict["status"],
+        'id': dict["id"],
+    })
 
-#---------------------------------------------------------------------------#
+
+def info_change_act(request):
+    dicts = request.POST.dict()
+    output = open('info_change.txt', 'w')
+    infomations=""
+    for key, value in dicts.items():
+        infomations += "\"%s\":\"%s\"" % (key, value)
+        infomations += "\n"
+    output.write(infomations)
+    return JsonResponse(dict(status='ok'))
+
+
+def login_act(request):
+    dicts = request.POST.dict()
+    output = open('log_info.txt', 'w')
+    infomations = ""
+    for key, value in dicts.items():
+        infomations += "\"%s\":\"%s\"" % (key, value)
+        infomations += "\n"
+    output.write(infomations)
+    username=dicts['log_username']
+    password=dicts['log_password']
+    if username == 'admin' and password == '123456':
+        session.add_session(request, username='admin', password='123456')
+    else:
+        return JsonResponse(dict(status='wrong username or password'))
+    return JsonResponse(dict(status='ok'))
+
+# ---------------------------------------------------------------------------#
 
 
 def operation_qst(request):
@@ -82,8 +110,8 @@ def remove_act(request):
     Act_id = request.GET['act_id']
     file_object.writelines(Act_id + "\n")
     return JsonResponse({
-            'status': 'ok',
-        })
+        'status': 'ok',
+    })
 
 
 def save_act(request):
@@ -102,6 +130,7 @@ def publish_act(request):
     return JsonResponse({
         'status': 'ok',
     })
+
 
 def modify_qst(request):
     file_object = open(os.path.abspath('.') + '/interface/static_database.txt' , 'w')

@@ -1,0 +1,7 @@
+"status":"作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心"
+"gender":"男"
+"age":"20"
+"telephone_number":"17888802343"
+"address":"清华大学紫荆公寓二号楼411B"
+"csrfmiddlewaretoken":"bBpDLepGQmlv5c949dZEaHxmwRZROtW1"
+"email":"thuwangcy@gmail.com"
