@@ -22,6 +22,7 @@ from django.utils import timezone
 # Create your views here.
 
 def modify_name(request):
+	#issue closed
 	file_object = open(os.path.abspath('.') + '/interface/static_database.txt' , 'w')
 
 	dict = request.POST.dict()
@@ -41,6 +42,8 @@ def create_new_act(request):
 	#	act_type: 问卷类型
 	#	time    : 时间  
 	#   user_id : 所属用户的id，int
+
+	#issue closed
 	dict = api.createNewQuestionaire(request.GET.dict())
 	
 	return JsonResponse({
@@ -48,12 +51,13 @@ def create_new_act(request):
 			'id': dict["id"],
 		})
 
-
 def create_new_qst(request):
 	#这里从后端get问题id
 	#可用POST参数有：
 	#	act_id:   问卷id
 	#	qst_type: 问题类型
+
+	
 	dict = api.createNewQuestion(request.GET.dict())
 	return JsonResponse({
 			'status': dict["status"],
@@ -71,8 +75,9 @@ def operation_qst(request):
     file_object.writelines(Act_id + "\n")
     file_object.writelines(Qst_id + "\n")
     file_object.writelines(operation + "\n")
+    status = api.operateQuestion(request.GET.dict())
     return JsonResponse({
-        'status': 'ok',
+        'status': status,
     })
 
 
@@ -80,8 +85,9 @@ def remove_act(request):
 	file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
 	Act_id = request.GET['act_id']
 	file_object.writelines(Act_id + "\n")
+	status = api.deleteQuestionaire(request.GET.dict())
 	return JsonResponse({
-			'status': 'ok',
+			'status': status,
 		})
 
 
@@ -98,6 +104,7 @@ def publish_act(request):
 	file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
 	Act_id = request.GET['act_id']
 	file_object.writelines("Publish: " + Act_id + "\n")
+	status = publishQuestionaire(request.GET.dict())
 	return JsonResponse({
-		'status': 'ok',
+		'status': status,
 	})

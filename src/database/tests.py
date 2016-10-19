@@ -61,6 +61,47 @@ class saveQuestionaireInfoTest(TestCase):
 		status = saveQuestionaireInfo(dict)
 		self.assertEqual(status, "ok")
 		
-		
+class QuestionaireOperateTest(TestCase):
+	def setUp(self):
+		createSeveralTestQuestionaire()
+	def test_delete(self):
+		questionaireSet = Questionaire.objects.all()
+		print len(questionaireSet)
+		dict = {
+			"act_id" : 5
+		}
+		deleteQuestionaire(dict)
+		questionaireSet = Questionaire.objects.all()
+		print len(questionaireSet)
+		for qst in questionaireSet:
+			print qst.id
 
+class QuestionOperateTest(TestCase):
+	def setUp(self):
+		createSeveralQuestions()
+	def test_use(self):
+		questionSet = Question.objects.all()
+		for qst in questionSet:
+			print "id = " + str(qst.id) + " order = " + str(qst.question_order)
+		dict = {
+			"act_id" : 4,
+			"qst_id" : 3,
+			"operation" : "UP"
+		}
+		operateQuestion(dict)
+		questionSet = Question.objects.all()
+		for qst in questionSet:
+			print "id = " + str(qst.id) + " order = " + str(qst.question_order)
+
+		dict["operation"] = "DOWN"
+		operateQuestion(dict)
+		questionSet = Question.objects.all()
+		for qst in questionSet:
+			print "id = " + str(qst.id) + " order = " + str(qst.question_order)
+
+		dict["operation"] = "REMOVE"
+		operateQuestion(dict)
+		questionSet = Question.objects.all()
+		for qst in questionSet:
+			print "id = " + str(qst.id) + " order = " + str(qst.question_order)
 # Create your tests here.
