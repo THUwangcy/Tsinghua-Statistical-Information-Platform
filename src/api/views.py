@@ -23,7 +23,8 @@ from django.utils import timezone
 
 
 def modify_name(request):
-    file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
+	#issue closed
+    file_object = open(os.path.abspath('.') + '/interface/static_database.txt' , 'w')
 
     dict = request.POST.dict()
     for key in dict:
@@ -37,29 +38,105 @@ def modify_name(request):
 
 def create_new_act(request):
     # 这里从后端get问卷id
+	#可用POST参数有 
+	#	act_type: 问卷类型
+	#	time    : 时间  
+	#   user_id : 所属用户的id，int
 
-    # 可用POST参数有
-    #	act_type: 问卷类型
-    #	time    : 时间
-    #   user_id : 所属用户的id，int
-    dict = api.createNewQuestionaire(request.GET.dict())
-
-    return JsonResponse({
-        'status': dict["status"],
-        'id': dict["id"],
-    })
+	#issue closed
+	dict = api.createNewQuestionaire(request.GET.dict())
+	
+	return JsonResponse({
+			'status': dict["status"],
+			'id': dict["id"],
+		})
 
 
 def create_new_qst(request):
-    # 这里从后端get问题id
-    # 可用POST参数有：
-    #	act_id:   问卷id
-    #	qst_type: 问题类型
-    dict = api.createNewQuestion(request.GET.dict())
+	#这里从后端get问题id
+	#可用POST参数有：
+	#	act_id:   问卷id
+	#	qst_type: 问题类型
+
+	
+	dict = api.createNewQuestion(request.GET.dict())
+	return JsonResponse({
+			'status': dict["status"],
+			'id': dict["id"],
+		})
+
+# ---------------------------------------------------------------------------#
+
+
+def operation_qst(request):
+    file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
+    Act_id = request.GET['act_id']
+    Qst_id = request.GET['qst_id']
+    operation = request.GET['operation']
+    file_object.writelines(Act_id + "\n")
+    file_object.writelines(Qst_id + "\n")
+    file_object.writelines(operation + "\n")
+    status = api.operateQuestion(request.GET.dict())
     return JsonResponse({
-        'status': dict["status"],
-        'id': dict["id"],
+        'status': status,
     })
+
+
+def remove_act(request):
+	file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
+	Act_id = request.GET['act_id']
+	file_object.writelines(Act_id + "\n")
+	status = api.deleteQuestionaire(request.GET.dict())
+	return JsonResponse({
+			'status': status,
+		})
+
+
+def save_act(request):
+    file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
+    Act_id = request.GET['act_id']
+    file_object.writelines("Save: " + Act_id + "\n")
+    return JsonResponse({
+        'status': 'ok',
+    })
+
+
+def publish_act(request):
+    file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
+    Act_id = request.GET['act_id']
+    file_object.writelines("Publish: " + Act_id + "\n")
+    status = api.publishQuestionaire(request.GET.dict())
+    return JsonResponse({
+        'status': status,
+    })
+
+#--------------------------------------------------------------------------------------#
+
+def modify_qst(request):
+    file_object = open(os.path.abspath('.') + '/interface/static_database.txt' , 'w')
+
+    dict = request.POST.dict()
+    for key in dict:
+        file_object.writelines(key + ": " + dict[key] + "\n")
+    file_object.close()
+    return JsonResponse({
+            'status': 'ok',
+        })
+
+
+def create_new_notice(request):
+	# 这里从后端get问卷id
+
+	# 可用POST参数有
+	#	act_type: 问卷类型
+	#	time    : 时间
+	#   user_id : 所属用户的id，int
+	#dict = api.createNewQuestionaire(request.GET.dict())
+	Act_id = request.GET['time']
+	return JsonResponse({
+		'status': "ok",
+		'id': Act_id,
+	})
 
 
 def info_change_act(request):
@@ -88,73 +165,4 @@ def login_act(request):
     else:
         return JsonResponse(dict(status='wrong username or password'))
     return JsonResponse(dict(status='ok'))
-
-# ---------------------------------------------------------------------------#
-
-
-def operation_qst(request):
-    file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
-    Act_id = request.GET['act_id']
-    Qst_id = request.GET['qst_id']
-    operation = request.GET['operation']
-    file_object.writelines(Act_id + "\n")
-    file_object.writelines(Qst_id + "\n")
-    file_object.writelines(operation + "\n")
-    return JsonResponse({
-        'status': 'ok',
-        })
-
-
-def remove_act(request):
-    file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
-    Act_id = request.GET['act_id']
-    file_object.writelines(Act_id + "\n")
-    return JsonResponse({
-        'status': 'ok',
-    })
-
-
-def save_act(request):
-    file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
-    Act_id = request.GET['act_id']
-    file_object.writelines("Save: " + Act_id + "\n")
-    return JsonResponse({
-        'status': 'ok',
-    })
-
-
-def publish_act(request):
-    file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
-    Act_id = request.GET['act_id']
-    file_object.writelines("Publish: " + Act_id + "\n")
-    return JsonResponse({
-        'status': 'ok',
-    })
-
-
-def modify_qst(request):
-    file_object = open(os.path.abspath('.') + '/interface/static_database.txt' , 'w')
-
-    dict = request.POST.dict()
-    for key in dict:
-        file_object.writelines(key + ": " + dict[key] + "\n")
-    file_object.close()
-    return JsonResponse({
-            'status': 'ok',
-        })
-
-
-def create_new_notice(request):
-	# 这里从后端get问卷id
-
-	# 可用POST参数有
-	#	act_type: 问卷类型
-	#	time    : 时间
-	#   user_id : 所属用户的id，int
-	#dict = api.createNewQuestionaire(request.GET.dict())
-	Act_id = request.GET['time']
-	return JsonResponse({
-		'status': "ok",
-		'id': Act_id,
-	})
 

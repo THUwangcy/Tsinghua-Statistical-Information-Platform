@@ -9,16 +9,24 @@ def createDefaultUser():
 		)
 	defaultUser.save()
 
+def hasDefaultUser():
+	count = len(User.objects.filter(student_id = "1111111111"))
+	if count != 0:
+		return True
+	return False
+
 def createDefaultQuestionaire():
-	defaultQuestionaire = Questionaire(
-		questionaire_time = 2016,
-		questionaire_type = "VO",
-		questionaire_user = User.objects.get(student_id = "1111111111")
-		)
-	defaultQuestionaire.save()
+	dict = {
+		"act_type" : "vote",
+		"time" : 2016,
+		"user_id" : "1111111111"	
+		}
+	createNewQuestionaire(dict)
 
 def createNewQuestionaire(dict):
-	createDefaultUser()
+	if dict["user_id"] == "1111111111":
+		if not hasDefaultUser():
+			createDefaultUser()
 	TYPE = dict["act_type"]
 	switcher = {
 		"enroll" : "SU",
@@ -36,6 +44,11 @@ def createNewQuestionaire(dict):
 		"id" : currentQuestionaire.id
 	}
 	return return_dict
+
+def createSeveralTestQuestionaire():
+	for i in range(10):
+		createDefaultQuestionaire()
+
 
 def saveQuestionaireInfo(dict):
 	currentQuestionaire = Questionaire.objects.get(id = dict["act_id"])
@@ -56,9 +69,11 @@ def createNewQuestion(dict):
 		"mark" : "MA",
 		"sort" : "SO"
 	}
+	order = len(Question.objects.filter(questionaire_id = dict["act_id"])) + 1
 	currentQuestion = Question(
 		questionaire_id = Questionaire.objects.get(id = dict["act_id"]),
-		questionaire_type = switcher[TYPE]
+		question_type = switcher[TYPE],
+		question_order = dict["qst_rank"]
 		)
 	currentQuestion.save()
 	return_dict = {
@@ -66,3 +81,64 @@ def createNewQuestion(dict):
 		"id" : currentQuestion.id
 	}
 	return return_dict
+
+def createSeveralQuestions():
+	createSeveralTestQuestionaire()
+	dict = {
+		"qst_type" : "single",
+		"act_id" : 4,
+		"qst_rank" : 1
+	}
+	for i in range(10):
+		dict["qst_rank"] = i
+		createNewQuestion(dict)
+
+def operateQuestion(dict):
+	currentQuestion = Question.objects.get(id = dict["qst_id"])
+	currentQuestionaire = Questionaire.objects.get(id = dict["act_id"])
+	if dict['operation'] == "UP":
+		relatedQuestion = Question.objects.get(
+			question_order = currentQuestion.question_order - 1,
+			questionaire_id__id = dict["act_id"]
+			)
+		currentQuestion.question_order = currentQuestion.question_order - 1
+		relatedQuestion.question_order = relatedQuestion.question_order + 1
+		currentQuestion.save()
+		relatedQuestion.save()
+	if dict['operation'] == "DOWN":
+		relatedQuestion = Question.objects.get(
+			question_order = currentQuestion.question_order + 1,
+			questionaire_id__id = dict["act_id"]
+			)
+		currentQuestion.question_order = currentQuestion.question_order + 1
+		relatedQuestion.question_order = relatedQuestion.question_order - 1
+		currentQuestion.save()
+		relatedQuestion.save()
+	if dict['operation'] == "REMOVE":
+		relatedQuestionSet = Question.objects.filter(
+			question_order__gte = currentQuestion.question_order,
+			questionaire_id__id = dict["act_id"]
+			)
+		currentQuestion.delete()
+		for relatedQuestion in relatedQuestionSet:
+			relatedQuestion.question_order = relatedQuestion.question_order - 1
+			relatedQuestion.save()
+	return "ok"
+
+def deleteQuestionaire(dict):
+	currentQuestionaire = Questionaire.objects.get(id = dict["act_id"])
+	currentQuestionaire.delete()
+	return "ok"
+
+def saveQuestionaire(dict):
+	currentQuestionaire = Questionaire.objects.get(id = dict["act_id"])
+	currentQuestionaire.status = "SA"
+	currentQuestionaire.save()
+	return "ok"
+
+def publishQuestionaire(dict):
+	currentQuestionaire = Questionaire.objects.get(id = dict["act_id"])
+	currentQuestionaire.status = "LA"
+	currentQuestionaire.save()
+	return "ok"
+

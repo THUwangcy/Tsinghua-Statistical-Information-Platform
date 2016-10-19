@@ -110,10 +110,7 @@ def legalUser_design(request, type, act_id):
     elif type == 'vote':
         type_name = u'投票'
         type_icon = 'fa-list-alt'
-
-
     item_id = type + '-design-item'
-
     return render_ajax(request, 'legalUser/design/design.html', {
         'type': type,
         'design_type': type_name,
@@ -135,7 +132,6 @@ def legalUser_design_question(request, type, act_id):
         'rows': request.GET.get('rows'),
         'hint': request.GET.get('hint')
     }
-
     params['act_type'] = type
     params['act_id'] = act_id
     return render(request, question_url, params)
@@ -174,7 +170,6 @@ def user_information(request):
         'address': '清华大学紫荆公寓二号楼411B',
         'status': '做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心',
     }
-
     user_information_html = 'legalUser/information/user_information.html'
     return render_ajax(request, user_information_html, params, 'info-item-1')
 
@@ -421,6 +416,7 @@ def get_pagination(item_total, item_per_page, cur):
             'current': cur,
             'pages': pages}
     return page
+
 
 def questionnaire_publish_question(request, type, act_id):
     question_url = 'questionnaire/publish_qst/' + request.GET.get('questions_type') + '.html'

@@ -1,8 +1,1 @@
-status: none
-qst_type: fillin
-questions_id: 34
-fillin_row: 1
-fillin_check: 文本
-fillin_hint: 
-csrfmiddlewaretoken: As64oYUOYYDSsz3FfW6PWM8Ku89kpgaD
-qst_title: 请在此输入问
+1

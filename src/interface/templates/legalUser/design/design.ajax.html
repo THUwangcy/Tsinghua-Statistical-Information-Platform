@@ -1,3 +1,4 @@
+
 <script>
 
 
@@ -7,6 +8,7 @@
         var questions_params = {
             'questions_type': "default",
             'questions_id': 0
+
         };
 
         function createNewQst(qst_type) {
@@ -43,22 +45,27 @@
         $this.find("#single-question").click(function () {
             questions_params['questions_type'] = "single";
             createNewQst("single");
+
         })
         $this.find("#multi-question").click(function () {
             questions_params['questions_type'] = "multi";
             createNewQst("multi");
+
         })
         $this.find("#fillin-question").click(function () {
             questions_params['questions_type'] = "fillin";
             createNewQst("fillin");
+
         })
         $this.find("#vote-question").click(function () {
             questions_params['questions_type'] = "vote";
             createNewQst("vote");
+
         })
         $this.find("#mark-question").click(function () {
             questions_params['questions_type'] = "mark";
             createNewQst("mark");
+
         })
         $this.find("#sort-question").click(function () {
             questions_params['questions_type'] = "sort";

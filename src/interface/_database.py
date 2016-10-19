@@ -235,15 +235,7 @@ def get_questionnaire_byID(act_id):
     else:
         result = {'act_status': 'new'}
 
-
-
     return result
-
-
-
-
-
-
 
 
 def get_applications():
