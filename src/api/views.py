@@ -142,3 +142,19 @@ def modify_qst(request):
     return JsonResponse({
             'status': 'ok',
         })
+
+
+def create_new_notice(request):
+	# 这里从后端get问卷id
+
+	# 可用POST参数有
+	#	act_type: 问卷类型
+	#	time    : 时间
+	#   user_id : 所属用户的id，int
+	#dict = api.createNewQuestionaire(request.GET.dict())
+	Act_id = request.GET['time']
+	return JsonResponse({
+		'status': "ok",
+		'id': Act_id,
+	})
+

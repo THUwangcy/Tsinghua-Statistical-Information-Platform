@@ -41,6 +41,7 @@ urlpatterns = [
     #api
     url(r'^api/modify_name/?$', 'api.views.modify_name', name='api/modify_name'),
     url(r'^api/create_new_act/?$', 'api.views.create_new_act', name='api/create_new_act'),
+    url(r'^api/create_new_notice/?$', 'api.views.create_new_notice', name='api/create_new_notice'),
     url(r'^api/create_new_qst/?$', 'api.views.create_new_qst', name='api/create_new_qst'),
     url(r'^api/operation_qst/?$', 'api.views.operation_qst', name='api/operation_qst'),
     url(r'^api/remove_act/?$', 'api.views.remove_act', name='api/remove_act'),
@@ -63,4 +64,10 @@ urlpatterns = [
     #guest
     url(r'^guest/?$', 'interface.views.guest', name='guest'),
     url(r'^guest/dashboard/?$', 'interface.views.guest_dashboard', name='guest/dashboard'),
+
+    # manager
+    url(r'^manager/?$', 'interface.views.manager', name='manager'),
+    url(r'^manager/dashboard/?$', 'interface.views.manager_dashboard', name='manager/dashboard'),
+    url(r'^manager/design/(\w+)/?$', 'interface.views.manager_show_applications', name='manager/design'),
+    url(r'^manager/design/(\w+)/([0-9]+)/?$', 'interface.views.manager_design'),
 ]
