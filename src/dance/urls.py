@@ -52,7 +52,8 @@ urlpatterns = [
     url(r'^api/login_act/?$', 'api.views.login_act', name='api/login_act'),
 
     #userlist
-    url(r'^legalUser/login/?$', 'interface.views.login_page', name='legalUser/login'),
+    url(r'^/?$', 'interface.views.login_page', name='legalUser/login'),
+    url(r'^legalUser/logoff/?$', 'interface.views.log_off', name='legalUser/log_off'),
     url(r'^legalUser/information/?$', 'interface.views.user_information', name='legalUser/information'),
     url(r'^legalUser/information/change/?$', 'interface.views.user_information_change', name='legalUser/information_change'),
 

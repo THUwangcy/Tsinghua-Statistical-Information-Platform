@@ -149,7 +149,15 @@ def show_modal(request):
             'id': id,
         })
 
+
+def log_off(request):
+    session.del_session(request)
+    return login_page(request)
+
+
 def login_page(request):
+    if session.get_identity(request) == 'legalUser':
+        return legalUser(request)
     log_page_html = 'legalUser/login/log_page.html'
     return render(request, log_page_html)
 
@@ -194,7 +202,7 @@ def questionnaire(request, act_id):
 
 
 def guest(request):
-    request.session.set_expiry(1)
+    request.session.del_session(request)
     return guest_dashboard(request)
 
 
