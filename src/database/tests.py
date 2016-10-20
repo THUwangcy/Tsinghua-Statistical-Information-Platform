@@ -24,7 +24,7 @@ class createNewQuestionaireTest(TestCase):
 	def test_use(self):
 		dict = {
 		"act_type" : "vote",
-		"time" : 2016,
+		"time" : "2016",
 		"user_id" : "1111111111"	
 		}
 		return_dict = createNewQuestionaire(dict)
@@ -104,4 +104,9 @@ class QuestionOperateTest(TestCase):
 		questionSet = Question.objects.all()
 		for qst in questionSet:
 			print "id = " + str(qst.id) + " order = " + str(qst.question_order)
+
+class getQuestionaireTest(TestCase):
+	"""docstring for getQuestionaireTest"""
+
+		
 # Create your tests here.

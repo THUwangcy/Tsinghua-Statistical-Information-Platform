@@ -64,7 +64,7 @@ class Questionaire(models.Model):
     questionaire_introduction = models.TextField(default = u"没有说明")
     questionaire_status = models.CharField(max_length = 2, choices = STATUS, default = INIT)
     questionaire_type = models.CharField(max_length = 2, choices = TYPES, default = SIGN_UP)
-    questionaire_time = models.IntegerField()
+    questionaire_time = models.CharField(max_length = 50, default = "2016")
     questionaire_ip = models.GenericIPAddressField(null = True)
     questionaire_numOfQues = models.IntegerField(default = 0)
     questionaire_numOfFilled = models.IntegerField(default = 0)
