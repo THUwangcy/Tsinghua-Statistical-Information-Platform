@@ -156,7 +156,7 @@ def getQuestionaireListByStatus(str):
 def makeQuestionaireList(List):
 	returnList = list()
 	for Questionaire in List:
-		returnList.add(makeQuestionaireInfo(Questionaire))
+		returnList.append(makeQuestionaireInfo(Questionaire))
 	return returnList
 
 def makeQuestionaireInfo(Questionaire):
@@ -179,3 +179,4 @@ def makeQuestionaireInfo(Questionaire):
 		"description" : Questionaire.questionaire_introduction,
 		"fillin" : Questionaire.questionaire_numOfFilled
 	}
+	return dict
