@@ -17,6 +17,7 @@ from django.utils import timezone
 import session
 import _database
 from database import backend
+from api import views
 
 # Create your views here.
 
@@ -96,7 +97,7 @@ def legalUser_show_applications_list(request, type):
 
 def legalUser_design(request, type, act_id):
     
-    act_info = _database.get_questionnaire_byID(act_id)
+    act_info = views.get_questionnaire_byID(act_id)
 
     if act_info['act_status'] == 'pending':
         type = act_info['act_type'] 

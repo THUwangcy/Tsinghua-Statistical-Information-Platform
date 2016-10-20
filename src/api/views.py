@@ -19,6 +19,8 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils import timezone
 
+from interface import _database
+
 # Create your views here.
 
 
@@ -170,4 +172,9 @@ def login_act(request):
         return JsonResponse(dict(status='wrong username or password'))
     return JsonResponse(dict(status='ok', identity=identity))
 
+
+def get_questionnaire_byID(act_id):
+	#act_id:问卷id
+	result = _database.get_questionnaire_byID(act_id)
+	return result
 
