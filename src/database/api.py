@@ -18,7 +18,7 @@ def hasDefaultUser():
 def createDefaultQuestionaire():
 	dict = {
 		"act_type" : "vote",
-		"time" : 2016,
+		"time" : "2016",
 		"user_id" : "1111111111"	
 		}
 	createNewQuestionaire(dict)
@@ -52,10 +52,10 @@ def createSeveralTestQuestionaire():
 
 def saveQuestionaireInfo(dict):
 	currentQuestionaire = Questionaire.objects.get(id = dict["act_id"])
-	currentQuestionaire.title = dict["title"]
-	currentQuestionaire.introduction = dict["description"]
+	currentQuestionaire.questionaire_title = dict["title"]
+	currentQuestionaire.questionaire_introduction = dict["description"]
 	currentQuestionaire.save()
-	if (currentQuestionaire.introduction == dict["description"]) & (currentQuestionaire.title == dict["title"]):
+	if (currentQuestionaire.questionaire_introduction == dict["description"]) & (currentQuestionaire.questionaire_title == dict["title"]):
 		return "ok"
 	return "error"
 
@@ -132,13 +132,51 @@ def deleteQuestionaire(dict):
 
 def saveQuestionaire(dict):
 	currentQuestionaire = Questionaire.objects.get(id = dict["act_id"])
-	currentQuestionaire.status = "SA"
+	currentQuestionaire.questionaire_status = "SA"
 	currentQuestionaire.save()
 	return "ok"
 
 def publishQuestionaire(dict):
 	currentQuestionaire = Questionaire.objects.get(id = dict["act_id"])
-	currentQuestionaire.status = "LA"
+	currentQuestionaire.questionaire_status = "LA"
 	currentQuestionaire.save()
 	return "ok"
 
+def getQuestionaireListByStatus(str):
+	switcher  = {
+		"pending" : "SA",
+		"already" : "LA",
+		"all" : "AL"
+	}
+	if switcher[str] == "AL":
+		return makeQuestionaireList(Questionaire.objects.all())
+	else:
+		return makeQuestionaireList(Questionaire.objects.filter(questionaire_status = switcher[str]))
+
+def makeQuestionaireList(List):
+	returnList = list()
+	for Questionaire in List:
+		returnList.append(makeQuestionaireInfo(Questionaire))
+	return returnList
+
+def makeQuestionaireInfo(Questionaire):
+	status_switcher = {
+		"SA" : "pending",
+		"LA" : "already",
+		"IN" : "new"
+	}
+	type_switcher = {
+		"VO" : "vote",
+		"LW" : "recruit",
+		"SU" : "enroll"
+	}
+	dict = {
+		"name" : Questionaire.questionaire_title,
+		"subscribe_time" : Questionaire.questionaire_time,
+		"status" : status_switcher[Questionaire.questionaire_status],
+		"type" : type_switcher[Questionaire.questionaire_type],
+		"id" : Questionaire.id,
+		"description" : Questionaire.questionaire_introduction,
+		"fillin" : Questionaire.questionaire_numOfFilled
+	}
+	return dict
