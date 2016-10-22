@@ -1,5 +1,5 @@
 status: none
-act_id: 1
-csrfmiddlewaretoken: OCDyXLxQshofsiTLEHqdpOuhCLzRjLqC
-description: 找个女朋友陪我过十一QAQ
-title: 诚招女友 欢迎报名
+act_id: 5
+csrfmiddlewaretoken: As64oYUOYYDSsz3FfW6PWM8Ku89kpgaD
+description: 假装有活动
+title: XX活动

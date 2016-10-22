@@ -1,3 +1,4 @@
-"log_username":"admin"
+"qst1":"option1"
+"qst2":"sss"
+"act_id":"3"
 "csrfmiddlewaretoken":"As64oYUOYYDSsz3FfW6PWM8Ku89kpgaD"
-"log_password":"123456"

@@ -1,13 +1,13 @@
 {% extends 'questionnaire/publish_qst/index.html' %}
 
 {% block title%}
-
-    <label for="name" id="single_title">请在此输入问题标题</label>
+<div class="col-xs-12 form-group">
+    <label for="name" id="single_title" class="control-label" >请在此输入问题标题</label>
     <div id="radio-list">
         <div class="radio">
             &emsp;
             <label>
-            <input type="radio" name="option{{ questions_id }}" id="optionsRadios1" value="option1">
+            <input type="radio" name="option{{ questions_id }}" id="optionsRadios1" value="option1" class="form-control">
                 <label for="this.prev();">选项 1</label>
             </label>
         </div>
@@ -15,12 +15,12 @@
         <div class="radio">
             &emsp;
             <label>
-            <input type="radio" name="option{{ questions_id }}" id="optionsRadios2" value="option2">
+            <input type="radio" name="option{{ questions_id }}" id="optionsRadios2" value="option2" class="form-control">
                 <label for="this.prev();">选项 2</label>
             </label>
         </div>
     </div>
-
+</div>
     <script>
         $(document).ready(function(){
 
@@ -35,7 +35,7 @@
                     $(this).remove();
                 });
                 
-                var option_name = 'option' + '{{ questions_id }}';
+                var option_name = 'qst' + '{{ questions_id }}';
                 var prefix = '<div class="radio">\
                                 &emsp;\
                                 <label>\

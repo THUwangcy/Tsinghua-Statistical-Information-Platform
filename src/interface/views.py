@@ -192,12 +192,52 @@ def user_information_change(request):
     return render_ajax(request, user_information_change_html, params, 'info-item-2')
 
 
-def questionnaire(request, act_id):
-    params = {
-        'act_id': act_id,
-    }
-    return render(request, 'questionnaire/questionnaire.html', params)
 
+def questionnaire(request, act_id):
+    act_info = _database.get_questionnaire_byID(act_id)
+
+    if act_info['act_status'] == 'pending':
+        type = act_info['act_type']
+    else:
+        type = 'wrong' #需添加未发布问卷错误处理
+
+    if type == 'enroll':
+        type_name = u'报名/统计表'
+        type_icon = 'fa-tasks'
+    elif type == 'recruit':
+        type_name = u'实验室招募'
+        type_icon = 'fa-check'
+    elif type == 'vote':
+        type_name = u'投票'
+        type_icon = 'fa-list-alt'
+
+    item_id = type + '-design-item'
+
+    return render_ajax(request, 'questionnaire/questionnaire.html', {
+        'type': type,
+        'design_type': type_name,
+        'design_icon': type_icon,
+        'act_id': act_id,
+        'act_info': act_info
+    }, item_id)
+
+
+def questionnaire_publish_question(request, type, act_id):
+    question_url = 'questionnaire/publish_qst/' + request.GET.get('questions_type') + '.html'
+    params = {}
+    params = {
+        'questions_type': request.GET.get('questions_type'),
+        'questions_title': request.GET.get('questions_title'),
+        'questions_id': request.GET.get('questions_id'),
+        'option_num': request.GET.get('option_num'),
+        'option': request.GET.get('option'),
+        'rows': request.GET.get('rows'),
+        'hint': request.GET.get('hint')
+    }
+
+    params['act_type'] = type
+    params['act_id'] = act_id
+    return render(request, question_url, params)
 
 def guest(request):
     session.del_session(request)
@@ -422,47 +462,4 @@ def get_pagination(item_total, item_per_page, cur):
     return page
 
 
-def questionnaire_publish_question(request, type, act_id):
-    question_url = 'questionnaire/publish_qst/' + request.GET.get('questions_type') + '.html'
-    params = {}
-    params = {
-        'questions_type': request.GET.get('questions_type'),
-        'questions_title': request.GET.get('questions_title'),
-        'questions_id': request.GET.get('questions_id'),
-        'option_num': request.GET.get('option_num'),
-        'option': request.GET.get('option'),
-        'rows': request.GET.get('rows'),
-        'hint': request.GET.get('hint')
-    }
 
-    params['act_type'] = type
-    params['act_id'] = act_id
-    return render(request, question_url, params)
-
-def questionnaire(request, act_id):
-    act_info = _database.get_questionnaire_byID(act_id)
-
-    if act_info['act_status'] == 'pending':
-        type = act_info['act_type']
-    else:
-        type = 'wrong' #需添加未发布问卷错误处理
-
-    if type == 'enroll':
-        type_name = u'报名/统计表'
-        type_icon = 'fa-tasks'
-    elif type == 'recruit':
-        type_name = u'实验室招募'
-        type_icon = 'fa-check'
-    elif type == 'vote':
-        type_name = u'投票'
-        type_icon = 'fa-list-alt'
-
-    item_id = type + '-design-item'
-
-    return render_ajax(request, 'questionnaire/questionnaire.html', {
-        'type': type,
-        'design_type': type_name,
-        'design_icon': type_icon,
-        'act_id': act_id,
-        'act_info': act_info
-    }, item_id)

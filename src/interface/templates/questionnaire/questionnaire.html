@@ -1,9 +1,86 @@
 {% extends 'questionnaire/index.html' %}
 
 {% block main-page %}
-<div class="row">
+<div class="row" id="questionnaire_content" aria-labelledby="questionnaire_content">
     <div class="col-md-10">
-        {% include 'questionnaire/questionnaire_list.html' %}
+        <div class="panel panel-default hover_heading" style="border='0'">
+            <div class="panel-body heading">
+                <div class="row">
+                    <h4 class="col-xs-12" align="center" id="qst_title">
+                            {{act_info.act_title}}
+                    </h4>
+
+                    <div class="col-xs-12 textarea_display" id="qst_description" style="width:100%">
+                        </br>{{act_info.act_description}}
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+            {% block content-before %}
+            {% endblock content-before %}
+            <form id="questionnaire-submit-form" class="form form-vertical" role="form" data-toggle="validator">
+                {% csrf_token %}
+                <input name="act_id" type="text" style="display: none;" value="{{act_id}}">
+                <div class="modal-body">
+                    <div class="control-group row">
+                        <ol class="questions-list">
+                            <li class="question last-question">
+
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                    <hr>
+                <div class="modal-footer">
+                    <div id="submit-button-field">
+                            <button type="submit" class="btn btn-primary btn-block form-btn" style="font-size: 15px">
+                                完成
+                            </button>
+                    </div>
+                </div>
+            </form>
+        {% block content-after %}
+        {% endblock content-after %}
+
+        {% for qst in act_info.questions %}
+
+            <script>
+
+                pre_info_param = {
+                    'questions_type': '{{qst.qst_type}}',
+                    'questions_title': '{{qst.qst_title}}',
+                    'questions_id': '{{qst.qst_id}}',
+                    'option_num': '{{qst.option_num}}',
+                    'option': '{{qst.option}}',
+                    'rows': '{{ qst.rows }}',
+                    'hint':'{{ qst.hint }}'
+                }
+
+                loadContentOn($(".last-question"), "{% url 'questionnaire/publish_qst' type act_id%}", pre_info_param, {anim: false, scroll: false});
+                $(".last-question").removeClass("last-question");
+                $(".questions-list").append('<li class="question last-question">\
+                                                \
+                                             </li>');
+            </script>
+
+        {% endfor %}
+
     </div>
 </div>
+
+
+<script>
+
+    $("#questionnaire_content").ready(function () {
+        handleFormPost("#questionnaire-submit-form", "{% url 'api/qst_submit' %}", {
+            success_callback: function (data) {
+                if (data['status'] === 'ok') {
+                }
+            }
+        });
+    });
+</script>
+
 {% endblock main-page %}
