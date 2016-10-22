@@ -28,7 +28,10 @@ def legalUser(request):
     return legalUser_dashboard(request)
 
 def legalUser_dashboard(request):
-    pending_applications = _database.get_pending_applications()
+
+    username = session.get_username(request)
+
+    pending_applications = views.get_questionnaire_bySTATUS('pending', username)
     pending_count = len(pending_applications)
 
     show_all_pending_applications = False
@@ -38,7 +41,7 @@ def legalUser_dashboard(request):
 
     official_accounts = _database.get_official_accounts()
 
-    activities = _database.get_already_applications()
+    activities = views.get_questionnaire_bySTATUS('already', username)
     articles_count = len(activities)
 
     #category = MessageCategory.ToAdmin
@@ -88,7 +91,8 @@ def legalUser_show_applications(request, type):
 
 
 def legalUser_show_applications_list(request, type):
-    applications = _database.get_all_applications()
+    username = session.get_username(request)
+    applications = views.get_questionnaire_bySTATUS('all', username)
     return render_sortable(request, applications,
                            'legalUser/applications/applications_content.html', {
                                'type': type

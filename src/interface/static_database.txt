@@ -1,5 +1,8 @@
-status: none
-act_id: 1
-csrfmiddlewaretoken: OCDyXLxQshofsiTLEHqdpOuhCLzRjLqC
-description: 找个女朋友陪我过十一QAQ
-title: 诚招女友 欢迎报名
+status: already
+fillin: 0
+subscribe_time: 2016
+description: 假装有活动说明
+type: enroll
+id: 15
+name: XX活
+

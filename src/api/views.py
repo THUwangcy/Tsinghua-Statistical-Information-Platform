@@ -98,6 +98,7 @@ def save_act(request):
     file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
     Act_id = request.GET['act_id']
     file_object.writelines("Save: " + Act_id + "\n")
+    status = api.saveQuestionaire(request.GET.dict())
     return JsonResponse({
         'status': 'ok',
     })
@@ -176,5 +177,39 @@ def login_act(request):
 def get_questionnaire_byID(act_id):
 	#act_id:问卷id
 	result = _database.get_questionnaire_byID(act_id)
+	return result
+
+
+def get_questionnaire_bySTATUS(status, username):
+	#status: 问卷状态
+	#username: 用户名
+	result = api.getQuestionaireListByStatus(status)
+	file_object = open(os.path.abspath('.') + '/interface/static_database.txt' , 'w')
+
+    
+	for item in result:
+		for key in item:
+			file_object.writelines(key + ": " + str(item[key]) + "\n")
+		
+		if item['status'] == 'already':
+			item['status_display'] = {
+                 'colorclass': 'success',
+                 'icon': 'fa-check',
+                 'name': u'已发布'
+             }
+		elif item['status'] == 'pending':
+			item['status_display'] = {
+	                'colorclass': 'warning',
+	                'icon': 'fa-cogs',
+	                'name': u'待发布'
+	             }
+		file_object.writelines("\n")
+	file_object.close()
+#	if status == 'pending':
+#		result = _database.get_pending_applications()
+#	elif status == 'already':
+#		result = _database.get_already_applications()
+#	elif status == 'all':
+#		result = _database.get_all_applications()
 	return result
 
