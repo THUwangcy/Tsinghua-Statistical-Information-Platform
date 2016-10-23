@@ -61,14 +61,20 @@ urlpatterns = [
     #questionnaire
     url(r'^questionnaire/([0-9]+)/?$', 'interface.views.questionnaire', name='questionnaire'),
     url(r'^questionnaire/(\w+)/([0-9]+)/publish_qst/?$', 'interface.views.questionnaire_publish_question', name='questionnaire/publish_qst'),
+    url(r'^fillin/questionnaire/([0-9]+)/([0-9]+)/?$', 'interface.views.fillin_questionnaire', name='fillin/questionnaire'),
 
     #guest
     url(r'^guest/?$', 'interface.views.guest', name='guest'),
     url(r'^guest/dashboard/?$', 'interface.views.guest_dashboard', name='guest/dashboard'),
 
-    # manager
+    #manager
     url(r'^manager/?$', 'interface.views.manager', name='manager'),
     url(r'^manager/dashboard/?$', 'interface.views.manager_dashboard', name='manager/dashboard'),
     url(r'^manager/design/(\w+)/?$', 'interface.views.manager_show_applications', name='manager/design'),
     url(r'^manager/design/(\w+)/([0-9]+)/?$', 'interface.views.manager_design'),
+
+    #statistics
+    url(r'^statistics/?$', 'interface.views.show_statistics_choose', name='statistics'),
+    url(r'^statistics/([0-9]+)/?$', 'interface.views.show_statistics', name='statistics/id'),
+    url(r'^statistics/([0-9])+/paticipants', 'interface.views.show_paticipants_list', name='statistics/participants'),
 ]

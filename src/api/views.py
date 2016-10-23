@@ -213,3 +213,14 @@ def get_questionnaire_bySTATUS(status, username):
 #		result = _database.get_all_applications()
 	return result
 
+def get_participants(act_id):
+    #act_id: 问卷id
+    result = _database.get_participants()
+    return result
+
+def get_result_of_question(act_id, qst_id, fillin_id):
+    #act_id: 问卷id
+    #qst_id: 问题id
+    #fillin_id: 填写id
+    result = _database.get_result_of_question(act_id, qst_id, fillin_id)
+    return result

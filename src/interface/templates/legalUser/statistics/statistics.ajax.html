@@ -1,0 +1,37 @@
+<div class="top-row hidden-xs">
+
+    <a>&nbsp</a>
+    <a class="fake-link pull-right">
+        <strong>统计信息　<i class="fa fa-bar-chart fa-fw"></i></strong>
+    </a>
+</div>
+<hr class="hidden-xs">
+
+
+<ul class="nav nav-tabs">
+    <li role="presentation" class="active">
+        <a href="#oa-chart" data-toggle="tab">填写情况</a>
+    </li>
+    <li role="presentation">
+        <a href="#article-chart" data-toggle="tab">数据分析</a>
+    </li>
+    <li role="presentation">
+        <a href="#history-chart" data-toggle="tab">单题信息</a>
+    </li>
+</ul>
+<div class="tab-content" data-loading="true">
+    <div id="oa-chart" class="tab-pane fade active in">
+        {% include 'legalUser/statistics/paticipants/paticipants_list.html' %}
+        <div class="pull-right" style="font-size: 8px;">
+            数据来源：<a href="http://www.gsdata.cn/">新媒体指数</a>；无法获取到对应数据的日期不会在图表中显示。
+        </div>
+    </div>
+    <div id="article-chart" class="tab-pane fade">
+
+    </div>
+    <div id="history-chart" class="tab-pane fade">
+
+    </div>
+</div>
+
+

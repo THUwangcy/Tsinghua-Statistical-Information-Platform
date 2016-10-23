@@ -1,0 +1,41 @@
+<div class="top-row hidden-xs">
+
+    <a>&nbsp</a>
+    <a class="fake-link pull-right">
+        <strong>统计信息　<i class="fa fa-bar-chart fa-fw"></i></strong>
+    </a>
+</div>
+<hr class="hidden-xs">
+<div class="panel panel-default" id="main-statistic-page">
+    <div class="panel-heading">
+        <h4>请选择要查看的报名<span class="badge pull-right">{{ activities|length }}</span></h4></div>
+    <div class="panel-body">
+        <label class="control-label">选择报名</label>
+
+        <select id="statistics_choose_field" name="statistics_choose" class="form-control"
+                  style="resize: vertical;">
+            {% for app in activities %}
+                <option>{{ app.name }} (ID: {{ app.id }}) </option>
+            {% endfor %}
+        </select>
+        <br>
+        <button type="button" class="btn pull-right" id="statistics_choose_btn" style="font-size: 15px;background: #18bc9c;color: #FFF;">完成</button>
+
+    </div>
+</div>
+
+<script>
+    $("#main-statistic-page").ready(function() {
+
+        $("#statistics_choose_btn").click(function() {
+            var select = $("#statistics_choose_field").val();
+            var ID_index = select.lastIndexOf('ID:');
+            var length = select.length;
+            var select_id = select.substr(ID_index + 4, length - ID_index - 5);
+            var url = "{% url 'statistics/id' 1234 %}";
+
+            url = url.replace('1234', select_id);
+            loadContent(url, {}, "#statistics-list-item");
+        })
+    });
+</script>

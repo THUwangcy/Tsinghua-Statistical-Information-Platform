@@ -210,7 +210,9 @@ def guest(request):
 
 
 def guest_dashboard(request):
-    pending_applications = _database.get_pending_applications()
+    username = session.get_username(request)
+
+    pending_applications = views.get_questionnaire_bySTATUS('pending', username)
     pending_count = len(pending_applications)
 
     show_all_pending_applications = False
@@ -220,7 +222,7 @@ def guest_dashboard(request):
 
     official_accounts = _database.get_official_accounts()
 
-    activities = _database.get_already_applications()
+    activities = views.get_questionnaire_bySTATUS('already', username)
     articles_count = len(activities)
 
     # category = MessageCategory.ToAdmin
@@ -247,7 +249,9 @@ def manager(request):
     return manager_dashboard(request)
 
 def manager_dashboard(request):
-    pending_applications = _database.get_pending_applications()
+    username = session.get_username(request)
+
+    pending_applications = views.get_questionnaire_bySTATUS('pending', username)
     pending_count = len(pending_applications)
 
     show_all_pending_applications = False
@@ -257,7 +261,7 @@ def manager_dashboard(request):
 
     official_accounts = _database.get_official_accounts()
 
-    activities = _database.get_already_applications()
+    activities = views.get_questionnaire_bySTATUS('already', username)
     articles_count = len(activities)
 
     # category = MessageCategory.ToAdmin
@@ -319,6 +323,28 @@ def manager_design(request, type, act_id):
     }, item_id)
 
 
+def show_statistics_choose(request):
+    username = session.get_username(request)
+    activities = views.get_questionnaire_bySTATUS('already', username)
+    return render_ajax(request, 'legalUser/statistics/statistics_choose.html', {
+        'activities': activities
+    }, 'statistics-list-item')
+
+
+def show_statistics(request, act_id):
+    act_info = views.get_questionnaire_byID(act_id)
+    return render_ajax(request, 'legalUser/statistics/statistics.html', {
+        'act_id': act_id,
+        'act_info': act_info
+    }, 'statistics-list-item')
+
+def show_paticipants_list(request, act_id):
+    applications = views.get_participants(act_id)
+    return render_sortable(request, applications,
+                           'legalUser/statistics/paticipants/paticipants_content.html', {
+                               'act_id': act_id
+                           })
+
 #----------------------------分割线--------------------------------#
 
 def render_ajax(request, url, params, item_id=''):
@@ -377,8 +403,10 @@ def render_sortable(request, items, url, params=None):
     #search操作，今后要在数据库中
     modify_items = []
     for item in items:
-        if search_keyword in item['name'] or search_keyword in item['description']:
-            modify_items.append(item)
+        for key in item:
+            if search_keyword in str(item[key]):
+                modify_items.append(item)
+                break
 
     items = modify_items
 
@@ -436,15 +464,19 @@ def questionnaire_publish_question(request, type, act_id):
         'option_num': request.GET.get('option_num'),
         'option': request.GET.get('option'),
         'rows': request.GET.get('rows'),
-        'hint': request.GET.get('hint')
+        'hint': request.GET.get('hint'),
+        'fillin_id': request.GET.get('fillin_id')
     }
+    if request.GET.get('fillin_id') != None:
+        fillin_result = views.get_result_of_question(act_id, request.GET.get('questions_id'), request.GET.get('fillin_id'))
+        params['result'] = fillin_result
 
     params['act_type'] = type
     params['act_id'] = act_id
     return render(request, question_url, params)
 
 def questionnaire(request, act_id):
-    act_info = _database.get_questionnaire_byID(act_id)
+    act_info = views.get_questionnaire_byID(act_id)
 
     if act_info['act_status'] == 'pending':
         type = act_info['act_type']
@@ -470,3 +502,14 @@ def questionnaire(request, act_id):
         'act_id': act_id,
         'act_info': act_info
     }, item_id)
+
+
+def fillin_questionnaire(request, act_id, fillin_id):
+    act_info = views.get_questionnaire_byID(act_id)
+
+    return render(request, 'questionnaire/questionnaire.html', {
+        'act_id': act_id,
+        'act_info': act_info,
+        'fillin_id': fillin_id,
+        'type': 'pending'
+    })

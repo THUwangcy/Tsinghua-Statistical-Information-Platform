@@ -16,7 +16,7 @@ def get_pending_applications():
              'subscribe_time': '2016.10.01',
              'status': 'pending',
              'type': 'recruit',
-             'id': 1,
+             'id': 1000,
              'description': u'找个女朋友陪我过十一QAQ',
              'status_display': {
                 'colorclass': 'warning',
@@ -28,7 +28,7 @@ def get_pending_applications():
              'subscribe_time': '2016.10.04',
              'status': 'pending',
              'type': 'vote',
-             'id': 2,
+             'id': 2000,
              'status_display': {
                 'colorclass': 'warning',
                 'icon': 'fa-cogs',
@@ -41,7 +41,7 @@ def get_pending_applications():
              'subscribe_time': '2016.10.05',
              'status': 'pending',
              'type': 'enroll',
-             'id': 3,
+             'id': 3000,
              'description': u'半藏：当然了我的弟',
              'status_display': {
                 'colorclass': 'warning',
@@ -122,6 +122,33 @@ def get_all_applications():
     pending += pending
     return pending
 
+def get_participants():
+    item1 = {
+        'id': 1,
+        'fillin_time': '2016.10.06',
+        'ip': '127.0.0.1',
+        'city': u'北京'
+    }
+    item2 = {
+        'id': 2,
+        'fillin_time': '2016.10.06',
+        'ip': '127.0.0.1',
+        'city': u'北京'
+    }
+    item3 = {
+        'id': 3,
+        'fillin_time': '2016.10.06',
+        'ip': '127.0.0.1',
+        'city': u'北京'
+    }
+    item4 = {
+        'id': 4,
+        'fillin_time': '2016.10.06',
+        'ip': '127.0.0.1',
+        'city': u'北京'
+    }
+    return [item1, item2, item3, item4]
+
 def get_official_accounts_with_unprocessed_messages():
     item1 = {'name': u'旗鼓相当的对手',
              'message': u'快看公告！'
@@ -138,7 +165,7 @@ def get_announcement():
 
 def get_questionnaire_byID(act_id):
     result = {}
-    if act_id == '1':
+    if act_id == '1000':
         act_type = 'recruit'
         act_status = 'pending'
         act_title = u'诚招女友 欢迎报名'
@@ -167,7 +194,7 @@ def get_questionnaire_byID(act_id):
                   'qst_num': qst_num,
                   'questions': questions
                   }
-    elif act_id == '2':
+    elif act_id == '2000':
         act_type = 'vote'
         act_status = 'pending'
         act_title = u'名字一定要长名字一定要长名字一定要长'
@@ -202,7 +229,7 @@ def get_questionnaire_byID(act_id):
                   'qst_num': qst_num,
                   'questions': questions
                   }
-    elif act_id == '3':
+    elif act_id == '3000':
         act_type = 'enroll'
         act_status = 'pending'
         act_title = u'源：厉害了我的哥'
@@ -236,6 +263,20 @@ def get_questionnaire_byID(act_id):
         result = {'act_status': 'new'}
 
     return result
+
+
+def get_result_of_question(act_id, qst_id, fillin_id):
+    result = ''
+    if act_id == '1000':
+        if qst_id == '1':
+            if fillin_id == '1':
+                result = 2
+            else:
+                result = 1
+        else:
+            result = 1
+    return result
+
 
 
 def get_applications():

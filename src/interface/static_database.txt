@@ -1,8 +1,40 @@
 status: already
 fillin: 0
-subscribe_time: 2016
+subscribe_time: 2016.10.23
 description: 假装有活动说明
 type: enroll
-id: 15
-name: XX活
+id: 34
+name: XX活动报名
+
+status: already
+fillin: 0
+subscribe_time: 2016.10.23
+description: 假装有活动说明
+type: recruit
+id: 35
+name: XX实验志愿者招募
+
+status: already
+fillin: 0
+subscribe_time: 2016.10.23
+description: 假装有活动说明
+type: vote
+id: 36
+name: 票选最XXXX
+
+status: already
+fillin: 0
+subscribe_time: 2016.10.23
+description: 没有说明
+type: vote
+id: 37
+name: 
+
+status: already
+fillin: 0
+subscribe_time: 2016.10.23
+description: 没有说明
+type: recruit
+id: 38
+name: 
 

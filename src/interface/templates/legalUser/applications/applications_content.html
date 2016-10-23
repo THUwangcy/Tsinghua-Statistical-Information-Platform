@@ -64,7 +64,7 @@
                                 </a>
                             </li>
                             <li style="width: 25%" align="center">
-                                <a class="fake-link" href="javascript:showConfirmModal('删除报名', '确定要删除吗？')" >
+                                <a class="fake-link" href="javascript:remove_act('{{app.id}}', '{% url 'api/remove_act' %}', '#all-applications-item')" >
                                     <i class="fa fa-trash fa-fw fa-2x" aria-hidden="true"></i> 删除
                                 </a>
                             </li>
@@ -80,7 +80,7 @@
                                 </a>
                             </li>
                             <li style="width: 30%" align="center">
-                                <a class="fake-link" href="javascript:showConfirmModal('删除报名', '确定要删除吗？')" >
+                                <a class="fake-link" href="javascript:remove_act('{{app.id}}', '{% url 'api/remove_act' %}', '#all-applications-item')" >
                                     <i class="fa fa-trash fa-fw fa-2x" aria-hidden="true"></i> 删除
                                 </a>
                             </li>

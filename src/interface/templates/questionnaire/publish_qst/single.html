@@ -23,7 +23,6 @@
 
     <script>
         $(document).ready(function(){
-
             var source_panel_body = $("#qst{{ questions_id }}");
             if('{{questions_title}}' != 'None')
                 source_panel_body.find("#single_title").html('{{questions_title}}');
@@ -50,6 +49,11 @@
                                         </lable>\
                                     </div>';
                     source_panel_body.find("#radio-list").append(to_append);
+                }
+
+                //判断是否是已填写的问卷
+                if('{{ result }}' != '') {
+                    source_panel_body.find("#optionsRadios" + '{{ result }}').attr("checked",'checked');
                 }
 
             }
