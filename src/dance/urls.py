@@ -30,6 +30,11 @@ urlpatterns = [
     url(r'^legalUser/applications/(\w+)/list/?$', 'interface.views.legalUser_show_applications_list',
         name='legalUser/applications-list'),
 
+    url(r'^manager/applications/activities/?$', 'interface.views.manager_all_activities',
+        name='manager/applications_activities'),
+    url(r'^manager/applications/activities/list/?$', 'interface.views.manager_all_activities_list',
+        name='manager/applications_activities_list'),
+
     #design
     url(r'^legalUser/design/(\w+)/?$', 'interface.views.legalUser_show_applications', name='legalUser/design'),
     url(r'^legalUser/design/(\w+)/([0-9]+)/?$', 'interface.views.legalUser_design', name='legalUser/design/id'),
@@ -69,6 +74,4 @@ urlpatterns = [
     # manager
     url(r'^manager/?$', 'interface.views.manager', name='manager'),
     url(r'^manager/dashboard/?$', 'interface.views.manager_dashboard', name='manager/dashboard'),
-    url(r'^manager/design/(\w+)/?$', 'interface.views.manager_show_applications', name='manager/design'),
-    url(r'^manager/design/(\w+)/([0-9]+)/?$', 'interface.views.manager_design'),
 ]

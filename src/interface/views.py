@@ -237,9 +237,11 @@ def guest_dashboard(request):
         'show_all_pending_applications': show_all_pending_applications
     }, 'dashboard-item')
 
+
 #manageUser
 def manager(request):
     return manager_dashboard(request)
+
 
 def manager_dashboard(request):
     pending_applications = _database.get_pending_applications()
@@ -275,33 +277,17 @@ def manager_dashboard(request):
     }, 'dashboard-item')
 
 
-def manager_show_applications(request, type):
-    if type == 'pending':
-        type_name = u'待发布报名'
-        type_icon = 'fa-tasks'
-    elif type == 'already':
-        type_name = u'我发布的报名'
-        type_icon = 'fa-check'
-    elif type == 'all':
-        type_name = u'所有报名'
-        type_icon = 'fa-th-list'
-    elif type == 'trash':
-        type_name = u'已删除报名'
-        type_icon = 'fa-trash'
-    else:
-        type_name = ''
-        type_icon = ''
-    item_id = type + '-applications-item'
-
-    return render_ajax(request, 'legalUser/applications/applications.html', {
-        'type': type,
-        'application_type': type_name,
-        'application_icon': type_icon
-    }, item_id)
+def manager_all_activities(request):
+    return render_ajax(request, 'manager/application/applications.html', {}, 'all-questionnaire-item')
 
 
+def manager_all_activities_list(request):
+    applications = _database.get_activities()
+    return render_sortable(request, applications,
+                           'manager/application/applications_content.html')
 
-def manager_design(request, type, act_id):
+
+def manager_design(request, type, act_id=0):
     if type == 'notice':
         type_name = u'公告'
         type_icon = 'fa-tasks'

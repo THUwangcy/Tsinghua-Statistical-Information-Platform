@@ -268,6 +268,7 @@ function loadContentOn(container, url, params, load_params, callback) {
             });
         },
         error: function (xhr, textStatus, errorThrown) {
+            alert("error!!!!!!!!!!!");
             clearTimeout(loadSpinnerTimer);
             displayContent('\
                 <div class="alert alert-danger" role="alert">\
