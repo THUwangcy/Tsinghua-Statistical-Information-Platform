@@ -142,16 +142,16 @@ def publishQuestionaire(dict):
 	currentQuestionaire.save()
 	return "ok"
 
-def getQuestionaireListByStatus(str):
+def getQuestionaireListByStatus(dict):
 	switcher  = {
 		"pending" : "SA",
 		"already" : "LA",
 		"all" : "AL"
 	}
-	if switcher[str] == "AL":
-		return makeQuestionaireList(Questionaire.objects.all())
+	if switcher[dict["status"]] == "AL":
+		return makeQuestionaireList(Questionaire.objects.filter(questionaire_user__student_id = dict["username"]).exclude(questionaire_status = "new"))
 	else:
-		return makeQuestionaireList(Questionaire.objects.filter(questionaire_status = switcher[str]))
+		return makeQuestionaireList(Questionaire.objects.filter(questionaire_user__student_id = dict["username"]).filter(questionaire_status = switcher[str]))
 
 def makeQuestionaireList(List):
 	returnList = list()

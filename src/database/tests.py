@@ -41,8 +41,10 @@ class createNewQuestionTest(TestCase):
 		dict = {
 		"act_id" : 1,
 		"qst_type" : "single",
+		"qst_rank" : 1
 		}
 		return_dict = createNewQuestion(dict)
+		dict["qst_rank"] = 2
 		return_dict = createNewQuestion(dict)
 		self.assertEqual(return_dict["status"], "ok")
 		self.assertEqual(return_dict["id"], 2)

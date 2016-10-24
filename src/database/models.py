@@ -20,7 +20,11 @@ class Admin(models.Model):
 
 class User(models.Model):
     student_id = models.CharField(max_length = 20, primary_key = True)
-    real_name = models.CharField(max_length = 20)
+    real_name = models.CharField(max_length = 20, default = "michael jackson")
+    password = models.CharField(max_length = 32, default = "00000000")
+    age = models.CharField(max_length = 18, default = "18")
+    status = models.CharField(max_length = 400, default = "hello world")
+    address = models.CharField(max_length = 400, default = "china")
     tel = models.CharField(
         max_length = 20,
         validators = [
