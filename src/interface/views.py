@@ -475,6 +475,7 @@ def questionnaire_publish_question(request, type, act_id):
     params['act_id'] = act_id
     return render(request, question_url, params)
 
+
 def questionnaire(request, act_id):
     act_info = views.get_questionnaire_byID(act_id)
 
