@@ -25,21 +25,39 @@
         </ul>
     </ul>
     <hr>
-     <a class="fake-link left-column-menu" data-toggle="collapse" data-target="#application-menu">
-        <strong><i class="fa fa-wrench fa-fw"></i>　发布公告</strong>
+    <a class="fake-link left-column-menu" data-toggle="collapse" data-target="#notice-menu">
+        <strong><i class="fa fa-tasks fa-fw"></i>　发布公告</strong>
     </a>
-    <ul class="nav nav-stacked collapse in" id="application-menu">
+    <ul class="nav nav-stacked collapse in" id="notice-menu">
         <hr>
         <ul class="nav nav-stacked collapse in nav-pills">
-            <li id="notice-design-item" class="nav-header left-column-item"
-                data-url="{% url 'manager/design' 'notice' %}"
-                data-source="{% url 'api/create_new_notice' %}">
-                <a class="fake-link" >
-                    <i class="fa fa-tasks fa-fw"></i>　发布公告</a>
+            <li id="all-applications-item" class="nav-header left-column-item"
+                data-url="{% url 'manager/notice' %}">
+                <a class="fake-link"><i class="fa fa-tasks fa-fw"></i>　发布公告</a>
             </li>
         </ul>
     </ul>
     <hr>
+    <a class="fake-link left-column-menu" data-toggle="collapse" data-target="#statictic-menu">
+        <strong><i class="fa fa-signal fa-fw"></i>　数据统计</strong>
+    </a>
+    <ul class="nav nav-stacked collapse in" id="statistic-menu">
+        <hr>
+        <ul class="nav nav-stacked collapse in nav-pills">
+            <li id="all-questionnaire-item" class="nav-header left-column-item"
+                data-url="{% url 'manager/applications_activities' %}">
+                <a class="fake-link" >
+                    <i class="fa fa-th-list fa-fw"></i>　所有报名</a>
+            </li>
+            <li id="all-users-item" class="nav-header left-column-item"
+                data-url="{% url 'manager/applications_users' %}">
+                <a class="fake-link" >
+                    <i class="fa fa-users fa-fw"></i>　所有用户</a>
+            </li>
+        </ul>
+    </ul>
+    <hr>
+
 {% endblock left-column %}
 
 {% block user-menu %}

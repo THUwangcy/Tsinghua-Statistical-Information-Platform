@@ -30,6 +30,16 @@ urlpatterns = [
     url(r'^legalUser/applications/(\w+)/list/?$', 'interface.views.legalUser_show_applications_list',
         name='legalUser/applications-list'),
 
+    url(r'^manager/applications/activities/?$', 'interface.views.manager_all_activities',
+        name='manager/applications_activities'),
+    url(r'^manager/applications/activities/list/?$', 'interface.views.manager_all_activities_list',
+        name='manager/applications_activities_list'),
+
+    url(r'^manager/applications/users/?$', 'interface.views.manager_all_users',
+        name='manager/applications_users'),
+    url(r'^manager/applications/users/list/?$', 'interface.views.manager_all_users_list',
+        name='manager/applications_users_list'),
+
     #design
     url(r'^legalUser/design/(\w+)/?$', 'interface.views.legalUser_show_applications', name='legalUser/design'),
     url(r'^legalUser/design/(\w+)/([0-9]+)/?$', 'interface.views.legalUser_design', name='legalUser/design/id'),
@@ -51,6 +61,7 @@ urlpatterns = [
 
     url(r'^api/info_change_act/?$', 'api.views.info_change_act', name='api/info_change_act'),
     url(r'^api/login_act/?$', 'api.views.login_act', name='api/login_act'),
+    url(r'^api/notice_act/?$', 'api.views.notice_act', name='api/notice_act'),
 
     #userlist
     url(r'^/?$', 'interface.views.login_page', name='legalUser/login'),
@@ -70,8 +81,7 @@ urlpatterns = [
     #manager
     url(r'^manager/?$', 'interface.views.manager', name='manager'),
     url(r'^manager/dashboard/?$', 'interface.views.manager_dashboard', name='manager/dashboard'),
-    url(r'^manager/design/(\w+)/?$', 'interface.views.manager_show_applications', name='manager/design'),
-    url(r'^manager/design/(\w+)/([0-9]+)/?$', 'interface.views.manager_design'),
+    url(r'^manager/notice/?$', 'interface.views.manager_notice', name='manager/notice'),
 
     #statistics
     url(r'^statistics/?$', 'interface.views.show_statistics_choose', name='statistics'),
@@ -79,4 +89,5 @@ urlpatterns = [
     url(r'^statistics/([0-9]+)/paticipants', 'interface.views.show_paticipants_list', name='statistics/participants'),
     url(r'^statistics/([0-9]+)/question/?$', 'interface.views.statistics_question', name='statistics/question'),
     url(r'^statistics/([0-9]+)/question/list/(\w+)/([0-9]+)/?$', 'interface.views.statistics_question_list', name='statistics/question/list'),
+
 ]

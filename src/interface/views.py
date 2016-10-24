@@ -180,6 +180,7 @@ def user_information(request):
     user_information_html = 'legalUser/information/user_information.html'
     return render_ajax(request, user_information_html, params, 'info-item-1')
 
+
 def user_information_change(request):
     params = {
         'username': session.get_username(request),
@@ -244,9 +245,11 @@ def guest_dashboard(request):
         'show_all_pending_applications': show_all_pending_applications
     }, 'dashboard-item')
 
+
 #manageUser
 def manager(request):
     return manager_dashboard(request)
+
 
 def manager_dashboard(request):
     username = session.get_username(request)
@@ -284,43 +287,32 @@ def manager_dashboard(request):
     }, 'dashboard-item')
 
 
-def manager_show_applications(request, type):
-    if type == 'pending':
-        type_name = u'待发布报名'
-        type_icon = 'fa-tasks'
-    elif type == 'already':
-        type_name = u'我发布的报名'
-        type_icon = 'fa-check'
-    elif type == 'all':
-        type_name = u'所有报名'
-        type_icon = 'fa-th-list'
-    elif type == 'trash':
-        type_name = u'已删除报名'
-        type_icon = 'fa-trash'
-    else:
-        type_name = ''
-        type_icon = ''
-    item_id = type + '-applications-item'
 
-    return render_ajax(request, 'legalUser/applications/applications.html', {
-        'type': type,
-        'application_type': type_name,
-        'application_icon': type_icon
-    }, item_id)
+def manager_all_activities(request):
+    return render_ajax(request, 'manager/application/applications.html', {}, 'all-questionnaire-item')
 
 
+def manager_all_activities_list(request):
+    applications = _database.get_activities()
+    return render_sortable(request, applications,
+                           'manager/application/applications_content.html')
 
-def manager_design(request, type, act_id):
-    if type == 'notice':
-        type_name = u'公告'
-        type_icon = 'fa-tasks'
-    item_id = type + '-design-item'
-    return render_ajax(request, 'manager/design/design.html', {
-        'type': type,
-        'design_type': type_name,
-        'design_icon': type_icon,
-        'act_id': act_id
-    }, item_id)
+
+def manager_all_users(request):
+    return render_ajax(request, 'manager/application_2/applications.html', {}, 'all-users-item')
+
+
+def manager_all_users_list(request):
+    applications = _database.get_users()
+    return render_sortable(request, applications,
+                           'manager/application_2/applications_content.html')
+
+
+def manager_notice(request):
+    params = {
+        'notice': '这里是管理员发布的公告'
+    }
+    return render_ajax(request, 'manager/notice/manager_notice.html', params, 'notice-design-item')
 
 #statistics
 def show_statistics_choose(request):

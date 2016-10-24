@@ -174,6 +174,7 @@ def login_act(request):
     return JsonResponse(dict(status='ok', identity=identity))
 
 
+
 def get_questionnaire_byID(act_id):
 	#act_id:问卷id
 	result = _database.get_questionnaire_byID(act_id)
@@ -218,6 +219,7 @@ def get_participants(act_id):
     result = _database.get_participants()
     return result
 
+
 def get_result_of_question(act_id, qst_id, fillin_id):
     #act_id: 问卷id
     #qst_id: 问题id
@@ -230,3 +232,9 @@ def get_statistics_of_question(qst_id):
     #qst_id: 问题id 获取该问题的详细统计信息
     result = _database.get_statistics_of_question(qst_id)
     return result
+
+
+def notice_act(request):
+    dicts = request.POST.dict()
+    return JsonResponse(dict(status='ok'))
+
