@@ -1,10 +1,12 @@
 {% load tz %}
 
 <script>
-    $(".sortable").ready(function () {
-        var $this = $(".sortable");
+    $(".sortable").ready().each(function () {
+        var $this = $(this);
+        if($this.find("th.th-sortable").html().indexOf("span") >= 0)
+            return;
+        
         var tbody = $this.find("tbody");
-
         var defaults = {
             {% block defaults %}
             {% endblock defaults %}
@@ -19,70 +21,104 @@
         sort_params = defaults;
 
 
-        refreshTable = function (callback) {
-            loadContentOn(tbody, sort_url, sort_params, {anim: false, scroll: false}, callback);
-        };
+        loadContentOn(tbody, sort_url, sort_params, {anim: true, scroll: false});
 
-        loadContentOn(tbody, sort_url, defaults, {anim: true, scroll: false});
-
-        $this.find(".sortable-search-input").ready(function () {
-            $(".sortable-search-input").on("input propertychange paste", function () {
-                sort_params['page'] = 1
-                sort_params['search_keyword'] = $(this).val();
-                refreshTable();
-            });
-        });
 
         $this.find(".table-sortable").find("thead").ready(function () {
-            var th = $("th.th-sortable");
+            
+            var th = $this.find("th.th-sortable");
 
             th.html(function (index, old) {
-                return old + ' <span class="sort-label fa fa-unsorted"></span>';
+                if(old.indexOf("span") < 0)
+                    return old + ' <span class="sort-label fa fa-unsorted"></span>';
+                else
+                    return old;
             });
 
             var allClasses = "fa-unsorted fa-sort-asc fa-sort-desc";
-            var icons = $(this).find("th span.sort-label");
 
             th.each(function () {
                 if ($(this).data("key") === defaults.sort_by) {
                     $(this).find("span.sort-label")
                             .removeClass(allClasses).addClass("fa-sort-" + defaults.sort_order);
                 }
-            });
-
-            th.click(function () {
-                var icon = $(this).find("span.sort-label");
-                if ($(this).data("key") !== sort_params.sort_by) {
-                    sort_params.sort_by = $(this).data("key");
-                    sort_params.sort_order = defaults.sort_order;
-                } else {
-                    if (sort_params.sort_order === "desc") {
-                        sort_params.sort_order = "asc";
-                    } else {
-                        sort_params.sort_order = "desc";
-                    }
-                }
-                
-                icons.removeClass(allClasses).addClass("fa-unsorted");
-                icon.removeClass(allClasses).addClass("fa-sort-" + sort_params.sort_order);
-
-                refreshTable();
+                $(this).attr("onclick", "return sort_click(this);");
             });
         });
+
+        if($this.find("input[name=sort_url]").attr('value') == "")
+            $this.find("input[name=sort_url]").attr('value', sort_url);
+        if($this.find("input[name=sort_order]").attr('value') == "")
+            $this.find("input[name=sort_order]").attr('value', sort_params['sort_order']);
+        if($this.find("input[name=sort_by]").attr('value') == "")
+            $this.find("input[name=sort_by]").attr('value', sort_params['sort_by']);
+        if($this.find("input[name=sort_field]").attr('value') == "")
+            $this.find("input[name=sort_field]").attr('value', sort_params['sort_field']);
     });
+
+    function on_search(obj)
+    {
+        var onthis = $(obj).parent().parent().parent().parent().parent().parent();
+        var tbody = onthis.find("tbody");
+        var sort_url = onthis.find("input[name=sort_url]").attr('value');
+        var sort_params = {
+            'sort_by': onthis.find("input[name=sort_by]").attr('value'),
+            'sort_order': onthis.find("input[name=sort_order]").attr('value'),
+            'sort_field': onthis.find("input[name=sort_field]").attr('value')
+        };
+        sort_params['page'] = 1
+        sort_params['search_keyword'] = $(obj).val();
+        loadContentOn(tbody, sort_url, sort_params, {anim: false, scroll: false});
+    }
+
+    //点击排序事件
+    function sort_click(obj)
+    {
+        var onthis = $(obj).parent().parent().parent().parent().parent().parent();
+        var tbody = onthis.find("tbody");
+        var sort_url = onthis.find("input[name=sort_url]").attr('value');
+        var sort_params = {
+            'sort_by': onthis.find("input[name=sort_by]").attr('value'),
+            'sort_order': onthis.find("input[name=sort_order]").attr('value'),
+            'sort_field': onthis.find("input[name=sort_field]").attr('value')
+        };
+        var allClasses = "fa-unsorted fa-sort-asc fa-sort-desc";
+        var icons = onthis.find("th span.sort-label");
+        var icon = $(obj).find("span.sort-label");
+        if ($(obj).data("key") !== sort_params.sort_by) {
+            sort_params.sort_by = $(obj).data("key");
+            onthis.find("input[name=sort_by]").attr('value', sort_params.sort_by);
+         //   sort_params.sort_order = defaults.sort_order;
+        } else {
+            if (sort_params.sort_order === "desc") {
+                sort_params.sort_order = "asc";
+                onthis.find("input[name=sort_order]").attr('value', sort_params.sort_order);
+            } else {
+                sort_params.sort_order = "desc";
+                onthis.find("input[name=sort_order]").attr('value', sort_params.sort_order);
+            }
+        }
+
+        
+        icons.removeClass(allClasses).addClass("fa-unsorted");
+        icon.removeClass(allClasses).addClass("fa-sort-" + sort_params['sort_order']);
+
+        loadContentOn(tbody, sort_url, sort_params, {anim: false, scroll: false});
+    }
 </script>
 
 <div class="sortable panel panel-default">
     <div class="panel-heading">
         <div class="row">
-            <h4 class="col-xs-6">{% block title %}列表标题{% endblock title %}</h4>
-
+            <h4 class="col-xs-6 heading">{% block title %}列表标题{% endblock title %}</h4>
+            
             <div class="col-xs-6">
                 <div style="vertical-align: text-top">
                     <div class="sortable-search-box left-inner-addon col-xs-10">
                         <i class="fa fa-search fa-fw"></i>
                         <input class="sortable-search-input form-control" name="keyword" type="text"
-                               placeholder="搜索关键字……"/>
+                               placeholder="搜索关键字……"/ oninput="return on_search(this);"
+                               onpropertychange="return on_search(this);" onpaste="return on_search(this);">
                     </div>
                 </div>
                 <span class="badge item-count-badge pull-right"></span>
@@ -107,4 +143,10 @@
         {% block content-after %}
         {% endblock content-after %}
     </div>
+    <form class="form form-vertical" role="form" data-toggle="validator">
+        <input name="sort_url" type="text" style="display: none;" value="">
+        <input name="sort_order" type="text" style="display: none;" value="">
+        <input name="sort_by" type="text" style="display: none;" value="">
+        <input name="sort_field" type="text" style="display: none;" value="">
+    </form> 
 </div>
