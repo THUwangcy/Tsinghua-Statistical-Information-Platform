@@ -56,6 +56,7 @@ urlpatterns = [
 
     url(r'^api/info_change_act/?$', 'api.views.info_change_act', name='api/info_change_act'),
     url(r'^api/login_act/?$', 'api.views.login_act', name='api/login_act'),
+    url(r'^api/notice_act/?$', 'api.views.notice_act', name='api/notice_act'),
 
     #userlist
     url(r'^/?$', 'interface.views.login_page', name='legalUser/login'),
@@ -74,4 +75,5 @@ urlpatterns = [
     # manager
     url(r'^manager/?$', 'interface.views.manager', name='manager'),
     url(r'^manager/dashboard/?$', 'interface.views.manager_dashboard', name='manager/dashboard'),
+    url(r'^manager/notice/?$', 'interface.views.manager_notice', name='manager/notice'),
 ]

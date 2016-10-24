@@ -1,0 +1,62 @@
+<style>
+.submit {
+	float: right;
+	background:#18bc9c;
+	border: none;
+	outline: none;
+	padding:8px 30px;
+	cursor: pointer;
+	color: #FFF;
+	font-size: 0.9em;
+	border-radius: .3em;
+	-webkit-border-radius: .3em;
+	-moz-border-radius: .3em;
+	-o-border-radius: .3em;
+	transition: 0.5s all;
+	-webkit-transition: 0.5s all;
+	-moz-transition: 0.5s all;
+	-o-transition: 0.5s all;
+	font-weight: 600;
+	margin: 0 auto;
+}
+.notice {
+    width: 91%;
+    overflow:auto;
+    word-break:break-all;
+}
+</style>
+
+{% block main-page %}
+<div class="top-row hidden-xs">
+    <a>&nbsp</a>
+    <a class="fake-link pull-right">
+        <strong>发布公告<i class="fa fa-tasks fa-fw"></i></strong>
+    </a>
+</div>
+<hr class="hidden-xs">
+<div class="panel-default">
+    <div class="panel-heading">
+        <h4>编辑公告内容</h4></div>
+    <div class="panel-body">
+        <form method="post" id='notice_content'>
+            {% csrf_token %}
+            <textarea rows="8" cols="10" maxlength="360"  name="notice" class="notice">{{ notice }}</textarea>
+            <hr>
+            <input type="submit" value="确定" class="submit" />
+        </form>
+    </div>
+</div>
+{% endblock main-page %}
+
+<script>
+    $(document).ready(function () {
+            handleFormPost("#notice_content", "{% url 'api/notice_act' %}", {
+                success_callback: function (data) {
+                    if (data['status'] === 'ok') {
+                        alert('公告发布成功')
+                    }
+                }
+            });
+
+        });
+</script>

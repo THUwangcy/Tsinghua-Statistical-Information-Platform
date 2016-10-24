@@ -287,17 +287,11 @@ def manager_all_activities_list(request):
                            'manager/application/applications_content.html')
 
 
-def manager_design(request, type, act_id=0):
-    if type == 'notice':
-        type_name = u'公告'
-        type_icon = 'fa-tasks'
-    item_id = type + '-design-item'
-    return render_ajax(request, 'manager/design/design.html', {
-        'type': type,
-        'design_type': type_name,
-        'design_icon': type_icon,
-        'act_id': act_id
-    }, item_id)
+def manager_notice(request):
+    params = {
+        'notice': '这里是管理员发布的公告'
+    }
+    return render_ajax(request, 'manager/notice/manager_notice.html', params, 'notice-design-item')
 
 
 #----------------------------分割线--------------------------------#

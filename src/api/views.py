@@ -171,3 +171,6 @@ def login_act(request):
     return JsonResponse(dict(status='ok', identity=identity))
 
 
+def notice_act(request):
+    dicts = request.POST.dict()
+    return JsonResponse(dict(status='ok'))
