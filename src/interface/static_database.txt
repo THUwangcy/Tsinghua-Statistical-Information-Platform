@@ -6,11 +6,3 @@ type: enroll
 id: 52
 name: XX活动报名
 
-status: already
-fillin: 0
-subscribe_time: 2016.10.24
-description: 没有说明
-type: recruit
-id: 75
-name: 
-

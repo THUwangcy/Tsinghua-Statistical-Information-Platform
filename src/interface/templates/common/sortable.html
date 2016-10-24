@@ -1,60 +1,62 @@
 {% load tz %}
 
 <script>
-    $(".sortable").ready().each(function () {
-        var $this = $(this);
-        if($this.find("th.th-sortable").html().indexOf("span") >= 0)
-            return;
-        
-        var tbody = $this.find("tbody");
-        var defaults = {
-            {% block defaults %}
-            {% endblock defaults %}
-        };
-        if (!defaults.hasOwnProperty("url"))
-            console.log("SorTable usage error: ", "url");
-        if (!defaults.hasOwnProperty("search_field"))
-            $this.addClass("no-search");
-        // declare global
-        sort_url = defaults.url;
-        // alert(sort_url);
-        delete defaults.url;
-        sort_params = defaults;
-
-
-        loadContentOn(tbody, sort_url, sort_params, {anim: true, scroll: false});
-
-
-        $this.find(".table-sortable").find("thead").ready(function () {
+    $(".sortable").ready(function () {
+        $(".sortable").each(function() {
+            var $this = $(this);
+            if($this.find("th.th-sortable").html().indexOf("sort-label") >= 0)
+                return;
             
-            var th = $this.find("th.th-sortable");
+            var tbody = $this.find("tbody");
+            var defaults = {
+                {% block defaults %}
+                {% endblock defaults %}
+            };
+            if (!defaults.hasOwnProperty("url"))
+                console.log("SorTable usage error: ", "url");
+            if (!defaults.hasOwnProperty("search_field"))
+                $this.addClass("no-search");
+            // declare global
+            sort_url = defaults.url;
+            // alert(sort_url);
+            delete defaults.url;
+            sort_params = defaults;
 
-            th.html(function (index, old) {
-                if(old.indexOf("span") < 0)
-                    return old + ' <span class="sort-label fa fa-unsorted"></span>';
-                else
-                    return old;
+
+            loadContentOn(tbody, sort_url, sort_params, {anim: true, scroll: false});
+
+
+            $this.find(".table-sortable").find("thead").ready(function () {
+                
+                var th = $this.find("th.th-sortable");
+
+                th.html(function (index, old) {
+                    if(old.indexOf("span") < 0)
+                        return old + ' <span class="sort-label fa fa-unsorted"></span>';
+                    else
+                        return old;
+                });
+
+                var allClasses = "fa-unsorted fa-sort-asc fa-sort-desc";
+
+                th.each(function () {
+                    if ($(this).data("key") === defaults.sort_by) {
+                        $(this).find("span.sort-label")
+                                .removeClass(allClasses).addClass("fa-sort-" + defaults.sort_order);
+                    }
+                    $(this).attr("onclick", "return sort_click(this);");
+                });
             });
 
-            var allClasses = "fa-unsorted fa-sort-asc fa-sort-desc";
-
-            th.each(function () {
-                if ($(this).data("key") === defaults.sort_by) {
-                    $(this).find("span.sort-label")
-                            .removeClass(allClasses).addClass("fa-sort-" + defaults.sort_order);
-                }
-                $(this).attr("onclick", "return sort_click(this);");
-            });
-        });
-
-        if($this.find("input[name=sort_url]").attr('value') == "")
-            $this.find("input[name=sort_url]").attr('value', sort_url);
-        if($this.find("input[name=sort_order]").attr('value') == "")
-            $this.find("input[name=sort_order]").attr('value', sort_params['sort_order']);
-        if($this.find("input[name=sort_by]").attr('value') == "")
-            $this.find("input[name=sort_by]").attr('value', sort_params['sort_by']);
-        if($this.find("input[name=sort_field]").attr('value') == "")
-            $this.find("input[name=sort_field]").attr('value', sort_params['sort_field']);
+            if($this.find("input[name=sort_url]").attr('value') == "")
+                $this.find("input[name=sort_url]").attr('value', sort_url);
+            if($this.find("input[name=sort_order]").attr('value') == "")
+                $this.find("input[name=sort_order]").attr('value', sort_params['sort_order']);
+            if($this.find("input[name=sort_by]").attr('value') == "")
+                $this.find("input[name=sort_by]").attr('value', sort_params['sort_by']);
+            if($this.find("input[name=sort_field]").attr('value') == "")
+                $this.find("input[name=sort_field]").attr('value', sort_params['sort_field']);
+        })
     });
 
     function on_search(obj)

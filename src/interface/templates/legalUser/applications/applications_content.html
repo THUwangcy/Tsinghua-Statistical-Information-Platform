@@ -17,7 +17,7 @@
         <tr>
             <td>
                 {% if app.status == 'already' %}
-                    <a class="ajax-link fake-link" href="{% url 'questionnaire' 1000 %}" target="_blank">
+                    <a class="fake-link" href="{% url 'questionnaire' 1000 %}" target="_blank">
                         {{ app.name }}
                     </a>
                 {% elif app.status == 'pending' %}
@@ -38,7 +38,7 @@
             {% endif %}
             {% if params.type != 'trash' %}
             <td style="text-align: right">
-                <a class="fake-link collapse-row" href="#app_all{{forloop.counter}}" onclick="return collapseRow(this);">
+                <a class="fake-link collapse-row" href="#app_all{{forloop.counter}}">
                     <span class="fa fa-check-square-o fa-fw"></span> 操作
                 </a>
             </td>
@@ -101,11 +101,8 @@
 
 <script>
     //处理折叠行
-   /* $(function(){
-
+    $(function(){
         $("a.collapse-row").click(function(){
-            
-        
             var _this= $(this).attr("href");
             var _this_td = _this + "_td";
             if($(_this).css("display")=="none"){
@@ -115,11 +112,9 @@
                 $(_this_td).slideUp("fast");
                 $(_this).slideUp("fast");
             }
-    
-            
+            return false;
         });
-
-    });*/
+    });
     function collapseRow(obj)
     {
         var this_div = $(obj).parent().parent().next().next().find("div");

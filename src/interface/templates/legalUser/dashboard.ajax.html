@@ -135,7 +135,7 @@
                             {% for activity in activities %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td><a class="ajax-link fake-link"
+                                    <td><a class="fake-link"
                                            href="{% url 'questionnaire' 1000 %}" target="_blank">
                                         {{ activity.name|truncatechars:100 }}
                                     </a></td>
@@ -262,7 +262,7 @@
                             {% for activity in activities %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td><a class="ajax-link fake-link" href="{% url 'questionnaire' 1000 %}" target="_blank">
+                                    <td><a class="fake-link" href="{% url 'questionnaire' 1000 %}" target="_blank">
                                         {{ activity.name }}
                                     </a></td>
                                     <td align="center">{{ activity.fillin}}</td>
