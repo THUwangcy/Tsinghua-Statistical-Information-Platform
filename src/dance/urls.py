@@ -35,6 +35,11 @@ urlpatterns = [
     url(r'^manager/applications/activities/list/?$', 'interface.views.manager_all_activities_list',
         name='manager/applications_activities_list'),
 
+    url(r'^manager/applications/users/?$', 'interface.views.manager_all_users',
+        name='manager/applications_users'),
+    url(r'^manager/applications/users/list/?$', 'interface.views.manager_all_users_list',
+        name='manager/applications_users_list'),
+
     #design
     url(r'^legalUser/design/(\w+)/?$', 'interface.views.legalUser_show_applications', name='legalUser/design'),
     url(r'^legalUser/design/(\w+)/([0-9]+)/?$', 'interface.views.legalUser_design', name='legalUser/design/id'),

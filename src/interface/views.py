@@ -175,6 +175,7 @@ def user_information(request):
     user_information_html = 'legalUser/information/user_information.html'
     return render_ajax(request, user_information_html, params, 'info-item-1')
 
+
 def user_information_change(request):
     params = {
         'username': session.get_username(request),
@@ -277,6 +278,7 @@ def manager_dashboard(request):
     }, 'dashboard-item')
 
 
+
 def manager_all_activities(request):
     return render_ajax(request, 'manager/application/applications.html', {}, 'all-questionnaire-item')
 
@@ -285,6 +287,16 @@ def manager_all_activities_list(request):
     applications = _database.get_activities()
     return render_sortable(request, applications,
                            'manager/application/applications_content.html')
+
+
+def manager_all_users(request):
+    return render_ajax(request, 'manager/application_2/applications.html', {}, 'all-users-item')
+
+
+def manager_all_users_list(request):
+    applications = _database.get_users()
+    return render_sortable(request, applications,
+                           'manager/application_2/applications_content.html')
 
 
 def manager_notice(request):

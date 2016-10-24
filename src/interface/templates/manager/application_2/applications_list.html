@@ -1,0 +1,31 @@
+{% extends 'common/sortable.html' %}
+
+{% block title %}所有活动{% endblock title %}
+
+{% block defaults %}
+    url: "{% url 'manager/applications_users_list' %}",
+    sort_by: "name",
+    sort_order: "asc",
+    search_field: "name"
+{% endblock defaults %}
+
+{% block head %}
+    <th class="th-sortable" data-key="name" style="width: 20%; min-width: 120px">
+        用户名
+    </th>
+    <th class="th-sortable" data-key="identity" style="width: 20%; min-width: 110px">
+        用户类别
+    </th>
+    <th class="th-sortable" data-key="email" style=" min-width: 120px">
+        用户邮箱
+    </th>
+    <th class="th-sortable" data-key="telephone_number" style=" min-width: 120px">
+        联系方式
+    </th>
+    <th class="th-sortable" data-key="real_name" style="min-width: 120px">
+        真实姓名
+    </th>
+    <th>
+        <div style="width: 60px"></div>
+    </th>
+{% endblock head %}

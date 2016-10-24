@@ -328,3 +328,91 @@ def get_activities():
              'publisher': '王晨阳',
              'description': '这是给管理员看的信息这是给管理员看的信息这是给管理员看的信息'}
     return [item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12]
+
+
+def get_users():
+    item1 = {
+        'name': '2014011407',
+        'identity': 'legalUser',
+        'email': 'thuwangcy@gmail.com',
+        'telephone_number': '17888802343',
+        'real_name': '王晨阳',
+    }
+    item2 = {
+        'name': '2014011407',
+        'identity': 'legalUser',
+        'email': 'thuwangcy@gmail.com',
+        'telephone_number': '17888802343',
+        'real_name': '王晨阳',
+    }
+    item3 = {
+        'name': '2014011407',
+        'identity': 'legalUser',
+        'email': 'thuwangcy@gmail.com',
+        'telephone_number': '17888802343',
+        'real_name': '王晨阳',
+    }
+    item4 = {
+        'name': '2014011407',
+        'identity': 'legalUser',
+        'email': 'thuwangcy@gmail.com',
+        'telephone_number': '17888802343',
+        'real_name': '王晨阳',
+    }
+    item5 = {
+        'name': '2014011407',
+        'identity': 'legalUser',
+        'email': 'thuwangcy@gmail.com',
+        'telephone_number': '17888802343',
+        'real_name': '王晨阳',
+    }
+    item6 = {
+        'name': '2014011407',
+        'identity': 'legalUser',
+        'email': 'thuwangcy@gmail.com',
+        'telephone_number': '17888802343',
+        'real_name': '王晨阳',
+    }
+    item7 = {
+        'name': '2014011407',
+        'identity': 'legalUser',
+        'email': 'thuwangcy@gmail.com',
+        'telephone_number': '17888802343',
+        'real_name': '王晨阳',
+    }
+    item8 = {
+        'name': '2014011407',
+        'identity': 'legalUser',
+        'email': 'thuwangcy@gmail.com',
+        'telephone_number': '17888802343',
+        'real_name': '王晨阳',
+    }
+    item9 = {
+        'name': '2014011407',
+        'identity': 'legalUser',
+        'email': 'thuwangcy@gmail.com',
+        'telephone_number': '17888802343',
+        'real_name': '王晨阳',
+    }
+    item10 = {
+        'name': '2014011407',
+        'identity': 'legalUser',
+        'email': 'thuwangcy@gmail.com',
+        'telephone_number': '17888802343',
+        'real_name': '王晨阳',
+    }
+    item11 = {
+        'name': '2014011407',
+        'identity': 'legalUser',
+        'email': 'thuwangcy@gmail.com',
+        'telephone_number': '17888802343',
+        'real_name': '王晨阳',
+    }
+    item12 = {
+        'name': '2014011407',
+        'identity': 'legalUser',
+        'email': 'thuwangcy@gmail.com',
+        'telephone_number': '17888802343',
+        'real_name': '王晨阳',
+    }
+    return [item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12]
