@@ -322,7 +322,7 @@ def manager_design(request, type, act_id):
         'act_id': act_id
     }, item_id)
 
-
+#statistics
 def show_statistics_choose(request):
     username = session.get_username(request)
     activities = views.get_questionnaire_bySTATUS('already', username)
@@ -332,11 +332,12 @@ def show_statistics_choose(request):
 
 
 def show_statistics(request, act_id):
-    act_info = views.get_questionnaire_byID(act_id)
+    act_info = views.get_questionnaire_byID('1000')
     return render_ajax(request, 'legalUser/statistics/statistics.html', {
         'act_id': act_id,
         'act_info': act_info
     }, 'statistics-list-item')
+
 
 def show_paticipants_list(request, act_id):
     applications = views.get_participants(act_id)
@@ -344,6 +345,31 @@ def show_paticipants_list(request, act_id):
                            'legalUser/statistics/paticipants/paticipants_content.html', {
                                'act_id': act_id
                            })
+
+
+def statistics_question(request, act_id):
+    question_url = 'legalUser/statistics/questions/' + request.GET.get('questions_type') + '/' + request.GET.get('questions_type') + '_list.html'
+    params = {}
+    params = {
+        'questions_type': request.GET.get('questions_type'),
+        'questions_title': request.GET.get('questions_title'),
+        'questions_id': request.GET.get('questions_id'),
+        'option_num': request.GET.get('option_num'),
+        'option': request.GET.get('option'),
+        'rows': request.GET.get('rows'),
+        'hint': request.GET.get('hint')
+    }
+    params['act_type'] = type
+    params['act_id'] = act_id
+    return render(request, question_url, params)
+
+
+def statistics_question_list(request, act_id, qst_type, qst_id):
+    question_url = 'legalUser/statistics/questions/' + qst_type + '/' + qst_type + '_content.html'
+    applications = views.get_statistics_of_question(qst_id)
+    return render_sortable(request, applications, question_url, {
+            'act_id': act_id
+        })
 
 #----------------------------分割线--------------------------------#
 

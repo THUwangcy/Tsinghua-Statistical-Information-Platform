@@ -278,6 +278,49 @@ def get_result_of_question(act_id, qst_id, fillin_id):
     return result
 
 
+def get_statistics_of_question(qst_id):
+    if qst_id == '1':
+        item1 = {
+            'id': 1,
+            'content': '第一个选项',
+            'count': 1,
+            'percentage': 25,
+            'total': 4
+        }
+        item2 = {
+            'id': 2,
+            'content': '第二个选项',
+            'count': 3,
+            'percentage': 75,
+            'total': 4
+        }
+        return [item1, item2]
+    else:
+        item1 = {
+            'id': 1,
+            'content': '选项 1',
+            'count': 1,
+            'percentage': 25,
+            'total': 4
+        }
+        item2 = {
+            'id': 2,
+            'content': '选项 2',
+            'count': 2,
+            'percentage': 50,
+            'total': 4
+        }
+        item3 = {
+            'id': 3,
+            'content': '选项 3',
+            'count': 1,
+            'percentage': 25,
+            'total': 4
+        }
+        return [item1, item2, item3]
+    return []
+
+
 
 def get_applications():
     item1 = {'name': 'u计四五微信平台',

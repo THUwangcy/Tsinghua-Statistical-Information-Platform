@@ -10,10 +10,10 @@
 
 <ul class="nav nav-tabs">
     <li role="presentation" class="active">
-        <a href="#oa-chart" data-toggle="tab">填写情况</a>
+        <a href="#oa-chart" data-toggle="tab">数据分析</a>
     </li>
     <li role="presentation">
-        <a href="#article-chart" data-toggle="tab">数据分析</a>
+        <a href="#article-chart" data-toggle="tab">填写情况</a>
     </li>
     <li role="presentation">
         <a href="#history-chart" data-toggle="tab">单题信息</a>
@@ -21,13 +21,37 @@
 </ul>
 <div class="tab-content" data-loading="true">
     <div id="oa-chart" class="tab-pane fade active in">
-        {% include 'legalUser/statistics/paticipants/paticipants_list.html' %}
-        <div class="pull-right" style="font-size: 8px;">
-            数据来源：<a href="http://www.gsdata.cn/">新媒体指数</a>；无法获取到对应数据的日期不会在图表中显示。
-        </div>
+        <ol class="questions-list">
+            <li class="question last-question">
+                <p align="center"> 暂无题目 </p>
+            </li>
+        </ol>
+
+        {% for qst in act_info.questions %}
+        
+            <script>
+                
+                pre_info_param = {
+                    'questions_type': '{{qst.qst_type}}',
+                    'questions_title': '{{qst.qst_title}}',
+                    'questions_id': '{{qst.qst_id}}',
+                }
+
+                loadContentOn($(".last-question"), "{% url 'statistics/question' act_id%}", pre_info_param, {anim: false, scroll: false});
+                $(".last-question").removeClass("last-question");
+                $(".questions-list").append('<li class="question last-question">\
+                                                \
+                                             </li>');
+            </script>
+        
+        {% endfor %}
+
     </div>
     <div id="article-chart" class="tab-pane fade">
-
+        {% include 'legalUser/statistics/paticipants/paticipants_list.html' %}
+        <div style="display: none;">
+            {% include 'legalUser/statistics/paticipants/paticipants_list.html' %}
+        </div>
     </div>
     <div id="history-chart" class="tab-pane fade">
 

@@ -224,3 +224,9 @@ def get_result_of_question(act_id, qst_id, fillin_id):
     #fillin_id: 填写id
     result = _database.get_result_of_question(act_id, qst_id, fillin_id)
     return result
+
+
+def get_statistics_of_question(qst_id):
+    #qst_id: 问题id 获取该问题的详细统计信息
+    result = _database.get_statistics_of_question(qst_id)
+    return result

@@ -76,5 +76,7 @@ urlpatterns = [
     #statistics
     url(r'^statistics/?$', 'interface.views.show_statistics_choose', name='statistics'),
     url(r'^statistics/([0-9]+)/?$', 'interface.views.show_statistics', name='statistics/id'),
-    url(r'^statistics/([0-9])+/paticipants', 'interface.views.show_paticipants_list', name='statistics/participants'),
+    url(r'^statistics/([0-9]+)/paticipants', 'interface.views.show_paticipants_list', name='statistics/participants'),
+    url(r'^statistics/([0-9]+)/question/?$', 'interface.views.statistics_question', name='statistics/question'),
+    url(r'^statistics/([0-9]+)/question/list/(\w+)/([0-9]+)/?$', 'interface.views.statistics_question_list', name='statistics/question/list'),
 ]

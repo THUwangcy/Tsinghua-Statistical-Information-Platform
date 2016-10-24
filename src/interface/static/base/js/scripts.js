@@ -31,7 +31,7 @@ function publish_act(act_id, url, modal_url) {
                 };
 
                 showModal(modal_url, 'publish-modal', params);
-                loadContentOfItem("#dashboard-item", {anim: false, scroll: false});
+                window.location.reload();
             },
             error: function (xhr, textStatus, errorThrown) {
                 alert(xhr.responseText.substr(0, 500));
@@ -422,7 +422,7 @@ function handleFormPost(form_selector, post_url, params) {
                 url: post_url,
                 data: form.serialize(),
                 success: function (data) {
-                    alert(form.serialize());
+                //    alert(form.serialize());
                     msg.removeClass("alert-danger alert-success");
                     if (data.status === "ok") msg.addClass("alert-success");
                     else msg.addClass("alert-danger");

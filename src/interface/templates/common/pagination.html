@@ -1,3 +1,4 @@
+{% if page.count > 1 %}
 <nav class="pagination-container">
     <ul class="pagination">
         {% if page.current > 1 %}
@@ -70,6 +71,8 @@
                     //$.scrollTo($(".sortable"), {offset: -removePx($(".main").css("padding-top"))});
                 });
             });
+
         });
     </script>
 </nav>
+{% endif %}

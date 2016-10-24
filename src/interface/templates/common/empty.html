@@ -1,12 +1,12 @@
 {% extends 'common/sortable.html' %}
 
-{% block title %}{{ application_type }}{% endblock title %}
+{% block title %}{% endblock title %}
 
 {% block defaults %}
-    url: "{% url 'legalUser/applications-list' type %}",
-    sort_by: "status",
+    url: "{% url 'test' %}",
+    sort_by: "id",
     sort_order: "asc",
-    search_field: "status"
+    search_field: "id"
 {% endblock defaults %}
 
 {% block head %}
