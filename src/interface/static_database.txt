@@ -1,8 +1,0 @@
-status: already
-fillin: 0
-subscribe_time: 2016.10.24
-description: 假装有活动说明
-type: enroll
-id: 52
-name: XX活动报名
-

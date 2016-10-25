@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.views.generic import RedirectView
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -64,7 +65,8 @@ urlpatterns = [
     url(r'^api/notice_act/?$', 'api.views.notice_act', name='api/notice_act'),
 
     #userlist
-    url(r'^/?$', 'interface.views.login_page', name='legalUser/login'),
+    url(r'^/?$', RedirectView.as_view(url='/login/')),
+    url(r'^login/?$', 'interface.views.login_page', name='legalUser/login'),
     url(r'^legalUser/logoff/?$', 'interface.views.log_off', name='legalUser/log_off'),
     url(r'^legalUser/information/?$', 'interface.views.user_information', name='legalUser/information'),
     url(r'^legalUser/information/change/?$', 'interface.views.user_information_change', name='legalUser/information_change'),
