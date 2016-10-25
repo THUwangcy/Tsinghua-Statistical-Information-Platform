@@ -147,7 +147,6 @@ def legalUser_design(request, type, act_id):
     }, item_id)
 
 
-@check_identity('legalUser')
 def legalUser_design_question(request, type, act_id):
     question_url = 'legalUser/design/questions/' + request.GET.get('questions_type') + '.html'
     params = {}
@@ -165,7 +164,6 @@ def legalUser_design_question(request, type, act_id):
     return render(request, question_url, params)
 
 
-@check_identity('legalUser')
 def show_modal(request):
     modal_type = request.GET['modal_type']
     id = request.GET['id']
@@ -271,6 +269,38 @@ def guest_dashboard(request):
         'announcement': announcement,
         'show_all_pending_applications': show_all_pending_applications
     }, 'dashboard-item')
+
+
+@check_identity('guest')
+def guest_design(request, type, act_id):
+
+    act_info = views.get_questionnaire_byID(act_id)
+
+    if act_info['act_status'] == 'pending':
+        type = act_info['act_type']
+
+    if type == 'enroll':
+        type_name = u'报名/统计表'
+        type_icon = 'fa-tasks'
+    elif type == 'recruit':
+        type_name = u'实验室招募'
+        type_icon = 'fa-check'
+    elif type == 'vote':
+        type_name = u'投票'
+        type_icon = 'fa-list-alt'
+    item_id = type + '-design-item'
+    return render_ajax(request, 'guest/design/design.html', {
+        'type': type,
+        'design_type': type_name,
+        'design_icon': type_icon,
+        'act_id': act_id,
+        'act_info': act_info
+    }, item_id)
+
+
+@check_identity('guest')
+def guest_show_applications(request, type):
+    return legalUser_show_applications(request, type)
 
 
 #manageUser

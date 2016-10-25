@@ -44,7 +44,11 @@ urlpatterns = [
     #design
     url(r'^legalUser/design/(\w+)/?$', 'interface.views.legalUser_show_applications', name='legalUser/design'),
     url(r'^legalUser/design/(\w+)/([0-9]+)/?$', 'interface.views.legalUser_design', name='legalUser/design/id'),
-    url(r'^legalUser/design/(\w+)/([0-9]+)/question/?$', 'interface.views.legalUser_design_question', name='legalUser/design/question'),
+    url(r'^legalUser/design/(\w+)/([0-9]+)/question/?$', 'interface.views.legalUser_design_question',
+        name='legalUser/design/question'),
+
+    url(r'^guest/design/(\w+)/?$', 'interface.views.guest_show_applications', name='guest/design'),
+    url(r'^guest/design/(\w+)/([0-9]+)/?$', 'interface.views.guest_design', name='guest/design/id'),
 
     #modal
     url(r'^modal/?$', 'interface.views.show_modal', name='legalUser/modal'),

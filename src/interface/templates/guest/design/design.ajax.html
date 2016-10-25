@@ -1,0 +1,176 @@
+
+<script>
+
+
+    $(".right-column").ready(function () {
+        var $this = $(".right-column");
+
+        var questions_params = {
+            'questions_type': "default",
+            'questions_id': 0
+
+        };
+
+        function createNewQst(qst_type) {
+            var rank = $(".last-question").index() + 1;
+            $.ajax({
+                type: "GET",
+                url: "{% url 'api/create_new_qst' %}",
+                data: "&act_id=" + "{{act_id}}" + "&qst_type=" + qst_type + "&qst_rank=" + rank,
+                success: function(data) {
+                    if(data['status'] == 'ok'){
+                        questions_params['questions_id'] = data['id'];
+                        refreshTable();
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert(xhr.responseText.substr(0, 500));
+                }
+            });
+        }
+
+        //刷新中间问卷的最后一个问题
+        refreshTable = function (callback) {
+
+            loadContentOn($(".last-question"), "{% url 'legalUser/design/question' type act_id%}", questions_params, {anim: false, scroll: false}, callback);
+            $(".last-question").removeClass("last-question");
+            $(".questions-list").append('<li class="question last-question">\
+                                            \
+                                         </li>');
+        };
+
+
+
+        //设置各个题型的点击事件
+        $this.find("#single-question").click(function () {
+            questions_params['questions_type'] = "single";
+            createNewQst("single");
+
+        })
+        $this.find("#multi-question").click(function () {
+            questions_params['questions_type'] = "multi";
+            createNewQst("multi");
+
+        })
+        $this.find("#fillin-question").click(function () {
+            questions_params['questions_type'] = "fillin";
+            createNewQst("fillin");
+
+        })
+        $this.find("#vote-question").click(function () {
+            questions_params['questions_type'] = "vote";
+            createNewQst("vote");
+
+        })
+        $this.find("#mark-question").click(function () {
+            questions_params['questions_type'] = "mark";
+            createNewQst("mark");
+
+        })
+        $this.find("#sort-question").click(function () {
+            questions_params['questions_type'] = "sort";
+            createNewQst("sort");
+        })
+
+        //设置保存和发布按钮点击事件
+        $this.find("#save_btn").click(function() {
+            $.ajax({
+                type: "GET",
+                url: "{% url 'api/save_act' %}",
+                data: "&act_id=" + "{{act_id}}",
+                success: function(data) {
+                    if(data['status'] == 'ok') {
+                        showConfirmModal("提示", "保存成功！", true);
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert(xhr.responseText.substr(0, 500));
+                }
+            });
+        })
+        $this.find("#publish_btn").click(function() {
+            var publish_callback = function() {
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'api/publish_act' %}",
+                    data: "&act_id=" + "{{act_id}}",
+                    success: function(data) {
+                        params = {
+                            'modal_type': 'publish',
+                            'id': '{{ act_id }}',
+                        }
+                        showModal("{% url 'legalUser/modal' %}", 'publish-modal', params);
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        alert(xhr.responseText.substr(0, 500));
+                    }
+                });
+            }
+
+            showConfirmModal("提示", "确定要发布吗？", false, publish_callback);
+        })
+
+
+    })
+
+
+</script>
+
+{% block css %}
+
+{% endblock css %}
+
+
+<div class="top-row hidden-xs">
+    <a>&nbsp;</a>
+    <a class="fake-link pull-right">
+        <strong>{{ design_type }}　<i class="fa {{ design_icon }} fa-fw"></i></strong>
+    </a>
+</div>
+<hr class="hidden-xs">
+
+<div class="row">
+    <div class="col-md-10">
+        {% include 'legalUser/design/design_list.html' %}
+    </div>
+    <div class="col-md-2 container right-column">
+
+        <ul class="nav nav-stacked nav-pills affix">
+            <li id="single-question" class="nav-header ">
+                <a class="fake-link"><i class="fa fa-dot-circle-o fa-fw"></i>　单选题</a>
+            </li>
+            <hr>
+            <li id="multi-question" class="nav-header">
+                <a class="fake-link"><i class="fa fa-check-square-o fa-fw"></i>　多选题</a>
+            </li>
+            <hr>
+            <li id="fillin-question" class="nav-header">
+                <a class="fake-link"><i class="fa fa-edit fa-fw"></i>　填空题</a>
+            </li>
+            <hr>
+            <li id="vote-question" class="nav-header">
+                <a class="fake-link"><i class="fa fa-list-alt fa-fw"></i>　投票题</a>
+            </li>
+            <hr>
+            <li id="mark-question" class="nav-header">
+                <a class="fake-link"><i class="fa fa-heart-o fa-fw"></i>　评分题</a>
+            </li>
+            <hr>
+            <li id="sort-question" class="nav-header">
+                <a class="fake-link"><i class="fa fa-list-ol fa-fw"></i>　排序题</a>
+            </li>
+            <hr>
+            <br>
+            <li align="center">
+                <button type="button" class="btn btn-block" id="save_btn" style="font-size: 15px;background: #18bc9c;color: #FFF;">保存</button>
+            </li>
+            <br>
+            <li align="center">
+                <button type="button" class="btn btn-default btn-block" id="publish_btn" style="font-size: 15px;">发布</button>
+            </li>
+
+        </ul>
+
+    </div>
+
+</div>
