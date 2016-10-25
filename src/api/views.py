@@ -122,8 +122,9 @@ def modify_qst(request):
     for key in dict:
         file_object.writelines(key + ": " + dict[key] + "\n")
     file_object.close()
+    status = api.modifyQuestion(dict)
     return JsonResponse({
-            'status': 'ok',
+            'status': status,
         })
 
 

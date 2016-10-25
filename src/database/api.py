@@ -180,3 +180,30 @@ def makeQuestionaireInfo(Questionaire):
 		"fillin" : Questionaire.questionaire_numOfFilled
 	}
 	return dict
+
+def modifyQuestion(dict):
+	currentQuestion = Question.objects.get(id = dict["question_id"])
+	currentQuestion.question_text = dict["qst_title"]
+	currentQuestion.save()
+	if dict["qst_type"] != "fillin":
+		for i in range(dict["option_num"]):
+			pass_dict = {
+				"order" : i + 1,
+				"text" : dict["option[" + str(i + 1) + "]_field"],
+				"question_id" : currentQuestion.id()
+			}
+			makeNewChoice(pass_dict)
+	else:
+		currentQuestion.question_fillinrow = dict["fillinrow"]
+		currentQuestion.question_fillincheck = dict["fillincheck"]
+		currentQuestion.question_fillinhint = dict["fillinhint"]
+		currentQuestion.save()
+	return "ok"
+
+def makeNewChoice(dict):
+	currentChoice = Choice(
+		choice_order = dict["order"],
+		choice_text = dict["text"],
+		question = Question.objects.get(id = dict["question_id"])
+		)
+	currentChoice.save()

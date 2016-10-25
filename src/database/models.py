@@ -101,6 +101,7 @@ class Question(models.Model):
     question_order = models.IntegerField(default = 1)
     question_choices = models.IntegerField(default = 0)
     pub_date = models.DateTimeField('date published', null = True)
+    question_fillinrow = models.IntegerField(default = 1)
 
     def __unicode__(self):
         return self.question_text
@@ -108,7 +109,20 @@ class Question(models.Model):
 class Choice(models.Model):
     question = models.ForeignKey(Question)
     choice_text = models.CharField(max_length = 200)
+    choice_order = models.IntegerField(default = 0)
     votes = models.IntegerField(default = 0)
 
     def __unicode__(self):
         return self.choice_text
+
+
+class Filler(models.Model):
+    filler_ip = models.CharField(max_length = 30, default = "0.0.0.0")
+    filler_time = models.CharField(max_length = 30, default = "2016")
+    filler_questionaire = models.ForeignKey(Questionaire)
+
+class Answer(models.Model):
+    answer_filler = models.ForeignKey(Filler)
+    answer_question = models.ForeignKey(Question)
+    answer_content = models.TextField(null = True)
+        
