@@ -275,6 +275,23 @@ def get_result_of_question(act_id, qst_id, fillin_id):
                 result = 1
         else:
             result = 1
+    elif act_id == '2000':
+        if qst_id == '3':
+            if fillin_id == '1':
+                result = [1, 2]
+            else:
+                result = [2, 3]
+        else:
+            result = 2
+    elif act_id == '3000':
+        if qst_id == '2':
+            if fillin_id == '1':
+                result = '对'
+            else:
+                result = '不对'
+        else:
+            result = 1
+
     return result
 
 

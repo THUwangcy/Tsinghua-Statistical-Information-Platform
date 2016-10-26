@@ -31,7 +31,7 @@ function publish_act(act_id, url, modal_url) {
                 };
 
                 showModal(modal_url, 'publish-modal', params);
-                window.location.reload();
+                
             },
             error: function (xhr, textStatus, errorThrown) {
                 alert(xhr.responseText.substr(0, 500));

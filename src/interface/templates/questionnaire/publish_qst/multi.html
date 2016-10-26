@@ -52,6 +52,13 @@
                     source_panel_body.find("#checkbox-list").append(to_append);
                 }
 
+                //判断是否是已填写的问卷
+                if('{{ result }}' != '') {
+                    '{% for res in result %}'
+                        source_panel_body.find("#optionsCheckbox" + '{{ res }}').attr("checked",'checked');
+                    '{% endfor %}'
+                }
+
             }
 
             //加载选框样式

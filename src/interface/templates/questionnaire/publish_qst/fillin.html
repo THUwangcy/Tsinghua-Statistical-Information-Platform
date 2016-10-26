@@ -28,6 +28,11 @@
               radioClass: 'iradio_flat-green',
               increaseArea: '20%'
             });
+
+            //判断是否是已填写的问卷
+            if('{{ result }}' != '') {
+                source_panel_body.find("#fillin_field").html('{{ result }}');
+            }
         });
     </script>
 {% endblock title %}

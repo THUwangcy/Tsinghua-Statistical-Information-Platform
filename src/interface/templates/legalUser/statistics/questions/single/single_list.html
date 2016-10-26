@@ -1,6 +1,6 @@
 {% extends 'common/sortable.html' %}
 
-{% block title %}{{questions_title}} [单选题]{% endblock title %}
+{% block title %}{{questions_title}}&nbsp;&nbsp;[单选题]{% endblock title %}
 
 {% block defaults %}
     url: "{% url 'statistics/question/list' act_id questions_type questions_id %}",
