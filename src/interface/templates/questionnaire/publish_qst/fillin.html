@@ -1,14 +1,13 @@
 {% extends 'questionnaire/publish_qst/index.html' %}
 
 {% block title%}
-	<label for="fillin_field" id="fillin_title">请在此输入问题标题</label>
 
-    <div class="row" style="text-align: left; padding-left:25px; padding-top: 10px;">
-        <div class="col-xs-12 form-group">
-            <textarea id="fillin_field" name="fillin_content" class="form-control"
+        <label for="fillin_field" id="fillin_title" class="control-label">请在此输入问题标题</label>
+
+        <div class="row" style="text-align: left; padding-left:25px; padding-top: 10px;">
+                <textarea id="fillin_field" name="qst{{ questions_id }}" class="form-control"
                       style="resize: vertical; width: 60%" rows="1"></textarea>
         </div>
-    </div>
 
     <script>
         $(document).ready(function(){
@@ -28,6 +27,11 @@
               radioClass: 'iradio_flat-green',
               increaseArea: '20%'
             });
+
+            //判断是否是已填写的问卷
+            if('{{ result }}' != '') {
+                source_panel_body.find("#fillin_field").html('{{ result }}');
+            }
         });
     </script>
 {% endblock title %}

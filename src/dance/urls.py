@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.views.generic import RedirectView
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -30,10 +31,24 @@ urlpatterns = [
     url(r'^legalUser/applications/(\w+)/list/?$', 'interface.views.legalUser_show_applications_list',
         name='legalUser/applications-list'),
 
+    url(r'^manager/applications/activities/?$', 'interface.views.manager_all_activities',
+        name='manager/applications_activities'),
+    url(r'^manager/applications/activities/list/?$', 'interface.views.manager_all_activities_list',
+        name='manager/applications_activities_list'),
+
+    url(r'^manager/applications/users/?$', 'interface.views.manager_all_users',
+        name='manager/applications_users'),
+    url(r'^manager/applications/users/list/?$', 'interface.views.manager_all_users_list',
+        name='manager/applications_users_list'),
+
     #design
     url(r'^legalUser/design/(\w+)/?$', 'interface.views.legalUser_show_applications', name='legalUser/design'),
     url(r'^legalUser/design/(\w+)/([0-9]+)/?$', 'interface.views.legalUser_design', name='legalUser/design/id'),
-    url(r'^legalUser/design/(\w+)/([0-9]+)/question/?$', 'interface.views.legalUser_design_question', name='legalUser/design/question'),
+    url(r'^legalUser/design/(\w+)/([0-9]+)/question/?$', 'interface.views.legalUser_design_question',
+        name='legalUser/design/question'),
+
+    url(r'^guest/design/(\w+)/?$', 'interface.views.guest_show_applications', name='guest/design'),
+    url(r'^guest/design/(\w+)/([0-9]+)/?$', 'interface.views.guest_design', name='guest/design/id'),
 
     #modal
     url(r'^modal/?$', 'interface.views.show_modal', name='legalUser/modal'),
@@ -51,9 +66,13 @@ urlpatterns = [
 
     url(r'^api/info_change_act/?$', 'api.views.info_change_act', name='api/info_change_act'),
     url(r'^api/login_act/?$', 'api.views.login_act', name='api/login_act'),
+    url(r'^api/notice_act/?$', 'api.views.notice_act', name='api/notice_act'),
+
+    url(r'^api/qst_submit/?$', 'api.views.questionnaire_submit', name='api/qst_submit'),
 
     #userlist
-    url(r'^/?$', 'interface.views.login_page', name='legalUser/login'),
+    url(r'^/?$', RedirectView.as_view(url='/login/')),
+    url(r'^login/?$', 'interface.views.login_page', name='legalUser/login'),
     url(r'^legalUser/logoff/?$', 'interface.views.log_off', name='legalUser/log_off'),
     url(r'^legalUser/information/?$', 'interface.views.user_information', name='legalUser/information'),
     url(r'^legalUser/information/change/?$', 'interface.views.user_information_change', name='legalUser/information_change'),
@@ -61,14 +80,22 @@ urlpatterns = [
     #questionnaire
     url(r'^questionnaire/([0-9]+)/?$', 'interface.views.questionnaire', name='questionnaire'),
     url(r'^questionnaire/(\w+)/([0-9]+)/publish_qst/?$', 'interface.views.questionnaire_publish_question', name='questionnaire/publish_qst'),
+    url(r'^fillin/questionnaire/([0-9]+)/([0-9]+)/?$', 'interface.views.fillin_questionnaire', name='fillin/questionnaire'),
 
     #guest
     url(r'^guest/?$', 'interface.views.guest', name='guest'),
     url(r'^guest/dashboard/?$', 'interface.views.guest_dashboard', name='guest/dashboard'),
 
-    # manager
+    #manager
     url(r'^manager/?$', 'interface.views.manager', name='manager'),
     url(r'^manager/dashboard/?$', 'interface.views.manager_dashboard', name='manager/dashboard'),
-    url(r'^manager/design/(\w+)/?$', 'interface.views.manager_show_applications', name='manager/design'),
-    url(r'^manager/design/(\w+)/([0-9]+)/?$', 'interface.views.manager_design'),
+    url(r'^manager/notice/?$', 'interface.views.manager_notice', name='manager/notice'),
+
+    #statistics
+    url(r'^statistics/?$', 'interface.views.show_statistics_choose', name='statistics'),
+    url(r'^statistics/([0-9]+)/?$', 'interface.views.show_statistics', name='statistics/id'),
+    url(r'^statistics/([0-9]+)/paticipants', 'interface.views.show_paticipants_list', name='statistics/participants'),
+    url(r'^statistics/([0-9]+)/question/?$', 'interface.views.statistics_question', name='statistics/question'),
+    url(r'^statistics/([0-9]+)/question/list/(\w+)/([0-9]+)/?$', 'interface.views.statistics_question_list', name='statistics/question/list'),
+
 ]

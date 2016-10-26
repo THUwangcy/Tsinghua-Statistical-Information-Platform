@@ -1,8 +1,64 @@
+username: adminstatus: already
+fillin: 0
+subscribe_time: 2016.10.26
+description: 没有说明
+type: enroll
+id: 1
+name: 
+
 status: already
 fillin: 0
-subscribe_time: 2016
-description: 假装有活动说明
+subscribe_time: 2016.10.26
+description: 没有说明
+type: recruit
+id: 2
+name: 
+
+status: already
+fillin: 0
+subscribe_time: 2016.10.26
+description: 没有说明
+type: enroll
+id: 3
+name: XX活动报名
+
+status: already
+fillin: 0
+subscribe_time: 2016.10.26
+description: 没有说明
+type: enroll
+id: 12
+name: 游客
+
+status: already
+fillin: 0
+subscribe_time: 2016.10.27
+description: 没有说明
+type: recruit
+id: 13
+name: XX实验志愿者招募
+
+status: already
+fillin: 0
+subscribe_time: 2016.10.27
+description: 没有说明
+type: enroll
+id: 14
+name: XX活动报名
+
+status: already
+fillin: 0
+subscribe_time: 2016.10.27
+description: 没有说明
 type: enroll
 id: 15
-name: XX活
+name: XX活动报名
+
+status: already
+fillin: 0
+subscribe_time: 2016.10.27
+description: 没有说明
+type: enroll
+id: 16
+name: 仅单选
 

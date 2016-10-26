@@ -18,15 +18,34 @@ import session
 import _database
 from database import backend
 from api import views
+from django.core.exceptions import PermissionDenied
 
 # Create your views here.
+
+
+def check_identity(identity):
+    def check_identity_func(func):
+        def check(request, *args, **kw):
+            if session.get_identity(request) != identity:
+                if request.is_ajax():
+                    return HttpResponseForbidden()
+                else:
+                    return HttpResponseRedirect('/legalUser/logoff/')
+            return func(request, *args, **kw)
+        return check
+    return check_identity_func
+
 
 def test(request):
     return HttpResponse("new")
 
+
+@check_identity('legalUser')
 def legalUser(request):
     return legalUser_dashboard(request)
 
+
+@check_identity('legalUser')
 def legalUser_dashboard(request):
 
     username = session.get_username(request)
@@ -65,6 +84,7 @@ def legalUser_dashboard(request):
     }, 'dashboard-item')
 
 
+@check_identity('legalUser')
 def legalUser_show_applications(request, type):
     if type == 'pending':
         type_name = u'待发布报名'
@@ -90,6 +110,7 @@ def legalUser_show_applications(request, type):
     }, item_id)
 
 
+@check_identity('legalUser')
 def legalUser_show_applications_list(request, type):
     username = session.get_username(request)
     applications = views.get_questionnaire_bySTATUS('all', username)
@@ -99,6 +120,7 @@ def legalUser_show_applications_list(request, type):
                            })
 
 
+@check_identity('legalUser')
 def legalUser_design(request, type, act_id):
     
     act_info = views.get_questionnaire_byID(act_id)
@@ -153,7 +175,7 @@ def show_modal(request):
 
 def log_off(request):
     session.del_session(request)
-    return login_page(request)
+    return HttpResponseRedirect('/login/')
 
 
 def login_page(request):
@@ -165,6 +187,7 @@ def login_page(request):
     return render(request, log_page_html)
 
 
+@check_identity('legalUser')
 def user_information(request):
     params = {
         'username': session.get_username(request),
@@ -180,6 +203,8 @@ def user_information(request):
     user_information_html = 'legalUser/information/user_information.html'
     return render_ajax(request, user_information_html, params, 'info-item-1')
 
+
+@check_identity('legalUser')
 def user_information_change(request):
     params = {
         'username': session.get_username(request),
@@ -196,21 +221,17 @@ def user_information_change(request):
     return render_ajax(request, user_information_change_html, params, 'info-item-2')
 
 
-def questionnaire(request, act_id):
-    params = {
-        'act_id': act_id,
-    }
-    return render(request, 'questionnaire/questionnaire.html', params)
-
-
 def guest(request):
     session.del_session(request)
     session.add_session(request, identity='guest')
     return guest_dashboard(request)
 
 
+@check_identity('guest')
 def guest_dashboard(request):
-    pending_applications = _database.get_pending_applications()
+    username = session.get_username(request)
+
+    pending_applications = views.get_questionnaire_bySTATUS('pending', username)
     pending_count = len(pending_applications)
 
     show_all_pending_applications = False
@@ -220,7 +241,7 @@ def guest_dashboard(request):
 
     official_accounts = _database.get_official_accounts()
 
-    activities = _database.get_already_applications()
+    activities = views.get_questionnaire_bySTATUS('already', username)
     articles_count = len(activities)
 
     # category = MessageCategory.ToAdmin
@@ -242,12 +263,50 @@ def guest_dashboard(request):
         'show_all_pending_applications': show_all_pending_applications
     }, 'dashboard-item')
 
+
+@check_identity('guest')
+def guest_design(request, type, act_id):
+
+    act_info = views.get_questionnaire_byID(act_id)
+
+    if act_info['act_status'] == 'pending':
+        type = act_info['act_type']
+
+    if type == 'enroll':
+        type_name = u'报名/统计表'
+        type_icon = 'fa-tasks'
+    elif type == 'recruit':
+        type_name = u'实验室招募'
+        type_icon = 'fa-check'
+    elif type == 'vote':
+        type_name = u'投票'
+        type_icon = 'fa-list-alt'
+    item_id = type + '-design-item'
+    return render_ajax(request, 'guest/design/design.html', {
+        'type': type,
+        'design_type': type_name,
+        'design_icon': type_icon,
+        'act_id': act_id,
+        'act_info': act_info
+    }, item_id)
+
+
+@check_identity('guest')
+def guest_show_applications(request, type):
+    return legalUser_show_applications(request, type)
+
+
 #manageUser
+@check_identity('manager')
 def manager(request):
     return manager_dashboard(request)
 
+
+@check_identity('manager')
 def manager_dashboard(request):
-    pending_applications = _database.get_pending_applications()
+    username = session.get_username(request)
+
+    pending_applications = views.get_questionnaire_bySTATUS('pending', username)
     pending_count = len(pending_applications)
 
     show_all_pending_applications = False
@@ -257,7 +316,7 @@ def manager_dashboard(request):
 
     official_accounts = _database.get_official_accounts()
 
-    activities = _database.get_already_applications()
+    activities = views.get_questionnaire_bySTATUS('already', username)
     articles_count = len(activities)
 
     # category = MessageCategory.ToAdmin
@@ -280,43 +339,146 @@ def manager_dashboard(request):
     }, 'dashboard-item')
 
 
-def manager_show_applications(request, type):
-    if type == 'pending':
-        type_name = u'待发布报名'
-        type_icon = 'fa-tasks'
-    elif type == 'already':
-        type_name = u'我发布的报名'
-        type_icon = 'fa-check'
-    elif type == 'all':
-        type_name = u'所有报名'
-        type_icon = 'fa-th-list'
-    elif type == 'trash':
-        type_name = u'已删除报名'
-        type_icon = 'fa-trash'
+@check_identity('manager')
+def manager_all_activities(request):
+    return render_ajax(request, 'manager/application/applications.html', {}, 'all-questionnaire-item')
+
+
+@check_identity('manager')
+def manager_all_activities_list(request):
+    applications = _database.get_activities()
+    return render_sortable(request, applications, 'manager/application/applications_content.html')
+
+
+@check_identity('manager')
+def manager_all_users(request):
+    return render_ajax(request, 'manager/application_2/applications.html', {}, 'all-users-item')
+
+
+@check_identity('manager')
+def manager_all_users_list(request):
+    applications = _database.get_users()
+    return render_sortable(request, applications, 'manager/application_2/applications_content.html')
+
+
+@check_identity('manager')
+def manager_notice(request):
+    params = {'notice': '这里是管理员发布的公告'}
+    return render_ajax(request, 'manager/notice/manager_notice.html', params, 'notice-design-item')
+
+
+#statistics
+@check_identity('legalUser')
+def show_statistics_choose(request):
+    username = session.get_username(request)
+    activities = views.get_questionnaire_bySTATUS('already', username)
+    return render_ajax(request, 'legalUser/statistics/statistics_choose.html', {
+        'activities': activities
+    }, 'statistics-list-item')
+
+
+@check_identity('legalUser')
+def show_statistics(request, act_id):
+    act_info = views.get_questionnaire_byID(act_id)
+    return render_ajax(request, 'legalUser/statistics/statistics.html', {
+        'act_id': act_id,
+        'act_info': act_info
+    }, 'statistics-list-item')
+
+
+def show_paticipants_list(request, act_id):
+    applications = views.get_participants(act_id)
+    return render_sortable(request, applications,
+                           'legalUser/statistics/paticipants/paticipants_content.html', {
+                               'act_id': act_id
+                           })
+
+
+def statistics_question(request, act_id):
+    question_url = 'legalUser/statistics/questions/' + request.GET.get('questions_type') + '/' + request.GET.get('questions_type') + '_list.html'
+    params = {}
+    params = {
+        'questions_type': request.GET.get('questions_type'),
+        'questions_title': request.GET.get('questions_title'),
+        'questions_id': request.GET.get('questions_id'),
+        'option_num': request.GET.get('option_num'),
+        'option': request.GET.get('option'),
+        'rows': request.GET.get('rows'),
+        'hint': request.GET.get('hint')
+        }
+    params['act_type'] = type
+    params['act_id'] = act_id
+    return render(request, question_url, params)
+
+
+def statistics_question_list(request, act_id, qst_type, qst_id):
+    question_url = 'legalUser/statistics/questions/' + qst_type + '/' + qst_type + '_content.html'
+    applications = views.get_statistics_of_question(qst_id)
+    return render_sortable(request, applications, question_url, {
+            'act_id': act_id
+        })
+
+
+#questionnaire
+def questionnaire_publish_question(request, type, act_id):
+    question_url = 'questionnaire/publish_qst/' + request.GET.get('questions_type') + '.html'
+    params = {}
+    params = {
+        'questions_type': request.GET.get('questions_type'),
+        'questions_title': request.GET.get('questions_title'),
+        'questions_id': request.GET.get('questions_id'),
+        'option_num': request.GET.get('option_num'),
+        'option': request.GET.get('option'),
+        'rows': request.GET.get('rows'),
+        'hint': request.GET.get('hint'),
+        'fillin_id': request.GET.get('fillin_id')
+    }
+    if request.GET.get('fillin_id') != None:
+        fillin_result = views.get_result_of_question(act_id, request.GET.get('questions_id'), request.GET.get('fillin_id'))
+        params['result'] = fillin_result
+
+    params['act_type'] = type
+    params['act_id'] = act_id
+    return render(request, question_url, params)
+
+
+def questionnaire(request, act_id):
+    act_info = views.get_questionnaire_byID(act_id)
+
+    if act_info['act_status'] == 'pending':
+        type = act_info['act_type']
     else:
-        type_name = ''
-        type_icon = ''
-    item_id = type + '-applications-item'
+        type = 'wrong' #需添加未发布问卷错误处理
 
-    return render_ajax(request, 'legalUser/applications/applications.html', {
-        'type': type,
-        'application_type': type_name,
-        'application_icon': type_icon
-    }, item_id)
-
-
-
-def manager_design(request, type, act_id):
-    if type == 'notice':
-        type_name = u'公告'
+    if type == 'enroll':
+        type_name = u'报名/统计表'
         type_icon = 'fa-tasks'
+    elif type == 'recruit':
+        type_name = u'实验室招募'
+        type_icon = 'fa-check'
+    elif type == 'vote':
+        type_name = u'投票'
+        type_icon = 'fa-list-alt'
+
     item_id = type + '-design-item'
-    return render_ajax(request, 'manager/design/design.html', {
+
+    return render_ajax(request, 'questionnaire/questionnaire.html', {
         'type': type,
-        'design_type': type_name,
-        'design_icon': type_icon,
-        'act_id': act_id
+        
+        'act_id': act_id,
+        'act_info': act_info
     }, item_id)
+
+
+def fillin_questionnaire(request, act_id, fillin_id):
+    act_info = views.get_questionnaire_byID(act_id)
+
+    return render(request, 'questionnaire/questionnaire.html', {
+        'act_id': '1000',
+        'act_info': act_info,
+        'fillin_id': fillin_id,
+        'type': 'pending'
+    })
 
 
 #----------------------------分割线--------------------------------#
@@ -377,8 +539,10 @@ def render_sortable(request, items, url, params=None):
     #search操作，今后要在数据库中
     modify_items = []
     for item in items:
-        if search_keyword in item['name'] or search_keyword in item['description']:
-            modify_items.append(item)
+        for key in item:
+            if search_keyword in str(item[key]):
+                modify_items.append(item)
+                break
 
     items = modify_items
 
@@ -426,47 +590,3 @@ def get_pagination(item_total, item_per_page, cur):
     return page
 
 
-def questionnaire_publish_question(request, type, act_id):
-    question_url = 'questionnaire/publish_qst/' + request.GET.get('questions_type') + '.html'
-    params = {}
-    params = {
-        'questions_type': request.GET.get('questions_type'),
-        'questions_title': request.GET.get('questions_title'),
-        'questions_id': request.GET.get('questions_id'),
-        'option_num': request.GET.get('option_num'),
-        'option': request.GET.get('option'),
-        'rows': request.GET.get('rows'),
-        'hint': request.GET.get('hint')
-    }
-
-    params['act_type'] = type
-    params['act_id'] = act_id
-    return render(request, question_url, params)
-
-def questionnaire(request, act_id):
-    act_info = _database.get_questionnaire_byID(act_id)
-
-    if act_info['act_status'] == 'pending':
-        type = act_info['act_type']
-    else:
-        type = 'wrong' #需添加未发布问卷错误处理
-
-    if type == 'enroll':
-        type_name = u'报名/统计表'
-        type_icon = 'fa-tasks'
-    elif type == 'recruit':
-        type_name = u'实验室招募'
-        type_icon = 'fa-check'
-    elif type == 'vote':
-        type_name = u'投票'
-        type_icon = 'fa-list-alt'
-
-    item_id = type + '-design-item'
-
-    return render_ajax(request, 'questionnaire/questionnaire.html', {
-        'type': type,
-        'design_type': type_name,
-        'design_icon': type_icon,
-        'act_id': act_id,
-        'act_info': act_info
-    }, item_id)

@@ -2,12 +2,12 @@
 
 {% block title%}
 
-    <label for="name" id="single_title">请在此输入问题标题</label>
+    <label for="name" id="single_title" class="control-label" >请在此输入问题标题</label>
     <div id="radio-list">
         <div class="radio">
             &emsp;
             <label>
-            <input type="radio" name="option{{ questions_id }}" id="optionsRadios1" value="option1">
+            <input type="radio" name="option{{ questions_id }}" id="optionsRadios1" value="option1" class="form-control">
                 <label for="this.prev();">选项 1</label>
             </label>
         </div>
@@ -15,7 +15,7 @@
         <div class="radio">
             &emsp;
             <label>
-            <input type="radio" name="option{{ questions_id }}" id="optionsRadios2" value="option2">
+            <input type="radio" name="option{{ questions_id }}" id="optionsRadios2" value="option2" class="form-control">
                 <label for="this.prev();">选项 2</label>
             </label>
         </div>
@@ -23,7 +23,6 @@
 
     <script>
         $(document).ready(function(){
-
             var source_panel_body = $("#qst{{ questions_id }}");
             if('{{questions_title}}' != 'None')
                 source_panel_body.find("#single_title").html('{{questions_title}}');
@@ -35,7 +34,7 @@
                     $(this).remove();
                 });
                 
-                var option_name = 'option' + '{{ questions_id }}';
+                var option_name = 'qst' + '{{ questions_id }}';
                 var prefix = '<div class="radio">\
                                 &emsp;\
                                 <label>\
@@ -50,6 +49,11 @@
                                         </lable>\
                                     </div>';
                     source_panel_body.find("#radio-list").append(to_append);
+                }
+
+                //判断是否是已填写的问卷
+                if('{{ result }}' != '') {
+                    source_panel_body.find("#optionsRadios" + '{{ result }}').attr("checked",'checked');
                 }
 
             }

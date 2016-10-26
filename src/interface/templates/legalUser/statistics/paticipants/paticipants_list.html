@@ -1,0 +1,29 @@
+{% extends 'common/sortable.html' %}
+
+{% block title %}所有填写{% endblock title %}
+
+{% block defaults %}
+    url: "{% url 'statistics/participants' act_id %}",
+    sort_by: "id",
+    sort_order: "asc",
+    search_field: "id"
+{% endblock defaults %}
+
+{% block head %}
+
+    <th class="th-sortable" data-key="id" style="width: 20%; min-width: 20px">
+        序号
+    </th>
+    <th class="th-sortable" data-key="fillin_time" style="width: 25%; min-width: 50px">
+        填写时间
+    </th>
+    <th class="th-sortable" data-key="ip" style="width: 25%">
+        IP来源
+    </th>
+    <th class="th-sortable" data-key="city" style="width: 20%">
+        所在城市
+    </th>
+    <th>
+        <div style="width: 60px"></div>
+    </th>
+{% endblock head %}

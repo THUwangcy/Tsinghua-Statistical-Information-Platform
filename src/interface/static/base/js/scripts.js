@@ -1,14 +1,13 @@
 
 //删除问卷
-function remove_act(act_id, url) {
+function remove_act(act_id, url, item) {
     var callback = function() {
         $.ajax({
             type: "GET",
             url: url,
             data: "&act_id=" + act_id,
             success: function(data) {
-
-
+                loadContentOfItem(item, {anim: false, scroll: false});
             },
             error: function (xhr, textStatus, errorThrown) {
                 alert(xhr.responseText);
@@ -16,6 +15,31 @@ function remove_act(act_id, url) {
         });
     }
     showConfirmModal('删除报名', '确定要删除吗？', false, callback);
+}
+
+//发布问卷
+function publish_act(act_id, url, modal_url) {
+    var publish_callback = function() {
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: "&act_id=" + act_id,
+            success: function(data) {
+                params = {
+                    'modal_type': 'publish',
+                    'id': act_id ,
+                };
+
+                showModal(modal_url, 'publish-modal', params);
+                
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert(xhr.responseText.substr(0, 500));
+            }
+        });
+    }
+
+    showConfirmModal("提示", "确定要发布吗？", false, publish_callback);
 }
 
 // deal with csrf tokens when using ajax
@@ -147,8 +171,9 @@ function loadContent(url, params, item_selector, load_params, callback) {
         main.css("height", main.height());
     }
     //更改左边栏激活的item
-    $(".left-column-item").removeClass("active");
+
     if (typeof item_selector !== "undefined") {
+        $(".left-column-item").removeClass("active");
         var item = $(item_selector);
         if (typeof item !== "undefined") {
             $(item).addClass("active");
@@ -268,6 +293,7 @@ function loadContentOn(container, url, params, load_params, callback) {
             });
         },
         error: function (xhr, textStatus, errorThrown) {
+            alert("error!!!!!!!!!!!");
             clearTimeout(loadSpinnerTimer);
             displayContent('\
                 <div class="alert alert-danger" role="alert">\
@@ -295,7 +321,7 @@ function loadContentOfItem(item, load_params, callback) {
         $.ajax({
             type: "GET",
             url: post_url,
-            data: "&act_type=" + act_id + "&time=2016" + "&user_id=1111111111",
+            data: "&act_type=" + act_id + "&time=" + getTime() + "&user_id=1111111111",
             success: function(data) {
                 if(data['status'] == 'ok'){
                     append = data['id'];
@@ -312,6 +338,17 @@ function loadContentOfItem(item, load_params, callback) {
     }
     else
         loadContent($(item).data("url"), {}, item, load_params, callback);
+}
+
+function getTime() {
+    var mydate = new Date();
+    var year = mydate.getFullYear();
+    var month = mydate.getMonth() + 1;
+    var day = mydate.getDate();
+    if(month < 10)  month = '0' + month;
+    if(day < 10) month = '0' + day;
+    time = year + '.' + month + '.' + day;
+    return time;
 }
 
 function removePx(str) {
@@ -386,7 +423,7 @@ function handleFormPost(form_selector, post_url, params) {
                 url: post_url,
                 data: form.serialize(),
                 success: function (data) {
-                    alert(form.serialize());
+                //    alert(form.serialize());
                     msg.removeClass("alert-danger alert-success");
                     if (data.status === "ok") msg.addClass("alert-success");
                     else msg.addClass("alert-danger");

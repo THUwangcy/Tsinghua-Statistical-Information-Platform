@@ -1,0 +1,29 @@
+{% extends 'common/sortable_content.html' %}
+
+{% block no-data-info %}
+    暂无填写
+{% endblock no-data-info %}
+
+{% block content %}
+    
+
+    {% for fillin in items %}
+        <tr>
+            <td>
+                &emsp;{{ fillin.id }}
+            </td>
+            <td>{{ fillin.fillin_time }}</td>
+            <td>{{ fillin.ip }}</td>
+            <td>
+                &emsp;{{ fillin.city }}
+            </td>
+            <td style="text-align: right">
+                <a class="fake-link collapse-row" href="{% url 'fillin/questionnaire' params.act_id fillin.id %}" target="_blank">
+                    <span class="fa fa-check-square-o fa-fw"></span> 查看&emsp;
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+
+
+{% endblock content %}
