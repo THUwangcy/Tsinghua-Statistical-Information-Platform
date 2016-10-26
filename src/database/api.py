@@ -3,7 +3,7 @@ from models import *
 def createDefaultUser():
 	defaultUser = User(
 		student_id = "1111111111",
-		real_name = "default",
+		real_name = "admin",
 		tel = "88888888888",
 		email = "default@ggmail.com"
 		)
@@ -60,7 +60,8 @@ def saveQuestionaireInfo(dict):
 	return "error"
 
 def createNewQuestion(dict):
-	TYPE = dict["qst_type"]
+	print dict["qst_type"]
+	thetype = dict["qst_type"]
 	switcher = {
 		"single" : "SI",
 		"multi" : "MU",
@@ -70,9 +71,12 @@ def createNewQuestion(dict):
 		"sort" : "SO"
 	}
 	order = len(Question.objects.filter(questionaire_id = dict["act_id"])) + 1
+	currentQuestionaire = Questionaire.objects.get(id = dict["act_id"])
+	currentQuestionaire.questionaire_numOfQues = currentQuestionaire.questionaire_numOfQues + 1
+	currentQuestionaire.save()
 	currentQuestion = Question(
 		questionaire_id = Questionaire.objects.get(id = dict["act_id"]),
-		question_type = switcher[TYPE],
+		question_type = switcher[thetype],
 		question_order = dict["qst_rank"]
 		)
 	currentQuestion.save()
@@ -92,6 +96,27 @@ def createSeveralQuestions():
 	for i in range(10):
 		dict["qst_rank"] = i
 		createNewQuestion(dict)
+
+def createSeveralTestQuestions():
+	createSeveralTestQuestionaire()
+	dictlist = [{
+		"qst_type" : "single",
+		"act_id" : 4,
+		"qst_rank" : 1
+	},
+	{
+		"qst_type" : "fillin",
+		"act_id" : 4,
+		"qst_rank" : 2
+	},
+	{
+		"qst_type" : "multi",
+		"act_id" : 4,
+		"qst_rank" : 1
+	}]
+	for i in range(12):
+		dictlist[i % 3]["qst_rank"] = i + 1
+		createNewQuestion(dictlist[i % 3])
 
 def operateQuestion(dict):
 	currentQuestion = Question.objects.get(id = dict["qst_id"])
@@ -115,6 +140,9 @@ def operateQuestion(dict):
 		currentQuestion.save()
 		relatedQuestion.save()
 	if dict['operation'] == "REMOVE":
+		currentQuestionaire = Questionaire.objects.get(id = dict["act_id"])
+		currentQuestionaire.questionaire_numOfQues = currentQuestionaire.questionaire_numOfQues - 1
+		currentQuestionaire.save()
 		relatedQuestionSet = Question.objects.filter(
 			question_order__gte = currentQuestion.question_order,
 			questionaire_id__id = dict["act_id"]
@@ -142,16 +170,16 @@ def publishQuestionaire(dict):
 	currentQuestionaire.save()
 	return "ok"
 
-def getQuestionaireListByStatus(str):
+def getQuestionaireListByStatus(dict):
 	switcher  = {
 		"pending" : "SA",
 		"already" : "LA",
 		"all" : "AL"
 	}
-	if switcher[str] == "AL":
-		return makeQuestionaireList(Questionaire.objects.all())
+	if switcher[dict["status"]] == "AL":
+		return makeQuestionaireList(Questionaire.objects.filter(questionaire_user__real_name = dict["username"]).exclude(questionaire_status = "new"))
 	else:
-		return makeQuestionaireList(Questionaire.objects.filter(questionaire_status = switcher[str]))
+		return makeQuestionaireList(Questionaire.objects.filter(questionaire_user__real_name = dict["username"]).filter(questionaire_status = switcher[dict["status"]]))
 
 def makeQuestionaireList(List):
 	returnList = list()
@@ -180,3 +208,91 @@ def makeQuestionaireInfo(Questionaire):
 		"fillin" : Questionaire.questionaire_numOfFilled
 	}
 	return dict
+
+def modifyQuestion(dict):
+	currentQuestion = Question.objects.get(id = dict["questions_id"])
+	currentQuestion.question_text = dict["qst_title"]
+	currentQuestion.save()
+	if dict["qst_type"] != "fillin":
+		oldChoiceList = Choice.objects.filter(question = currentQuestion)
+		for choice in oldChoiceList:
+			choice.delete()
+		currentQuestion.question_choices = dict["option_num"]
+		currentQuestion.save()
+		for i in range(int(dict["option_num"])):
+			pass_dict = {
+				"order" : i + 1,
+				"text" : dict["option" + str(i + 1) + "_field"],
+				"question_id" : currentQuestion.id
+			}
+			makeNewChoice(pass_dict)
+	else:
+		currentQuestion.question_fillinrow = dict["fillin_row"]
+		currentQuestion.question_fillincheck = dict["fillin_check"]
+		currentQuestion.question_fillinhint = dict["fillin_hint"]
+		currentQuestion.save()
+	return "ok"
+
+def makeNewChoice(dict):
+	currentChoice = Choice(
+		choice_order = dict["order"],
+		choice_text = dict["text"],
+		question = Question.objects.get(id = dict["question_id"])
+		)
+	currentChoice.save()
+
+def getQuestionaireByID(qid):
+	currentQuestionaire = Questionaire.objects.get(id = qid)
+	return_dict = dict()
+	type_switcher = {
+		"VO" : "vote",
+		"LW" : "recruit",
+		"SU" : "enroll"
+	}
+	status_switcher = {
+		"SA" : "pending",
+		"LA" : "already",
+		"IN" : "new"
+	}
+	return_dict["act_type"] = type_switcher[currentQuestionaire.questionaire_type]
+	return_dict["act_status"] = status_switcher[currentQuestionaire.questionaire_status]
+	return_dict["act_title"] = currentQuestionaire.questionaire_title
+	return_dict["act_description"] = currentQuestionaire.questionaire_introduction
+	return_dict["qst_num"] = currentQuestionaire.questionaire_numOfQues
+	questionList = getQuestionsByQuestionaire(qid)
+	return_dict["questions"] = questionList
+	return return_dict
+
+def getQuestionsByQuestionaire(qid):
+	returnList = list()
+	currentQuestionList = Question.objects.filter(questionaire_id__id = qid)
+	for question in currentQuestionList:
+		currentQuestionDict = makeQuestionDict(question)
+		returnList.append(currentQuestionDict)
+	return returnList
+
+def makeQuestionDict(qst):
+	return_dict = dict()
+	type_switcher = {
+		"SI" : "single",
+		"MU" : "multi",
+		"VO" : "vote",
+		"FI" : "fillin",
+		"MA" : "mark",
+		"SO" : "sort"
+	}
+	return_dict["qst_type"] = type_switcher[qst.question_type]
+	return_dict["qst_title"] = qst.question_text
+	return_dict["qst_id"] = qst.id
+	if qst.question_type == "FI":
+		return_dict["rows"] = qst.question_fillinrow
+		return_dict["hint"] = qst.question_fillinhint
+		return_dict["check"] = qst.question_fillincheck
+	else:
+		return_dict["option_num"] = qst.question_choices
+		optionList = list()
+		currentChoices = Choice.objects.filter(question = qst)
+		for choice in currentChoices:
+			optionList.append("###" + choice.choice_text + "###")
+		return_dict["option"] = optionList
+	return return_dict

@@ -17,7 +17,7 @@
         <tr>
             <td>
                 {% if app.status == 'already' %}
-                    <a class="fake-link" href="{% url 'questionnaire' 1000 %}" target="_blank">
+                    <a class="fake-link" href="{% url 'questionnaire' app.id %}" target="_blank">
                         {{ app.name }}
                     </a>
                 {% elif app.status == 'pending' %}
@@ -70,7 +70,7 @@
                         {% elif app.status == 'already' %}
                             
                             <li style="width: 24%" align="center">
-                                <a class="fake-link" href="{% url 'questionnaire' 1000 %}" target="_blank" >
+                                <a class="fake-link" href="{% url 'questionnaire' app.id %}" target="_blank" >
                                     <i class="fa fa-file-text-o fa-fw fa-2x" aria-hidden="true"></i> 查看
                                 </a>
                             </li>

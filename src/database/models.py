@@ -20,7 +20,11 @@ class Admin(models.Model):
 
 class User(models.Model):
     student_id = models.CharField(max_length = 20, primary_key = True)
-    real_name = models.CharField(max_length = 20)
+    real_name = models.CharField(max_length = 20, default = "michael jackson")
+    password = models.CharField(max_length = 32, default = "00000000")
+    age = models.CharField(max_length = 18, default = "18")
+    status = models.CharField(max_length = 400, default = "hello world")
+    address = models.CharField(max_length = 400, default = "china")
     tel = models.CharField(
         max_length = 20,
         validators = [
@@ -92,11 +96,14 @@ class Question(models.Model):
         (SORT, "sort")
         )
     questionaire_id = models.ForeignKey(Questionaire)
-    question_text = models.TextField()
+    question_text = models.TextField(default = u"请在此输入问题标题")
     question_type = models.CharField(max_length = 2, choices = TYPES, default = FILLIN)
     question_order = models.IntegerField(default = 1)
     question_choices = models.IntegerField(default = 0)
     pub_date = models.DateTimeField('date published', null = True)
+    question_fillinrow = models.IntegerField(default = 1)
+    question_fillinhint = models.CharField(max_length = 200, default = u"文本")
+    question_fillincheck = models.CharField(max_length = 100, default = "")
 
     def __unicode__(self):
         return self.question_text
@@ -104,7 +111,20 @@ class Question(models.Model):
 class Choice(models.Model):
     question = models.ForeignKey(Question)
     choice_text = models.CharField(max_length = 200)
+    choice_order = models.IntegerField(default = 0)
     votes = models.IntegerField(default = 0)
 
     def __unicode__(self):
         return self.choice_text
+
+
+class Filler(models.Model):
+    filler_ip = models.CharField(max_length = 30, default = "0.0.0.0")
+    filler_time = models.CharField(max_length = 30, default = "2016")
+    filler_questionaire = models.ForeignKey(Questionaire)
+
+class Answer(models.Model):
+    answer_filler = models.ForeignKey(Filler)
+    answer_question = models.ForeignKey(Question)
+    answer_content = models.TextField(null = True)
+        

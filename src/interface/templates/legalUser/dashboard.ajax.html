@@ -136,7 +136,7 @@
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
                                     <td><a class="fake-link"
-                                           href="{% url 'questionnaire' 1000 %}" target="_blank">
+                                           href="{% url 'questionnaire' activity.id %}" target="_blank">
                                         {{ activity.name|truncatechars:100 }}
                                     </a></td>
                                     <td style="min-width: 120px; max-width: 120px">
@@ -163,7 +163,7 @@
                                         <div id="already{{forloop.counter}}" class="operation" style="display:none; width: 100%">
                                             <ul>
                                                 <li style="width: 24%" align="center">
-                                                    <a class="fake-link" href="{% url 'questionnaire' 1000 %}" target="_blank" >
+                                                    <a class="fake-link" href="{% url 'questionnaire' activity.id %}" target="_blank" >
                                                         <i class="fa fa-file-text-o fa-fw fa-2x" aria-hidden="true"></i> 查看
                                                     </a>
                                                 </li>
@@ -262,7 +262,7 @@
                             {% for activity in activities %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td><a class="fake-link" href="{% url 'questionnaire' 1000 %}" target="_blank">
+                                    <td><a class="fake-link" href="{% url 'questionnaire' activity.id %}" target="_blank">
                                         {{ activity.name }}
                                     </a></td>
                                     <td align="center">{{ activity.fillin}}</td>

@@ -5,6 +5,8 @@
 {% endblock no-data-info %}
 
 {% block content %}
+    
+
     {% for fillin in items %}
         <tr>
             <td>
@@ -16,14 +18,12 @@
                 &emsp;{{ fillin.city }}
             </td>
             <td style="text-align: right">
-                <a class="fake-link collapse-row" href="{% url 'fillin/questionnaire' 1000 fillin.id %}" target="_blank">
+                <a class="fake-link collapse-row" href="{% url 'fillin/questionnaire' params.act_id fillin.id %}" target="_blank">
                     <span class="fa fa-check-square-o fa-fw"></span> 查看&emsp;
                 </a>
             </td>
         </tr>
     {% endfor %}
 
-    <script>
 
-    </script>
 {% endblock content %}

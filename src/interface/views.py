@@ -324,7 +324,7 @@ def show_statistics_choose(request):
 
 
 def show_statistics(request, act_id):
-    act_info = views.get_questionnaire_byID('1000')
+    act_info = views.get_questionnaire_byID(act_id)
     return render_ajax(request, 'legalUser/statistics/statistics.html', {
         'act_id': act_id,
         'act_info': act_info
@@ -516,8 +516,7 @@ def questionnaire(request, act_id):
 
     return render_ajax(request, 'questionnaire/questionnaire.html', {
         'type': type,
-        'design_type': type_name,
-        'design_icon': type_icon,
+        
         'act_id': act_id,
         'act_info': act_info
     }, item_id)
@@ -527,7 +526,7 @@ def fillin_questionnaire(request, act_id, fillin_id):
     act_info = views.get_questionnaire_byID(act_id)
 
     return render(request, 'questionnaire/questionnaire.html', {
-        'act_id': act_id,
+        'act_id': '1000',
         'act_info': act_info,
         'fillin_id': fillin_id,
         'type': 'pending'

@@ -1,40 +1,6 @@
-status: already
-fillin: 0
-subscribe_time: 2016.10.24
-description: 假装有活动说明
-type: enroll
-id: 52
-name: XX活动报名
-
-status: already
-fillin: 0
-subscribe_time: 2016.10.25
-description: 假装有活动说明
-type: enroll
-id: 88
-name: XX活动报名
-
-status: already
-fillin: 0
-subscribe_time: 2016.10.26
-description: 假装有活动说明
-type: recruit
-id: 90
-name: XX实验志愿者招募
-
-status: already
-fillin: 0
-subscribe_time: 2016.10.26
-description: 假装有活动说明
-type: enroll
-id: 92
-name: XX活动报名
-
-status: already
-fillin: 0
-subscribe_time: 2016.10.26
-description: 假装有活动说明
-type: vote
-id: 93
-name: 票选最XXXX
-
+act_description: 没有说明
+act_type: enroll
+qst_num: 0
+act_status: new
+questions: []
+act_title: 
