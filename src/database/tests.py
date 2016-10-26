@@ -144,5 +144,10 @@ class getQuestionaireTest(TestCase):
 		for q in List:
 			print(q)
 
+class modifyQuestionTest(TestCase):
+	def setUp(self):
+		createSeveralTestQuestions()
+	def test_single(self):
 		
+
 # Create your tests here.
