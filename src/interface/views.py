@@ -18,15 +18,34 @@ import session
 import _database
 from database import backend
 from api import views
+from django.core.exceptions import PermissionDenied
 
 # Create your views here.
+
+
+def check_identity(identity):
+    def check_identity_func(func):
+        def check(request, *args, **kw):
+            if session.get_identity(request) != identity:
+                if request.is_ajax():
+                    return HttpResponseForbidden()
+                else:
+                    return HttpResponseRedirect('/legalUser/logoff/')
+            return func(request, *args, **kw)
+        return check
+    return check_identity_func
+
 
 def test(request):
     return HttpResponse("new")
 
+
+@check_identity('legalUser')
 def legalUser(request):
     return legalUser_dashboard(request)
 
+
+@check_identity('legalUser')
 def legalUser_dashboard(request):
 
     username = session.get_username(request)
@@ -65,6 +84,7 @@ def legalUser_dashboard(request):
     }, 'dashboard-item')
 
 
+@check_identity('legalUser')
 def legalUser_show_applications(request, type):
     if type == 'pending':
         type_name = u'待发布报名'
@@ -90,6 +110,7 @@ def legalUser_show_applications(request, type):
     }, item_id)
 
 
+@check_identity('legalUser')
 def legalUser_show_applications_list(request, type):
     username = session.get_username(request)
     applications = views.get_questionnaire_bySTATUS('all', username)
@@ -99,6 +120,7 @@ def legalUser_show_applications_list(request, type):
                            })
 
 
+@check_identity('legalUser')
 def legalUser_design(request, type, act_id):
     
     act_info = views.get_questionnaire_byID(act_id)
@@ -153,7 +175,7 @@ def show_modal(request):
 
 def log_off(request):
     session.del_session(request)
-    return login_page(request)
+    return HttpResponseRedirect('/login/')
 
 
 def login_page(request):
@@ -165,6 +187,7 @@ def login_page(request):
     return render(request, log_page_html)
 
 
+@check_identity('legalUser')
 def user_information(request):
     params = {
         'username': session.get_username(request),
@@ -181,6 +204,7 @@ def user_information(request):
     return render_ajax(request, user_information_html, params, 'info-item-1')
 
 
+@check_identity('legalUser')
 def user_information_change(request):
     params = {
         'username': session.get_username(request),
@@ -210,6 +234,7 @@ def guest(request):
     return guest_dashboard(request)
 
 
+@check_identity('guest')
 def guest_dashboard(request):
     username = session.get_username(request)
 
@@ -246,11 +271,45 @@ def guest_dashboard(request):
     }, 'dashboard-item')
 
 
+@check_identity('guest')
+def guest_design(request, type, act_id):
+
+    act_info = views.get_questionnaire_byID(act_id)
+
+    if act_info['act_status'] == 'pending':
+        type = act_info['act_type']
+
+    if type == 'enroll':
+        type_name = u'报名/统计表'
+        type_icon = 'fa-tasks'
+    elif type == 'recruit':
+        type_name = u'实验室招募'
+        type_icon = 'fa-check'
+    elif type == 'vote':
+        type_name = u'投票'
+        type_icon = 'fa-list-alt'
+    item_id = type + '-design-item'
+    return render_ajax(request, 'guest/design/design.html', {
+        'type': type,
+        'design_type': type_name,
+        'design_icon': type_icon,
+        'act_id': act_id,
+        'act_info': act_info
+    }, item_id)
+
+
+@check_identity('guest')
+def guest_show_applications(request, type):
+    return legalUser_show_applications(request, type)
+
+
 #manageUser
+@check_identity('manager')
 def manager(request):
     return manager_dashboard(request)
 
 
+@check_identity('manager')
 def manager_dashboard(request):
     username = session.get_username(request)
 
@@ -287,34 +346,36 @@ def manager_dashboard(request):
     }, 'dashboard-item')
 
 
-
+@check_identity('manager')
 def manager_all_activities(request):
     return render_ajax(request, 'manager/application/applications.html', {}, 'all-questionnaire-item')
 
 
+@check_identity('manager')
 def manager_all_activities_list(request):
     applications = _database.get_activities()
-    return render_sortable(request, applications,
-                           'manager/application/applications_content.html')
+    return render_sortable(request, applications, 'manager/application/applications_content.html')
 
 
+@check_identity('manager')
 def manager_all_users(request):
     return render_ajax(request, 'manager/application_2/applications.html', {}, 'all-users-item')
 
 
+@check_identity('manager')
 def manager_all_users_list(request):
     applications = _database.get_users()
-    return render_sortable(request, applications,
-                           'manager/application_2/applications_content.html')
+    return render_sortable(request, applications, 'manager/application_2/applications_content.html')
 
 
+@check_identity('manager')
 def manager_notice(request):
-    params = {
-        'notice': '这里是管理员发布的公告'
-    }
+    params = {'notice': '这里是管理员发布的公告'}
     return render_ajax(request, 'manager/notice/manager_notice.html', params, 'notice-design-item')
 
+
 #statistics
+@check_identity('legalUser')
 def show_statistics_choose(request):
     username = session.get_username(request)
     activities = views.get_questionnaire_bySTATUS('already', username)
@@ -323,6 +384,7 @@ def show_statistics_choose(request):
     }, 'statistics-list-item')
 
 
+@check_identity('legalUser')
 def show_statistics(request, act_id):
     act_info = views.get_questionnaire_byID(act_id)
     return render_ajax(request, 'legalUser/statistics/statistics.html', {
@@ -350,7 +412,7 @@ def statistics_question(request, act_id):
         'option': request.GET.get('option'),
         'rows': request.GET.get('rows'),
         'hint': request.GET.get('hint')
-    }
+        }
     params['act_type'] = type
     params['act_id'] = act_id
     return render(request, question_url, params)
@@ -362,6 +424,7 @@ def statistics_question_list(request, act_id, qst_type, qst_id):
     return render_sortable(request, applications, question_url, {
             'act_id': act_id
         })
+
 
 #----------------------------分割线--------------------------------#
 

@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.views.generic import RedirectView
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -43,7 +44,11 @@ urlpatterns = [
     #design
     url(r'^legalUser/design/(\w+)/?$', 'interface.views.legalUser_show_applications', name='legalUser/design'),
     url(r'^legalUser/design/(\w+)/([0-9]+)/?$', 'interface.views.legalUser_design', name='legalUser/design/id'),
-    url(r'^legalUser/design/(\w+)/([0-9]+)/question/?$', 'interface.views.legalUser_design_question', name='legalUser/design/question'),
+    url(r'^legalUser/design/(\w+)/([0-9]+)/question/?$', 'interface.views.legalUser_design_question',
+        name='legalUser/design/question'),
+
+    url(r'^guest/design/(\w+)/?$', 'interface.views.guest_show_applications', name='guest/design'),
+    url(r'^guest/design/(\w+)/([0-9]+)/?$', 'interface.views.guest_design', name='guest/design/id'),
 
     #modal
     url(r'^modal/?$', 'interface.views.show_modal', name='legalUser/modal'),
@@ -64,7 +69,8 @@ urlpatterns = [
     url(r'^api/notice_act/?$', 'api.views.notice_act', name='api/notice_act'),
 
     #userlist
-    url(r'^/?$', 'interface.views.login_page', name='legalUser/login'),
+    url(r'^/?$', RedirectView.as_view(url='/login/')),
+    url(r'^login/?$', 'interface.views.login_page', name='legalUser/login'),
     url(r'^legalUser/logoff/?$', 'interface.views.log_off', name='legalUser/log_off'),
     url(r'^legalUser/information/?$', 'interface.views.user_information', name='legalUser/information'),
     url(r'^legalUser/information/change/?$', 'interface.views.user_information_change', name='legalUser/information_change'),
