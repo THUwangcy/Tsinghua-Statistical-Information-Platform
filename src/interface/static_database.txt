@@ -1,6 +1,64 @@
-act_description: 没有说明
-act_type: enroll
-qst_num: 3
-act_status: already
-questions: [{'qst_id': 8, 'qst_type': 'single', 'option_num': 2, 'option': [u'###\u9009\u9879 1###', u'###\u9009\u9879 2###'], 'qst_title': u'\u8bf7\u5728\u6b64\u8f93\u5165\u95ee\u9898\u6807\u9898'}, {'qst_id': 9, 'qst_type': 'multi', 'option_num': 2, 'option': [u'###\u9009\u9879 1###', u'###\u9009\u9879 2###'], 'qst_title': u'\u8bf7\u5728\u6b64\u8f93\u5165\u95ee\u9898\u6807\u9898'}, {'qst_id': 10, 'rows': 1, 'hint': u'', 'qst_type': 'fillin', 'check': u'\u6587\u672c', 'qst_title': u'\u8bf7\u5728\u6b64\u8f93\u5165\u95ee\u9898\u6807\u9898'}]
-act_title: XX活动报名
+username: adminstatus: already
+fillin: 0
+subscribe_time: 2016.10.26
+description: 没有说明
+type: enroll
+id: 1
+name: 
+
+status: already
+fillin: 0
+subscribe_time: 2016.10.26
+description: 没有说明
+type: recruit
+id: 2
+name: 
+
+status: already
+fillin: 0
+subscribe_time: 2016.10.26
+description: 没有说明
+type: enroll
+id: 3
+name: XX活动报名
+
+status: already
+fillin: 0
+subscribe_time: 2016.10.26
+description: 没有说明
+type: enroll
+id: 12
+name: 游客
+
+status: already
+fillin: 0
+subscribe_time: 2016.10.27
+description: 没有说明
+type: recruit
+id: 13
+name: XX实验志愿者招募
+
+status: already
+fillin: 0
+subscribe_time: 2016.10.27
+description: 没有说明
+type: enroll
+id: 14
+name: XX活动报名
+
+status: already
+fillin: 0
+subscribe_time: 2016.10.27
+description: 没有说明
+type: enroll
+id: 15
+name: XX活动报名
+
+status: already
+fillin: 0
+subscribe_time: 2016.10.27
+description: 没有说明
+type: enroll
+id: 16
+name: 仅单选
+

@@ -268,7 +268,7 @@ def get_questionnaire_byID(act_id):
 def get_result_of_question(act_id, qst_id, fillin_id):
     result = ''
     if act_id == '1000':
-        if qst_id == '1':
+        if int(qst_id) % 2 == 1:
             if fillin_id == '1':
                 result = 2
             else:
@@ -296,7 +296,7 @@ def get_result_of_question(act_id, qst_id, fillin_id):
 
 
 def get_statistics_of_question(qst_id):
-    if qst_id == '1':
+    if int(qst_id) % 2 == 1:
         item1 = {
             'id': 1,
             'content': '第一个选项',

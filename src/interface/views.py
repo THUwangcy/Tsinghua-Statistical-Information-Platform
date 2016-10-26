@@ -221,13 +221,6 @@ def user_information_change(request):
     return render_ajax(request, user_information_change_html, params, 'info-item-2')
 
 
-def questionnaire(request, act_id):
-    params = {
-        'act_id': act_id,
-    }
-    return render(request, 'questionnaire/questionnaire.html', params)
-
-
 def guest(request):
     session.del_session(request)
     session.add_session(request, identity='guest')
@@ -426,6 +419,68 @@ def statistics_question_list(request, act_id, qst_type, qst_id):
         })
 
 
+#questionnaire
+def questionnaire_publish_question(request, type, act_id):
+    question_url = 'questionnaire/publish_qst/' + request.GET.get('questions_type') + '.html'
+    params = {}
+    params = {
+        'questions_type': request.GET.get('questions_type'),
+        'questions_title': request.GET.get('questions_title'),
+        'questions_id': request.GET.get('questions_id'),
+        'option_num': request.GET.get('option_num'),
+        'option': request.GET.get('option'),
+        'rows': request.GET.get('rows'),
+        'hint': request.GET.get('hint'),
+        'fillin_id': request.GET.get('fillin_id')
+    }
+    if request.GET.get('fillin_id') != None:
+        fillin_result = views.get_result_of_question(act_id, request.GET.get('questions_id'), request.GET.get('fillin_id'))
+        params['result'] = fillin_result
+
+    params['act_type'] = type
+    params['act_id'] = act_id
+    return render(request, question_url, params)
+
+
+def questionnaire(request, act_id):
+    act_info = views.get_questionnaire_byID(act_id)
+
+    if act_info['act_status'] == 'pending':
+        type = act_info['act_type']
+    else:
+        type = 'wrong' #需添加未发布问卷错误处理
+
+    if type == 'enroll':
+        type_name = u'报名/统计表'
+        type_icon = 'fa-tasks'
+    elif type == 'recruit':
+        type_name = u'实验室招募'
+        type_icon = 'fa-check'
+    elif type == 'vote':
+        type_name = u'投票'
+        type_icon = 'fa-list-alt'
+
+    item_id = type + '-design-item'
+
+    return render_ajax(request, 'questionnaire/questionnaire.html', {
+        'type': type,
+        
+        'act_id': act_id,
+        'act_info': act_info
+    }, item_id)
+
+
+def fillin_questionnaire(request, act_id, fillin_id):
+    act_info = views.get_questionnaire_byID(act_id)
+
+    return render(request, 'questionnaire/questionnaire.html', {
+        'act_id': '1000',
+        'act_info': act_info,
+        'fillin_id': fillin_id,
+        'type': 'pending'
+    })
+
+
 #----------------------------分割线--------------------------------#
 
 def render_ajax(request, url, params, item_id=''):
@@ -535,62 +590,3 @@ def get_pagination(item_total, item_per_page, cur):
     return page
 
 
-def questionnaire_publish_question(request, type, act_id):
-    question_url = 'questionnaire/publish_qst/' + request.GET.get('questions_type') + '.html'
-    params = {}
-    params = {
-        'questions_type': request.GET.get('questions_type'),
-        'questions_title': request.GET.get('questions_title'),
-        'questions_id': request.GET.get('questions_id'),
-        'option_num': request.GET.get('option_num'),
-        'option': request.GET.get('option'),
-        'rows': request.GET.get('rows'),
-        'hint': request.GET.get('hint'),
-        'fillin_id': request.GET.get('fillin_id')
-    }
-    if request.GET.get('fillin_id') != None:
-        fillin_result = views.get_result_of_question(act_id, request.GET.get('questions_id'), request.GET.get('fillin_id'))
-        params['result'] = fillin_result
-
-    params['act_type'] = type
-    params['act_id'] = act_id
-    return render(request, question_url, params)
-
-
-def questionnaire(request, act_id):
-    act_info = views.get_questionnaire_byID(act_id)
-
-    if act_info['act_status'] == 'pending':
-        type = act_info['act_type']
-    else:
-        type = 'wrong' #需添加未发布问卷错误处理
-
-    if type == 'enroll':
-        type_name = u'报名/统计表'
-        type_icon = 'fa-tasks'
-    elif type == 'recruit':
-        type_name = u'实验室招募'
-        type_icon = 'fa-check'
-    elif type == 'vote':
-        type_name = u'投票'
-        type_icon = 'fa-list-alt'
-
-    item_id = type + '-design-item'
-
-    return render_ajax(request, 'questionnaire/questionnaire.html', {
-        'type': type,
-        
-        'act_id': act_id,
-        'act_info': act_info
-    }, item_id)
-
-
-def fillin_questionnaire(request, act_id, fillin_id):
-    act_info = views.get_questionnaire_byID(act_id)
-
-    return render(request, 'questionnaire/questionnaire.html', {
-        'act_id': '1000',
-        'act_info': act_info,
-        'fillin_id': fillin_id,
-        'type': 'pending'
-    })

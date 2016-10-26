@@ -248,3 +248,21 @@ def notice_act(request):
     dicts = request.POST.dict()
     return JsonResponse(dict(status='ok'))
 
+#问卷提交函数 目前已实现 单选、填空
+#格式infomations如下
+#"qst1":"option1"
+#"qst2":"sss"
+#"act_id":"3"
+#"csrfmiddlewaretoken":"As64oYUOYYDSsz3FfW6PWM8Ku89kpgaD"
+#
+#
+#
+def questionnaire_submit(request):
+    dicts = request.POST.dict()
+    output = open('questionnaire.txt', 'w')
+    infomations=""
+    for key, value in dicts.items():
+        infomations += "\"%s\":\"%s\"" % (key, value)
+        infomations += "\n"
+    output.write(infomations)
+    return JsonResponse(dict(status='ok'))

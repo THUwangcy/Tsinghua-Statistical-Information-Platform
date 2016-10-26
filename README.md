@@ -1,3 +1,11 @@
+### 问卷提交处理
+    api里的questionnaire_submit(request)函数
+	处理并储存已填写的问卷
+
+
+
+
+
 ###   去掉了所有的.pyc
     请各位在本地运行
     git rm -r --cached .
@@ -53,3 +61,4 @@
     
 ### 注意：     
     pull下来后先运行python manage.py migrate
+
