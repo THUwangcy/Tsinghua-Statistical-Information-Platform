@@ -60,7 +60,8 @@ def saveQuestionaireInfo(dict):
 	return "error"
 
 def createNewQuestion(dict):
-	TYPE = dict["qst_type"]
+	print dict["qst_type"]
+	thetype = dict["qst_type"]
 	switcher = {
 		"single" : "SI",
 		"multi" : "MU",
@@ -75,7 +76,7 @@ def createNewQuestion(dict):
 	currentQuestionaire.save()
 	currentQuestion = Question(
 		questionaire_id = Questionaire.objects.get(id = dict["act_id"]),
-		question_type = switcher[TYPE],
+		question_type = switcher[thetype],
 		question_order = dict["qst_rank"]
 		)
 	currentQuestion.save()
@@ -114,8 +115,8 @@ def createSeveralTestQuestions():
 		"qst_rank" : 1
 	}]
 	for i in range(12):
-		dict[i % 3]["qst_rank"] = i + 1
-		createNewQuestion(dict[])
+		dictlist[i % 3]["qst_rank"] = i + 1
+		createNewQuestion(dictlist[i % 3])
 
 def operateQuestion(dict):
 	currentQuestion = Question.objects.get(id = dict["qst_id"])
@@ -209,7 +210,7 @@ def makeQuestionaireInfo(Questionaire):
 	return dict
 
 def modifyQuestion(dict):
-	currentQuestion = Question.objects.get(id = dict["question_id"])
+	currentQuestion = Question.objects.get(id = dict["questions_id"])
 	currentQuestion.question_text = dict["qst_title"]
 	currentQuestion.save()
 	if dict["qst_type"] != "fillin":
@@ -221,8 +222,8 @@ def modifyQuestion(dict):
 		for i in range(dict["option_num"]):
 			pass_dict = {
 				"order" : i + 1,
-				"text" : dict["option[" + str(i + 1) + "]_field"],
-				"question_id" : currentQuestion.id()
+				"text" : dict["option" + str(i + 1) + "_field"],
+				"question_id" : currentQuestion.id
 			}
 			makeNewChoice(pass_dict)
 	else:
@@ -283,12 +284,12 @@ def makeQuestionDict(qst):
 	return_dict["qst_type"] = type_switcher[qst.question_type]
 	return_dict["qst_title"] = qst.question_text
 	return_dict["qst_id"] = qst.id
-	if qst.question_type == "fillin":
+	if qst.question_type == "FI":
 		return_dict["rows"] = qst.question_fillinrow
 		return_dict["hint"] = qst.question_fillinhint
 		return_dict["check"] = qst.question_fillincheck
 	else:
-		return_dict["option"] = qst.question_choices
+		return_dict["option_num"] = qst.question_choices
 		optionList = list()
 		currentChoices = Choice.objects.filter(question = qst)
 		for choice in currentChoices:

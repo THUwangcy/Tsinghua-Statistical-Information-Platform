@@ -123,7 +123,8 @@ class changeQuestionaireStatusTest(TestCase):
 class getQuestionaireTest(TestCase):
 	"""docstring for getQuestionaireTest"""
 	def setUp(self):
-		createSeveralTestQuestionaire()
+		createSeveralTestQuestions()
+
 	def test_byStatus(self):
 		List = getQuestionaireListByStatus("all")
 		for q in List:
@@ -144,10 +145,45 @@ class getQuestionaireTest(TestCase):
 		for q in List:
 			print(q)
 
+	def test_byID(self):
+		for i in range(10):
+			r = getQuestionaireByID(i + 1)
+			print r
+
+
 class modifyQuestionTest(TestCase):
 	def setUp(self):
 		createSeveralTestQuestions()
 	def test_single(self):
-		
+		dict = {
+			"qst_type" : "single",
+			"questions_id" : 1,
+			"option_num" : 4,
+			"qst_title" : "FA Q",
+			"option1_field" : "van",
+			"option2_field" : "bili",
+			"option3_field" : "muji",
+			"option4_field" : "mQ"
+		}
+		modifyQuestion(dict)
+		for i in range(10):
+			r = getQuestionaireByID(i + 1)
+			print r
+
+	def test_fillin(self):
+		dict = {
+			"qst_type" : "fillin",
+			"questions_id" : 2,
+			"qst_title" : "FA Q",
+			"fillinrow" : 4,
+			"fillincheck" : "picture",
+			"fillinhint" : "philosophy"
+		}
+		modifyQuestion(dict)
+		for i in range(10):
+			r = getQuestionaireByID(i + 1)
+			print r
+
+
 
 # Create your tests here.

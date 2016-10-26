@@ -96,12 +96,14 @@ class Question(models.Model):
         (SORT, "sort")
         )
     questionaire_id = models.ForeignKey(Questionaire)
-    question_text = models.TextField()
+    question_text = models.TextField(default = u"请在此输入问题标题")
     question_type = models.CharField(max_length = 2, choices = TYPES, default = FILLIN)
     question_order = models.IntegerField(default = 1)
     question_choices = models.IntegerField(default = 0)
     pub_date = models.DateTimeField('date published', null = True)
     question_fillinrow = models.IntegerField(default = 1)
+    question_fillinhint = models.CharField(max_length = 200, default = u"文本")
+    question_fillincheck = models.CharField(max_length = 100, default = "")
 
     def __unicode__(self):
         return self.question_text

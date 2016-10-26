@@ -177,7 +177,7 @@ def login_act(request):
 
 def get_questionnaire_byID(act_id):
 	#act_id:问卷id
-	result = _database.get_questionnaire_byID(act_id)
+	result = api.getQuestionaireByID(act_id)
 	return result
 
 def get_questionnaire_bySTATUS(status, username):
