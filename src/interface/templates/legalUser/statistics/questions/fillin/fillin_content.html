@@ -1,0 +1,34 @@
+{% extends 'common/sortable_content.html' %}
+
+{% block no-data-info %}
+    暂无题目
+{% endblock no-data-info %}
+
+{% block content %}
+    {% for option in items %}
+        <tr>
+            <td>
+                &emsp;{{ option.id }}
+            </td>
+            <td colspan="10">{{ option.content }}</td>
+            
+        </tr>
+    {% endfor %}
+    <tr>
+        <td>
+            &emsp;#
+        </td>
+        <td><strong>本题有效填写人数</strong></td>
+        <td colspan="10">
+            {% for option in items %}
+                {% if forloop.first %}
+                    &emsp;<strong>{{option.total}}</strong>
+                {% endif %}
+            {% endfor %}
+        </td>
+    </tr>
+
+    <script>
+
+    </script>
+{% endblock content %}

@@ -296,7 +296,7 @@ def get_result_of_question(act_id, qst_id, fillin_id):
 
 
 def get_statistics_of_question(qst_id):
-    if int(qst_id) % 2 == 1:
+    if int(qst_id) % 3 == 1:
         item1 = {
             'id': 1,
             'content': '第一个选项',
@@ -312,7 +312,7 @@ def get_statistics_of_question(qst_id):
             'total': 4
         }
         return [item1, item2]
-    else:
+    elif int(qst_id) % 3 == 2:
         item1 = {
             'id': 1,
             'content': '选项 1',
@@ -335,7 +335,85 @@ def get_statistics_of_question(qst_id):
             'total': 4
         }
         return [item1, item2, item3]
-    return []
+    else:
+        item1 = {
+            'id': 1,
+            'content': '填空1',
+            'count': 1,
+            'percentage': 25,
+            'total': 11
+        }
+        item2 = {
+            'id': 2,
+            'content': '这是一个非常长非常长非常长非常长非常长非常长非常长非常长非常长非常长非常长非常长非常长非常长非常长的答案',
+            'count': 1,
+            'percentage': 25,
+            'total': 11
+        }
+        item3 = {
+            'id': 3,
+            'content': '填空3',
+            'count': 1,
+            'percentage': 25,
+            'total': 11
+        }
+        item4 = {
+            'id': 4,
+            'content': '填空4',
+            'count': 1,
+            'percentage': 25,
+            'total': 11
+        }
+        item5 = {
+            'id': 5,
+            'content': '填空5',
+            'count': 1,
+            'percentage': 25,
+            'total': 11
+        }
+        item6 = {
+            'id': 6,
+            'content': '填空6',
+            'count': 1,
+            'percentage': 25,
+            'total': 11
+        }
+        item7 = {
+            'id': 7,
+            'content': '填空7',
+            'count': 1,
+            'percentage': 25,
+            'total': 11
+        }
+        item8 = {
+            'id': 8,
+            'content': '填空8',
+            'count': 1,
+            'percentage': 25,
+            'total': 11
+        }
+        item9 = {
+            'id': 9,
+            'content': '填空9',
+            'count': 1,
+            'percentage': 25,
+            'total': 11
+        }
+        item10 = {
+            'id': 10,
+            'content': '填空10',
+            'count': 1,
+            'percentage': 25,
+            'total': 11
+        }
+        item11 = {
+            'id': 11,
+            'content': '填空11',
+            'count': 1,
+            'percentage': 25,
+            'total': 11
+        }
+    return [item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11]
 
 
 

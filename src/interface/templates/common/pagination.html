@@ -64,14 +64,24 @@
 
     <script>
         $(".pagination").ready(function () {
-            $(".pager-link").click(function () {
-                var this_params = sort_params;
-                this_params['page'] = $(this).data("page");
-                loadContentOn($(".sortable tbody"), sort_url, this_params, {anim: false, scroll: false}, function () {
-                    //$.scrollTo($(".sortable"), {offset: -removePx($(".main").css("padding-top"))});
+            $(".pagination").each(function () {
+                var $this = $(this);
+                var onthis = $this.parent().parent().parent().parent().parent().parent().parent().parent();
+                var tbody = onthis.find("tbody");
+                var sort_url = onthis.find("input[name=sort_url]").attr('value');
+                var sort_params = {
+                    'sort_by': onthis.find("input[name=sort_by]").attr('value'),
+                    'sort_order': onthis.find("input[name=sort_order]").attr('value'),
+                    'sort_field': onthis.find("input[name=sort_field]").attr('value')
+                };
+                $this.find(".pager-link").click(function () {
+                    var this_params = sort_params;
+                    this_params['page'] = $(this).data("page");
+                    loadContentOn(tbody, sort_url, this_params, {anim: false, scroll: false}, function () {
+                        $.scrollTo(onthis, {offset: -removePx($(".main").css("padding-top"))});
+                    });
                 });
-            });
-
+            })
         });
     </script>
 </nav>
