@@ -18,13 +18,47 @@
                         <div class="row" style="text-align: left;">
                             <div class="col-xs-12 form-group">
                                 <label class="control-label" for="publish_url">问卷链接</label>
-                                <input id="publish_url" name="title" class="form-control" style="resize: vertical;">
+                                <br>
+                                <div class="col-xs-8" >
+                                    <input id="publish_url" name="title" class="form-control" style="resize: vertical;">
+                                </div>
+
+                                <div class="col-xs-1" style="text-align: center;">
+                                    <button type="button" class="btn btn-default" id="copyBtn">
+                                        <div>复制</div>
+                                    </button>
+                                </div>
+                        
+                                <div class="col-xs-3" style="text-align: center;">
+                                    &emsp;
+                                    <a href="{% url 'questionnaire' id %}" target="_blank">
+                                        <button type="button" class="btn btn-primary"> 
+                                            查看问卷
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        
+                        </div>
+
+                        <hr>
+                        <div class="row" style="text-align: left;">
+                            <div class="col-xs-12">
+                                <label class="control-label">问卷二维码</label>
+
+                            </div>
+                            
+                        </div>
+                        <div class="row" style="text-align: center;">
+                            <div class="col-xs-12 ">
+                                <div class="panel-body">
+                                    <div id="qrcode"></div>
+                                </div>
                             </div>
                         </div>
-                        <br>
-                        <div id="submit-button-field">
-                            <button type="submit" class="btn btn-primary form-btn" href="javascript:window.location.reload();">
-                                确认
+                        <div class="control-group">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                完成
                             </button>
                         </div>
                     </form>
@@ -40,9 +74,22 @@
     var url_field = modal.find("#publish_url");
 
 
+    var copyBtn = $('#copyBtn');
+    $(copyBtn).click(function(){
+        $(url_field).select();
+        document.execCommand('Copy');
+        showConfirmModal("提示", "已复制到剪贴板", true);
+    })
+    
+
+
     modal.ready(function () {
 
-        url_field.val("127.0.0.1:8000" + "{% url 'questionnaire' id %}");
+        var questionnaire_url = "http://127.0.0.1:8000" + "{% url 'questionnaire' id %}";
+        url_field.val(questionnaire_url); 
+        $('#qrcode').qrcode(questionnaire_url);
+
+
 
     });
 </script>
