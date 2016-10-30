@@ -1,4 +1,23 @@
 
+//停止问卷
+function stop_act(act_id, url, item) {
+    var callback = function() {
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: "&act_id=" + act_id,
+            success: function(data) {
+                loadContentOfItem(item, {anim: false, scroll: false});
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert(xhr.responseText);
+            }
+        });
+    }
+    showConfirmModal('停止收集问卷', '停止之后问卷将无法填写，<br>确定要停止收集吗？', false, callback);
+}
+
+
 //删除问卷
 function remove_act(act_id, url, item) {
     var callback = function() {
@@ -31,7 +50,7 @@ function publish_act(act_id, url, modal_url) {
                 };
 
                 showModal(modal_url, 'publish-modal', params);
-                
+
             },
             error: function (xhr, textStatus, errorThrown) {
                 alert(xhr.responseText.substr(0, 500));

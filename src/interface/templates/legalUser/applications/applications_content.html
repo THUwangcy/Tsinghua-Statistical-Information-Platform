@@ -70,8 +70,8 @@
                         {% elif app.status == 'already' %}
                             
                             <li style="width: 24%" align="center">
-                                <a class="fake-link" href="{% url 'questionnaire' app.id %}" target="_blank" >
-                                    <i class="fa fa-file-text-o fa-fw fa-2x" aria-hidden="true"></i> 查看
+                                <a class="fake-link" href="javascript:stop_act('{{activity.id}}', '{% url 'api/stop_act' %}', '#all-applications-item')">
+                                    <i class="fa fa-pause fa-fw fa-2x" aria-hidden="true"></i>停止
                                 </a>
                             </li>
                             <li style="width: 24%" align="center">

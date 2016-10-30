@@ -237,7 +237,6 @@ def get_result_of_question(act_id, qst_id, fillin_id):
     return result
 
 
-
 def get_statistics_of_question(qst_id):
     #qst_id: 问题id 获取该问题的详细统计信息
     result = _database.get_statistics_of_question(qst_id)
@@ -254,9 +253,6 @@ def notice_act(request):
 #"qst2":"sss"
 #"act_id":"3"
 #"csrfmiddlewaretoken":"As64oYUOYYDSsz3FfW6PWM8Ku89kpgaD"
-#
-#
-#
 def questionnaire_submit(request):
     dicts = request.POST.dict()
     output = open('questionnaire.txt', 'w')
@@ -266,3 +262,13 @@ def questionnaire_submit(request):
         infomations += "\n"
     output.write(infomations)
     return JsonResponse(dict(status='ok'))
+
+
+def stop_act(request):
+    file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
+    Act_id = request.GET['act_id']
+    file_object.writelines("Stop: " + Act_id + "\n")
+    status = 'ok'
+    return JsonResponse({
+        'status': status,
+    })

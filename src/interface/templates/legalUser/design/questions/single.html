@@ -3,6 +3,7 @@
 {% block title%}
 
     <label for="name" id="single_title">请在此输入问题标题</label>
+    <label id = "must_qst" style="color:red; display: none;">&nbsp;*</label>
     <div id="radio-list">
         <div class="radio">
             &emsp;
@@ -28,12 +29,24 @@
             if('{{questions_title}}' != 'None')
                 source_panel_body.find("#single_title").html('{{questions_title}}');
 
+            //必答题星号
+            if('{{qst_must}}' == 'true')
+                source_panel_body.find("#must_qst").css("display", '');
+
+            
+
             if('{{option}}' != 'None')
             {
                 //全删除
                 source_panel_body.find(".radio").each(function() {
                     $(this).remove();
                 });
+
+                //加载人数限制
+                var statistics = new Array();
+                '{% for opt in statistics %}'
+                    statistics['{{forloop.counter}}'] = '{{opt.max}}';
+                '{% endfor %}'
                 
                 var option_name = 'option' + '{{ questions_id }}';
                 var prefix = '<div class="radio">\
@@ -45,8 +58,14 @@
                     var option_field = '{{option}}'.split('###')[(i - 1) * 2 + 1];
                     var radio_id = "optionsRadios" + i;
                     var radio_value = "option" + i;
+
+                    var option_maxium = statistics[i];
+                    if (option_maxium != '') {
+                        option_maxium = "【 剩余可选择次数: " + option_maxium + ' / ' + option_maxium + ' 】';
+                    }
                     var to_append = prefix + radio_id + ' value=' + radio_value + '>\
-                                        <label for="this.prev();">' + option_field + '</label\
+                                        <label for="this.prev();">' + option_field + '</label>\
+                                        <label for="this.prev();">' + option_maxium + '</label>\
                                         </lable>\
                                     </div>';
                     source_panel_body.find("#radio-list").append(to_append);

@@ -23,15 +23,24 @@
                         <div class="row" style="text-align: left;">
                             <div class="col-xs-12 form-group">
                                 <label class="control-label" for="multi_title_field">标题</label>
-                                <input id="multi_title_field" name="qst_title" class="form-control"
-                                          style="resize: vertical;">
+                                <br>
+                                <div class="col-xs-9">
+                                    <input id="multi_title_field" name="qst_title" class="form-control"
+                                              style="resize: vertical;">
+                                </div>
+                                <div class="col-xs-3" style="margin-top: 5px;">
+                                    <label>
+                                    <input type="checkbox" name="must" id="must_field" value="true">
+                                        <label for="this.prev();">必答题</label>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <hr>
                         <div id="option_list">
                             <div>
                                 <div class="row option" style="text-align: left;">
-                                    <div class="col-xs-12 form-group">
+                                    <div class="col-xs-9 form-group">
                                         <label class="control-label pull-left" >选项</label>
                                         <a class="fake-link pull-left" href="#" onclick="return Add(this);">
                                             &emsp;<span class="fa fa-plus-circle fa-fw"></span> 在下面添加&emsp;
@@ -42,10 +51,31 @@
                                         <input id="option1_field" name="title" class="form-control"
                                                       style="resize: vertical;">
                                     </div>
+                                    <div class="col-xs-3 form-group">
+                                        <label class="control-label pull-left" >填写上限</label>
+                                        
+                                        <input id="option1_maxium" name="option1_maxium" class="form-control"
+                                                      style="resize: vertical; width: 80%;" placeholder="请输入数字"> 
+                                    </div>
                                 </div>
                                 <br>
                             </div>
 
+                        </div>
+                        <hr>
+                        <div class="row" style="text-align: center;">
+                            <div class="col-xs-6 form-group">
+                                <label class="control-label pull-left" >最少选择</label>
+                                
+                                <input id="min_selected" name="min_selected" class="form-control"
+                                              style="resize: vertical; width: 80%;" placeholder="请输入数字">
+                            </div>
+                            <div class="col-xs-6 form-group">
+                                <label class="control-label pull-left" >最多选择</label>
+                                
+                                <input id="max_selected" name="max_selected" class="form-control"
+                                              style="resize: vertical; width: 80%;" placeholder="请输入数字">
+                            </div>
                         </div>
                         <div id="submit-button-field">
                             <button type="submit" class="btn btn-primary form-btn">
@@ -66,17 +96,25 @@
     var submit_button = modal.find("#submit-button-field");
     var title_field = modal.find("#multi_title_field")
     var option_field1 = modal.find("#option1_field");
+    var must_option = modal.find("#must_field");
+    var min_selected = modal.find("#min_selected");
+    var max_selected = modal.find("#max_selected");
 
     //重新加载每个选项输入框的id和name，方便之后表单serilize
     function reloadID() {
         var num = $(".option").parent().size();
         modal.find("input[name=option_num]").val(num);
         $("form#multi-form").find(".option").each(function() {
-            var input_field = $(this).find(".form-control");
+            var input_field = $(this).find(".form-control").first();
             var rank = $(this).parent().index() + 1;
             var id = 'option' + rank + '_field';
+
+            var input_maxium = $(this).find(".form-control").last();
+            var maxium_id = 'option' + rank + '_maxium';
             input_field.attr('name', id);
             input_field.attr('id', id);
+            input_maxium.attr('name', maxium_id);
+            input_maxium.attr('id', maxium_id);
         })
     }
 
@@ -85,7 +123,7 @@
         var this_option = $(obj).parent().parent().parent();
         this_option.after('<div>\
                                 <div class="row option" style="text-align: left;">\
-                                    <div class="col-xs-12 form-group">\
+                                    <div class="col-xs-9 form-group">\
                                         <label class="control-label pull-left" >选项</label>\
                                         <a class="fake-link pull-left" href="#" onclick="return Add(this);">\
                                             &emsp;<span class="fa fa-plus-circle fa-fw"></span> 在下面添加&emsp;\
@@ -95,6 +133,11 @@
                                         </a>\
                                         <input name="title" class="form-control"\
                                                       style="resize: vertical;">\
+                                    </div>\
+                                    <div class="col-xs-3 form-group">\
+                                        <label class="control-label pull-left" >填写上限</label>\
+                                        <input id="option1_maxium" name="option1_maxium" class="form-control"\
+                                                      style="resize: vertical; width: 80%;" placeholder="请输入数字">\
                                     </div>\
                                 </div>\
                                 <br>\
@@ -136,11 +179,37 @@
             var option_field = modal.find("#option" + i + "_field").val();
             var radio_id = "optionsCheckbox" + i;
             var radio_value = "option" + i;
+
+            var option_maxium = modal.find("#option" + i + "_maxium").val();
+            if (option_maxium != '') {
+                option_maxium = "【 剩余可选择次数: " + option_maxium + ' / ' + option_maxium + ' 】';
+            }
             var to_append = prefix + radio_id + ' value=' + radio_value + '>\
-                                <label for="this.prev();">' + option_field + '</label\
+                                <label for="this.prev();">' + option_field + '</label>\
+                                <label for="this.prev();">' + option_maxium + '</label>\
                                 </lable>\
                             </div>';
             source_panel_body.find("#checkbox-list").append(to_append);
+        }
+
+        //必答题设置星号
+        var must_field = source_panel_body.find("#must_qst");
+        if(modal.find("#must_field").is(':checked'))
+            must_field.css("display", '');
+        else
+            must_field.css("display", "none");
+
+        //设置选择提示
+        var select_hint = source_panel_body.find("#select_hint");
+        if(min_selected.val() == '') {
+            if(max_selected.val() != '')
+                select_hint.html("&nbsp;[最多选择" + max_selected.val() + "项]");
+        }
+        else {
+            if(max_selected.val() != '')
+                select_hint.html("&nbsp;[请选择" + min_selected.val() + " - " + max_selected.val() + "项]");
+            else
+                select_hint.html("&nbsp;[至少选择" + min_selected.val() + "项]")
         }
 
         //重新加载选框样式
@@ -156,6 +225,33 @@
         var source_panel_body = $("#qst{{ id }}");
         title_field.val(source_panel_body.find("#multi_title").text().trim());
         option_field1.val(source_panel_body.find("#optionsCheckbox1").parent().next().html().trim());
+        //设置第一个选项的限制人数
+        var option1_maxium = source_panel_body.find("#optionsCheckbox1").parent().next().next();
+        if(option1_maxium.length != 0) {
+            var content = option1_maxium.html().trim();
+            content = content.substr(content.indexOf('/') + 2, content.indexOf('】') - content.indexOf('/') - 2);
+            modal.find("#option1_maxium").val(content);
+        }
+
+        //必答题设置
+        var must_field = source_panel_body.find("#must_qst");
+        if(must_field.css("display") != 'none')
+            must_option.attr("checked",'checked');
+
+        //设置选择提示
+        var select_hint = source_panel_body.find("#select_hint");
+        if(select_hint.html() != '') {
+            var reg = /\d+/g;
+            var ms = select_hint.html().match(reg);
+            if(select_hint.html().indexOf('-') > -1) {
+                min_selected.val(ms[0]);
+                max_selected.val(ms[1]);
+            }
+            else if(select_hint.html().indexOf('多') > -1) 
+                max_selected.val(ms[0]);
+            else
+                min_selected.val(ms[0]);
+        }
 
         //将现有题目的选项内容放到文本框中
         var size = source_panel_body.find(".checkbox").size();
@@ -164,6 +260,14 @@
             var current_id = '#option' + current_rank + '_field';
             Add($(current_id));
             modal.find("#option" + i + "_field").val(source_panel_body.find("#optionsCheckbox" + i).parent().next().html().trim());
+
+            //设置选项限制人数
+            var maxium_field = source_panel_body.find("#optionsCheckbox" + i).parent().next().next();
+            if(maxium_field.length != 0) {
+                var content = maxium_field.html().trim();
+                content = content.substr(content.indexOf('/') + 2, content.indexOf('】') - content.indexOf('/') - 2);
+                modal.find("#option" + i + "_maxium").val(content);
+            }
         }
 
         handleFormPost("#multi-form", "{% url 'api/modify_qst' %}", {
@@ -173,6 +277,13 @@
                     modal.modal('hide');
                 }
             }
+        });
+
+        //重新加载选框样式
+        $('input').iCheck({
+          checkboxClass: 'icheckbox_flat-green',
+          radioClass: 'iradio_flat-green',
+          increaseArea: '20%'
         });
 
     });

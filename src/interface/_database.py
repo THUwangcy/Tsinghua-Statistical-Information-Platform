@@ -302,6 +302,7 @@ def get_statistics_of_question(qst_id):
             'content': '第一个选项',
             'count': 1,
             'percentage': 25,
+            'max': 10,
             'total': 4
         }
         item2 = {
@@ -318,6 +319,7 @@ def get_statistics_of_question(qst_id):
             'content': '选项 1',
             'count': 1,
             'percentage': 25,
+            'max': 10,
             'total': 4
         }
         item2 = {
@@ -332,6 +334,7 @@ def get_statistics_of_question(qst_id):
             'content': '选项 3',
             'count': 1,
             'percentage': 25,
+            'max': 10,
             'total': 4
         }
         return [item1, item2, item3]

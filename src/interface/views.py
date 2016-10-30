@@ -149,6 +149,7 @@ def legalUser_design(request, type, act_id):
 
 def legalUser_design_question(request, type, act_id):
     question_url = 'legalUser/design/questions/' + request.GET.get('questions_type') + '.html'
+    statistics = views.get_statistics_of_question(request.GET.get('questions_id'))
     params = {}
     params = {
         'questions_type': request.GET.get('questions_type'),
@@ -157,7 +158,8 @@ def legalUser_design_question(request, type, act_id):
         'option_num': request.GET.get('option_num'),
         'option': request.GET.get('option'),
         'rows': request.GET.get('rows'),
-        'hint': request.GET.get('hint')
+        'hint': request.GET.get('hint'),
+        'statistics': statistics
     }
     params['act_type'] = type
     params['act_id'] = act_id

@@ -2,6 +2,7 @@
 
 {% block title%}
 	<label for="fillin_field" id="fillin_title">请在此输入问题标题</label>
+    <label id = "must_qst" style="color:red; display: none;">&nbsp;*</label>
 
     <div class="row" style="text-align: left; padding-left:25px; padding-top: 10px;">
         <div class="col-xs-12 form-group">
@@ -20,6 +21,10 @@
             	source_panel_body.find("#fillin_field").attr('rows', '{{rows}}');
             if('{{hint}}' != 'None')
             	source_panel_body.find("#fillin_field").attr('placeholder', '{{hint}}');
+
+            //必答题星号
+            if('{{qst_must}}' == 'true')
+                source_panel_body.find("#must_qst").css("display", '');
          
 
             //加载选框样式

@@ -63,6 +63,7 @@ urlpatterns = [
     url(r'^api/save_act/?$', 'api.views.save_act', name='api/save_act'),
     url(r'^api/publish_act/?$', 'api.views.publish_act', name='api/publish_act'),
     url(r'^api/modify_qst/?$', 'api.views.modify_qst', name='api/modify_qst'),
+    url(r'^api/stop_act/?$', 'api.views.stop_act', name='api/stop_act'),
 
     url(r'^api/info_change_act/?$', 'api.views.info_change_act', name='api/info_change_act'),
     url(r'^api/login_act/?$', 'api.views.login_act', name='api/login_act'),
