@@ -600,3 +600,14 @@ def get_pagination(item_total, item_per_page, cur):
     return page
 
 
+def get_username(request):
+    username = session.get_username(request)
+    if username == 'none':
+        return JsonResponse({
+            'status': 'wrong',
+        })
+    else:
+        return JsonResponse({
+            'status': 'OK',
+            'username': username,
+        })

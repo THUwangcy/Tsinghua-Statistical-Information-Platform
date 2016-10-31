@@ -53,6 +53,9 @@ urlpatterns = [
     #modal
     url(r'^modal/?$', 'interface.views.show_modal', name='legalUser/modal'),
 
+    #username
+    url(r'^get_username/?$', 'interface.views.get_username', name='get_username'),
+
     #api
     url(r'^api/modify_name/?$', 'api.views.modify_name', name='api/modify_name'),
     url(r'^api/create_new_act/?$', 'api.views.create_new_act', name='api/create_new_act'),
