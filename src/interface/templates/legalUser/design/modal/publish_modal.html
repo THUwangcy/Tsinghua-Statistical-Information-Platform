@@ -40,6 +40,33 @@
                             </div>
                         
                         </div>
+                        <br>
+                        <div class="row" style="text-align: left;">
+                            <div class="col-xs-12 form-group">
+                                <label class="control-label" for="publish_url">后台管理链接</label>
+                                <br>
+                                <div class="col-xs-8" >
+                                    <input id="management_url" name="title" class="form-control" style="resize: vertical;">
+                                </div>
+
+                                <div class="col-xs-1" style="text-align: center;">
+                                    <button type="button" class="btn btn-default" id="copyBtn_manage">
+                                        <div>复制</div>
+                                    </button>
+                                </div>
+
+                                <div class="col-xs-3" style="text-align: center;">
+                                    &emsp;
+                                    <a href="{% url 'guest/statistics/id' id %}" target="_blank">
+                                        <button type="button" class="btn btn-primary"> 
+                                            前往后台
+                                        </button>
+                                    </a>
+                                </div>
+                        
+                            </div>
+                        
+                        </div>
 
                         <hr>
                         <div class="row" style="text-align: left;">
@@ -72,6 +99,7 @@
     var modal = $("#publish-modal");
 
     var url_field = modal.find("#publish_url");
+    var manage_field = modal.find("#management_url");
 
 
     var copyBtn = $('#copyBtn');
@@ -81,12 +109,19 @@
         showConfirmModal("提示", "已复制到剪贴板", true);
     })
     
-
+    var copyBtn_manage = $('#copyBtn_manage');
+    $(copyBtn_manage).click(function () {
+        $(manage_field).select();
+        document.execCommand('Copy');
+        showConfirmModal("提示", "已复制到剪贴板", true);
+    })
 
     modal.ready(function () {
 
         var questionnaire_url = "http://127.0.0.1:8000" + "{% url 'questionnaire' id %}";
+        var management_url = "http://127.0.0.1:8000" + "{% url 'guest/statistics/id' id %}";
         url_field.val(questionnaire_url); 
+        manage_field.val(management_url);
         $('#qrcode').qrcode(questionnaire_url);
 
         $("#confirm_btn").click(function () {

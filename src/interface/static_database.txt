@@ -1,56 +1,6 @@
-username: adminstatus: already
-fillin: 0
-subscribe_time: 2016.10.28
-description: 没有说明
-type: enroll
-id: 1
-name: XX活动报名
-
-status: already
-fillin: 0
-subscribe_time: 2016.10.30
-description: 没有说明
-type: recruit
-id: 2
-name: 
-
-status: already
-fillin: 0
-subscribe_time: 2016.10.30
-description: 没有说明
-type: enroll
-id: 3
-name: 
-
-status: already
-fillin: 0
-subscribe_time: 2016.10.30
-description: 没有说明
-type: recruit
-id: 5
-name: 
-
-status: already
-fillin: 0
-subscribe_time: 2016.10.30
-description: 没有说明
-type: recruit
-id: 6
-name: 
-
-status: already
-fillin: 0
-subscribe_time: 2016.10.30
-description: 没有说明
-type: enroll
-id: 7
-name: 
-
-status: already
-fillin: 0
-subscribe_time: 2016.10.30
-description: 没有说明
-type: vote
-id: 8
-name: 
-
+act_description: 没有说明
+act_type: enroll
+qst_num: 2
+act_status: already
+questions: [{'qst_id': 1, 'qst_type': 'single', 'option_num': 2, 'option': [u'###\u9009\u9879 1###', u'###\u9009\u9879 2###'], 'qst_title': u'\u8bf7\u5728\u6b64\u8f93\u5165\u95ee\u9898\u6807\u9898'}, {'qst_id': 2, 'qst_type': 'multi', 'option_num': 2, 'option': [u'###\u9009\u9879 1###', u'###\u9009\u9879 2###'], 'qst_title': u'\u8bf7\u5728\u6b64\u8f93\u5165\u95ee\u9898\u6807\u9898'}]
+act_title: XX活动报名

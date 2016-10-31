@@ -1,22 +1,21 @@
 {% extends 'publish_base.html' %}
 
-{% block title %}问卷填写 - 清华大学信息化统计平台{% endblock %}
+{% block title %}后台管理 - 清华大学信息化统计平台{% endblock %}
 
 {% block subtitle %}
     <a class="navbar-brand">&gt;</a>
-    <a class="fake-link-scroll navbar-brand">问卷填写</a>
+    <a class="fake-link-scroll navbar-brand">后台管理</a>
 {% endblock subtitle %}
 
 {% block itemtitle %} 
-    问卷填写
+    后台管理
 {% endblock itemtitle %}
 
 {% block scripts %}
-    <script>
-    </script>
 {% endblock scripts %}
 
 {% block main-page %}
+	{% include 'legalUser/statistics/statistics.ajax.html' %}
 {% endblock main-page %}
 
 {% block modals %}

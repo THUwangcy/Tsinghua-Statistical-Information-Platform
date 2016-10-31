@@ -99,4 +99,6 @@ urlpatterns = [
     url(r'^statistics/([0-9]+)/question/?$', 'interface.views.statistics_question', name='statistics/question'),
     url(r'^statistics/([0-9]+)/question/list/(\w+)/([0-9]+)/?$', 'interface.views.statistics_question_list', name='statistics/question/list'),
 
+    #guest_management
+    url(r'^guest/statistics/([0-9]+)/?$', 'interface.views.guest_statistics', name='guest/statistics/id'),
 ]

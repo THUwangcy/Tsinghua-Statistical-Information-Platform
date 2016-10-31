@@ -388,6 +388,14 @@ def show_statistics(request, act_id):
     }, 'statistics-list-item')
 
 
+def guest_statistics(request, act_id):
+    act_info = views.get_questionnaire_byID(act_id)
+    return render(request, 'publish/management/index.html', {
+        'act_id': act_id,
+        'act_info': act_info
+    })
+
+
 def show_paticipants_list(request, act_id):
     applications = views.get_participants(act_id)
     return render_sortable(request, applications,

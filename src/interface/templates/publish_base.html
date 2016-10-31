@@ -38,9 +38,8 @@
     <script src="{% static 'md5/md5.min.js' %}"></script>
     <script src="{% static 'validator/validator.min.js' %}"></script>
 
-    <script src="{% static 'icheck-1.x/icheck.js' %}"></script>
 
-    
+    <script src="{% static 'icheck-1.x/icheck.js' %}"></script>
     {% block scripts %}
     {% endblock scripts %}
 </head>
@@ -106,61 +105,24 @@
                 </li-->
             {% endblock right-toggle %}
             
-            <li class="dropdown">
-                <a class="pull-right fake-link dropdown-toggle" role="button" data-toggle="dropdown" data-target="#">
-                    <i class="glyphicon glyphicon-user"></i> {{ username }} <span class="caret"></span>
-                </a>
-                <ul id="g-account-menu" class="dropdown-menu" role="menu">
-                    {% block user-menu %}
-
-                    {% endblock user-menu %}
-                </ul>
-            </li>
         </ul>
     </div>
     <!-- /container -->
 </div>
 <!-- /Header -->
 
-
-<!-- Main -->
 <div class="wrap">
+<!-- Main -->
 <div class="container-fluid main">
     {% block main-frame %}
         <div class="row">
-            <div id="left-column">
-                <!-- Left column -->
-                <div class="container column-container">
-                    {% block left-column %}
-                    {% endblock left-column %}
-                </div>
-                {% if active_item %}
-                    <script>
-                        var container = $(".column-container"),
-                                item = $("#" + "{{ active_item }}.left-column-item");
-                        item.addClass("active");
-                        if (item.position().top > container.outerHeight())
-                            container.scrollTo(item);
-                    </script>
-                {% endif %}
-                <div class="hidden-xs scroll-edge scroll-edge-top fake-link" style="opacity: 0;">
-                    <img src="{% static 'image/scroll-edge-top.png' %}"
-                         style="position: absolute; top: 0;">
-                    <span class="fa fa-chevron-up"
-                          style="position: absolute; top: 10px; left: 50%; opacity: 0.5"></span>
-                </div>
-                <div class="hidden-xs scroll-edge scroll-edge-bottom fake-link" style="opacity: 0;">
-                    <img src="{% static 'image/scroll-edge-bottom.png' %}"
-                         style="position: absolute; bottom: 0;">
-                    <span class="fa fa-chevron-down"
-                          style="position: absolute; bottom: 10px; left: 50%; opacity: 0.5;"></span>
-                </div>
+            <div class="col-md-1">
             </div>
-            <div class="container-fluid" id="main-page">
+            <div class="container-fluid col-md-10">
                 <!-- Main page -->
                 {% block main-page %}
 
-                {% endblock main-page %}   
+                {% endblock main-page %}
             </div>
         </div>
     {% endblock main-frame %}

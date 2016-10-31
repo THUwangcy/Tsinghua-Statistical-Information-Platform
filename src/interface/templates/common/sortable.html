@@ -16,6 +16,8 @@
                 console.log("SorTable usage error: ", "url");
             if (!defaults.hasOwnProperty("search_field"))
                 $this.addClass("no-search");
+            if (defaults.hasOwnProperty("table_id"))
+                $this.find(".table-sortable").attr("id", defaults.table_id);
             // declare global
             sort_url = defaults.url;
             // alert(sort_url);
