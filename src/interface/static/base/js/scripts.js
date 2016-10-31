@@ -346,8 +346,24 @@ function getTime() {
     var month = mydate.getMonth() + 1;
     var day = mydate.getDate();
     if(month < 10)  month = '0' + month;
-    if(day < 10) month = '0' + day;
+    if(day < 10) day = '0' + day;
     time = year + '.' + month + '.' + day;
+    return time;
+}
+function getDetailTime(){
+    var mydate = new Date();
+    var year = mydate.getFullYear();
+    var month = mydate.getMonth() + 1;
+    var day = mydate.getDate();
+    var hour = mydate.getHours();
+    var minute = mydate.getMinutes();
+    var second = mydate.getSeconds();
+    if(month < 10)  month = '0' + month;
+    if(day < 10) day = '0' + day;
+    if(hour < 10) hour = '0' + hour;
+    if(minute< 10) minute = '0' + minute;
+    if(second < 10) second = '0' + second;
+    time = year + '.' + month + '.' + day +'.'+ hour + ':'+ minute + ':'+ second;
     return time;
 }
 

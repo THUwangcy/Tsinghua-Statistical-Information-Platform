@@ -1,6 +1,6 @@
 act_description: 没有说明
-act_type: recruit
-qst_num: 0
-act_status: new
-questions: []
-act_title: 
+act_type: enroll
+qst_num: 5
+act_status: already
+questions: [{'qst_id': 1, 'qst_type': 'single', 'option_num': 2, 'option': [u'###\u9009\u9879 1###', u'###\u9009\u9879 2###'], 'qst_title': u'\u8bf7\u5728\u6b64\u8f93\u5165\u95ee\u9898\u6807\u9898'}, {'qst_id': 2, 'qst_type': 'single', 'option_num': 2, 'option': [u'###\u9009\u9879 1###', u'###\u9009\u9879 2###'], 'qst_title': u'\u8bf7\u5728\u6b64\u8f93\u5165\u95ee\u9898\u6807\u9898'}, {'qst_id': 3, 'qst_type': 'single', 'option_num': 2, 'option': [u'###\u9009\u9879 1###', u'###\u9009\u9879 2###'], 'qst_title': u'\u8bf7\u5728\u6b64\u8f93\u5165\u95ee\u9898\u6807\u9898'}, {'qst_id': 4, 'rows': 1, 'hint': u'', 'qst_type': 'fillin', 'check': u'\u6587\u672c', 'qst_title': u'\u8bf7\u5728\u6b64\u8f93\u5165\u95ee\u9898\u6807\u9898'}, {'qst_id': 5, 'rows': 1, 'hint': u'', 'qst_type': 'fillin', 'check': u'\u6587\u672c', 'qst_title': u'\u8bf7\u5728\u6b64\u8f93\u5165\u95ee\u9898\u6807\u9898'}]
+act_title: XX活动报名
