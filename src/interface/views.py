@@ -19,6 +19,8 @@ import _database
 from database import backend
 from api import views
 from django.core.exceptions import PermissionDenied
+from django.core.mail import send_mail
+from send_email import send_html_mail
 
 # Create your views here.
 

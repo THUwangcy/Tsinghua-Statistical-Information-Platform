@@ -1,6 +1,1 @@
-act_description: 没有说明
-act_type: vote
-qst_num: 0
-act_status: new
-questions: []
-act_title: 
+username: none
