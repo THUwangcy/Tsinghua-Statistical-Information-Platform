@@ -382,24 +382,54 @@ def show_statistics_choose(request):
 @check_identity('legalUser')
 def show_statistics(request, act_id):
     act_info = views.get_questionnaire_byID(act_id)
+    applications = views.get_participants(act_id)
+    
+    for fillin in applications:
+        toAppend = []
+        for qst in act_info['questions']:
+            fillin_id = fillin['id']
+            qst_id = qst['qst_id']
+            qst_info = views.get_result_of_question(act_id, qst_id, fillin_id)
+            toAppend.append(qst_info)
+        fillin['fillin_result'] = toAppend
+
+    file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
+    for fillin in applications:
+        for key in fillin:
+            file_object.writelines(key + ': ' + str(fillin[key]) + '\n')
+        file_object.writelines('\n')
+
     return render_ajax(request, 'legalUser/statistics/statistics.html', {
         'act_id': act_id,
-        'act_info': act_info
+        'act_info': act_info,
+        'item':applications
     }, 'statistics-list-item')
 
 
 def guest_statistics(request, act_id):
     act_info = views.get_questionnaire_byID(act_id)
+    applications = views.get_participants(act_id)
+    
+    for fillin in applications:
+        toAppend = []
+        for qst in act_info['questions']:
+            fillin_id = fillin['id']
+            qst_id = qst['qst_id']
+            qst_info = views.get_result_of_question(act_id, qst_id, fillin_id)
+            toAppend.append(qst_info)
+        fillin['fillin_result'] = toAppend
+
     return render(request, 'publish/management/index.html', {
         'act_id': act_id,
-        'act_info': act_info
+        'act_info': act_info,
+        'item':applications
     })
 
 
-def show_paticipants_list(request, act_id):
+def show_participants_list(request, act_id):
     applications = views.get_participants(act_id)
     return render_sortable(request, applications,
-                           'legalUser/statistics/paticipants/paticipants_content.html', {
+                           'legalUser/statistics/participants/participants_content.html', {
                                'act_id': act_id
                            })
 
