@@ -73,6 +73,7 @@ urlpatterns = [
     url(r'^api/notice_act/?$', 'api.views.notice_act', name='api/notice_act'),
 
     url(r'^api/qst_submit/?$', 'api.views.questionnaire_submit', name='api/qst_submit'),
+    url(r'^api/register_email/?$', 'api.views.register_email', name='api/register_email'),
 
     #userlist
     url(r'^/?$', RedirectView.as_view(url='/login/')),
