@@ -226,21 +226,21 @@ def get_questionnaire_bySTATUS(status, username):
 
 def get_participants(act_id):
     #act_id: 问卷id
-    result = _database.get_participants()
+    result = api.getFillers(act_id)
     return result
 
 def get_result_of_question(act_id, qst_id, fillin_id):
     #act_id: 问卷id
     #qst_id: 问题id
     #fillin_id: 填写id
-    result = _database.get_result_of_question(act_id, qst_id, fillin_id)
+    result = api.getQuestionaireFills(act_id, qst_id, fillin_id)
     return result
 
 
 
 def get_statistics_of_question(qst_id):
     #qst_id: 问题id 获取该问题的详细统计信息
-    result = _database.get_statistics_of_question(qst_id)
+    result = api.getStatisticsOfQuestion(qst_id)
     return result
 
 
@@ -265,4 +265,156 @@ def questionnaire_submit(request):
         infomations += "\"%s\":\"%s\"" % (key, value)
         infomations += "\n"
     output.write(infomations)
-    return JsonResponse(dict(status='ok'))
+    status = api.fillQuestionaire(dicts)
+    return JsonResponse({
+        'status': status
+    })
+
+def stop_act(request):
+    file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
+    Act_id = request.GET['act_id']
+    file_object.writelines("Stop: " + Act_id + "\n")
+    status = 'ok'
+    return JsonResponse({
+        'status': status,
+    })
+
+
+def get_columnChart_json(act_id, qst_id):
+    act_info = get_questionnaire_byID(act_id)
+    question = {}
+    for qst in act_info['questions']:
+        if qst['qst_id'] == int(qst_id):
+            question = qst
+            break
+    qst_info = get_statistics_of_question(qst_id)
+    question['qst_info'] = qst_info
+    tableData = {
+        'chart': {
+            'caption': question['qst_title'],
+            'subCaption': question['qst_type'],
+            'xAxisName': '选项',
+            'pYAxisName': '选择人数',
+            'sYAxisName': '百分比',
+            'sYAxisMaxValue': 150,
+            'pYAxisMaxValue': 0
+        },
+        'categories': [
+            {
+                'category': []
+            }
+        ],
+        'dataset': [
+            {
+                'seriesName': '选择人数',
+                'data': []
+            },
+            {
+                'seriesName': '百分比',
+                'parentYAxis': 'S',
+                'renderAs': 'area',
+                'data': []
+            }
+        ]
+    }
+
+    for option in question['option']:
+        tableData['categories'][0]['category'].append({
+            'label': str(option)
+        })
+    for option in question['qst_info']:
+        tableData['dataset'][0]['data'].append({
+            'value': str(option['count'])
+        })
+        tableData['dataset'][1]['data'].append({
+            'value': str(option['percentage'])
+        })
+        if int(option['count']) >= tableData['chart']['pYAxisMaxValue']:
+            tableData['chart']['pYAxisMaxValue'] = int(option['count']) + 1
+    if question['qst_type'] == 'single':
+        tableData['chart']['subCaption'] = u'单选题'
+    elif question['qst_type'] == 'multi':
+        tableData['chart']['subCaption'] = u'多选题'
+    else:
+        tableData = {}
+
+    tableData = json.dumps(tableData)
+    return tableData
+
+
+def get_pieChart_json(act_id, qst_id):
+    act_info = get_questionnaire_byID(act_id)
+    question = {}
+    for qst in act_info['questions']:
+        if qst['qst_id'] == int(qst_id):
+            question = qst
+            break
+    qst_info = get_statistics_of_question(qst_id)
+    question['qst_info'] = qst_info
+    tableData = {
+        'chart': {
+            'caption': question['qst_title'],
+            'subCaption': question['qst_type'],
+            'showLegend': '1',
+            'legendItemFontSize': '12',
+        },
+        'data': []
+    }
+
+    for option in question['qst_info']:
+        tableData['data'].append({
+                'label': option['content'],
+                'value': option['count']
+            })
+
+    if question['qst_type'] == 'single':
+        tableData['chart']['subCaption'] = u'单选题'
+    elif question['qst_type'] == 'multi':
+        tableData['chart']['subCaption'] = u'多选题'
+    else:
+        tableData = {}
+
+    tableData = json.dumps(tableData)
+    return tableData
+
+
+def get_barChart_json(act_id, qst_id):
+    act_info = get_questionnaire_byID(act_id)
+    question = {}
+    for qst in act_info['questions']:
+        if qst['qst_id'] == int(qst_id):
+            question = qst
+            break
+    qst_info = get_statistics_of_question(qst_id)
+    question['qst_info'] = qst_info
+    tableData = {
+        'chart': {
+            'caption': question['qst_title'],
+            'subCaption': question['qst_type'],
+            "yAxisName": u"选择人数",
+        },
+        'data': []
+    }
+
+    for option in question['option']:
+        tableData['categories'][0]['category'].append({
+            'label': str(option)
+        })
+    for option in question['qst_info']:
+        tableData['dataset'][0]['data'].append({
+            'value': str(option['count'])
+        })
+        tableData['dataset'][1]['data'].append({
+            'value': str(option['percentage'])
+        })
+        if int(option['count']) >= tableData['chart']['pYAxisMaxValue']:
+            tableData['chart']['pYAxisMaxValue'] = int(option['count']) + 1
+    if question['qst_type'] == 'single':
+        tableData['chart']['subCaption'] = u'单选题'
+    elif question['qst_type'] == 'multi':
+        tableData['chart']['subCaption'] = u'多选题'
+    else:
+        tableData = {}
+
+    tableData = json.dumps(tableData)
+    return tableData

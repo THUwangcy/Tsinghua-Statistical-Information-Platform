@@ -124,10 +124,11 @@ class Choice(models.Model):
 class Filler(models.Model):
     filler_ip = models.CharField(max_length = 30, default = "0.0.0.0")
     filler_time = models.CharField(max_length = 30, default = "2016")
+    filler_address = models.CharField(max_length = 50, default = u"北京")
     filler_questionaire = models.ForeignKey(Questionaire)
 
 class Answer(models.Model):
     answer_filler = models.ForeignKey(Filler)
     answer_question = models.ForeignKey(Question)
     answer_content = models.TextField(null = True)
-        
+    answer_choice = models.ForeignKey(Choice, null = True)

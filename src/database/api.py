@@ -312,3 +312,106 @@ def makeQuestionDict(qst):
 			optionList.append("###" + choice.choice_text + "###")
 		return_dict["option"] = optionList
 	return return_dict
+
+def fillQuestionaire(dict):
+	currentQuestionaire = Questionaire.objects.get(id = dict["act_id"])
+	currentQuestionList = Question.objects.filter(questionaire_id = currentQuestionaire)
+	questionCount = currentQuestionaire.questionaire_numOfQues
+	currentFiller = Filler(
+		filler_ip = dict["IP"],
+		filler_address = dict["address"],
+		filler_questionaire = currentQuestionaire,
+		filler_time = dict["submitTime"]
+		)
+	currentFiller.save()
+	filledList = dict.keys()
+	for qst in currentQuestionList:
+		if ("qst" + str(qst.id)) in filledList:
+			choice = None
+			
+
+			if qst.question_type == "FI":
+				text = dict[("qst" + str(qst.id))]
+			else:
+				for oneChoice in dict["qst" + str(qst.id)]:
+					order = int(oneChoice[6:])
+					choice = Choice.objects.get(
+						question = qst,
+						choice_order = order
+						)
+					text = choice.choice_text
+			currentAnswer = Answer(
+				answer_filler = currentFiller,
+				answer_question = qst,
+				answer_content = text,
+				answer_choice = choice
+				)
+			currentAnswer.save()
+
+def getFillers(act_id):
+	currentQuestionaire = Questionaire.objects.get(id = act_id)
+	currentFillerList = Filler.objects.filter(filler_questionaire = currentQuestionaire)
+	returnList = list()
+	for Fill in currentFillerList:
+		returnList.append(makeFillerDict(Fill))
+	return returnList
+
+def makeFillerDict(Fill):
+	dict = {
+		"id" : Fill.id,
+		"fillin_time" : Fill.filler_address,
+		"ip" : Fill.filler_ip,
+		"city" : Fill.filler_address
+	}
+	return dict
+
+def getQuestionaireFills(act_id, qst_id, fillin_id):
+	currentFiller = Filler.objects.get(id = fillin_id)
+	currentQuestion = Question.objects.get(id = qst_id)
+	currentAnswer = Answer.objects.filter(answer_filler = currentFiller, answer_question = currentQuestion)
+	if currentQuestion.question_type == "FI":
+		return currentAnswer[0].answer_content
+	if currentQuestion.question_type == "SI":
+		return currentAnswer[0].answer_choice.choice_order
+	if currentQuestion.question_type == "MI":
+		returnList = list()
+		for answer in currentAnswer:
+			returnList.append(answer.answer_choice.choice_order)
+		return returnList
+
+def getStatisticsOfQuestion(qst_id):
+	currentQuestion = Question.objects.get(id = qst_id)
+	AnswerList = Answer.objects.filter(answer_question = currentQuestion)
+	Fillers = Filler.objects.filter(filler_questionaire = currentQuestion.questionaire_id)
+	count = len(Fillers)
+	returnList = list()
+	if currentQuestion.question_type == "FI":
+		countDown = 1
+		for answer in AnswerList:
+			dict = {
+				"id" : countDown,
+				"content" : answer.answer_content
+			}
+			returnList.append(dict)
+		countDown = countDown + 1
+	else:
+		Choices = choice.objects.filter(question = currentQuestion)
+		fillerSet = set()
+		for answer in AnswerList:
+			filler.add(answer.answer_filler)
+		total = len(fillerSet)
+		returnList = list()
+		for oneChoice in Choices:
+			answerForOne = AnswerList.filter(answer_choice = oneChoice)
+			choiceCount = len(answerForOne)
+			percentage = int(round(float(choiceCount) / float(count)))
+			dict = {
+				"id" : oneChoice.choice_order,
+				"content" : oneChoice.choice_text,
+				"count" : choiceCount,
+				"total" : total,
+				"percentage" : percentage
+			}
+			returnList.append(dict)
+	return returnList
+
