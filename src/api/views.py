@@ -233,7 +233,7 @@ def get_result_of_question(act_id, qst_id, fillin_id):
     #act_id: 问卷id
     #qst_id: 问题id
     #fillin_id: 填写id
-    result = api.getQuestionaireFills(act_id, qst_id, fillin_id)
+    result = api.getQuestionFill(act_id, qst_id, fillin_id)
     return result
 
 

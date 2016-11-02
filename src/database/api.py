@@ -328,25 +328,31 @@ def fillQuestionaire(dict):
 	for qst in currentQuestionList:
 		if ("qst" + str(qst.id)) in filledList:
 			choice = None
-			
-
 			if qst.question_type == "FI":
 				text = dict[("qst" + str(qst.id))]
+				currentAnswer = Answer(
+					answer_filler = currentFiller,
+					answer_question = qst,
+					answer_content = text,
+					answer_choice = choice
+					)
+				currentAnswer.save()
 			else:
 				for oneChoice in dict["qst" + str(qst.id)]:
+					#print oneChoice
 					order = int(oneChoice[6:])
 					choice = Choice.objects.get(
 						question = qst,
 						choice_order = order
 						)
 					text = choice.choice_text
-			currentAnswer = Answer(
-				answer_filler = currentFiller,
-				answer_question = qst,
-				answer_content = text,
-				answer_choice = choice
-				)
-			currentAnswer.save()
+					currentAnswer = Answer(
+						answer_filler = currentFiller,
+						answer_question = qst,
+						answer_content = text,
+						answer_choice = choice
+						)
+					currentAnswer.save()
 
 def getFillers(act_id):
 	currentQuestionaire = Questionaire.objects.get(id = act_id)
@@ -359,23 +365,26 @@ def getFillers(act_id):
 def makeFillerDict(Fill):
 	dict = {
 		"id" : Fill.id,
-		"fillin_time" : Fill.filler_address,
+		"fillin_time" : Fill.filler_time,
 		"ip" : Fill.filler_ip,
 		"city" : Fill.filler_address
 	}
 	return dict
 
-def getQuestionaireFills(act_id, qst_id, fillin_id):
+def getQuestionFill(act_id, qst_id, fillin_id):
 	currentFiller = Filler.objects.get(id = fillin_id)
 	currentQuestion = Question.objects.get(id = qst_id)
 	currentAnswer = Answer.objects.filter(answer_filler = currentFiller, answer_question = currentQuestion)
+	#print len(currentAnswer)
 	if currentQuestion.question_type == "FI":
 		return currentAnswer[0].answer_content
 	if currentQuestion.question_type == "SI":
 		return currentAnswer[0].answer_choice.choice_order
-	if currentQuestion.question_type == "MI":
+	if currentQuestion.question_type == "MU":
 		returnList = list()
+		#print "?????"
 		for answer in currentAnswer:
+			#print "???"
 			returnList.append(answer.answer_choice.choice_order)
 		return returnList
 
@@ -393,18 +402,18 @@ def getStatisticsOfQuestion(qst_id):
 				"content" : answer.answer_content
 			}
 			returnList.append(dict)
-		countDown = countDown + 1
+			countDown = countDown + 1
 	else:
-		Choices = choice.objects.filter(question = currentQuestion)
+		Choices = Choice.objects.filter(question = currentQuestion)
 		fillerSet = set()
 		for answer in AnswerList:
-			filler.add(answer.answer_filler)
+			fillerSet.add(answer.answer_filler)
 		total = len(fillerSet)
 		returnList = list()
 		for oneChoice in Choices:
 			answerForOne = AnswerList.filter(answer_choice = oneChoice)
 			choiceCount = len(answerForOne)
-			percentage = int(round(float(choiceCount) / float(count)))
+			percentage = int(round(float(choiceCount) / float(count) * 100))
 			dict = {
 				"id" : oneChoice.choice_order,
 				"content" : oneChoice.choice_text,
