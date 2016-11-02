@@ -254,13 +254,27 @@ def notice_act(request):
 #"act_id":"3"
 #"csrfmiddlewaretoken":"As64oYUOYYDSsz3FfW6PWM8Ku89kpgaD"
 def questionnaire_submit(request):
+
     dicts = request.POST.dict()
-    output = open('questionnaire.txt', 'w')
-    infomations=""
+    output = open('questionnaire1.txt', 'w')
+    infomations1=""
     for key, value in dicts.items():
-        infomations += "\"%s\":\"%s\"" % (key, value)
-        infomations += "\n"
-    output.write(infomations)
+        infomations1 += "\"%s\":\"%s\"" % (key, value)
+        infomations1 += "\n"
+    output.write(infomations1)
+
+    output = open('questionnaire2.txt', 'w')
+    infomations2 = ""
+    for key, value in dicts.items():
+        result_list = request.POST.getlist(key, '')
+        if len(result_list) == 1:
+            infomations2 += "\"%s\":\"%s\"" % (key, value)
+            infomations2 += "\n"
+        else:
+            infomations2 += "\"%s\":\"%s\"" % (key, str(result_list))
+            infomations2 += "\n"
+    output.write(infomations2)
+
     return JsonResponse(dict(status='ok'))
 
 

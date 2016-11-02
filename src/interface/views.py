@@ -483,6 +483,8 @@ def questionnaire_publish_question(request, type, act_id):
         fillin_result = views.get_result_of_question(act_id, request.GET.get('questions_id'), request.GET.get('fillin_id'))
         params['result'] = fillin_result
 
+
+
     params['act_type'] = type
     params['act_id'] = act_id
     return render(request, question_url, params)
