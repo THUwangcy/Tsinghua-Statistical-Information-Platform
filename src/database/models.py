@@ -104,6 +104,9 @@ class Question(models.Model):
     question_fillinrow = models.IntegerField(default = 1)
     question_fillinhint = models.CharField(max_length = 200, default = u"文本")
     question_fillincheck = models.CharField(max_length = 100, default = "")
+    question_mustfill = models.BooleanField(default = False)
+    question_minfill = models.IntegerField(default = 0)
+    question_maxfill = models.IntegerField(default = 2)
 
     def __unicode__(self):
         return self.question_text

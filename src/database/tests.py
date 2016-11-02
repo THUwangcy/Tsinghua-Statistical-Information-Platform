@@ -126,7 +126,11 @@ class getQuestionaireTest(TestCase):
 		createSeveralTestQuestions()
 
 	def test_byStatus(self):
-		List = getQuestionaireListByStatus("all")
+		dict = {
+			"status" : "all",
+			"username" : 'admin'
+		}
+		List = getQuestionaireListByStatus(dict)
 		for q in List:
 			print(q)
 		publishQuestionaire({"act_id" : 1})
@@ -135,13 +139,15 @@ class getQuestionaireTest(TestCase):
 		saveQuestionaire({"act_id" : 2})
 		saveQuestionaire({"act_id" : 4})
 		saveQuestionaire({"act_id" : 6})
-		List = getQuestionaireListByStatus("all")
+		List = getQuestionaireListByStatus(dict)
 		for q in List:
 			print(q)
-		List = getQuestionaireListByStatus("pending")
+		dict["status"] = "pending"
+		List = getQuestionaireListByStatus(dict)
 		for q in List:
 			print(q)
-		List = getQuestionaireListByStatus("already")
+		dict["status"] = "already"
+		List = getQuestionaireListByStatus(dict)
 		for q in List:
 			print(q)
 

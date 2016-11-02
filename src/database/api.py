@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from models import *
  
 def createDefaultUser():
@@ -79,7 +81,21 @@ def createNewQuestion(dict):
 		question_type = switcher[thetype],
 		question_order = dict["qst_rank"]
 		)
+
 	currentQuestion.save()
+	if ((switcher[thetype] == "SI") or (switcher[thetype] == "MU")):
+		option1 = Choice(
+			question = currentQuestion,
+			choice_text = u'选项1',
+			choice_order= 1
+			)
+		option2 = Choice(
+			question = currentQuestion,
+			choice_text = u'选项2',
+			choice_order= 2
+			)
+		option1.save()
+		option2.save()
 	return_dict = {
 		"status" : "ok",
 		"id" : currentQuestion.id
@@ -177,7 +193,7 @@ def getQuestionaireListByStatus(dict):
 		"all" : "AL"
 	}
 	if switcher[dict["status"]] == "AL":
-		return makeQuestionaireList(Questionaire.objects.filter(questionaire_user__real_name = dict["username"]).exclude(questionaire_status = "new"))
+		return makeQuestionaireList(Questionaire.objects.exclude(questionaire_status = "IN").filter(questionaire_user__real_name = dict["username"]))
 	else:
 		return makeQuestionaireList(Questionaire.objects.filter(questionaire_user__real_name = dict["username"]).filter(questionaire_status = switcher[dict["status"]]))
 
