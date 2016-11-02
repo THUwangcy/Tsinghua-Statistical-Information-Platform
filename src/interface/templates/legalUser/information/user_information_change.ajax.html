@@ -109,6 +109,7 @@
             handleFormPost("#info_change_form", "{% url 'api/info_change_act' %}", {
                 success_callback: function (data) {
                     if (data['status'] === 'ok') {
+                        showConfirmModal('提示', '个人信息修改成功', true)
                     }
                 }
             });

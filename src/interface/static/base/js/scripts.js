@@ -755,6 +755,24 @@ function resizeComponents() {
     }
 }
 
+function get_username() {
+    $.ajax({
+        url: '/get_username',
+        type: "POST",
+        success: function (data) {
+            if(data["status"] == 'OK') {
+                return data["username"];
+            }
+            else {
+                alert("no username!");
+            }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+                alert(xhr.responseText);
+        }
+    })
+}
+
 function drawCharts(selected_charts) {
 
     var load_status = $(".tab-content").data("loading");

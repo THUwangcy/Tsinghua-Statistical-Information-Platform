@@ -19,6 +19,8 @@ import _database
 from database import backend
 from api import views
 from django.core.exceptions import PermissionDenied
+from django.core.mail import send_mail
+from send_email import send_html_mail
 
 # Create your views here.
 
@@ -637,3 +639,14 @@ def get_pagination(item_total, item_per_page, cur):
     return page
 
 
+def get_username(request):
+    username = session.get_username(request)
+    if username == 'none':
+        return JsonResponse({
+            'status': 'wrong',
+        })
+    else:
+        return JsonResponse({
+            'status': 'OK',
+            'username': username,
+        })

@@ -1,8 +1,0 @@
-"act_id":"1"
-"IP":"183.172.113.139"
-"qst2":"[u'option1', u'option2']"
-"qst3":"3"
-"submitTime":"none"
-"qst1":"option2"
-"csrfmiddlewaretoken":"tHprGDj916VgI5bS8OSnzZxQzxNSO73C"
-"address":"none"
