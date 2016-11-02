@@ -7,7 +7,7 @@ import time
 
 def send_html_mail(subject, content, recipient_list):
     html_content = loader.render_to_string(
-                        'guest\email\email.html',
+                        'guest/email/email.html',
                         {
                             'email': content['email'],
                             'date': time.strftime("%Y.%m.%d", time.localtime()),
@@ -15,6 +15,9 @@ def send_html_mail(subject, content, recipient_list):
                             'questionnaire_url': content['questionnaire_url'],
                         }
                    )
-    msg = EmailMessage(subject, html_content, EMAIL_HOST_USER, recipient_list)
-    msg.content_subtype = "html"
-    msg.send()
+    try:
+        msg = EmailMessage(subject, html_content, EMAIL_HOST_USER, recipient_list)
+        msg.content_subtype = "html"
+        msg.send()
+    except:
+        pass        

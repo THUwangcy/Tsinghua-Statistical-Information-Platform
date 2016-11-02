@@ -6,6 +6,8 @@ import sys
 from database import api
 from interface import session
 
+import re
+
 from django.shortcuts import render
 import json
 import os
@@ -243,20 +245,20 @@ def get_questionnaire_bySTATUS(status, username):
 
 def get_participants(act_id):
     #act_id: 问卷id
-    result = _database.get_participants()
+    result = api.getFillers(act_id)
     return result
 
 def get_result_of_question(act_id, qst_id, fillin_id):
     #act_id: 问卷id
     #qst_id: 问题id
     #fillin_id: 填写id
-    result = _database.get_result_of_question(act_id, qst_id, fillin_id)
+    result = api.getQuestionFill(act_id, qst_id, fillin_id)
     return result
 
 
 def get_statistics_of_question(qst_id):
     #qst_id: 问题id 获取该问题的详细统计信息
-    result = _database.get_statistics_of_question(qst_id)
+    result = api.getStatisticsOfQuestion(qst_id)
     return result
 
 
@@ -273,27 +275,24 @@ def notice_act(request):
 def questionnaire_submit(request):
 
     dicts = request.POST.dict()
-    output = open('questionnaire1.txt', 'w')
-    infomations1=""
-    for key, value in dicts.items():
-        infomations1 += "\"%s\":\"%s\"" % (key, value)
-        infomations1 += "\n"
-    output.write(infomations1)
-
     output = open('questionnaire2.txt', 'w')
-    infomations2 = ""
+    infomations2 = {}
+    pattern = 'option'
+    regex = re.compile(pattern)
     for key, value in dicts.items():
-        result_list = request.POST.getlist(key, '')
-        if len(result_list) == 1:
-            infomations2 += "\"%s\":\"%s\"" % (key, value)
-            infomations2 += "\n"
+        match = regex.search(value)
+        if match:
+            result_list = request.POST.getlist(key, '')
+            infomations2[key] = result_list
         else:
-            infomations2 += "\"%s\":\"%s\"" % (key, str(result_list))
-            infomations2 += "\n"
-    output.write(infomations2)
+            infomations2[key]=value
+
+    for key in infomations2:
+        output.writelines(str(key) + ": " + str(infomations2[key]) + '\n')
+ #   output.write(infomations2)
+    status = api.fillQuestionaire(infomations2)
 
     return JsonResponse(dict(status='ok'))
-
 
 def stop_act(request):
     file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
@@ -356,7 +355,7 @@ def get_columnChart_json(act_id, qst_id):
         tableData['dataset'][1]['data'].append({
             'value': str(option['percentage'])
         })
-        
+
     if question['qst_type'] == 'single':
         tableData['chart']['subCaption'] = u'单选题'
     elif question['qst_type'] == 'multi':
@@ -377,8 +376,10 @@ def get_pieChart_json(act_id, qst_id):
             break
     qst_info = get_statistics_of_question(qst_id)
     question['qst_info'] = qst_info
+
     if question['qst_type'] == 'fillin':
         return {}
+
     tableData = {
         'chart': {
             'caption': question['qst_title'],
@@ -415,8 +416,10 @@ def get_barChart_json(act_id, qst_id):
             break
     qst_info = get_statistics_of_question(qst_id)
     question['qst_info'] = qst_info
+
     if question['qst_type'] == 'fillin':
         return {}
+
     tableData = {
         'chart': {
             'caption': question['qst_title'],

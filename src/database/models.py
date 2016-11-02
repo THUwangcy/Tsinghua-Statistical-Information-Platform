@@ -104,6 +104,9 @@ class Question(models.Model):
     question_fillinrow = models.IntegerField(default = 1)
     question_fillinhint = models.CharField(max_length = 200, default = u"文本")
     question_fillincheck = models.CharField(max_length = 100, default = "")
+    question_mustfill = models.BooleanField(default = False)
+    question_minfill = models.IntegerField(default = 0)
+    question_maxfill = models.IntegerField(default = 2)
 
     def __unicode__(self):
         return self.question_text
@@ -121,10 +124,12 @@ class Choice(models.Model):
 class Filler(models.Model):
     filler_ip = models.CharField(max_length = 30, default = "0.0.0.0")
     filler_time = models.CharField(max_length = 30, default = "2016")
+    filler_address = models.CharField(max_length = 50, default = u"北京")
+    #filler_order = models.IntegerField(default = 1)
     filler_questionaire = models.ForeignKey(Questionaire)
 
 class Answer(models.Model):
     answer_filler = models.ForeignKey(Filler)
     answer_question = models.ForeignKey(Question)
     answer_content = models.TextField(null = True)
-        
+    answer_choice = models.ForeignKey(Choice, null = True)

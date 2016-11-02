@@ -25,8 +25,7 @@
             <script type="text/javascript">
             function getIpPlace() {
                 var ipData = "";
-		        ipData += "省份：" + remote_ip_info["province"] ;
-		        ipData += "   城市：" + remote_ip_info["city"];
+		        ipData += remote_ip_info["city"];
                 //alert(ipData);
                 var address = $("#questionnaire_content").find("#address");
                 address.val(ipData);
@@ -75,6 +74,7 @@
                     'hint':'{{ qst.hint }}',
                     'fillin_id': '{{ fillin_id }}'
                 }
+            //    alert("fillin_id: " + "{{ fillin_id }}" + '.');
                 loadContentOn($(".last-question"), "{% url 'questionnaire/publish_qst' type act_id%}", pre_info_param, {anim: false, scroll: false});
                 $(".last-question").removeClass("last-question");
                 $(".questions-list").append('<li class="question last-question">\

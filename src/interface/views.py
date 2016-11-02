@@ -481,7 +481,7 @@ def questionnaire_publish_question(request, type, act_id):
         'hint': request.GET.get('hint'),
         'fillin_id': request.GET.get('fillin_id')
     }
-    if request.GET.get('fillin_id') != None:
+    if request.GET.get('fillin_id') != None and request.GET.get('fillin_id') != '':
         fillin_result = views.get_result_of_question(act_id, request.GET.get('questions_id'), request.GET.get('fillin_id'))
         params['result'] = fillin_result
 
