@@ -2,12 +2,12 @@
 
 {% block title%}
 
-	<label for="name" id="multi_title">请在此输入问题标题</label>
+	<label for="name" id="multi_title" class="control-label">请在此输入问题标题</label>
     <div id="checkbox-list">
         <div class="checkbox">
             &emsp;
             <label>
-            <input type="checkbox" name="option{{ questions_id }}" id="optionsCheckbox1" value="option1">
+            <input type="checkbox" name="qst{{ questions_id }}" id="optionsCheckbox1" value="option1" class="form-control">
                 <label for="this.prev();">选项 1</label>
             </label>
         </div>
@@ -15,7 +15,7 @@
         <div class="checkbox">
             &emsp;
             <label>
-            <input type="checkbox" name="option{{ questions_id }}" id="optionsCheckbox2" value="option2">
+            <input type="checkbox" name="qst{{ questions_id }}" id="optionsCheckbox2" value="option2" class="form-control">
                 <label for="this.prev();">选项 2</label>
             </label>
         </div>
@@ -35,11 +35,11 @@
                     $(this).remove();
                 });
 
-                var option_name = 'option' + '{{ questions_id }}';
+                var option_name = 'qst' + '{{ questions_id }}';
                 var prefix = '<div class="checkbox">\
                                 &emsp;\
                                 <label>\
-                                <input type="checkbox" name=' + option_name + ' id=';
+                                <input class="form-control" type="checkbox" name=' + option_name + ' id=';
                 //一个一个加选项
                 for(i = 1; i <= '{{option_num}}'; i ++) {
                     var option_field = '{{option}}'.split('###')[(i - 1) * 2 + 1];

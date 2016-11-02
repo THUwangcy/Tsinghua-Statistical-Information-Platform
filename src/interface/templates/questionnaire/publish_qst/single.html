@@ -38,7 +38,7 @@
                 var prefix = '<div class="radio">\
                                 &emsp;\
                                 <label>\
-                                <input type="radio" name=' + option_name + ' id=';
+                                <input class="form-control" type="radio" name=' + option_name + ' id=';
                 //一个一个加选项
                 for(i = 1; i <= '{{option_num}}'; i ++) {
                     var option_field = '{{option}}'.split('###')[(i - 1) * 2 + 1];

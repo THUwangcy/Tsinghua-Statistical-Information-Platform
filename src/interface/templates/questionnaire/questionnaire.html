@@ -27,7 +27,7 @@
                 var ipData = "";
 		        ipData += "省份：" + remote_ip_info["province"] ;
 		        ipData += "   城市：" + remote_ip_info["city"];
-                alert(ipData);
+                //alert(ipData);
                 var address = $("#questionnaire_content").find("#address");
                 address.val(ipData);
                 }
@@ -105,7 +105,7 @@
         var time = getDetailTime();
         var timeSubmit = $("#questionnaire_content").find("#submitTime");
         timeSubmit.val(time);
-        alert(time);
+        //alert(time);
         getIpPlace();
     }
     $("#questionnaire_content").ready(function () {
