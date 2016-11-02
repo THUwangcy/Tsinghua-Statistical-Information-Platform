@@ -1,8 +1,8 @@
 "act_id":"1"
-"IP":"183.172.113.139"
-"qst2":"[u'option1', u'option2']"
-"qst3":"3"
-"submitTime":"none"
-"qst1":"option2"
-"csrfmiddlewaretoken":"tHprGDj916VgI5bS8OSnzZxQzxNSO73C"
-"address":"none"
+"IP":"59.66.131.116"
+"qst2":[u'option1', u'option2']
+"qst3":"单选1选1，多选2选了1、2，填空"
+"submitTime":"2016.11.02.20:59:17"
+"qst1":[u'option1']
+"csrfmiddlewaretoken":"As64oYUOYYDSsz3FfW6PWM8Ku89kpgaD"
+"address":"省份：北京   城市：北京"

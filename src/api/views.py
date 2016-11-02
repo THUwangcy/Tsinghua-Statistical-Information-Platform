@@ -5,7 +5,7 @@ import sys
 
 from database import api
 from interface import session
-
+import re
 
 from django.shortcuts import render
 import json
@@ -256,25 +256,21 @@ def notice_act(request):
 def questionnaire_submit(request):
 
     dicts = request.POST.dict()
-    output = open('questionnaire1.txt', 'w')
-    infomations1=""
-    for key, value in dicts.items():
-        infomations1 += "\"%s\":\"%s\"" % (key, value)
-        infomations1 += "\n"
-    output.write(infomations1)
-
     output = open('questionnaire2.txt', 'w')
     infomations2 = ""
+    pattern = 'option'
+    regex = re.compile(pattern)
     for key, value in dicts.items():
-        result_list = request.POST.getlist(key, '')
-        if len(result_list) == 1:
-            infomations2 += "\"%s\":\"%s\"" % (key, value)
+        match = regex.search(value)
+        if match:
+            result_list = request.POST.getlist(key, '')
+            infomations2 += "\"%s\":%s" % (key, str(result_list))
             infomations2 += "\n"
         else:
-            infomations2 += "\"%s\":\"%s\"" % (key, str(result_list))
+            infomations2 += "\"%s\":\"%s\"" % (key, value)
             infomations2 += "\n"
-    output.write(infomations2)
 
+    output.write(infomations2)
     return JsonResponse(dict(status='ok'))
 
 
