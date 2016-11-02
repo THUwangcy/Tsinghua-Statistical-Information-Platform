@@ -402,9 +402,19 @@ def show_statistics(request, act_id):
     return render_ajax(request, 'legalUser/statistics/statistics.html', {
         'act_id': act_id,
         'act_info': act_info,
-        'item':applications
+        'item':applications,
     }, 'statistics-list-item')
 
+
+def show_charts(request, act_id, qst_id):
+    tableData = {}
+    tableData['column_chart'] = views.get_columnChart_json(act_id, qst_id)
+    tableData['pie_chart'] = views.get_pieChart_json(act_id, qst_id)
+    tableData['bar_chart'] = views.get_barChart_json(act_id, qst_id)
+    tableData['circle_chart'] = views.get_circleChart_json(act_id, qst_id)
+    return render(request, 'legalUser/statistics/charts/charts.html',{
+            'tableData': tableData
+        })
 
 def guest_statistics(request, act_id):
     act_info = views.get_questionnaire_byID(act_id)
@@ -441,10 +451,6 @@ def statistics_question(request, act_id):
         'questions_type': request.GET.get('questions_type'),
         'questions_title': request.GET.get('questions_title'),
         'questions_id': request.GET.get('questions_id'),
-        'option_num': request.GET.get('option_num'),
-        'option': request.GET.get('option'),
-        'rows': request.GET.get('rows'),
-        'hint': request.GET.get('hint')
         }
     params['act_type'] = type
     params['act_id'] = act_id
@@ -504,7 +510,6 @@ def questionnaire(request, act_id):
 
     return render_ajax(request, 'questionnaire/questionnaire.html', {
         'type': type,
-        
         'act_id': act_id,
         'act_info': act_info
     }, item_id)

@@ -58,7 +58,6 @@
                     'hint':'{{ qst.hint }}',
                     'fillin_id': '{{ fillin_id }}'
                 }
-
                 loadContentOn($(".last-question"), "{% url 'questionnaire/publish_qst' type act_id%}", pre_info_param, {anim: false, scroll: false});
                 $(".last-question").removeClass("last-question");
                 $(".questions-list").append('<li class="question last-question">\

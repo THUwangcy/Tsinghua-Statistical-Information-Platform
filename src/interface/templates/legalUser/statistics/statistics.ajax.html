@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <div class="top-row hidden-xs">
 
     <a>&nbsp</a>
@@ -10,17 +11,56 @@
 
 <ul class="nav nav-tabs">
     <li role="presentation" class="active">
-        <a href="#oa-chart" data-toggle="tab">数据分析</a>
+        <a href="#single_chart" data-toggle="tab" class="statistics-tab" id="display_chart">单题信息</a>
     </li>
     <li role="presentation">
-        <a href="#article-chart" data-toggle="tab">填写情况</a>
+        <a href="#data_analyse" data-toggle="tab" class="statistics-tab">整体报告</a>
     </li>
     <li role="presentation">
-        <a href="#history-chart" data-toggle="tab">单题信息</a>
+        <a href="#fillin_info" data-toggle="tab" class="statistics-tab">填写情况</a>
     </li>
 </ul>
 <div class="tab-content" data-loading="true">
-    <div id="oa-chart" class="tab-pane fade active in">
+    <div id="single_chart" class="tab-pane fade active in">
+        <div class="panel panel-default" id="qst_choose">
+            <div class="panel-heading">
+                <h4>单题数据统计<span class="badge pull-right">{{ act_info.questions|length }}</span></h4></div>
+            <div class="panel-body">
+                <label class="control-label">选择题目</label>
+
+                <select id="qst_choose_field" name="statistics_choose" class="form-control"
+                          style="resize: vertical;" onchange="return change_qst();">
+                    {% for qst in act_info.questions %}
+                        <option>{{ qst.qst_title }} &nbsp;(&nbsp;ID: {{ qst.qst_id }}&nbsp;) </option>
+                    {% endfor %}
+                </select>
+                <br>
+                <div id="table_field">
+                </div>
+                <div id="chart_field">
+                </div>
+
+            </div>
+        </div>
+        <script>
+            function change_qst() 
+            {
+                var select = $("#qst_choose_field").val();
+                var ID_index = select.lastIndexOf('ID:');
+                var length = select.length;
+                var select_id = select.substr(ID_index + 4, length - ID_index - 6);
+                var url = "{% url 'statistics/charts' act_id 1234 %}";
+
+                url = url.replace('1234', select_id);
+                loadContentOn($("#chart_field"), url);
+            }
+            $(document).ready(function() {
+                change_qst();
+            })
+        </script>
+    </div>
+
+    <div id="data_analyse" class="tab-pane fade">
         <ol class="questions-list">
             <li class="question last-question">
                 <p align="center"> 暂无题目 </p>
@@ -30,30 +70,29 @@
         {% for qst in act_info.questions %}
         
             <script>
-                
-                pre_info_param = {
-                    'questions_type': '{{qst.qst_type}}',
-                    'questions_title': '{{qst.qst_title}}',
-                    'questions_id': '{{qst.qst_id}}',
-                }
+                $(document).ready(function() {
+                    pre_info_param = {
+                        'questions_type': '{{qst.qst_type}}',
+                        'questions_title': '{{qst.qst_title}}',
+                        'questions_id': '{{qst.qst_id}}',
+                    }
 
-                loadContentOn($(".last-question"), "{% url 'statistics/question' act_id%}", pre_info_param, {anim: false, scroll: false});
-                $(".last-question").removeClass("last-question");
-                $(".questions-list").append('<li class="question last-question">\
-                                                \
-                                             </li>');
+                    loadContentOn($(".last-question"), "{% url 'statistics/question' act_id%}", pre_info_param, {anim: false, scroll: false});
+                    $(".last-question").removeClass("last-question");
+                    $(".questions-list").append('<li class="question last-question">\
+                                                    \
+                                                 </li>');
+                })
+                
             </script>
         
         {% endfor %}
-
     </div>
-    <div id="article-chart" class="tab-pane fade">
+    <div id="fillin_info" class="tab-pane fade">
         {% include 'legalUser/statistics/participants/participants_list.html' %}
         {% include 'legalUser/statistics/print_table.html' %}
     </div>
-    <div id="history-chart" class="tab-pane fade">
-
-    </div>
+    
 </div>
 
 

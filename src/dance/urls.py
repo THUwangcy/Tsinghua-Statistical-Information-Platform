@@ -98,6 +98,7 @@ urlpatterns = [
     url(r'^statistics/([0-9]+)/participants', 'interface.views.show_participants_list', name='statistics/participants'),
     url(r'^statistics/([0-9]+)/question/?$', 'interface.views.statistics_question', name='statistics/question'),
     url(r'^statistics/([0-9]+)/question/list/(\w+)/([0-9]+)/?$', 'interface.views.statistics_question_list', name='statistics/question/list'),
+    url(r'^statistics/([0-9]+)/question/([0-9]+)/charts/?$', 'interface.views.show_charts', name='statistics/charts'),
 
     #guest_management
     url(r'^guest/statistics/([0-9]+)/?$', 'interface.views.guest_statistics', name='guest/statistics/id'),

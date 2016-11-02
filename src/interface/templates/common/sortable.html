@@ -1,4 +1,5 @@
 {% load tz %}
+{% load staticfiles %}
 
 <script>
     $(".sortable").ready(function () {
@@ -160,3 +161,5 @@
         <input name="sort_field" type="text" style="display: none;" value="">
     </form> 
 </div>
+{% block chart %}
+{% endblock chart %}

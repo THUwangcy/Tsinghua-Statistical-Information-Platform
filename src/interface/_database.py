@@ -292,7 +292,7 @@ def get_result_of_question(act_id, qst_id, fillin_id):
         else:
             result = 1
     else:
-        result = 1
+        result = ''
 
     return result
 

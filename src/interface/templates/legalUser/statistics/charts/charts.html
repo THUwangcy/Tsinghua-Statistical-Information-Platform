@@ -1,0 +1,122 @@
+{% load staticfiles %}
+
+<script type="text/javascript" src="{% static 'base/js/charts.js' %}"></script>
+
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead style="visibility: hidden;">
+                <th class="visible-xs" style="min-width: 500px;"></th>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <ul class="nav nav-tabs" id="chart-tabs">
+                            <li role="presentation" class="active">
+                                <a href="#column-chart" data-toggle="tab" class="chart-tab">柱状图</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#pie-chart" data-toggle="tab" class="chart-tab">饼状图</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#bar-chart" data-toggle="tab" class="chart-tab">条形图</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#circle-chart" data-toggle="tab" class="chart-tab">环形图</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" data-loading="true">
+                            <div id="column-chart" class="tab-pane fade active in chart-content">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <object id="column-chart-container" data-type="mscombidy2d"
+                                            data-json='{{ tableData.column_chart }}'></object>
+                                </div>
+                                <div class="pull-right" style="font-size: 8px;">
+                                    数据来源：<a href="{% url 'legalUser/login' %}" target="_blank">清华信息化统计平台</a>。
+                                </div>
+                            </div>
+                            <div id="pie-chart" class="tab-pane fade chart-content">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <object id="pie-chart-container" data-type="pie2d"
+                                            data-json='{{ tableData.pie_chart }}'></object>
+                                </div>
+                                <div class="pull-right" style="font-size: 8px;">
+                                    数据来源：<a href="{% url 'legalUser/login' %}" target="_blank">清华信息化统计平台</a>。
+                                </div>
+                            </div>
+                            <div id="bar-chart" class="tab-pane fade chart-content">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <object id="bar-chart-container" data-type="bar2d"
+                                            data-json='{{ tableData.bar_chart }}'></object>
+                                </div>
+                                <div class="pull-right" style="font-size: 8px;">
+                                    数据来源：<a href="{% url 'legalUser/login' %}" target="_blank">清华信息化统计平台</a>。
+                                </div>
+                            </div>
+                            <div id="circle-chart" class="tab-pane fade chart-content">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <object id="circle-chart-container" data-type="doughnut2d"
+                                            data-json='{{ tableData.circle_chart }}'></object>
+                                </div>
+                                <div class="pull-right" style="font-size: 8px;">
+                                    数据来源：<a href="{% url 'legalUser/login' %}" target="_blank">清华信息化统计平台</a>。
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <script>
+        	[
+                "{% static 'fusioncharts/fusioncharts.js' %}",
+                "{% static 'fusioncharts/fusioncharts.charts.js' %}",
+                "{% static 'fusioncharts/fusioncharts-jquery-plugin.min.js' %}",
+                "{% static 'fusioncharts/themes/fusioncharts.theme.zune.js' %}",
+                "{% static 'fusioncharts/startrender.js' %}"
+            ].forEach(function (src) {
+                var script = document.createElement('script');
+                script.src = src;
+                script.async = false;
+                document.head.appendChild(script);
+            });
+        //    $("#display_charts").ready(function() {
+            	var charts = $(".tab-pane object");
+	            charts.html('\
+	                <div style="width: 100%; text-align: center; opacity: 50;">\
+	                    <span class="fa fa-spinner fa-pulse fa-4x"></span>\
+	                </div>');
+	            var longLoadTimer = setTimeout(function () {
+	                charts.append('<p></p>' +
+	                                '<p class="wait-text" style="text-align: center; font-size: 10px;">图表控件需要较长时间载入，请耐心等待……</p>')
+	                        .find(".wait-text").fadeOut(0).fadeIn(1000);
+	            }, 5000);
+
+	            var errorHandler = function () {
+	                charts.data("json", "");
+	                charts.html('<p style="text-align: center; color: red">图表载入出错</p>');
+	            };
+
+	            var loadChart = function () {
+	       
+	                clearTimeout(longLoadTimer);
+	                $(".tab-content").data("loading", "");
+	                if($(".chart-content.active object").data("json")['chart'] == undefined) {
+	                	charts.append('<p></p>' + 
+	                                '<p class="wait-text" style="text-align: center; font-size: 10px;">该题目为主观题，暂无统计图表，请查看其他题目</p>')
+	                        .find(".wait-text").fadeOut(0).fadeIn(0);
+	                }
+	                else
+	                	drawCharts($(".chart-content.active object"));
+	            };
+
+
+	            $('a.chart-tab').on('show.bs.tab', function (e) {
+
+	                drawCharts($($(e.target).attr("href")).find("object"));
+
+	            })
+        //    })
+
+        </script>
