@@ -22,8 +22,17 @@
                         <div class="row" style="text-align: left;">
                             <div class="col-xs-12 form-group">
                                 <label class="control-label" for="fillin_title_field">标题</label>
-                                <input id="fillin_title_field" name="qst_title" class="form-control"
+                                <br>
+                                <div class="col-xs-9">
+                                    <input id="fillin_title_field" name="qst_title" class="form-control"
                                           style="resize: vertical;">
+                                </div>
+                                <div class="col-xs-3" style="margin-top: 5px;">
+                                    <label>
+                                    <input type="checkbox" name="must" id="must_field" value="true">
+                                        <label for="this.prev();">必答题</label>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <hr>
@@ -87,12 +96,20 @@
     var row_field = modal.find("#fillin_row_field");
     var check_field = modal.find("#fillin_check_field");
     var hint_field = modal.find("#fillin_hint_field");
+    var must_option = modal.find("#must_field");
 
     function modify_page() {
         var source_panel_body = $("#qst{{ id }}");
         source_panel_body.find("#fillin_title").html(title_field.val());
         source_panel_body.find("#fillin_field").attr("rows", row_field.val());
         source_panel_body.find("#fillin_field").attr("placeholder", hint_field.val());
+
+        //必答题设置星号
+        var must_field = source_panel_body.find("#must_qst");
+        if(modal.find("#must_field").is(':checked'))
+            must_field.css("display", '');
+        else
+            must_field.css("display", "none");
     }
 
     modal.ready(function () {
@@ -101,6 +118,11 @@
         row_field.val(source_panel_body.find("#fillin_field").attr("rows"));
         hint_field.val(source_panel_body.find("#fillin_field").attr("placeholder"));
 
+        //必答题设置
+        var must_field = source_panel_body.find("#must_qst");
+        if(must_field.css("display") != 'none')
+            must_option.attr("checked",'checked');
+
         handleFormPost("#fillin-form", "{% url 'api/modify_qst' %}", {
             success_callback: function (data) {
                 if (data['status'] === 'ok') {
@@ -108,6 +130,13 @@
                     modal.modal('hide');
                 }
             }
+        });
+
+        //重新加载选框样式
+        $('input').iCheck({
+          checkboxClass: 'icheckbox_flat-green',
+          radioClass: 'iradio_flat-green',
+          increaseArea: '20%'
         });
 
     });

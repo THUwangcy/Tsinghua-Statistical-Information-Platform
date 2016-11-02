@@ -1,0 +1,42 @@
+{% load staticfiles %}
+
+<div class="table-responsive">
+    <table class="table table-striped" id="print-table">
+        <thead>
+        <tr style="display:none;">
+            <th>序号</th>
+            <th>填写时间</th>
+            <th>IP来源</th>
+            <th>所在城市</th>
+            {% for qst in act_info.questions %}
+                <th>{{ qst.qst_title }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+            {% for fillin in item %}
+                <tr  style="display:none;">
+                    <td>{{ fillin.id }}</td>
+                    <td>{{ fillin.fillin_time }}</td>
+                    <td>{{ fillin.ip }}</td>
+                    <td>{{ fillin.city }}</td>
+                    {% for result in fillin.fillin_result %}
+                        <td>{{ result }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    var export_table = $("#print-table").tableExport({
+        headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
+        footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
+        formats: ["xlsx", "xls"],    // (String[]), filetypes for the export
+        fileName: "{{ act_info.act_title }}" + "_数据统计",       // (id, String), filename for the downloaded file
+        bootstrap: true,                   // (Boolean), style buttons using bootstrap
+        position: "bottom"                 // (top, bottom), position of the caption element relative to table
+    });
+
+    
+</script>

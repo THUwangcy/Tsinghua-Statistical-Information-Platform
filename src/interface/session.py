@@ -23,3 +23,8 @@ def get_identity(request):
     if 'identity' in request.session:
         return request.session['identity']
     return 'none'
+
+def get_email(request):
+    if 'email' in request.session:
+        return request.session['email']
+    return 'none'

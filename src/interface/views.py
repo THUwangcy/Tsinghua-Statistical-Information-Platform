@@ -19,6 +19,8 @@ import _database
 from database import backend
 from api import views
 from django.core.exceptions import PermissionDenied
+from django.core.mail import send_mail
+from send_email import send_html_mail
 
 # Create your views here.
 
@@ -149,6 +151,7 @@ def legalUser_design(request, type, act_id):
 
 def legalUser_design_question(request, type, act_id):
     question_url = 'legalUser/design/questions/' + request.GET.get('questions_type') + '.html'
+    statistics = views.get_statistics_of_question(request.GET.get('questions_id'))
     params = {}
     params = {
         'questions_type': request.GET.get('questions_type'),
@@ -157,7 +160,8 @@ def legalUser_design_question(request, type, act_id):
         'option_num': request.GET.get('option_num'),
         'option': request.GET.get('option'),
         'rows': request.GET.get('rows'),
-        'hint': request.GET.get('hint')
+        'hint': request.GET.get('hint'),
+        'statistics': statistics
     }
     params['act_type'] = type
     params['act_id'] = act_id
@@ -380,16 +384,64 @@ def show_statistics_choose(request):
 @check_identity('legalUser')
 def show_statistics(request, act_id):
     act_info = views.get_questionnaire_byID(act_id)
+    applications = views.get_participants(act_id)
+    
+    for fillin in applications:
+        toAppend = []
+        for qst in act_info['questions']:
+            fillin_id = fillin['id']
+            qst_id = qst['qst_id']
+            qst_info = views.get_result_of_question(act_id, qst_id, fillin_id)
+            toAppend.append(qst_info)
+        fillin['fillin_result'] = toAppend
+
+    file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
+    for fillin in applications:
+        for key in fillin:
+            file_object.writelines(key + ': ' + str(fillin[key]) + '\n')
+        file_object.writelines('\n')
+
     return render_ajax(request, 'legalUser/statistics/statistics.html', {
         'act_id': act_id,
-        'act_info': act_info
+        'act_info': act_info,
+        'item':applications,
     }, 'statistics-list-item')
 
 
-def show_paticipants_list(request, act_id):
+def show_charts(request, act_id, qst_id):
+    tableData = {}
+    tableData['column_chart'] = views.get_columnChart_json(act_id, qst_id)
+    tableData['pie_chart'] = views.get_pieChart_json(act_id, qst_id)
+    tableData['bar_chart'] = views.get_barChart_json(act_id, qst_id)
+    tableData['circle_chart'] = views.get_circleChart_json(act_id, qst_id)
+    return render(request, 'legalUser/statistics/charts/charts.html',{
+            'tableData': tableData
+        })
+
+def guest_statistics(request, act_id):
+    act_info = views.get_questionnaire_byID(act_id)
+    applications = views.get_participants(act_id)
+    
+    for fillin in applications:
+        toAppend = []
+        for qst in act_info['questions']:
+            fillin_id = fillin['id']
+            qst_id = qst['qst_id']
+            qst_info = views.get_result_of_question(act_id, qst_id, fillin_id)
+            toAppend.append(qst_info)
+        fillin['fillin_result'] = toAppend
+
+    return render(request, 'publish/management/index.html', {
+        'act_id': act_id,
+        'act_info': act_info,
+        'item':applications
+    })
+
+
+def show_participants_list(request, act_id):
     applications = views.get_participants(act_id)
     return render_sortable(request, applications,
-                           'legalUser/statistics/paticipants/paticipants_content.html', {
+                           'legalUser/statistics/participants/participants_content.html', {
                                'act_id': act_id
                            })
 
@@ -401,10 +453,6 @@ def statistics_question(request, act_id):
         'questions_type': request.GET.get('questions_type'),
         'questions_title': request.GET.get('questions_title'),
         'questions_id': request.GET.get('questions_id'),
-        'option_num': request.GET.get('option_num'),
-        'option': request.GET.get('option'),
-        'rows': request.GET.get('rows'),
-        'hint': request.GET.get('hint')
         }
     params['act_type'] = type
     params['act_id'] = act_id
@@ -433,9 +481,11 @@ def questionnaire_publish_question(request, type, act_id):
         'hint': request.GET.get('hint'),
         'fillin_id': request.GET.get('fillin_id')
     }
-    if request.GET.get('fillin_id') != None:
+    if request.GET.get('fillin_id') != None and request.GET.get('fillin_id') != '':
         fillin_result = views.get_result_of_question(act_id, request.GET.get('questions_id'), request.GET.get('fillin_id'))
         params['result'] = fillin_result
+
+
 
     params['act_type'] = type
     params['act_id'] = act_id
@@ -464,7 +514,6 @@ def questionnaire(request, act_id):
 
     return render_ajax(request, 'questionnaire/questionnaire.html', {
         'type': type,
-        
         'act_id': act_id,
         'act_info': act_info
     }, item_id)
@@ -590,3 +639,14 @@ def get_pagination(item_total, item_per_page, cur):
     return page
 
 
+def get_username(request):
+    username = session.get_username(request)
+    if username == 'none':
+        return JsonResponse({
+            'status': 'wrong',
+        })
+    else:
+        return JsonResponse({
+            'status': 'OK',
+            'username': username,
+        })

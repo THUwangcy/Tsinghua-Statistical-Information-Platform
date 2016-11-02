@@ -3,12 +3,15 @@ function renderChart(container, type, data, params, callback) {
         data['chart']['baseFont'] = $("body").css("font-family");
         data['chart']['theme'] = 'zune';
         data['chart']['exportEnabled'] = '1';
+
         var chart_params = {
             type: type,
             dataFormat: 'json',
             dataSource: data
         };
+
         $.extend(chart_params, params);
+        
         var myChart = new FusionCharts(chart_params);
 
         // Render the chart.

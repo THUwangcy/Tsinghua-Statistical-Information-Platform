@@ -126,7 +126,11 @@ class getQuestionaireTest(TestCase):
 		createSeveralTestQuestions()
 
 	def test_byStatus(self):
-		List = getQuestionaireListByStatus("all")
+		dict = {
+			"status" : "all",
+			"username" : 'admin'
+		}
+		List = getQuestionaireListByStatus(dict)
 		for q in List:
 			print(q)
 		publishQuestionaire({"act_id" : 1})
@@ -135,13 +139,15 @@ class getQuestionaireTest(TestCase):
 		saveQuestionaire({"act_id" : 2})
 		saveQuestionaire({"act_id" : 4})
 		saveQuestionaire({"act_id" : 6})
-		List = getQuestionaireListByStatus("all")
+		List = getQuestionaireListByStatus(dict)
 		for q in List:
 			print(q)
-		List = getQuestionaireListByStatus("pending")
+		dict["status"] = "pending"
+		List = getQuestionaireListByStatus(dict)
 		for q in List:
 			print(q)
-		List = getQuestionaireListByStatus("already")
+		dict["status"] = "already"
+		List = getQuestionaireListByStatus(dict)
 		for q in List:
 			print(q)
 
@@ -170,20 +176,92 @@ class modifyQuestionTest(TestCase):
 			r = getQuestionaireByID(i + 1)
 			print r
 
-	def test_fillin(self):
+	def test_getbyID(self):
 		dict = {
 			"qst_type" : "fillin",
 			"questions_id" : 2,
 			"qst_title" : "FA Q",
-			"fillinrow" : 4,
-			"fillincheck" : "picture",
-			"fillinhint" : "philosophy"
+			"fillin_row" : 4,
+			"fillin_check" : "picture",
+			"fillin_hint" : "philosophy"
 		}
 		modifyQuestion(dict)
 		for i in range(10):
 			r = getQuestionaireByID(i + 1)
 			print r
 
-
+class fillQuestionaireTest(TestCase):
+	def setUp(self):
+		createSeveralTestQuestions()
+		dict = {
+			"qst_type" : "fillin",
+			"questions_id" : 2,
+			"qst_title" : "FA Q",
+			"fillin_row" : 4,
+			"fillin_check" : "picture",
+			"fillin_hint" : "philosophy"
+		}
+		modifyQuestion(dict)
+		dict = {
+			"qst_type" : "single",
+			"questions_id" : 1,
+			"option_num" : 4,
+			"qst_title" : "FA Q",
+			"option1_field" : "van",
+			"option2_field" : "bili",
+			"option3_field" : "muji",
+			"option4_field" : "mQ"
+		}
+		modifyQuestion(dict)
+	def test_fill(self):
+		dict = {
+			"act_id" : 4,
+			"IP" : "0.0.0.0",
+			"address" : "beijing",
+			"submitTime" : "2016",
+			"qst1" : ["option1"],
+			"qst2" : "mum",
+			"qst3" : ["option1", "option2"]
+		}
+		fillQuestionaire(dict)
+		print (getFillers(4))
+		print (getQuestionFill(4, 1, 1))
+		print (getQuestionFill(4, 2, 1))
+		print (getQuestionFill(4, 3, 1))
+	def test_fillSeveral(self):
+		dict = {
+			"act_id" : 4,
+			"IP" : "0.0.0.0",
+			"address" : "beijing",
+			"submitTime" : "2016",
+			"qst1" : ["option1"],
+			"qst2" : "mum",
+			"qst3" : ["option1", "option2"]
+		}
+		fillQuestionaire(dict)
+		dict = {
+			"act_id" : 4,
+			"IP" : "0.0.0.1",
+			"address" : "beijing",
+			"submitTime" : "2017",
+			"qst1" : ["option2"],
+			"qst2" : "mum?????",
+			"qst3" : ["option1", "option2"]
+		}
+		fillQuestionaire(dict)
+		dict = {
+			"act_id" : 4,
+			"IP" : "0.0.0.2",
+			"address" : "beijing",
+			"submitTime" : "2018",
+			"qst1" : ["option1"],
+			"qst2" : "mum",
+			"qst3" : ["option1"]
+		}
+		fillQuestionaire(dict)
+		print (getFillers(4))
+		print getStatisticsOfQuestion(1)
+		print getStatisticsOfQuestion(2)
+		print getStatisticsOfQuestion(3)
 
 # Create your tests here.

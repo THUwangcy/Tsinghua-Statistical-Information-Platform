@@ -1,0 +1,22 @@
+{% extends 'publish_base.html' %}
+
+{% block title %}后台管理 - 清华大学信息化统计平台{% endblock %}
+
+{% block subtitle %}
+    <a class="navbar-brand">&gt;</a>
+    <a class="fake-link-scroll navbar-brand">后台管理</a>
+{% endblock subtitle %}
+
+{% block itemtitle %} 
+    后台管理
+{% endblock itemtitle %}
+
+{% block scripts %}
+{% endblock scripts %}
+
+{% block main-page %}
+	{% include 'legalUser/statistics/statistics.ajax.html' %}
+{% endblock main-page %}
+
+{% block modals %}
+{% endblock modals %}

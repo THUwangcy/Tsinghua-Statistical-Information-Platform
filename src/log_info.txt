@@ -1,3 +1,0 @@
-"log_username":"admin"
-"csrfmiddlewaretoken":"As64oYUOYYDSsz3FfW6PWM8Ku89kpgaD"
-"log_password":"123456"

@@ -15,7 +15,7 @@
         <select id="statistics_choose_field" name="statistics_choose" class="form-control"
                   style="resize: vertical;">
             {% for app in activities %}
-                <option>{{ app.name }} (ID: {{ app.id }}) </option>
+                <option>{{ app.name }} &nbsp;(&nbsp;ID: {{ app.id }}&nbsp;) </option>
             {% endfor %}
         </select>
         <br>
@@ -31,7 +31,7 @@
             var select = $("#statistics_choose_field").val();
             var ID_index = select.lastIndexOf('ID:');
             var length = select.length;
-            var select_id = select.substr(ID_index + 4, length - ID_index - 5);
+            var select_id = select.substr(ID_index + 4, length - ID_index - 6);
             var url = "{% url 'statistics/id' 1234 %}";
 
             url = url.replace('1234', select_id);

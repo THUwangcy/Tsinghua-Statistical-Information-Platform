@@ -104,3 +104,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# email config
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.126.com'
+
+EMAIL_POST = 25
+
+EMAIL_HOST_USER = 'tispsupport@126.com'
+
+EMAIL_HOST_PASSWORD = 'whynotdance1'
+
+EMAIL_USE_TLS = True

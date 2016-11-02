@@ -1,4 +1,23 @@
 
+//停止问卷
+function stop_act(act_id, url, item) {
+    var callback = function() {
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: "&act_id=" + act_id,
+            success: function(data) {
+                loadContentOfItem(item, {anim: false, scroll: false});
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert(xhr.responseText);
+            }
+        });
+    }
+    showConfirmModal('停止收集问卷', '停止之后问卷将无法填写，<br>确定要停止收集吗？', false, callback);
+}
+
+
 //删除问卷
 function remove_act(act_id, url, item) {
     var callback = function() {
@@ -31,7 +50,7 @@ function publish_act(act_id, url, modal_url) {
                 };
 
                 showModal(modal_url, 'publish-modal', params);
-                
+
             },
             error: function (xhr, textStatus, errorThrown) {
                 alert(xhr.responseText.substr(0, 500));
@@ -346,8 +365,24 @@ function getTime() {
     var month = mydate.getMonth() + 1;
     var day = mydate.getDate();
     if(month < 10)  month = '0' + month;
-    if(day < 10) month = '0' + day;
+    if(day < 10) day = '0' + day;
     time = year + '.' + month + '.' + day;
+    return time;
+}
+function getDetailTime(){
+    var mydate = new Date();
+    var year = mydate.getFullYear();
+    var month = mydate.getMonth() + 1;
+    var day = mydate.getDate();
+    var hour = mydate.getHours();
+    var minute = mydate.getMinutes();
+    var second = mydate.getSeconds();
+    if(month < 10)  month = '0' + month;
+    if(day < 10) day = '0' + day;
+    if(hour < 10) hour = '0' + hour;
+    if(minute< 10) minute = '0' + minute;
+    if(second < 10) second = '0' + second;
+    time = month + '月' + day +'日 '+ hour + ':'+ minute;
     return time;
 }
 
@@ -456,7 +491,7 @@ function handleFormPost(form_selector, post_url, params) {
                     success_callback(data);
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    alert(xhr.responseText.substr(0, 500));
+                    alert(xhr.responseText.substr(0, 2000000));
                     console.log("post error");
                     msg_text.html("提交申请遇到错误：" + textStatus + ": " + errorThrown);
                     console.log(xhr.responseText.substr(0, 500));
@@ -720,18 +755,41 @@ function resizeComponents() {
     }
 }
 
+function get_username() {
+    $.ajax({
+        url: '/get_username',
+        type: "POST",
+        success: function (data) {
+            if(data["status"] == 'OK') {
+                return data["username"];
+            }
+            else {
+                alert("no username!");
+            }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+                alert(xhr.responseText);
+        }
+    })
+}
+
 function drawCharts(selected_charts) {
+
     var load_status = $(".tab-content").data("loading");
     var charts = $(".tab-pane object");
-    if (typeof selected_charts !== "undefined")
+    if (typeof selected_charts !== "undefined") {
         charts = selected_charts;
+    } 
     if (typeof charts !== "undefined") {
-        var active_container = $(".tab-pane.active object");
+        
+        var active_container = $(".chart-content.active object");
         var chart_height = active_container.height(), chart_width = active_container.width();
         charts.each(function () {
             var $this = $(this);
+
             $this.ready(function () {
                 var json = $this.data("json");
+
                 if (load_status !== true && json !== "") {
                     charts.html("");
                     renderChart("#" + $this.attr("id"), $this.data("type"), $this.data("json"), {

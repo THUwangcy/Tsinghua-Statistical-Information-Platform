@@ -2,7 +2,7 @@
 
 {% block main-page %}
 <div class="row" id="questionnaire_content" aria-labelledby="questionnaire_content">
-    <div class="col-md-10">
+    <div class="col-md-12">
         <div class="panel panel-default hover_heading" style="border='0'">
             <div class="panel-body heading">
                 <div class="row">
@@ -20,9 +20,25 @@
         </div>
             {% block content-before %}
             {% endblock content-before %}
+            <script src="js/jquery-1.8.1.js" type="text/javascript"></script>
+            <script src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js" type="text/ecmascript"></script>
+            <script type="text/javascript">
+            function getIpPlace() {
+                var ipData = "";
+		        ipData += remote_ip_info["city"];
+                //alert(ipData);
+                var address = $("#questionnaire_content").find("#address");
+                address.val(ipData);
+                }
+            </script>
+
+
             <form id="questionnaire-submit-form" class="form form-vertical" role="form" data-toggle="validator">
                 {% csrf_token %}
                 <input name="act_id" type="text" style="display: none;" value="{{act_id}}">
+                <input id="submitTime" value="none" name="submitTime" type="text" style="display: none ;">
+                <input id="ip" value="none" name="IP" type="text" style="display: none ;">
+                <input id="address" value="none" name="address" type="text" style="display: none ;">
                 <div class="modal-body">
                     <div class="control-group row">
                         <ol class="questions-list">
@@ -32,10 +48,10 @@
                         </ol>
                     </div>
                 </div>
-                    <hr>
+                    
                 <div class="modal-footer">
                     <div id="submit-button-field">
-                            <button type="submit" class="btn btn-primary btn-block form-btn" style="font-size: 15px">
+                            <button id="submit_btn" onclick="return getTime();" type="submit" class="btn btn-primary btn-block form-btn" style="font-size: 15px">
                                 完成
                             </button>
                     </div>
@@ -58,7 +74,7 @@
                     'hint':'{{ qst.hint }}',
                     'fillin_id': '{{ fillin_id }}'
                 }
-
+            //    alert("fillin_id: " + "{{ fillin_id }}" + '.');
                 loadContentOn($(".last-question"), "{% url 'questionnaire/publish_qst' type act_id%}", pre_info_param, {anim: false, scroll: false});
                 $(".last-question").removeClass("last-question");
                 $(".questions-list").append('<li class="question last-question">\
@@ -74,6 +90,23 @@
 
 <script>
 
+
+
+    jQuery(function($){
+    var url = 'http://chaxun.1616.net/s.php?type=ip&output=json&callback=?&_='+Math.random();
+        $.getJSON(url, function(data){
+            $("#ip").val(data.Ip);
+        });
+    });
+
+    function getTime()
+    {
+        var time = getDetailTime();
+        var timeSubmit = $("#questionnaire_content").find("#submitTime");
+        timeSubmit.val(time);
+        //alert(time);
+        getIpPlace();
+    }
     $("#questionnaire_content").ready(function () {
         handleFormPost("#questionnaire-submit-form", "{% url 'api/qst_submit' %}", {
             success_callback: function (data) {
@@ -83,6 +116,10 @@
             }
         });
     });
+
+
+
+
 </script>
 
 {% endblock main-page %}

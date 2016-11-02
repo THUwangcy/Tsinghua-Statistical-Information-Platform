@@ -1,0 +1,25 @@
+{% extends 'common/sortable.html' %}
+
+{% block title %}{{questions_title}}&nbsp;&nbsp;[填空题]{% endblock title %}
+
+{% block defaults %}
+    url: "{% url 'statistics/question/list' act_id questions_type questions_id %}",
+    sort_by: "id",
+    sort_order: "asc",
+    search_field: "id"
+{% endblock defaults %}
+
+{% block head %}
+    <th class="th-sortable" data-key="id" style="width: 10%; min-width: 20px">
+        编号
+    </th>
+    <th class="th-sortable" data-key="content" style="width: 50%; min-width: 50px">
+        填写文本
+    </th>
+    <th data-key="count" style="width: 15%;">
+        
+    </th>
+    <th data-key="percentage" style="width: 30%;">
+        
+    </th>
+{% endblock head %}

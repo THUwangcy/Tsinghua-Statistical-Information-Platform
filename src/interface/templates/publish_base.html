@@ -1,0 +1,145 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<!-- Turn off browser cache to force reload on navigating back -->
+<meta http-equiv="Cache-Control" content="no-store" />
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>{% block title %}清华大学信息化统计平台{% endblock title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!--[if lt IE 9]>
+        <script src="{% static 'ie/html5shiv.js' %}"></script>
+        <script src="{% static 'ie/jquery-1.11.3.min.js' %}"></script>
+        <script src="{% static 'ie/css3-mediaqueries.js' %}"></script>
+    <![endif]-->
+    <!-- stylesheets -->
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'base/css/fonts.min.css' %}" rel="stylesheet">
+    <link href="{% static 'base/css/eden.min.css' %}" rel="stylesheet">
+    <link href="{% static 'animate/css/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'base/css/styles.css' %}" rel="stylesheet">
+    <link href="{% static 'icheck-1.x/skins/all.css' %}" rel="stylesheet">
+    <link href="{% static 'TableExport/dist/css/tableexport.css' %}" rel="stylesheet">
+
+    {% block css %}
+    {% endblock css %}
+    <!-- script references -->
+    <script src="{% static 'jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'jquery/jquery.history.min.js' %}"></script>
+    <script src="{% static 'jquery/jquery.scrollto.min.js' %}"></script>
+    <script src="{% static 'jquery/jquery.fixer.min.js' %}"></script>
+    <script src="{% static 'jquery/jquery.qrcode.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+    <script src="{% static 'base/js/scripts.js' %}"></script>
+
+    <script src="{% static 'md5/md5.min.js' %}"></script>
+    <script src="{% static 'validator/validator.min.js' %}"></script>
+
+
+    <script src="{% static 'icheck-1.x/icheck.js' %}"></script>
+
+    <script src="{% static 'js-xlsx/dist/xlsx.core.min.js' %}"></script>
+    <script src="{% static 'FileSaver/FileSaver.js' %}"></script>
+    <script src="{% static 'TableExport/dist/js/tableexport.js' %}"></script>
+    {% block scripts %}
+    {% endblock scripts %}
+</head>
+
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    html,body { height: 100%;}
+    .wrap{
+        min-height: 100%;
+    }
+    .main{
+        padding-bottom: 60px;
+    }
+    footer {
+        margin-top: -60px;
+    }
+</style>
+
+<body>
+<!-- header -->
+<div id="top-nav" class="navbar navbar-default navbar-static-top affix">
+    <div class="container-fluid">
+        <!--[if IE]>
+        <div class="alert alert-info" style="text-align: center;">
+            如果页面显示不正确，请尝试<b>使用较新版本的IE浏览器</b>、<b>关闭浏览器的IE兼容模式</b>，或者<b>使用Chrome浏览器</b>访问网站。
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <![endif]-->
+
+        <div class="nav navbar-nav navbar-left hidden-xs">
+            <a class="fake-link-scroll navbar-brand">清华大学信息化统计平台</a>
+            {% block subtitle %}
+                <!-- example
+                <a class="navbar-brand">&gt;</a>
+                <a class="fake-link-scroll navbar-brand">管理员后台</a>
+                -->
+            {% endblock subtitle %}
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="pull-left visible-xs">
+                <a id="left-column-toggle" class="fake-link">
+                    <i class="fa fa-navicon fa-fw"></i>
+                </a>
+            </li>
+            <li class="pull-left visible-xs">
+                <a style="font-size: 18px; color: #18bc9c">
+                    <strong>
+                        {% block itemtitle %}
+                        {% endblock itemtitle %}
+                    </strong>
+                </a>
+            </li>
+            {% block right-toggle %}
+                <!--li class="pull-right visible-xs">
+                    <a id="left-column-toggle" class="fake-link">
+                        <i class="fa fa-navicon fa-fw"></i>
+                    </a>
+                </li-->
+            {% endblock right-toggle %}
+
+        </ul>
+    </div>
+    <!-- /container -->
+</div>
+<!-- /Header -->
+
+<div class="wrap">
+<!-- Main -->
+<div class="container-fluid main">
+    {% block main-frame %}
+        <div class="row">
+            <div class="col-md-1">
+            </div>
+            <div class="container-fluid col-md-10">
+                <!-- Main page -->
+                {% block main-page %}
+
+                {% endblock main-page %}
+            </div>
+        </div>
+    {% endblock main-frame %}
+</div>
+<!-- /Main -->
+</div>
+
+<footer class="text-center">清华大学信息化统计平台</footer>
+
+{% block modals %}
+{% endblock modals %}
+
+</body>
+
+</html>

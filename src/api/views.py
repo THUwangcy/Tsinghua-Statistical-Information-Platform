@@ -6,6 +6,7 @@ import sys
 from database import api
 from interface import session
 
+import re
 
 from django.shortcuts import render
 import json
@@ -20,6 +21,7 @@ from django.shortcuts import render
 from django.utils import timezone
 
 from interface import _database
+from interface import send_email
 
 # Create your views here.
 
@@ -107,10 +109,27 @@ def save_act(request):
 def publish_act(request):
     file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
     Act_id = request.GET['act_id']
+    questionnaire_url = request.GET['questionnaire_url']
+    manage_url = request.GET['management_url']
+    content = {
+        'email': session.get_email(request),
+        'manage_url': manage_url,
+        'questionnaire_url': questionnaire_url,
+    }
+    send_email.send_html_mail("来自清华大学信息化统计平台", content, [session.get_email(request),])
     file_object.writelines("Publish: " + Act_id + "\n")
     status = api.publishQuestionaire(request.GET.dict())
     return JsonResponse({
         'status': status,
+    })
+
+
+def register_email(request):
+    dicts = request.POST.dict()
+    email = dicts['email']
+    session.add_session(request, email=email)
+    return JsonResponse({
+        'status': 'ok',
     })
 
 #--------------------------------------------------------------------------------------#
@@ -120,7 +139,7 @@ def modify_qst(request):
 
     dict = request.POST.dict()
     for key in dict:
-        file_object.writelines(key + ": " + dict[key] + "\n")
+        file_object.writelines(key + ": " + dict[key] + "233\n")
     file_object.close()
     status = api.modifyQuestion(dict)
     return JsonResponse({
@@ -226,21 +245,20 @@ def get_questionnaire_bySTATUS(status, username):
 
 def get_participants(act_id):
     #act_id: 问卷id
-    result = _database.get_participants()
+    result = api.getFillers(act_id)
     return result
 
 def get_result_of_question(act_id, qst_id, fillin_id):
     #act_id: 问卷id
     #qst_id: 问题id
     #fillin_id: 填写id
-    result = _database.get_result_of_question(act_id, qst_id, fillin_id)
+    result = api.getQuestionFill(act_id, qst_id, fillin_id)
     return result
-
 
 
 def get_statistics_of_question(qst_id):
     #qst_id: 问题id 获取该问题的详细统计信息
-    result = _database.get_statistics_of_question(qst_id)
+    result = api.getStatisticsOfQuestion(qst_id)
     return result
 
 
@@ -254,15 +272,223 @@ def notice_act(request):
 #"qst2":"sss"
 #"act_id":"3"
 #"csrfmiddlewaretoken":"As64oYUOYYDSsz3FfW6PWM8Ku89kpgaD"
-#
-#
-#
 def questionnaire_submit(request):
+
     dicts = request.POST.dict()
-    output = open('questionnaire.txt', 'w')
-    infomations=""
+    output = open('questionnaire2.txt', 'w')
+    infomations2 = {}
+    pattern = 'option'
+    regex = re.compile(pattern)
     for key, value in dicts.items():
-        infomations += "\"%s\":\"%s\"" % (key, value)
-        infomations += "\n"
-    output.write(infomations)
+        match = regex.search(value)
+        if match:
+            result_list = request.POST.getlist(key, '')
+            infomations2[key] = result_list
+        else:
+            infomations2[key]=value
+
+    for key in infomations2:
+        output.writelines(str(key) + ": " + str(infomations2[key]) + '\n')
+ #   output.write(infomations2)
+    status = api.fillQuestionaire(infomations2)
+
     return JsonResponse(dict(status='ok'))
+
+def stop_act(request):
+    file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
+    Act_id = request.GET['act_id']
+    file_object.writelines("Stop: " + Act_id + "\n")
+    status = 'ok'
+    return JsonResponse({
+        'status': status,
+    })
+
+
+def get_columnChart_json(act_id, qst_id):
+    act_info = get_questionnaire_byID(act_id)
+    question = {}
+    for qst in act_info['questions']:
+        if qst['qst_id'] == int(qst_id):
+            question = qst
+            break
+    qst_info = get_statistics_of_question(qst_id)
+    question['qst_info'] = qst_info
+    if question['qst_type'] == 'fillin':
+        return {}
+    tableData = {
+        'chart': {
+            'caption': question['qst_title'],
+            'subCaption': question['qst_type'],
+            'xAxisName': '选项',
+            'pYAxisName': '选择人数',
+            'sYAxisName': '百分比',
+            'sYAxisMaxValue': 150,
+            'pYAxisMaxValue': 0
+        },
+        'categories': [
+            {
+                'category': []
+            }
+        ],
+        'dataset': [
+            {
+                'seriesName': '选择人数',
+                'data': []
+            },
+            {
+                'seriesName': '百分比',
+                'parentYAxis': 'S',
+                'renderAs': 'area',
+                'data': []
+            }
+        ]
+    }
+
+    for option in question['option']:
+        tableData['categories'][0]['category'].append({
+            'label': str(option)
+        })
+    for option in question['qst_info']:
+        tableData['dataset'][0]['data'].append({
+            'value': str(option['count'])
+        })
+        tableData['dataset'][1]['data'].append({
+            'value': str(option['percentage'])
+        })
+
+    if question['qst_type'] == 'single':
+        tableData['chart']['subCaption'] = u'单选题'
+    elif question['qst_type'] == 'multi':
+        tableData['chart']['subCaption'] = u'多选题'
+    else:
+        tableData = {}
+
+    tableData = json.dumps(tableData)
+    return tableData
+
+
+def get_pieChart_json(act_id, qst_id):
+    act_info = get_questionnaire_byID(act_id)
+    question = {}
+    for qst in act_info['questions']:
+        if qst['qst_id'] == int(qst_id):
+            question = qst
+            break
+    qst_info = get_statistics_of_question(qst_id)
+    question['qst_info'] = qst_info
+
+    if question['qst_type'] == 'fillin':
+        return {}
+
+    tableData = {
+        'chart': {
+            'caption': question['qst_title'],
+            'subCaption': question['qst_type'],
+            'showLegend': '1',
+            'legendItemFontSize': '12',
+        },
+        'data': []
+    }
+
+    for option in question['qst_info']:
+        tableData['data'].append({
+                'label': option['content'],
+                'value': option['count']
+            })
+
+    if question['qst_type'] == 'single':
+        tableData['chart']['subCaption'] = u'单选题'
+    elif question['qst_type'] == 'multi':
+        tableData['chart']['subCaption'] = u'多选题'
+    else:
+        tableData = {}
+
+    tableData = json.dumps(tableData)
+    return tableData
+
+
+def get_barChart_json(act_id, qst_id):
+    act_info = get_questionnaire_byID(act_id)
+    question = {}
+    for qst in act_info['questions']:
+        if qst['qst_id'] == int(qst_id):
+            question = qst
+            break
+    qst_info = get_statistics_of_question(qst_id)
+    question['qst_info'] = qst_info
+
+    if question['qst_type'] == 'fillin':
+        return {}
+
+    tableData = {
+        'chart': {
+            'caption': question['qst_title'],
+            'subCaption': question['qst_type'],
+            "yAxisName": u"选择人数",
+        },
+        'data': []
+    }
+
+    for option in question['qst_info']:
+        tableData['data'].append({
+                'label': option['content'],
+                'value': option['count']
+            })
+    if question['qst_type'] == 'single':
+        tableData['chart']['subCaption'] = u'单选题'
+    elif question['qst_type'] == 'multi':
+        tableData['chart']['subCaption'] = u'多选题'
+    else:
+        tableData = {}
+
+    tableData = json.dumps(tableData)
+    return tableData
+
+
+def get_circleChart_json(act_id, qst_id):
+    act_info = get_questionnaire_byID(act_id)
+    question = {}
+    for qst in act_info['questions']:
+        if qst['qst_id'] == int(qst_id):
+            question = qst
+            break
+    qst_info = get_statistics_of_question(qst_id)
+    question['qst_info'] = qst_info
+    if question['qst_type'] == 'fillin':
+        return {}
+    tableData = {
+        'chart': {
+            'caption': question['qst_title'],
+            'subCaption': question['qst_type'],
+            "showBorder": "0",
+            "use3DLighting": "0",
+            "enableSmartLabels": "0",
+            "startingAngle": "310",
+            "showLabels": "0",
+            "showPercentValues": "1",
+            "showLegend": "1",
+            "defaultCenterLabel": "总填写人数: " + str(question['qst_info'][0]['total']),
+            "centerLabel": "Option situation: $label: $value",
+            "centerLabelBold": "1",
+            "showTooltip": "0",
+            "decimals": "0",
+            "useDataPlotColorForLabels": "1",
+            "theme": "fint"
+        },
+        'data': []
+    }
+
+    for option in question['qst_info']:
+        tableData['data'].append({
+                'label': option['content'],
+                'value': option['count']
+            })
+    if question['qst_type'] == 'single':
+        tableData['chart']['subCaption'] = u'单选题'
+    elif question['qst_type'] == 'multi':
+        tableData['chart']['subCaption'] = u'多选题'
+    else:
+        tableData = {}
+
+    tableData = json.dumps(tableData)
+    return tableData

@@ -53,6 +53,9 @@ urlpatterns = [
     #modal
     url(r'^modal/?$', 'interface.views.show_modal', name='legalUser/modal'),
 
+    #username
+    url(r'^get_username/?$', 'interface.views.get_username', name='get_username'),
+
     #api
     url(r'^api/modify_name/?$', 'api.views.modify_name', name='api/modify_name'),
     url(r'^api/create_new_act/?$', 'api.views.create_new_act', name='api/create_new_act'),
@@ -63,12 +66,14 @@ urlpatterns = [
     url(r'^api/save_act/?$', 'api.views.save_act', name='api/save_act'),
     url(r'^api/publish_act/?$', 'api.views.publish_act', name='api/publish_act'),
     url(r'^api/modify_qst/?$', 'api.views.modify_qst', name='api/modify_qst'),
+    url(r'^api/stop_act/?$', 'api.views.stop_act', name='api/stop_act'),
 
     url(r'^api/info_change_act/?$', 'api.views.info_change_act', name='api/info_change_act'),
     url(r'^api/login_act/?$', 'api.views.login_act', name='api/login_act'),
     url(r'^api/notice_act/?$', 'api.views.notice_act', name='api/notice_act'),
 
     url(r'^api/qst_submit/?$', 'api.views.questionnaire_submit', name='api/qst_submit'),
+    url(r'^api/register_email/?$', 'api.views.register_email', name='api/register_email'),
 
     #userlist
     url(r'^/?$', RedirectView.as_view(url='/login/')),
@@ -94,8 +99,11 @@ urlpatterns = [
     #statistics
     url(r'^statistics/?$', 'interface.views.show_statistics_choose', name='statistics'),
     url(r'^statistics/([0-9]+)/?$', 'interface.views.show_statistics', name='statistics/id'),
-    url(r'^statistics/([0-9]+)/paticipants', 'interface.views.show_paticipants_list', name='statistics/participants'),
+    url(r'^statistics/([0-9]+)/participants', 'interface.views.show_participants_list', name='statistics/participants'),
     url(r'^statistics/([0-9]+)/question/?$', 'interface.views.statistics_question', name='statistics/question'),
     url(r'^statistics/([0-9]+)/question/list/(\w+)/([0-9]+)/?$', 'interface.views.statistics_question_list', name='statistics/question/list'),
+    url(r'^statistics/([0-9]+)/question/([0-9]+)/charts/?$', 'interface.views.show_charts', name='statistics/charts'),
 
+    #guest_management
+    url(r'^guest/statistics/([0-9]+)/?$', 'interface.views.guest_statistics', name='guest/statistics/id'),
 ]
