@@ -119,9 +119,11 @@ def publish_act(request):
         'manage_url': manage_url,
         'questionnaire_url': questionnaire_url,
     }
-    send_email.send_html_mail("来自清华大学信息化统计平台", content, [session.get_email(request),])
+    send_email.send_html_mail("来自清华大学信息化统计平台", content, [session.get_email(request), ])
     file_object.writelines("Publish: " + Act_id + "\n")
     status = api.publishQuestionaire(request.GET.dict())
+
+    session.del_email(request)
     return JsonResponse({
         'status': status,
     })
