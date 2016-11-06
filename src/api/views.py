@@ -23,6 +23,9 @@ from django.utils import timezone
 from interface import _database
 from interface import send_email
 
+import urllib
+import urllib2
+
 # Create your views here.
 
 
@@ -175,22 +178,37 @@ def info_change_act(request):
 
 def login_act(request):
     dicts = request.POST.dict()
-    output = open('log_info.txt', 'w')
-    information = ""
-    for key, value in dicts.items():
-        information += "\"%s\":\"%s\"" % (key, value)
-        information += "\n"
-    output.write(information)
     username = dicts['log_username']
     password = dicts['log_password']
-    if username == 'admin' and password == '123456':
-        identity = 'legalUser'
-        session.add_session(request, username=username, identity=identity)
-    elif username == 'manager' and password == '123456':
+    if username == 'manager' and password == '123456':
         identity = 'manager'
         session.add_session(request, username=username, identity=identity)
+    elif username == 'admin' and password == '123456':
+        identity = 'legalUser'
+        session.add_session(request, username=username, identity=identity)
     else:
-        return JsonResponse(dict(status='wrong username or password'))
+        data = {
+            'id': username,
+            'pw': password,
+        }
+        url = 'http://student.tsinghua.edu.cn/api/temp_login'
+        post_data = urllib.urlencode(data)
+
+        req = urllib2.urlopen(url, post_data)
+        content = req.read()
+
+        user_data = {}
+
+        try:
+            user = json.loads(content)
+            user_data['yhm'] = user['yhm']
+            user_data['xm'] = user['xm']
+            user_data['zjh'] = user['zjh']
+            user_data['email'] = user['email']
+            identity = 'legalUser'
+            session.add_session(request, username=user_data['yhm'], identity=identity)
+        except:
+            return JsonResponse(dict(status='wrong username or password'))
     return JsonResponse(dict(status='ok', identity=identity))
 
 
