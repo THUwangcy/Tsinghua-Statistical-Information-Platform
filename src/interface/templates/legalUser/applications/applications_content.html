@@ -53,43 +53,64 @@
                         {% if app.status == 'pending' %}
                             <li style="width: 33%" align="center">
                                 <a class="fake-link" href="javascript:loadContent('{% url 'legalUser/design/id' app.type app.id%}',
-                                 {}, '#' + '{{app.type}}' + '-design-item')" >
+                                 {}, '#' + '{{app.type}}' + '-design-item');" >
                                     <i class="fa fa-pencil-square-o fa-fw fa-2x" aria-hidden="true"></i> 修改
                                 </a>
                             </li>
                             <li style="width: 33%" align="center">
-                                <a class="fake-link" href="javascript:publish_act('{{ app.id }}', '{% url 'api/publish_act' %}', '{% url 'legalUser/modal' %}')" >
+                                <a class="fake-link" href="javascript:publish_act('{{ app.id }}', '{% url 'api/publish_act' %}', '{% url 'legalUser/modal' %}');" >
                                     <i class="fa fa-file-text-o fa-fw fa-2x" aria-hidden="true"></i> 发布
                                 </a>
                             </li>
                             <li style="width: 33%" align="center">
-                                <a class="fake-link" href="javascript:remove_act('{{app.id}}', '{% url 'api/remove_act' %}', '#all-applications-item')">
+                                <a class="fake-link" href="javascript:remove_act('{{app.id}}', '{% url 'api/remove_act' %}', '#all-applications-item');">
                                     <i class="fa fa-trash fa-fw fa-2x" aria-hidden="true"></i> 删除
                                 </a>
                             </li>
                         {% elif app.status == 'already' %}
                             
                             <li style="width: 24%" align="center">
-                                <a class="fake-link" href="javascript:stop_act('{{activity.id}}', '{% url 'api/stop_act' %}', '#all-applications-item')">
+                                <a class="fake-link" href="javascript:stop_act('{{activity.id}}', '{% url 'api/stop_act' %}', '#all-applications-item');">
                                     <i class="fa fa-pause fa-fw fa-2x" aria-hidden="true"></i>停止
                                 </a>
                             </li>
                             <li style="width: 24%" align="center">
-                                <a class="fake-link" href="javascript:showModal('{% url 'legalUser/modal' %}', 'publish-modal', {'modal_type': 'publish','id': {{app.id}} })" >
+                                <a class="fake-link" href="javascript:showModal('{% url 'legalUser/modal' %}', 'publish-modal', {'modal_type': 'publish','id': {{app.id}} });" >
                                     <i class="fa fa-share-square-o fa-fw fa-2x" aria-hidden="true"></i> 分享
                                 </a>
                             </li>
                             <li style="width: 24%" align="center">
-                                <a class="fake-link" href="javascript:loadContent('{% url 'statistics/id' app.id %}', {}, '#statistics-list-item')" >
+                                <a class="fake-link" href="javascript:loadContent('{% url 'statistics/id' app.id %}', {}, '#statistics-list-item');" >
                                     <i class="fa fa-bar-chart-o fa-fw fa-2x" aria-hidden="true"></i> 结果
                                 </a>
                             </li>
                             <li style="width: 24%" align="center">
-                                <a class="fake-link" href="javascript:remove_act('{{app.id}}', '{% url 'api/remove_act' %}', '#all-applications-item')" >
+                                <a class="fake-link" href="javascript:remove_act('{{app.id}}', '{% url 'api/remove_act' %}', '#all-applications-item');" >
                                     <i class="fa fa-trash fa-fw fa-2x" aria-hidden="true"></i> 删除
                                 </a>
                             </li>
-                                            
+
+                        {% elif app.status == 'pause' %}
+                            <li style="width: 24%" align="center">
+                                <a class="fake-link" href="javascript:stop_act('{{activity.id}}', '{% url 'api/resume_act' %}', '#all-applications-item');">
+                                    <i class="fa fa-step-forward fa-fw fa-2x" aria-hidden="true"></i>继续
+                                </a>
+                            </li>
+                            <li style="width: 24%" align="center">
+                                <a class="fake-link" href="javascript:showModal('{% url 'legalUser/modal' %}', 'publish-modal', {'modal_type': 'publish','id': {{app.id}} });" >
+                                    <i class="fa fa-share-square-o fa-fw fa-2x" aria-hidden="true"></i> 分享
+                                </a>
+                            </li>
+                            <li style="width: 24%" align="center">
+                                <a class="fake-link" href="javascript:loadContent('{% url 'statistics/id' app.id %}', {}, '#statistics-list-item');" >
+                                    <i class="fa fa-bar-chart-o fa-fw fa-2x" aria-hidden="true"></i> 结果
+                                </a>
+                            </li>
+                            <li style="width: 24%" align="center">
+                                <a class="fake-link" href="javascript:remove_act('{{app.id}}', '{% url 'api/remove_act' %}', '#all-applications-item');" >
+                                    <i class="fa fa-trash fa-fw fa-2x" aria-hidden="true"></i> 删除
+                                </a>
+                            </li>               
                         {% endif %}
                     </ul>
                 </div>

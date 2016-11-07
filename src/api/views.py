@@ -233,6 +233,12 @@ def get_questionnaire_bySTATUS(status, username):
                     'icon': 'fa-cogs',
                     'name': u'待发布'
                  }
+        elif item['status'] == 'pause':
+            item['status_display'] = {
+                    'colorclass': 'danger',
+                    'icon': 'fa-pause',
+                    'name': u'已暂停'
+                 }
         file_object.writelines("\n")
     file_object.close()
 #   if status == 'pending':
@@ -298,6 +304,15 @@ def stop_act(request):
     file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
     Act_id = request.GET['act_id']
     file_object.writelines("Stop: " + Act_id + "\n")
+    status = 'ok'
+    return JsonResponse({
+        'status': status,
+    })
+
+def resume_act(request):
+    file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
+    Act_id = request.GET['act_id']
+    file_object.writelines("Resume: " + Act_id + "\n")
     status = 'ok'
     return JsonResponse({
         'status': status,
@@ -386,6 +401,7 @@ def get_pieChart_json(act_id, qst_id):
             'subCaption': question['qst_type'],
             'showLegend': '1',
             'legendItemFontSize': '12',
+            "startingAngle": "310",
         },
         'data': []
     }

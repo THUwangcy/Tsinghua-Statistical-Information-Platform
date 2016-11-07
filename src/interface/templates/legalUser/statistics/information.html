@@ -1,0 +1,105 @@
+{% load staticfiles %}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>报名信息</h4></div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        
+                        <div style="margin-left: 55px; vertical-align: middle; line-height: 200%;">
+                            <b>问卷标题：</b> {{ act_info.act_title }}<br/>
+                            <b>问卷状态：</b> {{ act_info.act_status }}<br/>
+                            <b>已回收答卷：</b> {{ item | length}}<br/>
+                            <b>发布时间：</b> {{ act_info.time }}<br/>
+                        </div>
+                        <div class="pull-right" style="margin-top: 100px;">
+                            
+                            <a href="{% url 'questionnaire' act_id %}" target="_blank">
+                                <button class="btn btn-primary" style="margin-left: 10px">
+                                    <span class="fa fa-file fa-fw"></span>
+                                    &nbsp;查看问卷
+                                </button>
+                            </a>
+                            
+                            <button class="btn btn-info" style="margin-left: 10px"
+                                    id="email-link">
+                                <span class="fa fa-comment fa-fw"></span>
+                                &nbsp;发送链接到邮箱
+                            </button>
+    
+                            <script>
+                                $("#email-link").click(function() {
+                                    //何熙巽在这写！
+                                })
+                                
+                            </script>
+                            
+                            {% if act_info.act_status = 'already' %}
+                                <button class="btn btn-danger" id="stop-link" style="margin-left: 10px">
+                                    <span class="fa fa-pause fa-fw"></span>
+                                    &nbsp;停止收集
+                                </button>
+                                <script>
+                                    $("#stop-link").click(function() {
+                                        var callback = function() {
+                                            $.ajax({
+                                                type: "GET",
+                                                url: "{% url 'api/stop_act' %}",
+                                                data: "&act_id=" + "{{act_id}}",
+                                                success: function(data) {
+                                                    location.reload();
+                                                },
+                                                error: function (xhr, textStatus, errorThrown) {
+                                                    alert(xhr.responseText);
+                                                }
+                                            });
+                                        }
+                                        showConfirmModal('停止收集问卷', '停止之后问卷将无法填写，<br>确定要停止收集吗？', false, callback);
+                                    })
+                                    
+                                </script>
+                            {% endif %}
+                            {% if act_info.act_status = 'pause' %}
+                                <button class="btn btn-success" id="resume-link" style="margin-left: 10px">
+                                    <span class="fa fa-step-forward fa-fw"></span>
+                                    &nbsp;继续收集
+                                </button>
+                                <script>
+                                    $("#resume-link").click(function() {
+                                        var callback = function() {
+                                            $.ajax({
+                                                type: "GET",
+                                                url: "{% url 'api/resume_act' %}",
+                                                data: "&act_id=" + "{{act_id}}",
+                                                success: function(data) {
+                                                    location.reload();
+                                                },
+                                                error: function (xhr, textStatus, errorThrown) {
+                                                    alert(xhr.responseText);
+                                                }
+                                            });
+                                        }
+                                        showConfirmModal('继续收集', '要继续收集问卷吗？', false, callback);
+                                    })
+                                    
+                                </script>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-sm-6" id="qrcode" align="center">
+                        
+                    </div>
+                    <script type="text/javascript">
+                     //   alert("{{act_id}}");
+                        var questionnaire_url = "http://127.0.0.1:8000" + "{% url 'questionnaire' act_id %}";
+                        $('#qrcode').qrcode(questionnaire_url);
+                    </script>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
