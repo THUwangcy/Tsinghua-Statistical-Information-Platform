@@ -109,14 +109,13 @@
     }
     $("#questionnaire_content").ready(function () {
         var success_callback=function () {
-            alert("yes");
             window.location.replace("/success");
         };
 
         handleFormPost("#questionnaire-submit-form", "{% url 'api/qst_submit' %}", {
             success_callback: function (data) {
                 if (data['status'] === 'ok') {
-                    showConfirmModal("提示", "填写成功", true, success_callback);
+                    success_callback();
                 }
             }
         });
