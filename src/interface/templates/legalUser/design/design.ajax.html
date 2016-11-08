@@ -88,16 +88,29 @@
                 }
             });
         })
-        $this.find("#publish_btn").click(function() {
-            var email_callback = function() {
-                params = {
-                    'modal_type': 'email',
-                    'id': '{{ act_id }}',
-                }
-                showModal("{% url 'legalUser/modal' %}", 'email-modal', params);
-            }
 
-            showConfirmModal("提示", "确定要发布吗？", false, email_callback);
+        $this.find("#publish_btn").click(function() {
+            var publish_callback = function() {
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'api/publish_act' %}",
+                    data: {
+                        'act_id': "{{ act_id }}",
+                    },
+                    success: function(data) {
+                        params = {
+                            'modal_type': 'publish',
+                            'id': '{{ act_id }}',
+                        }
+                        showModal("{% url 'legalUser/modal' %}", 'publish-modal', params);
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        alert(xhr.responseText.substr(0, 500));
+                    }
+                });
+            };
+
+            showConfirmModal("提示", "确定要发布吗？", false, publish_callback);
         })
 
 

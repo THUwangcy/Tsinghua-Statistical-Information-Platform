@@ -61,12 +61,12 @@
                         alert(xhr.responseText.substr(0, 500));
                     }
                 });
-            }
+            };
 
             handleFormPost("#get_email_form", "{% url 'api/register_email' %}", {
                 success_callback: function (data) {
                     if (data['status'] === 'ok') {
-                       showConfirmModal("提示", '问卷的连接与管理连接已发送到所填邮箱中',true, publish_callback);
+                        publish_callback();
                         modal.modal('hide');
                     }
                 }

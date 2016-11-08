@@ -25,6 +25,7 @@ from interface import send_email
 
 import urllib
 import urllib2
+import thread
 
 # Create your views here.
 
@@ -111,16 +112,27 @@ def save_act(request):
 
 def publish_act(request):
     file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
-    Act_id = request.GET['act_id']
-    questionnaire_url = request.GET['questionnaire_url']
-    manage_url = request.GET['management_url']
-    content = {
-        'email': session.get_email(request),
-        'manage_url': manage_url,
-        'questionnaire_url': questionnaire_url,
-    }
-    send_email.send_html_mail("来自清华大学信息化统计平台", content, [session.get_email(request), ])
-    file_object.writelines("Publish: " + Act_id + "\n")
+    act_id = request.GET['act_id']
+
+    content = {}
+    try:
+        questionnaire_url = request.GET['questionnaire_url']
+        manage_url = request.GET['management_url']
+        content = {
+            'email': session.get_email(request),
+            'manage_url': manage_url,
+            'questionnaire_url': questionnaire_url,
+        }
+    except:
+        pass
+
+    try:
+        thread.start_new_thread(send_email.send_html_mail, ("来自清华大学信息化统计平台", content, [session.get_email(request), ], ))
+        # send_email.send_html_mail("来自清华大学信息化统计平台", content, [session.get_email(request), ])
+    except:
+        pass
+
+    file_object.writelines("Publish: " + act_id + "\n")
     status = api.publishQuestionaire(request.GET.dict())
 
     session.del_email(request)
