@@ -347,35 +347,58 @@ function loadContentOn(container, url, params, load_params, callback) {
 }
 
 function loadContentOfItem(item, load_params, callback) {
-    var act_id = $(item).attr("id");
-    var is_design = act_id.indexOf("design-item");
-    var append = "";
+    var username = '';
+    var get_username_callback = function() {
+        var act_id = $(item).attr("id");
+        var is_design = act_id.indexOf("design-item");
+        var append = "";
 
-    if(is_design > 0)
-    {
-        act_id = act_id.substr(0, is_design - 1);
-        var post_url;
-        post_url = $(item).data("source");
-        $.ajax({
-            type: "GET",
-            url: post_url,
-            data: "&act_type=" + act_id + "&time=" + getTime() + "&user_id=1111111111",
-            success: function(data) {
-                if(data['status'] == 'ok'){
-                    append = data['id'];
-                    loadContent($(item).data("url") + '/' + append, {}, item, load_params, callback);
+        if(is_design > 0)
+        {
+            act_id = act_id.substr(0, is_design - 1);
+            var post_url;
+            post_url = $(item).data("source");
+            $.ajax({
+                type: "GET",
+                url: post_url,
+                data: "&act_type=" + act_id + "&time=" + getTime() + "&user_id=1111111111" + "&username=" + username,
+                success: function(data) {
+                    if(data['status'] == 'ok'){
+                        append = data['id'];
+                        
+                     //   alert(username);
+                        loadContent($(item).data("url") + '/' + append, {}, item, load_params, callback);
+                    }
+                        
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert(xhr.responseText.substr(0, 500));
+
                 }
-                    
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                alert(xhr.responseText.substr(0, 500));
-
-            }
-        });
-        
+            });
+            
+        }
+        else
+            loadContent($(item).data("url"), {}, item, load_params, callback);
     }
-    else
-        loadContent($(item).data("url"), {}, item, load_params, callback);
+
+    $.ajax({
+        url: '/get_username',
+        type: "GET",
+        success: function (data) {
+            if(data["status"] == 'OK') {
+                username = data["username"];
+                get_username_callback();
+            }
+            else {
+                username = "no username!";
+                alert("no username!");
+            }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+                alert(xhr.responseText);
+        }
+    });
 }
 
 function getTime() {
@@ -774,22 +797,29 @@ function resizeComponents() {
     }
 }
 
-function get_username() {
+function get_username(user_id) {
+    var username = '';
+    var success_callback = function() {
+        user_id = username;
+    }
     $.ajax({
         url: '/get_username',
-        type: "POST",
+        type: "GET",
         success: function (data) {
             if(data["status"] == 'OK') {
-                return data["username"];
+                username = data["username"];
+                success_callback();
             }
             else {
+                username = "no username!";
                 alert("no username!");
             }
         },
         error: function (xhr, textStatus, errorThrown) {
                 alert(xhr.responseText);
         }
-    })
+    });
+    
 }
 
 function drawCharts(selected_charts) {

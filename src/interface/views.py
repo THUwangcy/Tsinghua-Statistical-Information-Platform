@@ -161,6 +161,10 @@ def legalUser_design_question(request, type, act_id):
         'option': request.GET.get('option'),
         'rows': request.GET.get('rows'),
         'hint': request.GET.get('hint'),
+
+        'qst_must': request.GET.get('qst.qst_must'),
+        'min_selected': request.GET.get('min_selected'),
+        'max_selected': request.GET.get('max_selected'),
         'statistics': statistics
     }
     params['act_type'] = type
@@ -470,6 +474,7 @@ def statistics_question_list(request, act_id, qst_type, qst_id):
 #questionnaire
 def questionnaire_publish_question(request, type, act_id):
     question_url = 'questionnaire/publish_qst/' + request.GET.get('questions_type') + '.html'
+    statistics = views.get_statistics_of_question(request.GET.get('questions_id'))
     params = {}
     params = {
         'questions_type': request.GET.get('questions_type'),
@@ -479,6 +484,12 @@ def questionnaire_publish_question(request, type, act_id):
         'option': request.GET.get('option'),
         'rows': request.GET.get('rows'),
         'hint': request.GET.get('hint'),
+
+        'statistics': statistics,
+
+        'qst_must': request.GET.get('qst.qst_must'),
+        'min_selected': request.GET.get('min_selected'),
+        'max_selected': request.GET.get('max_selected'),
         'fillin_id': request.GET.get('fillin_id')
     }
     if request.GET.get('fillin_id') != None and request.GET.get('fillin_id') != '':
@@ -641,6 +652,8 @@ def get_pagination(item_total, item_per_page, cur):
 
 def get_username(request):
     username = session.get_username(request)
+    file_object = open(os.path.abspath('.') + '/interface/stat_database.txt' , 'w')
+    file_object.writelines(username + "\n")
     if username == 'none':
         return JsonResponse({
             'status': 'wrong',

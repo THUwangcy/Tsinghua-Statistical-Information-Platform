@@ -72,7 +72,13 @@
                     'option': '{{qst.option}}',
                     'rows': '{{ qst.rows }}',
                     'hint':'{{ qst.hint }}',
-                    'fillin_id': '{{ fillin_id }}'
+
+                    'fillin_id': '{{ fillin_id }}',
+
+                    'qst_must': '{{ qst.qst_must }}',
+                    'min_selected': '{{ qst.min_selected }}',
+                    'max_selected': '{{ qst.max_selected }}'
+
                 }
             //    alert("fillin_id: " + "{{ fillin_id }}" + '.');
                 loadContentOn($(".last-question"), "{% url 'questionnaire/publish_qst' type act_id%}", pre_info_param, {anim: false, scroll: false});

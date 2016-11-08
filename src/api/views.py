@@ -135,11 +135,11 @@ def register_email(request):
 #--------------------------------------------------------------------------------------#
 
 def modify_qst(request):
-    file_object = open(os.path.abspath('.') + '/interface/static_database.txt' , 'w')
+    file_object = open(os.path.abspath('.') + '/interface/stat_database.txt' , 'w')
 
     dict = request.POST.dict()
     for key in dict:
-        file_object.writelines(key + ": " + dict[key] + "233\n")
+        file_object.writelines(key + ": " + dict[key] + "\n")
     file_object.close()
     status = api.modifyQuestion(dict)
     return JsonResponse({
@@ -375,6 +375,8 @@ def get_columnChart_json(act_id, qst_id):
         tableData['chart']['subCaption'] = u'单选题'
     elif question['qst_type'] == 'multi':
         tableData['chart']['subCaption'] = u'多选题'
+    elif question['qst_type'] == 'mark':
+        tableData['chart']['subCaption'] = u'招募题'
     else:
         tableData = {}
 
@@ -416,6 +418,8 @@ def get_pieChart_json(act_id, qst_id):
         tableData['chart']['subCaption'] = u'单选题'
     elif question['qst_type'] == 'multi':
         tableData['chart']['subCaption'] = u'多选题'
+    elif question['qst_type'] == 'mark':
+        tableData['chart']['subCaption'] = u'招募题'
     else:
         tableData = {}
 
@@ -454,6 +458,8 @@ def get_barChart_json(act_id, qst_id):
         tableData['chart']['subCaption'] = u'单选题'
     elif question['qst_type'] == 'multi':
         tableData['chart']['subCaption'] = u'多选题'
+    elif question['qst_type'] == 'mark':
+        tableData['chart']['subCaption'] = u'招募题'
     else:
         tableData = {}
 
@@ -503,6 +509,8 @@ def get_circleChart_json(act_id, qst_id):
         tableData['chart']['subCaption'] = u'单选题'
     elif question['qst_type'] == 'multi':
         tableData['chart']['subCaption'] = u'多选题'
+    elif question['qst_type'] == 'mark':
+        tableData['chart']['subCaption'] = u'招募题'
     else:
         tableData = {}
 

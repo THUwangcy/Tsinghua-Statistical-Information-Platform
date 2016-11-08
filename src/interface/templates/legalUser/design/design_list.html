@@ -50,7 +50,11 @@
                     'option_num': '{{qst.option_num}}',
                     'option': '{{qst.option}}',
                     'rows': '{{qst.rows}}',
-                    'hint': '{{qst.hint}}'
+                    'hint': '{{qst.hint}}',
+
+                    'qst_must': '{{ qst.qst_must }}',
+                    'min_selected': '{{ qst.min_selected }}',
+                    'max_selected': '{{ qst.max_selected }}'
                 }
 
                 loadContentOn($(".last-question"), "{% url 'legalUser/design/question' type act_id%}", pre_info_param, {anim: false, scroll: false});
