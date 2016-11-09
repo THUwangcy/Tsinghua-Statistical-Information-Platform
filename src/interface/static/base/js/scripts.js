@@ -55,7 +55,7 @@ function remove_act(act_id, url, item) {
     showConfirmModal('删除报名', '确定要删除吗？', false, callback);
 }
 
-//发布问卷
+
 function publish_act(act_id, url, modal_url) {
     var publish_callback = function() {
         $.ajax({
@@ -65,19 +65,32 @@ function publish_act(act_id, url, modal_url) {
             success: function(data) {
                 params = {
                     'modal_type': 'publish',
-                    'id': act_id ,
+                    'id': act_id 
                 };
-
                 showModal(modal_url, 'publish-modal', params);
-
             },
             error: function (xhr, textStatus, errorThrown) {
                 alert(xhr.responseText.substr(0, 500));
             }
         });
-    }
+   }
+   
+   showConfirmModal("提示", "确定要发布吗？", false, publish_callback);
+}
 
-    showConfirmModal("提示", "确定要发布吗？", false, publish_callback);
+
+//新发布问卷入口, 代替了原来的publish_act
+function email_act(act_id, modal_url){
+    var email_callback = function () {
+        params = {
+                    'modal_type': 'email',
+                    'id': act_id,
+                };
+
+        showModal(modal_url, 'email-modal', params);
+    };
+
+    showConfirmModal("提示", "确定要发布吗？", false, email_callback);
 }
 
 // deal with csrf tokens when using ajax
@@ -392,7 +405,8 @@ function loadContentOfItem(item, load_params, callback) {
             }
             else {
                 username = "no username!";
-                alert("no username!");
+                get_username_callback();
+            //    alert("no username!");
             }
         },
         error: function (xhr, textStatus, errorThrown) {

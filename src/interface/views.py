@@ -541,6 +541,10 @@ def fillin_questionnaire(request, act_id, fillin_id):
     })
 
 
+def fill_in_success(request):
+    return render(request, 'questionnaire/questionnaire_success.html')
+
+
 #----------------------------分割线--------------------------------#
 
 def render_ajax(request, url, params, item_id=''):

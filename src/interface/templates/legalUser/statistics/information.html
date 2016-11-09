@@ -33,6 +33,7 @@
                             <script>
                                 $("#email-link").click(function() {
                                     //何熙巽在这写！
+                                    email_act('{{ act_id }}', "{% url 'legalUser/modal' %}");
                                 })
                                 
                             </script>
@@ -90,14 +91,14 @@
                         </div>
                     </div>
                     <div class="col-sm-6" align="center">
-                        <div id="qrcode">
+                        <div id="Qrcode">
 
                         </div>
                     </div>
                     <script type="text/javascript">
                      //   alert("{{act_id}}");
                         var questionnaire_url = "http://127.0.0.1:8000" + "{% url 'questionnaire' act_id %}";
-                        $('#qrcode').qrcode(questionnaire_url);
+                        $('#Qrcode').qrcode(questionnaire_url);
                     </script>
                 </div>
                 

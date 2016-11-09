@@ -13,6 +13,13 @@ def del_session(request):
         pass
 
 
+def del_email(request):
+    try:
+        del request.session['email']
+    except KeyError:
+        pass
+
+
 def get_username(request):
     if 'username' in request.session:
         return request.session['username']
@@ -23,6 +30,7 @@ def get_identity(request):
     if 'identity' in request.session:
         return request.session['identity']
     return 'none'
+
 
 def get_email(request):
     if 'email' in request.session:

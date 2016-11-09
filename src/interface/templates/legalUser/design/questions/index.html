@@ -66,6 +66,7 @@
 	function Edit(obj)
     {
         var onthis = $(obj).parent().parent().parent().parent();
+        var pos = $("#left-column").offset().top;
 
         //先获得本题目的type和id
         var qst_type = onthis.find("input[name=questions_type]").attr('value');
@@ -75,6 +76,7 @@
             'id': qst_id,
         }
         showModal('{% url 'legalUser/modal'%}', qst_type + '-modal', params);
+        $.scrollTo(pos, 1);
     }
 
 	//上移
@@ -82,6 +84,7 @@
     {
 
         var onthis = $(obj).parent().parent().parent().parent();
+        var pos = $("#left-column").offset().top;
         if(onthis.index() == 0)
         	showConfirmModal("提示", "已经是第一题了O^O", true);
         else {
@@ -90,12 +93,14 @@
             operation_qst(obj, "UP");
             reloadRank();
         }
+        $.scrollTo(pos, 1);
     
     }
     //下移
     function DownLi(obj)
     {
         var onthis = $(obj).parent().parent().parent().parent();
+        var pos = $("#left-column").offset().top;
 
         if(onthis.index() == $("ol.questions-list > li").size() - 2)
         	showConfirmModal("提示", "已经是最后一题了O^O", true);
@@ -105,6 +110,7 @@
             operation_qst(obj, "DOWN");
             reloadRank();
         }
+        $.scrollTo(pos, 1);
     }
 
     //删除
@@ -112,11 +118,15 @@
 	{
 		var onthis = $(obj).parent().parent().parent().parent();
 
+        var pos = $("#left-column").offset().top;
+
 		onthis.remove();
 
 		reloadRank();
 
         operation_qst(obj, "REMOVE");
+
+        $.scrollTo(pos, 1, {offset: -removePx($(".main").css("padding-top"))});
 	}
 
 	//对于每一个问题添加事件
@@ -127,18 +137,28 @@
     	//显示标号的容器
     	var rank = $(this).find(".panel-body").find("#rank");
 
+        var timer;
+
     	//鼠标悬停事件
         $(this).find(".panel-body").hover(
             function(){
                 var $panel = $(this).parent();
+                var $this = $(this);
                 $panel.removeClass("panel-default");
                 $panel.addClass("panel-success");
-                $(this).find(".question-collapse").slideDown("fast");
+                clearTimeout(timer);
+                timer = setTimeout(function(){
+                    $this.find(".question-collapse").slideDown("fast");
+                },300);
+            //    setTimeout(function(){$this.find(".question-collapse").slideDown("fast");}, 0);
+                
             },
             function(){
                 var $panel = $(this).parent();
                 $panel.removeClass("panel-success");
                 $panel.addClass("panel-default");
+            //    window.clearInterval(int);
+                clearTimeout(timer);
                 $(this).find(".question-collapse").slideUp("fast");
         })
 

@@ -91,7 +91,8 @@
         heading.hover(function(){
             $heading_panel.removeClass("panel-default");
             $heading_panel.addClass("panel-success");
-            $("#collapse-heading").slideDown("fast");
+            setTimeout(function(){$("#collapse-heading").slideDown("fast");}, 0);
+            
         }, 
         function(){
             $heading_panel.removeClass("panel-success");

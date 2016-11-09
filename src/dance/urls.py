@@ -91,6 +91,7 @@ urlpatterns = [
     #guest
     url(r'^guest/?$', 'interface.views.guest', name='guest'),
     url(r'^guest/dashboard/?$', 'interface.views.guest_dashboard', name='guest/dashboard'),
+    url(r'^success/?$', 'interface.views.fill_in_success', name='success'),
 
     #manager
     url(r'^manager/?$', 'interface.views.manager', name='manager'),
