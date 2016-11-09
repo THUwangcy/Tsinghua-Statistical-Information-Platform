@@ -1,0 +1,53 @@
+{% extends 'common/sortable_content.html' %}
+{% load staticfiles %}
+
+{% block no-data-info %}
+    暂无题目
+{% endblock no-data-info %}
+
+{% block content %}
+    {% for option in items %}
+        <tr>
+            <td style='vertical-align: middle;'>
+                &emsp;{{ option.id }}
+            </td>
+            <td style='vertical-align: middle;'>{{ option.content }}</td>
+            <td style='vertical-align: middle;'><img src="{% static 'test.jpg' %}" class="img-responsive left-block"/></td>
+            <td></td>
+            <td style='vertical-align: middle;'>&emsp;{{ option.count }}</td>
+            <td style='vertical-align: middle;'>
+                <div>
+                <div class="progress" style="height: 16px; margin-bottom: 0px; margin-top: 3px">
+                    <div class="progress-bar progress-bar-success" role="progressbar"
+                         aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                         style="width: {{ option.percentage }}%;line-height: 16px; font-size: 14px">
+                        <strong>{{ option.percentage }}%</strong>
+                    </div>
+                </div>
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <td>
+            &emsp;#
+        </td>
+        <td><strong>本题有效填写人数</strong></td>
+        <td></td>
+        <td></td>
+        <td>
+            {% for option in items %}
+                {% if forloop.first %}
+                    &emsp;<strong>{{option.total}}</strong>
+                {% endif %}
+            {% endfor %}
+        </td>
+        <td>
+    
+        </td>
+    </tr>
+
+    <script>
+
+    </script>
+{% endblock content %}

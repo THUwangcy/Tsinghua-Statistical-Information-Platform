@@ -409,6 +409,8 @@ def get_columnChart_json(act_id, qst_id):
         tableData['chart']['subCaption'] = u'多选题'
     elif question['qst_type'] == 'mark':
         tableData['chart']['subCaption'] = u'招募题'
+    elif question['qst_type'] == 'vote':
+        tableData['chart']['subCaption'] = u'投票题'
     else:
         tableData = {}
 
@@ -452,6 +454,8 @@ def get_pieChart_json(act_id, qst_id):
         tableData['chart']['subCaption'] = u'多选题'
     elif question['qst_type'] == 'mark':
         tableData['chart']['subCaption'] = u'招募题'
+    elif question['qst_type'] == 'vote':
+        tableData['chart']['subCaption'] = u'投票题'
     else:
         tableData = {}
 
@@ -492,6 +496,8 @@ def get_barChart_json(act_id, qst_id):
         tableData['chart']['subCaption'] = u'多选题'
     elif question['qst_type'] == 'mark':
         tableData['chart']['subCaption'] = u'招募题'
+    elif question['qst_type'] == 'vote':
+        tableData['chart']['subCaption'] = u'投票题'
     else:
         tableData = {}
 
@@ -543,6 +549,8 @@ def get_circleChart_json(act_id, qst_id):
         tableData['chart']['subCaption'] = u'多选题'
     elif question['qst_type'] == 'mark':
         tableData['chart']['subCaption'] = u'招募题'
+    elif question['qst_type'] == 'vote':
+        tableData['chart']['subCaption'] = u'投票题'
     else:
         tableData = {}
 

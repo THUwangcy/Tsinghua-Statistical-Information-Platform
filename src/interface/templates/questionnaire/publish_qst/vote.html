@@ -1,3 +1,123 @@
 {% extends 'questionnaire/publish_qst/index.html' %}
+{% load staticfiles %}
 
-{% block title%}投票题{% endblock title %}
+{% block title %}
+	
+	<label for="name" id="vote_title">请在此输入投票标题</label>
+    <label id = "must_qst" style="color:red; display: none;">&nbsp;*</label>
+    <label id = "select_hint"></label>
+    <div class="">
+        <table class="table" style="border:10px">
+            <thead>
+            <tr>
+                <th style="width: 10%"></th>
+                <th style="width: 15%"></th>
+                <th style="width: 50%"></th>
+                <th style="width: 5%"></th>
+                <th style="width: 20%"></th>
+            </tr>
+            </thead>
+            <tbody  id="checkbox-list">
+                <tr class="row_option">
+                    <td style='vertical-align: middle;'>
+                        <input type="checkbox" name="qst{{ questions_id }}" id="optionsCheckbox1" value="option1">
+                    </td>
+                    <td style='vertical-align: middle;'>候选1</td>
+                    <td style='vertical-align: middle;'>
+                        <img src="{% static 'test.jpg' %}" class="img-responsive center-block"/>
+                    </td>
+                    <td style='vertical-align: middle;'></td>
+                    <td style='vertical-align: middle;'>0票&emsp;( 0% )</td>
+                    
+                </tr>
+                <tr class="row_option">
+                    <td style='vertical-align: middle;'>
+                        <input type="checkbox" name="qst{{ questions_id }}" id="optionsCheckbox2" value="option2">
+                    </td>
+                    <td style='vertical-align: middle;'>候选2</td>
+                    <td style='vertical-align: middle;'>
+                        <img src="{% static 'test.jpg' %}" class="img-responsive center-block"/>
+                    </td>
+                    <td style='vertical-align: middle;'></td>
+                    <td style='vertical-align: middle;'>0票&emsp;( 0% )</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+
+            var source_panel_body = $("#qst{{ questions_id }}");
+            if('{{questions_title}}' != 'None' && '{{questions_title}}' != '')
+                source_panel_body.find("#vote_title").html('{{questions_title}}');
+
+            //必答题星号
+            if('{{qst_must}}' == 'true')
+                source_panel_body.find("#must_qst").css("display", '');
+
+            //设置选择提示
+            var select_hint = source_panel_body.find("#select_hint");
+            if('{{min_selected}}' == 'None' || '{{min_selected}}' == '') {
+                if('{{max_selected}}' != 'None' && '{{max_selected}}' != '')
+                    select_hint.html("&nbsp;[最多选择" + '{{max_selected}}' + "项]");
+            }
+            else {
+                if('{{max_selected}}' != 'None' && '{{max_selected}}' != '')
+                    select_hint.html("&nbsp;[请选择" + '{{min_selected}}' + " - " + '{{max_selected}}' + "项]");
+                else
+                    select_hint.html("&nbsp;[至少选择" + '{{min_selected}}' + "项]")
+            }
+
+
+            if('{{option}}' != 'None')
+            {
+                //全删除
+                source_panel_body.find(".row_option").each(function() {
+                    $(this).remove();
+                });
+
+                //加载人数限制
+                var statistics = new Array();
+                var percentage = new Array();
+                '{% for opt in statistics %}'
+                    statistics['{{forloop.counter}}'] = '{{opt.count}}';
+                    percentage['{{forloop.counter}}'] = '{{opt.percentage}}';
+                '{% endfor %}'
+                
+                var option_name = 'qst' + '{{ questions_id }}';
+                var prefix = '<tr class="row_option">';
+                //一个一个加选项
+                for(i = 1; i <= '{{ option_num }}'; i ++) {
+                    var option_field = '{{option}}'.split('###')[(i - 1) * 2 + 1];
+                    var radio_id = "optionsCheckbox" + i;
+                    var radio_value = "option" + i;
+
+                    var vote_num = statistics[i] + "票";
+                    var percent = "&emsp;( " + percentage[i] + "% )"
+                   
+                    var to_append = prefix + '<td><input type="checkbox" name=' + option_name + 
+                                                  ' id=' + radio_id + ' value=' + radio_value + '></td>\
+                                              <td>' + option_field + '</td>\
+                                              <td>' + '</td>\
+                                              <td>' + '</td>\
+                                              <td>' + vote_num + percent + '</td>\
+                                              </tr>';
+                    source_panel_body.find("#checkbox-list").append(to_append);
+                }
+
+            }
+
+            
+
+            //加载选框样式
+            $('input').iCheck({
+              checkboxClass: 'icheckbox_flat-green',
+              radioClass: 'iradio_flat-green',
+              increaseArea: '20%'
+            });
+        });
+    </script>
+
+
+{% endblock title %}

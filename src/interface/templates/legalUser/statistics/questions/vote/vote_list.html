@@ -1,6 +1,6 @@
 {% extends 'common/sortable.html' %}
 
-{% block title %}{{questions_title}}&nbsp;&nbsp;[招募题]{% endblock title %}
+{% block title %}{{questions_title}}&nbsp;&nbsp;[投票题]{% endblock title %}
 
 {% block defaults %}
     url: "{% url 'statistics/question/list' act_id questions_type questions_id %}",
@@ -13,16 +13,15 @@
     <th class="th-sortable" data-key="id" style="width: 10%; min-width: 20px">
         编号
     </th>
-    <th class="th-sortable" data-key="content" style="width: 30%; min-width: 50px">
-        时间段
+    <th class="th-sortable" data-key="content" style="width: 18%; min-width: 50px">
+        选项
     </th>
-    <th class="th-sortable" data-key="maxium" style="width: 17%">
-        人数上限
-    </th>
-    <th class="th-sortable" data-key="count" style="width: 13%">
-        小计
+    <th data-key="content" style="width: 27%;"></th>
+    <th style="width: 5%;"></th>
+    <th class="th-sortable" data-key="count" style="width: 10%">
+        票数
     </th>
     <th class="th-sortable" data-key="percentage" style="width: 30%">
-        已选比例
+        比例
     </th>
 {% endblock head %}
