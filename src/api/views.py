@@ -215,15 +215,19 @@ def login_act(request):
 
         try:
             user = json.loads(content)
-            user_data['yhm'] = user['yhm']
-            user_data['xm'] = user['xm']
-            user_data['zjh'] = user['zjh']
+            user_data['username'] = user['yhm']
+            user_data['real_name'] = user['xm']
+            user_data['user_id'] = user['zjh']
             user_data['email'] = user['email']
             identity = 'legalUser'
-            session.add_session(request, username=user_data['yhm'], identity=identity, student_id=user_data['zjh'])
+            user_data['identity'] = identity
+            session.add_session(request, username=user_data['username'], identity=identity, student_id=user_data['zjh'])
         except:
             return JsonResponse(dict(status='wrong username or password'))
     return JsonResponse(dict(status='ok', identity=identity))
+
+
+def get_information_act(requeest)
 
 
 

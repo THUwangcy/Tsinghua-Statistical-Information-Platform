@@ -1,4 +1,4 @@
-<style>
+<style xmlns="http://www.w3.org/1999/html">
     .submit {
 	float: right;
 	background:#18bc9c;
@@ -57,11 +57,11 @@
                     </tr>
                     <tr>
                         <td>邮箱:</td>
-                        <td><input  style="width:40%" maxlength="40"  value={{email}} required="required" name="email"></td>
+                        <td><input type="email"  style="width:40%" maxlength="40"  value={{email}} required="required" name="email"></td>
                     </tr>
                     <tr>
                         <td>联系方式:</td>
-                        <td><input  style="width:40%" maxlength="20" value={{telephone_number}} required="required" name="telephone_number"></td>
+                        <td><input  type="tel" style="width:40%" maxlength="20" value={{telephone_number}} required="required" name="telephone_number"></td>
                     </tr>
                 </tbody>
             </table>
@@ -82,15 +82,21 @@
                 <tbody>
                     <tr>
                         <td>年龄:</td>
-                        <td><input  style="width:40%"  maxlength="20"  value={{age}} required="required" name="age"></td>
+                        <td><input  type="number" style="width:40%"  maxlength="20"  value={{age}} name="age"></td>
                     </tr>
                     <tr>
                         <td>性别:</td>
-                        <td><input  style="width:40%" maxlength="5" value={{gender}} required="required" name="gender"></td>
+                        <td>
+                            <select name="gender" id="choose_gender">
+                                <option value="男" >男</option>
+                                <option value="女">女</option>
+                                <option value="其它">其它</option>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td>住址:</td>
-                        <td><input  style="width:91%" maxlength="50" value={{address}} required="required" name="address"></td>
+                        <td><input  style="width:91%" maxlength="50" value={{address}} name="address"></td>
                     </tr>
                     <tr>
                         <td>状态:</td>
@@ -106,13 +112,31 @@
 
 <script>
     $(document).ready(function () {
+            var confirm_callback = function () {
+                window.location.replace('/legalUser/information');
+            };
+
             handleFormPost("#info_change_form", "{% url 'api/info_change_act' %}", {
                 success_callback: function (data) {
                     if (data['status'] === 'ok') {
-                        showConfirmModal('提示', '个人信息修改成功', true)
+                        showConfirmModal('提示', '个人信息修改成功', true, confirm_callback);
                     }
                 }
             });
 
         });
+
+    $()
+
+    var ss = document.getElementById('choose_gender')
+    if("{{ gender }}" == '男' ){
+        ss[0].selected = true;
+    }
+    else if("{{ gender }}" == '女'){
+        ss[1].selected = true;
+    }
+    else if("{{ gender }}" == '其它'){
+        ss[2].selected = true;
+    }
 </script>
+
