@@ -640,7 +640,6 @@ function showModal(url, id, params) {
                 modal.remove();
             });
             modal.modal();
-
             resizeComponents();
             loadComplete();
         },
@@ -795,12 +794,17 @@ function initLeftColumn() {
 }
 
 function resizeComponents() {
+
     var left_column = $("#left-column");
+    var right_column = $("#right");
+    
     // set page min height according to left column
-    var height = left_column.outerHeight(true);
+    var height = left_column.outerHeight(true) > right_column.outerHeight(true)? 
+                    left_column.outerHeight(true): right_column.outerHeight(true);
+//    alert(height);
     $("html, body").css("min-height", height);
     $("#main-page").css({
-        "min-height": height
+        "min-height": height + 70
     });
     $(".column-container").scroll();
 

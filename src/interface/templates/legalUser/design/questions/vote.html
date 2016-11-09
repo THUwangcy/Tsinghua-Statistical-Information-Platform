@@ -6,6 +6,9 @@
 	<label for="name" id="vote_title">请在此输入投票标题</label>
     <label id = "must_qst" style="color:red; display: none;">&nbsp;*</label>
     <label id = "select_hint"></label>
+    <label id = "display_signal" style="display:none;">true</label>
+    <label id = "ip_signal" style="display:none;"></label>
+    <label id = "day_signal" style="display:none;"></label>
     <div class="">
         <table class="table" style="border:10px">
             <thead>
@@ -56,6 +59,19 @@
             if('{{qst_must}}' == 'true')
                 source_panel_body.find("#must_qst").css("display", '');
 
+            //是否显示票数设置
+            var display_signal = source_panel_body.find("#display_signal");
+            if('{{ display_vote }}' == 'true')
+                display_signal.html('true');
+            else
+                display_signal.html('');
+
+            //设置投票次数限制
+            if('{{ ip_times }}' != 'None' && '{{ ip_times }}' != '')
+                source_panel_body.find("#ip_signal").html('{{ ip_times }}');
+            if('{{ day_times }}' != 'None' && '{{ day_times }}' != '')
+                source_panel_body.find("#day_signal").html('{{ day_times }}');
+
             //设置选择提示
             var select_hint = source_panel_body.find("#select_hint");
             if('{{min_selected}}' == 'None' || '{{min_selected}}' == '') {
@@ -95,6 +111,12 @@
 
                     var vote_num = statistics[i] + "票";
                     var percent = "&emsp;( " + percentage[i] + "% )"
+
+                    if('{{ display_vote }}' != 'true')
+                    {
+                        vote_num = '';
+                        percent = '';
+                    }
                    
                     var to_append = prefix + '<td><input type="checkbox" name=' + option_name + 
                                                   ' id=' + radio_id + ' value=' + radio_value + '></td>\

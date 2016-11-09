@@ -54,7 +54,11 @@
 
                     'qst_must': '{{ qst.qst_must }}',
                     'min_selected': '{{ qst.min_selected }}',
-                    'max_selected': '{{ qst.max_selected }}'
+                    'max_selected': '{{ qst.max_selected }}',
+
+                    'display_vote': '{{ qst.display_vote }}',
+                    'ip_times': '{{ qst.ip_times }}',
+                    'day_times': '{{ qst.day_times }}'
                 }
 
                 loadContentOn($(".last-question"), "{% url 'legalUser/design/question' type act_id%}", pre_info_param, {anim: false, scroll: false});

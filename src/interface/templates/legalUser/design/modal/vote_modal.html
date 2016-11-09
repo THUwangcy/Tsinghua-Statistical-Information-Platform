@@ -68,13 +68,37 @@
                                 <label class="control-label pull-left" >最少选择</label>
                                 
                                 <input id="min_selected" name="min_selected" class="form-control"
-                                              style="resize: vertical; width: 80%;" placeholder="请输入数字">
+                                              style="resize: vertical; width: 80%;" placeholder="请输入数字" type="number">
                             </div>
                             <div class="col-xs-6 form-group">
                                 <label class="control-label pull-left" >最多选择</label>
                                 
                                 <input id="max_selected" name="max_selected" class="form-control"
-                                              style="resize: vertical; width: 80%;" placeholder="请输入数字">
+                                              style="resize: vertical; width: 80%;" placeholder="请输入数字" type="number">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row" style="text-align: center;">
+                            <div class="col-xs-6 form-group">
+                                <label class="control-label pull-left" >每个ip投票次数</label>
+                                
+                                <input id="ip_times" name="ip_times" class="form-control"
+                                              style="resize: vertical; width: 80%;" placeholder="默认无次数限制" type="number">
+                            </div>
+                            <div class="col-xs-6 form-group">
+                                <label class="control-label pull-left" >每天投票次数</label>
+                                <input id="day_times" name="day_times" class="form-control"
+                                              style="resize: vertical; width: 80%;" placeholder="默认无次数限制" type="number">
+                                
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row" style="text-align: center;">
+                            <div class="col-xs-4 form-group">
+                                <label>
+                                <input type="checkbox" name="display_vote" id="display_vote" value="true">
+                                    <label for="this.prev();">问卷中显示选项票数</label>
+                                </label>
                             </div>
                         </div>
                         <div id="submit-button-field">
@@ -100,6 +124,9 @@
     var must_option = modal.find("#must_field");
     var min_selected = modal.find("#min_selected");
     var max_selected = modal.find("#max_selected");
+    var display_vote = modal.find("#display_vote");
+    var ip_times = modal.find("#ip_times");
+    var day_times = modal.find("#day_times");
 
     //重新加载每个选项输入框的id和name，方便之后表单serilize
     function reloadID() {
@@ -167,6 +194,17 @@
             $(this).remove();
         });
 
+        //设置是否显示投票
+        if(display_vote.is(':checked'))
+            source_panel_body.find("#display_signal").html('true');
+        else
+            source_panel_body.find("#display_signal").html('');
+
+        //设置投票次数限制
+        source_panel_body.find("#ip_signal").html(ip_times.val());
+        source_panel_body.find("#day_signal").html(day_times.val());
+
+
         //题目
         source_panel_body.find("#vote_title").html(title_field.val());
         var option_name = 'option' + '{{ id }}';
@@ -176,13 +214,14 @@
             var option_field = modal.find("#option" + i + "_field").val();
             var radio_id = "optionsCheckbox" + i;
             var radio_value = "option" + i;
+            var vote_num = display_vote.is(':checked')? '0票&emsp;( 0% )' : '';
             
             var to_append = prefix + '<td><input type="checkbox" name=' + option_name + 
                                           ' id=' + radio_id + ' value=' + radio_value + '></td>\
                                       <td>' + option_field + '</td>\
                                       <td>' + '</td>\
                                       <td>' + '</td>\
-                                      <td>0票&emsp;( 0% )</td>\
+                                      <td>' + vote_num + '</td>\
                                       </tr>';
        
             source_panel_body.find("#checkbox-list").append(to_append);
@@ -225,6 +264,15 @@
         var must_field = source_panel_body.find("#must_qst");
         if(must_field.css("display") != 'none')
             must_option.attr("checked",'checked');
+
+        //是否显示票数设置
+        var display_signal = source_panel_body.find("#display_signal");
+        if(display_signal.html().trim() == 'true')
+            display_vote.attr("checked", 'checked');
+
+        //设置投票次数限制
+        ip_times.val(source_panel_body.find("#ip_signal").html());
+        day_times.val(source_panel_body.find("#day_signal").html());
 	
         //设置选择提示
         var select_hint = source_panel_body.find("#select_hint");

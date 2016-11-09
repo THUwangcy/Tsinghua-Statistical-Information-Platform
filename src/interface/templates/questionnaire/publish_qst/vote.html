@@ -95,6 +95,12 @@
 
                     var vote_num = statistics[i] + "票";
                     var percent = "&emsp;( " + percentage[i] + "% )"
+
+                 /*   if('{{ display_vote }}' != 'true')
+                    {
+                        vote_num = '';
+                        percent = '';
+                    } */
                    
                     var to_append = prefix + '<td><input type="checkbox" name=' + option_name + 
                                                   ' id=' + radio_id + ' value=' + radio_value + '></td>\

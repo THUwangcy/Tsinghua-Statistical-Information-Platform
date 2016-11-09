@@ -162,9 +162,13 @@ def legalUser_design_question(request, type, act_id):
         'rows': request.GET.get('rows'),
         'hint': request.GET.get('hint'),
 
-        'qst_must': request.GET.get('qst.qst_must'),
+        'qst_must': request.GET.get('qst_must'),
         'min_selected': request.GET.get('min_selected'),
         'max_selected': request.GET.get('max_selected'),
+
+        'display_vote': request.GET.get('display_vote'),
+        'ip_times': request.GET.get('ip_times'),
+        'day_times': request.GET.get('day_times'),
         'statistics': statistics
     }
     params['act_type'] = type
@@ -487,10 +491,15 @@ def questionnaire_publish_question(request, type, act_id):
 
         'statistics': statistics,
 
-        'qst_must': request.GET.get('qst.qst_must'),
+        'qst_must': request.GET.get('qst_must'),
         'min_selected': request.GET.get('min_selected'),
         'max_selected': request.GET.get('max_selected'),
-        'fillin_id': request.GET.get('fillin_id')
+
+        'fillin_id': request.GET.get('fillin_id'),
+
+        'display_vote': request.GET.get('display_vote'),
+        'ip_times': request.GET.get('ip_times'),
+        'day_times': request.GET.get('day_times')
     }
     if request.GET.get('fillin_id') != None and request.GET.get('fillin_id') != '':
         fillin_result = views.get_result_of_question(act_id, request.GET.get('questions_id'), request.GET.get('fillin_id'))

@@ -33,7 +33,12 @@
                             <script>
                                 $("#email-link").click(function() {
                                     //何熙巽在这写！
-                                    email_act('{{ act_id }}', "{% url 'legalUser/modal' %}");
+                                    params = {
+                                                'modal_type': 'email',
+                                                'id': '{{ act_id }}',
+                                            };
+
+                                    showModal("{% url 'legalUser/modal' %}", 'email-modal', params);
                                 })
                                 
                             </script>

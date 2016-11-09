@@ -53,7 +53,7 @@
                                         <label class="control-label pull-left" >人数上限</label>
                                         
                                         <input id="option1_maxium" name="option1_maxium" class="form-control"
-                                                      style="resize: vertical; width: 80%;" placeholder="请输入数字"> 
+                                                      style="resize: vertical; width: 80%;" type="number"> 
                                     </div>
                                 </div>
                                 <br>
@@ -66,13 +66,13 @@
                                 <label class="control-label pull-left" >最少选择</label>
                                 
                                 <input id="min_selected" name="min_selected" class="form-control"
-                                              style="resize: vertical; width: 80%;" placeholder="请输入数字">
+                                              style="resize: vertical; width: 80%;" placeholder="请输入数字" type="number">
                             </div>
                             <div class="col-xs-6 form-group">
                                 <label class="control-label pull-left" >最多选择</label>
                                 
                                 <input id="max_selected" name="max_selected" class="form-control"
-                                              style="resize: vertical; width: 80%;" placeholder="请输入数字">
+                                              style="resize: vertical; width: 80%;" placeholder="请输入数字" type="number">
                             </div>
                         </div>
                         <div id="submit-button-field">
@@ -136,7 +136,7 @@
                                     <div class="col-xs-3 form-group">\
                                         <label class="control-label pull-left" >人数上限</label>\
                                         <input id="option1_maxium" name="option1_maxium" class="form-control"\
-                                                      style="resize: vertical; width: 80%;" placeholder="请输入数字">\
+                                                      style="resize: vertical; width: 80%;" type="number">\
                                     </div>\
                                 </div>\
                                 <br>\
@@ -258,7 +258,7 @@
             var maxium_field = source_panel_body.find("#optionsCheckbox" + i).parent().parent().prev();
             if(maxium_field.length != 0) {
                 var content = maxium_field.html().trim();
-                modal.find("#option" + i + "_maxium").val(content);
+                modal.find("#option" + i + "_maxium").val(parseInt(content));
             }
         }
 
