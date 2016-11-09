@@ -225,7 +225,8 @@ def login_act(request):
             identity = 'legalUser'
             user_data['identity'] = identity
             # 给徐子南, 在这把字典user_data丢给后端
-            session.add_session(request, username=user_data['username'], identity=identity, student_id=user_data['zjh'])
+            session.add_session(request, username=user_data['username'],
+                                identity=identity, student_id=user_data['user_id'])
         except:
             return JsonResponse(dict(status='wrong username or password'))
     return JsonResponse(dict(status='ok', identity=identity))
