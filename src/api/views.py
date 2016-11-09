@@ -199,7 +199,7 @@ def login_act(request):
         session.add_session(request, username=username, identity=identity)
     elif username == 'admin' and password == '123456':
         identity = 'legalUser'
-        session.add_session(request, username=username, identity=identity)
+        session.add_session(request, username=username, identity=identity, student_id='1111111111')
     else:
         data = {
             'id': username,
@@ -220,7 +220,7 @@ def login_act(request):
             user_data['zjh'] = user['zjh']
             user_data['email'] = user['email']
             identity = 'legalUser'
-            session.add_session(request, username=user_data['yhm'], identity=identity)
+            session.add_session(request, username=user_data['yhm'], identity=identity, student_id=user_data['zjh'])
         except:
             return JsonResponse(dict(status='wrong username or password'))
     return JsonResponse(dict(status='ok', identity=identity))

@@ -665,9 +665,10 @@ def get_pagination(item_total, item_per_page, cur):
 
 def get_username(request):
     username = session.get_username(request)
+    user_id = session.get_student_id(request)
     file_object = open(os.path.abspath('.') + '/interface/stat_database.txt' , 'w')
     file_object.writelines(username + "\n")
-    if username == 'none':
+    if username == 'none' or user_id == 'none':
         return JsonResponse({
             'status': 'wrong',
         })
@@ -675,4 +676,5 @@ def get_username(request):
         return JsonResponse({
             'status': 'OK',
             'username': username,
+            'user_id' : user_id,
         })

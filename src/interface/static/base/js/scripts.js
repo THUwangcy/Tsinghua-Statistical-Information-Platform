@@ -361,6 +361,7 @@ function loadContentOn(container, url, params, load_params, callback) {
 
 function loadContentOfItem(item, load_params, callback) {
     var username = '';
+    var user_id = '1111111111';
     var get_username_callback = function() {
         var act_id = $(item).attr("id");
         var is_design = act_id.indexOf("design-item");
@@ -374,7 +375,7 @@ function loadContentOfItem(item, load_params, callback) {
             $.ajax({
                 type: "GET",
                 url: post_url,
-                data: "&act_type=" + act_id + "&time=" + getTime() + "&user_id=1111111111" + "&username=" + username,
+                data: "&act_type=" + act_id + "&time=" + getTime() + "&user_id=" + user_id + "&username=" + username,
                 success: function(data) {
                     if(data['status'] == 'ok'){
                         append = data['id'];
@@ -401,6 +402,7 @@ function loadContentOfItem(item, load_params, callback) {
         success: function (data) {
             if(data["status"] == 'OK') {
                 username = data["username"];
+                user_id = data["user_id"];
                 get_username_callback();
             }
             else {
