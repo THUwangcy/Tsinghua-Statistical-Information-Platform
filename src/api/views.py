@@ -181,12 +181,15 @@ def create_new_notice(request):
 
 def info_change_act(request):
     dicts = request.POST.dict()
+    dicts["username"] = session.get_username(request)
+    # 给徐子南, 在这丢一个dict给后端，后端根据dict中的username修改用户信息
+    # 只修改dict中有的key 的value, 没有的key不修改
     output = open('info_change.txt', 'w')
-    infomations=""
+    information = ""
     for key, value in dicts.items():
-        infomations += "\"%s\":\"%s\"" % (key, value)
-        infomations += "\n"
-    output.write(infomations)
+        information += "\"%s\":\"%s\"" % (key, value)
+        information += "\n"
+    output.write(information)
     return JsonResponse(dict(status='ok'))
 
 
@@ -221,14 +224,29 @@ def login_act(request):
             user_data['email'] = user['email']
             identity = 'legalUser'
             user_data['identity'] = identity
+            # 给徐子南, 在这把字典user_data丢给后端
             session.add_session(request, username=user_data['username'], identity=identity, student_id=user_data['zjh'])
         except:
             return JsonResponse(dict(status='wrong username or password'))
     return JsonResponse(dict(status='ok', identity=identity))
 
 
-def get_information_act(requeest)
+def get_user_information_act(username):
+    # 给徐子南, 在这通过丢一个username个后端获取用户信息dict
+    dicts = {}
+    return dicts
 
+
+def get_all_user():
+    # 给徐子南, 这里丢回一个list, list中是所有用户的用户信息dict
+    all_user = []
+    return all_user
+
+
+def get_all_questionnaire():
+    # 给徐子南，这里丢回一个list, list中是所有问卷的问卷信息
+    all_questionnaire = []
+    return all_questionnaire
 
 
 def get_questionnaire_byID(act_id):
