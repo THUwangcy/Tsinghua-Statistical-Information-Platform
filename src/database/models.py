@@ -21,7 +21,7 @@ class Admin(models.Model):
 class User(models.Model):
     student_id = models.CharField(max_length = 20, primary_key = True)
     real_name = models.CharField(max_length = 20, default = "michael jackson")
-    password = models.CharField(max_length = 32, default = "00000000")
+    
     age = models.CharField(max_length = 18, default = "18")
     status = models.CharField(max_length = 400, default = "hello world")
     address = models.CharField(max_length = 400, default = "china")
@@ -100,14 +100,16 @@ class Question(models.Model):
     question_type = models.CharField(max_length = 2, choices = TYPES, default = FILLIN)
     question_order = models.IntegerField(default = 1)
     question_choices = models.IntegerField(default = 0)
-    pub_date = models.DateTimeField('date published', null = True)
+    question_time = models.CharField(max_length = 20, default = "2016")
     question_fillinrow = models.IntegerField(default = 1)
     question_fillinhint = models.CharField(max_length = 200, default = u"文本")
     question_fillincheck = models.CharField(max_length = 100, default = "")
     question_mustfill = models.BooleanField(default = False)
-    question_minfill = models.IntegerField(default = 0)
-    question_maxfill = models.IntegerField(default = 2)
-
+    question_minfill = models.IntegerField(null = True)
+    question_maxfill = models.IntegerField(null = True)
+    question_displayVotes = models.BooleanField(default = False)
+    question_ipTimes = models.IntegerField(null = True)
+    question_dayTimes = models.IntegerField(null = True)
     def __unicode__(self):
         return self.question_text
 
@@ -115,6 +117,7 @@ class Choice(models.Model):
     question = models.ForeignKey(Question)
     choice_text = models.CharField(max_length = 200)
     choice_order = models.IntegerField(default = 0)
+    choice_limit = models.IntegerField(null = True)
     votes = models.IntegerField(default = 0)
 
     def __unicode__(self):

@@ -1,7 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from models import *
- 
+import hashlib
+
+
+def md5encode(act_id):
+	m = hashlib.md5()
+	m.update(act_id)
+	return m.hexdigest()
+
 def createDefaultUser():
 	defaultUser = User(
 		student_id = "1111111111",
@@ -230,18 +237,34 @@ def makeQuestionaireInfo(Questionaire):
 def modifyQuestion(dict):
 	currentQuestion = Question.objects.get(id = dict["questions_id"])
 	currentQuestion.question_text = dict["qst_title"]
+	questionKeys = dict.keys()
+	if "must" in questionKeys:
+		currentQuestion.question_mustfill = True
 	currentQuestion.save()
 	if dict["qst_type"] != "fillin":
 		oldChoiceList = Choice.objects.filter(question = currentQuestion)
 		for choice in oldChoiceList:
 			choice.delete()
 		currentQuestion.question_choices = dict["option_num"]
+		currentQuestion.question_maxfill = currentQuestion.question_choices
+		if dict["min_selected"] != "":
+			currentQuestion.question_minfill = int(dict["min_selected"])
+		if dict["max_selected"] != "":
+			currentQuestion.question_maxfill = int(dict["max_selected"])
+		if dict["qst_type"] == "vote":
+			if "display_vote" in questionKeys:
+				currentQuestion.question_displayVotes = True
+			if dict["ip_times"] != "":
+				currentQuestion.question_ipTimes = int(dict["ip_times"])
+			if dict["day_times"] != "":
+				currentQuestion.question_dayTimes = int(dict["day_times"])
 		currentQuestion.save()
 		for i in range(int(dict["option_num"])):
 			pass_dict = {
 				"order" : i + 1,
 				"text" : dict["option" + str(i + 1) + "_field"],
 				"question_id" : currentQuestion.id
+				"limit" : dict["option" + str(i + 1) + "_maxium"]
 			}
 			makeNewChoice(pass_dict)
 	else:
@@ -257,6 +280,8 @@ def makeNewChoice(dict):
 		choice_text = dict["text"],
 		question = Question.objects.get(id = dict["question_id"])
 		)
+	if dict["limit"] != "":
+		currentChoice.choice_limit = int(dict["limit"])
 	currentChoice.save()
 
 def getQuestionaireByID(qid):
@@ -277,6 +302,7 @@ def getQuestionaireByID(qid):
 	return_dict["act_title"] = currentQuestionaire.questionaire_title
 	return_dict["act_description"] = currentQuestionaire.questionaire_introduction
 	return_dict["qst_num"] = currentQuestionaire.questionaire_numOfQues
+	return_dict["time"] = currentQuestionaire.questionaire_time
 	questionList = getQuestionsByQuestionaire(qid)
 	return_dict["questions"] = questionList
 	return return_dict
@@ -302,12 +328,34 @@ def makeQuestionDict(qst):
 	return_dict["qst_type"] = type_switcher[qst.question_type]
 	return_dict["qst_title"] = qst.question_text
 	return_dict["qst_id"] = qst.id
+
+	if qst.question_mustfill == True:
+		return_dict["qst_must"] = "true"
+	else:
+		return_dict["qst_must"] = "false"
 	if qst.question_type == "FI":
 		return_dict["rows"] = qst.question_fillinrow
 		return_dict["hint"] = qst.question_fillinhint
 		return_dict["check"] = qst.question_fillincheck
 	else:
 		return_dict["option_num"] = qst.question_choices
+		if qst.question_type == "MU":
+			if qst.question_maxfill != None:
+				return_dict["max_selected"] = qst.question_maxfill
+			if qst.question_minfill != None:
+				return_dict["min_selected"] = qst.question_minfill
+		if qst.question_displayVote == True:
+			return_dict["display_vote"] = "true"
+		else:
+			return_dict["display_vote"] = "false"
+		if qst.question_ipTimes != None:
+			return_dict["ip_times"] = qst.question_ipTimes
+		else:
+			return_dict["ip_times"] = ""
+		if qst.question_dayTimes != None:
+			return_dict["day_times"] = qst.question_dayTimes
+		else:
+			return_dict["day_times"] = ""
 		optionList = list()
 		currentChoices = Choice.objects.filter(question = qst)
 		for choice in currentChoices:
@@ -434,8 +482,14 @@ def getStatisticsOfQuestion(qst_id):
 				"content" : oneChoice.choice_text,
 				"count" : choiceCount,
 				"total" : total,
-				"percentage" : percentage
+				"percentage" : percentage,
+				"max" : "",
+				"left" : ""
 			}
+			if oneChoice.choice_limit != None:
+				dict["max"] = str(oneChoice.choice_limit)
+				answers = Answer.objects.filter(answer_choice = oneChoice)
+				dict["left"] = str(oneChoice.choice_limit - len(answers))
 			returnList.append(dict)
 	return returnList
 
