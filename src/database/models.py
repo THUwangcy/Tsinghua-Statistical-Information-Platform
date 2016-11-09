@@ -58,10 +58,12 @@ class Questionaire(models.Model):
     INIT = "IN"
     SAVED = "SA"
     LAUNCHED = "LA"
+    PAUSE = "PA"
     STATUS = (
         (INIT, "initial"),
         (SAVED, "saved"),
-        (LAUNCHED, "lauched")
+        (LAUNCHED, "lauched"),
+        (PAUSE, "pause")
         )
     questionaire_user = models.ForeignKey(User)
     questionaire_title = models.CharField(max_length = 30)

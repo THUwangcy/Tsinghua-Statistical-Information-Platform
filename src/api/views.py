@@ -336,7 +336,8 @@ def stop_act(request):
     file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
     Act_id = request.GET['act_id']
     file_object.writelines("Stop: " + Act_id + "\n")
-    status = 'ok'
+
+    status = api.stopQuestionaire(Act_id)
     return JsonResponse({
         'status': status,
     })
@@ -345,7 +346,7 @@ def resume_act(request):
     file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
     Act_id = request.GET['act_id']
     file_object.writelines("Resume: " + Act_id + "\n")
-    status = 'ok'
+    status = api.publishQuestionaire(Act_id)
     return JsonResponse({
         'status': status,
     })

@@ -25,6 +25,10 @@
                                  {}, '#' + '{{app.type}}' + '-design-item')" >
                         {{ app.name }}
                     </a>
+                {% elif app.status == 'pause' %}
+                    <a class="fake-link" href="#">
+                        {{ app.name }}
+                    </a>
                 {% endif %}
             </td>
             <td>{{ app.subscribe_time }}</td>
@@ -70,7 +74,7 @@
                         {% elif app.status == 'already' %}
                             
                             <li style="width: 24%" align="center">
-                                <a class="fake-link" href="javascript:stop_act('{{activity.id}}', '{% url 'api/stop_act' %}', '#all-applications-item');">
+                                <a class="fake-link" href="javascript:stop_act('{{app.id}}', '{% url 'api/stop_act' %}', '#all-applications-item');">
                                     <i class="fa fa-pause fa-fw fa-2x" aria-hidden="true"></i>停止
                                 </a>
                             </li>
@@ -92,7 +96,7 @@
 
                         {% elif app.status == 'pause' %}
                             <li style="width: 24%" align="center">
-                                <a class="fake-link" href="javascript:stop_act('{{activity.id}}', '{% url 'api/resume_act' %}', '#all-applications-item');">
+                                <a class="fake-link" href="javascript:resume_act('{{app.id}}', '{% url 'api/resume_act' %}', '#all-applications-item');">
                                     <i class="fa fa-step-forward fa-fw fa-2x" aria-hidden="true"></i>继续
                                 </a>
                             </li>

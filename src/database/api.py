@@ -189,9 +189,15 @@ def saveQuestionaire(dict):
 	currentQuestionaire.save()
 	return "ok"
 
-def publishQuestionaire(dict):
-	currentQuestionaire = Questionaire.objects.get(id = dict["act_id"])
+def publishQuestionaire(act):
+	currentQuestionaire = Questionaire.objects.get(id = int(act))
 	currentQuestionaire.questionaire_status = "LA"
+	currentQuestionaire.save()
+	return "ok"
+
+def stopQuestionaire(act):
+	currentQuestionaire = Questionaire.objects.get(id = int(act))
+	currentQuestionaire.questionaire_status = "PA"
 	currentQuestionaire.save()
 	return "ok"
 
@@ -206,17 +212,20 @@ def getQuestionaireListByStatus(dict):
 	else:
 		return makeQuestionaireList(Questionaire.objects.filter(questionaire_user__real_name = dict["username"]).filter(questionaire_status = switcher[dict["status"]]))
 
+
 def makeQuestionaireList(List):
 	returnList = list()
 	for Questionaire in List:
 		returnList.append(makeQuestionaireInfo(Questionaire))
 	return returnList
 
+
 def makeQuestionaireInfo(Questionaire):
 	status_switcher = {
 		"SA" : "pending",
 		"LA" : "already",
-		"IN" : "new"
+		"IN" : "new",
+		"PA" : "pause"
 	}
 	type_switcher = {
 		"VO" : "vote",
@@ -264,8 +273,11 @@ def modifyQuestion(dict):
 				"order" : i + 1,
 				"text" : dict["option" + str(i + 1) + "_field"],
 				"question_id" : currentQuestion.id
-				"limit" : dict["option" + str(i + 1) + "_maxium"]
 			}
+			if ("option" + str(i + 1) + "_maxium") in questionKeys:
+				pass_dict["limit"] = dict["option" + str(i + 1) + "_maxium"]
+			else:
+				pass_dict["limit"] = ""
 			makeNewChoice(pass_dict)
 	else:
 		currentQuestion.question_fillinrow = dict["fillin_row"]
@@ -295,7 +307,8 @@ def getQuestionaireByID(qid):
 	status_switcher = {
 		"SA" : "pending",
 		"LA" : "already",
-		"IN" : "new"
+		"IN" : "new",
+		"PA" : "pause"
 	}
 	return_dict["act_type"] = type_switcher[currentQuestionaire.questionaire_type]
 	return_dict["act_status"] = status_switcher[currentQuestionaire.questionaire_status]
@@ -344,7 +357,7 @@ def makeQuestionDict(qst):
 				return_dict["max_selected"] = qst.question_maxfill
 			if qst.question_minfill != None:
 				return_dict["min_selected"] = qst.question_minfill
-		if qst.question_displayVote == True:
+		if qst.question_displayVotes == True:
 			return_dict["display_vote"] = "true"
 		else:
 			return_dict["display_vote"] = "false"
@@ -365,6 +378,8 @@ def makeQuestionDict(qst):
 
 def fillQuestionaire(dict):
 	currentQuestionaire = Questionaire.objects.get(id = int(dict["act_id"]))
+	currentQuestionaire.questionaire_numOfFilled = currentQuestionaire.questionaire_numOfFilled + 1
+	currentQuestionaire.save()
 	currentQuestionList = Question.objects.filter(questionaire_id = currentQuestionaire)
 	questionCount = currentQuestionaire.questionaire_numOfQues
 	currentFiller = Filler(

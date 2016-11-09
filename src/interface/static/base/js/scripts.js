@@ -1,6 +1,6 @@
 
 //继续问卷
-function stop_act(act_id, url, item) {
+function resume_act(act_id, url, item) {
     var callback = function() {
         $.ajax({
             type: "GET",

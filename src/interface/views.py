@@ -135,7 +135,7 @@ def legalUser_design(request, type, act_id):
         type_icon = 'fa-tasks'
     elif type == 'recruit':
         type_name = u'实验室招募'
-        type_icon = 'fa-check'
+        type_icon = 'fa-calendar-check-o'
     elif type == 'vote':
         type_name = u'投票'
         type_icon = 'fa-list-alt'
