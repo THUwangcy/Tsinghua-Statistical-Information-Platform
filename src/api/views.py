@@ -211,7 +211,7 @@ def info_change_act(request):
         information += "\"%s\":\"%s\"" % (key, value)
         information += "\n"
     output.write(information)
-    return JsonResponse(dict(status=status))
+    return JsonResponse(dict(status='ok'))
 
 
 def login_act(request):

@@ -85,7 +85,10 @@ def getAllQustionaireInfo():
 	userlist = getAllUser()
 	return_list = list()
 	for user in userlist:
-		currentlist = makeQuestionaireList(Questionaire.objects.filter(questionaire_user = user).filter(questionaire_status = "AL"))
+		currentlist = makeQuestionaireList(Questionaire.objects.filter(questionaire_user = user).filter(questionaire_status = "LA"))
+		output = open('listview', 'w')
+		output.write(str(len(currentlist)))
+		output.close()
 		for aquestionaire in currentlist:
 			aquestionaire["username"] = user.username
 		return_list.extend(currentlist)
@@ -549,7 +552,8 @@ def getStatisticsOfQuestion(qst_id):
 		for answer in AnswerList:
 			dict = {
 				"id" : countDown,
-				"content" : answer.answer_content
+				"content" : answer.answer_content,
+				"total" : len(AnswerList)
 			}
 			returnList.append(dict)
 			countDown = countDown + 1

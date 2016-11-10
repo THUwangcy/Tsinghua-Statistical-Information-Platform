@@ -188,17 +188,22 @@ def show_modal(request):
 def show_info_modal(request):
     modal_type = request.GET['modal_type']
     username = request.GET['username']
-    return render(request, 'legalUser/design/modal/' + modal_type + '_modal.html', {
-            'modal_type': modal_type,
-            'username': username,
-            'real_name': '何熙巽',
-            'email': 'hexixun88@126.com',
-            'telephone_number': '18813003038',
-            'age': '20',
-            'gender': '男',
-            'address': "清华大学紫荆公寓二号楼411B",
-            'status': "做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开",
-    })
+
+    dicts = views.get_user_information_act(username)
+
+    params = {
+        'username': username,
+        'real_name': dicts['real_name'],
+        'identity': 'legalUser',
+        'email': dicts['email'],
+        'telephone_number': dicts['telephone_number'],
+        'age': dicts['age'],
+        'gender': dicts['gender'],
+        'address': dicts['address'],
+        'status': dicts['status'],
+    }
+
+    return render(request, 'legalUser/design/modal/' + modal_type + '_modal.html', params)
 
 
 def log_off(request):
@@ -380,7 +385,12 @@ def manager_all_activities(request):
 
 @check_identity('manager')
 def manager_all_activities_list(request):
-    applications = _database.get_activities()
+    applications = views.get_all_questionnaire()
+    for app in applications:
+        app['publisher'] = app['username']
+    output = open('asdfasdfasdfasd', 'w')
+    output.write(str(len(applications)))
+    output.close()
     return render_sortable(request, applications, 'manager/application/applications_content.html')
 
 
@@ -391,7 +401,9 @@ def manager_all_users(request):
 
 @check_identity('manager')
 def manager_all_users_list(request):
-    applications = _database.get_users()
+    applications = views.get_all_user()
+    for app in applications:
+        app['name'] = app['username']
     return render_sortable(request, applications, 'manager/application_2/applications_content.html')
 
 
