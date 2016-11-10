@@ -52,6 +52,7 @@ urlpatterns = [
 
     #modal
     url(r'^modal/?$', 'interface.views.show_modal', name='legalUser/modal'),
+    url(r'^modals/?$', 'interface.views.show_info_modal', name='manager/modal'),
 
     #username
     url(r'^get_username/?$', 'interface.views.get_username', name='get_username'),

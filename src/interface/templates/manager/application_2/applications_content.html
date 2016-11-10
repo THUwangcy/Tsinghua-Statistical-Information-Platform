@@ -7,11 +7,7 @@
 {% block content %}
     {% for app in items %}
         <tr>
-            <td>
-                <a class="ajax-link fake-link" data-url="{% url 'test'%}">
-                    {{ app.name}}
-                </a>
-            </td>
+            <td style="color: #18bc9c">{{ app.name}}</td>
             <td>{{ app.identity }}</td>
             <td>{{ app.email}}</td>
             <td>{{ app.telephone_number }}</td>
@@ -29,7 +25,7 @@
                 <div id="app_all{{forloop.counter}}" class="operation" style="display:none; width: 100%">
                     <ul>
                         <li style="width: 20%" align="center">
-                            <a class="fake-link" href="#" >
+                            <a class="fake-link" href="javascript:showModal('{% url 'manager/modal' %}', 'information-modal', {'modal_type': 'information', 'username': {{ app.name }}});" >
                                 <i class="fa fa-pencil-square-o fa-fw fa-2x" aria-hidden="true"></i>  查看信息
                             </a>
                         </li>

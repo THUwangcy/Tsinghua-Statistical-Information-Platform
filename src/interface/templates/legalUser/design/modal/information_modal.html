@@ -1,0 +1,78 @@
+<div class="modal fade" id="information-modal" tabindex="-1" role="dialog" aria-labelledby="information-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">用户信息展示</h4>
+            </div>
+
+
+            <div class="modal-footer">
+                <div class="row" style="text-align: center;">
+                    <div class="col-xs-6 form-group">
+                        <label class="control-label pull-left" >用户类别：</label>
+
+                        <strong style="resize: vertical; width: 80%;" >legalUser</strong>
+                    </div>
+                </div>
+                <br>
+                <div class="row" style="text-align: center;">
+                    <div class="col-xs-6 form-group">
+                        <label class="control-label pull-left" >用户名：</label>
+
+                        <strong style="resize: vertical; width: 80%;" >{{ username }}</strong>
+                    </div>
+                    <div class="col-xs-6 form-group">
+                        <label class="control-label pull-left" >真实姓名：</label>
+
+                        <strong style="resize: vertical; width: 80%;" >{{ real_name }}</strong>
+                    </div>
+                </div>
+                <br>
+                <div class="row" style="text-align: center;">
+                    <div class="col-xs-6 form-group">
+                        <label class="control-label pull-left" >邮箱：</label>
+
+                        <strong style="resize: vertical; width: 80%;" >{{ email }}</strong>
+                    </div>
+                    <div class="col-xs-6 form-group">
+                        <label class="control-label pull-left" >联系方式：</label>
+
+                        <strong style="resize: vertical; width: 80%;" >{{ telephone_number }}</strong>
+                    </div>
+                </div>
+                <br>
+                <div class="row" style="text-align: center;">
+                    <div class="col-xs-6 form-group">
+                        <label class="control-label pull-left" >年龄：</label>
+
+                        <strong style="resize: vertical; width: 80%;" >{{ age }}</strong>
+                    </div>
+                    <div class="col-xs-6 form-group">
+                        <label class="control-label pull-left" >性别：</label>
+
+                        <strong style="resize: vertical; width: 80%;" >{{ gender }}</strong>
+                    </div>
+                </div>
+                <br>
+                 <div class="row" style="text-align: center;">
+                    <div class="col-xs-12 form-group">
+                        <label class="control-label pull-left" >住址：</label>
+
+                        <strong style="resize: vertical; width: 80%;" >{{ address }}</strong>
+                    </div>
+                 </div>
+                <br>
+                 <div class="row" style="text-align: center;">
+                    <div class="col-xs-12 form-group">
+                        <label class="control-label pull-left" >状态：</label>
+
+                        <strong style="resize: vertical; width: 80%; word-break: break-all; text-overflow: ellipsis;
+                            display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden" >{{ status }}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

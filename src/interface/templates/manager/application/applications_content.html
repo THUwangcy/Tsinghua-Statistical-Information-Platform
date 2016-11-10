@@ -7,11 +7,7 @@
 {% block content %}
     {% for app in items %}
         <tr>
-            <td>
-                <a class="ajax-link fake-link" data-url="{% url 'test'%}">
-                    {{ app.name }}
-                </a>
-            </td>
+            <td>{{ app.name }}</td>
             <td>{{ app.subscribe_time }}</td>
             <td>{{ app.description|linebreaksbr|truncatechars:100}}</td>
             <td>
@@ -37,7 +33,7 @@
                             </a>
                         </li>
                         <li style="width: 20%" align="center">
-                            <a class="fake-link" href="javascript:showConfirmModal('删除报名', '确定要删除吗？')" >
+                            <a class="fake-link" href="javascript:showConfirmModal('删除报名', '确定要删除吗？', true)" >
                                 <i class="fa fa-trash fa-fw fa-2x" aria-hidden="true"></i> 删除
                             </a>
                         </li>

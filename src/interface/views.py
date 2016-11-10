@@ -185,6 +185,22 @@ def show_modal(request):
         })
 
 
+def show_info_modal(request):
+    modal_type = request.GET['modal_type']
+    username = request.GET['username']
+    return render(request, 'legalUser/design/modal/' + modal_type + '_modal.html', {
+            'modal_type': modal_type,
+            'username': username,
+            'real_name': '何熙巽',
+            'email': 'hexixun88@126.com',
+            'telephone_number': '18813003038',
+            'age': '20',
+            'gender': '男',
+            'address': "清华大学紫荆公寓二号楼411B",
+            'status': "做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开",
+    })
+
+
 def log_off(request):
     session.del_session(request)
     return HttpResponseRedirect('/login/')
