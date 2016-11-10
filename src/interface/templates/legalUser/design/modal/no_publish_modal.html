@@ -1,0 +1,72 @@
+<div class="modal fade" id="no-publish-modal" tabindex="-1" role="dialog" aria-labelledby="no-publish-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">填写反馈邮箱</h4>
+            </div>
+
+
+            <div class="modal-footer">
+
+                    <form method="post" id="get_email_form" class="form form-vertical" role="form" data-toggle="validator">
+                        {% csrf_token %}
+                        <input name="status" value="none" type="text" style="display: none;">
+                        <input name="act_id" type="text" style="display: none;" value="{{id}}">
+
+                        <div class="row" style="text-align: left;">
+                            <div class="col-xs-12 form-group">
+                                <label class="control-label" for="activity_title">邮箱地址</label>
+                                <input type='email' id="email_address" name="email" class="form-control"
+                                              style="resize: vertical;">
+                            </div>
+                        </div>
+                        <div id="submit-button-field">
+                            <button type="submit" class="btn btn-primary form-btn">
+                                完成
+                            </button>
+                        </div>
+                    </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script>
+        var modal = $("#no-publish-modal");
+
+        var questionnaire_url = "http://127.0.0.1:8000" + "{% url 'questionnaire' id %}";
+        var management_url = "http://127.0.0.1:8000" + "{% url 'guest/statistics/id' id %}";
+
+        modal.ready(function () {
+            var publish_callback = function() {
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'api/email_act' %}",
+                    data: {
+                        'act_id': "{{ id }}",
+                        'questionnaire_url': questionnaire_url,
+                        'management_url': management_url,
+                    },
+                    success: function(data) {
+                        showConfirmModal('提示', '邮件发送成功', true)
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        alert(xhr.responseText.substr(0, 500));
+                    }
+                });
+            };
+
+            handleFormPost("#get_email_form", "{% url 'api/register_email' %}", {
+                success_callback: function (data) {
+                    if (data['status'] === 'ok') {
+                        publish_callback();
+                        modal.modal('hide');
+                    }
+                }
+            });
+
+        });
+    </script>

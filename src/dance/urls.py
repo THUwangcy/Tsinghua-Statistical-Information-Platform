@@ -52,6 +52,7 @@ urlpatterns = [
 
     #modal
     url(r'^modal/?$', 'interface.views.show_modal', name='legalUser/modal'),
+    url(r'^modals/?$', 'interface.views.show_info_modal', name='manager/modal'),
 
     #username
     url(r'^get_username/?$', 'interface.views.get_username', name='get_username'),
@@ -75,6 +76,7 @@ urlpatterns = [
 
     url(r'^api/qst_submit/?$', 'api.views.questionnaire_submit', name='api/qst_submit'),
     url(r'^api/register_email/?$', 'api.views.register_email', name='api/register_email'),
+    url(r'^api/send_email/?$', 'api.views.email_act', name='api/email_act'),
 
     #userlist
     url(r'^/?$', RedirectView.as_view(url='/login/')),
