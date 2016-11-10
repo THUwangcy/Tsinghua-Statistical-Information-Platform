@@ -189,14 +189,14 @@ def saveQuestionaire(dict):
 	currentQuestionaire.save()
 	return "ok"
 
-def publishQuestionaire(act):
-	currentQuestionaire = Questionaire.objects.get(id = int(act))
+def publishQuestionaire(dict):
+	currentQuestionaire = Questionaire.objects.get(id = dict["act_id"])
 	currentQuestionaire.questionaire_status = "LA"
 	currentQuestionaire.save()
 	return "ok"
 
-def stopQuestionaire(act):
-	currentQuestionaire = Questionaire.objects.get(id = int(act))
+def stopQuestionaire(dict):
+	currentQuestionaire = Questionaire.objects.get(id = dict["act_id"])
 	currentQuestionaire.questionaire_status = "PA"
 	currentQuestionaire.save()
 	return "ok"
