@@ -141,6 +141,26 @@ def publish_act(request):
     })
 
 
+def email_act(request):
+    questionnaire_url = request.GET['questionnaire_url']
+    manage_url = request.GET['management_url']
+    content = {
+        'email': session.get_email(request),
+        'manage_url': manage_url,
+        'questionnaire_url': questionnaire_url,
+    }
+    try:
+        thread.start_new_thread(send_email.send_html_mail, ("来自清华大学信息化统计平台", content, [session.get_email(request), ], ))
+        # send_email.send_html_mail("来自清华大学信息化统计平台", content, [session.get_email(request), ])
+    except:
+        pass
+
+    session.del_email(request)
+    return JsonResponse({
+        'status': 'ok'
+    })
+
+
 def register_email(request):
     dicts = request.POST.dict()
     email = dicts['email']

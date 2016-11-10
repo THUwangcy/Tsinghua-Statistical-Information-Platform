@@ -34,11 +34,11 @@
                                 $("#email-link").click(function() {
                                     //何熙巽在这写！
                                     params = {
-                                                'modal_type': 'email',
+                                                'modal_type': 'no_publish',
                                                 'id': '{{ act_id }}',
                                             };
 
-                                    showModal("{% url 'legalUser/modal' %}", 'email-modal', params);
+                                    showModal("{% url 'legalUser/modal' %}", 'no-publish-modal', params);
                                 })
                                 
                             </script>
