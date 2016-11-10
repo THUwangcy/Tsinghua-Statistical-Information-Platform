@@ -11,7 +11,21 @@
                         
                         <div style="margin-left: 55px; vertical-align: middle; line-height: 200%;">
                             <b>问卷标题：</b> {{ act_info.act_title }}<br/>
-                            <b>问卷状态：</b> {{ act_info.act_status }}<br/>
+                            <b>问卷状态：</b>
+
+
+                                {% if act_info.act_status == 'pause' %}
+                                    <span class="fa fa-pause fa-fw"> </span>
+                                    &nbsp;已暂停
+                                {% elif act_info.act_status == 'already' %}
+                                    <span class="fa fa-play-circle-o fa-fw"></span>
+                                    &nbsp;正在收集
+                                {% else %}
+                                    非法状态
+                                {% endif %}
+
+
+                            <br/>
                             <b>已回收答卷：</b> {{ item | length}}<br/>
                             <b>发布时间：</b> {{ act_info.time }}<br/>
                         </div>
