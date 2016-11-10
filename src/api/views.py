@@ -204,13 +204,14 @@ def info_change_act(request):
     dicts["username"] = session.get_username(request)
     # 给徐子南, 在这丢一个dict给后端，后端根据dict中的username修改用户信息
     # 只修改dict中有的key 的value, 没有的key不修改
+    status = api.userInfoChange(dicts)
     output = open('info_change.txt', 'w')
     information = ""
     for key, value in dicts.items():
         information += "\"%s\":\"%s\"" % (key, value)
         information += "\n"
     output.write(information)
-    return JsonResponse(dict(status='ok'))
+    return JsonResponse(dict(status=status))
 
 
 def login_act(request):
@@ -245,6 +246,7 @@ def login_act(request):
             identity = 'legalUser'
             user_data['identity'] = identity
             # 给徐子南, 在这把字典user_data丢给后端
+            api.createUser(user_data)
             session.add_session(request, username=user_data['username'],
                                 identity=identity, student_id=user_data['user_id'])
         except:
@@ -254,19 +256,19 @@ def login_act(request):
 
 def get_user_information_act(username):
     # 给徐子南, 在这通过丢一个username个后端获取用户信息dict
-    dicts = {}
+    dicts = api.getUserInfo(username)
     return dicts
 
 
 def get_all_user():
     # 给徐子南, 这里丢回一个list, list中是所有用户的用户信息dict
-    all_user = []
+    all_user = api.getAllUserInfo()
     return all_user
 
 
 def get_all_questionnaire():
     # 给徐子南，这里丢回一个list, list中是所有问卷的问卷信息
-    all_questionnaire = []
+    all_questionnaire = api.getAllQustionaireInfo()
     return all_questionnaire
 
 

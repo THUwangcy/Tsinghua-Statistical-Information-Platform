@@ -217,16 +217,19 @@ def login_page(request):
 
 @check_identity('legalUser')
 def user_information(request):
+    username = session.get_username(request)
+    dicts = views.get_user_information_act(username)
+
     params = {
         'username': session.get_username(request),
-        'real_name': '王晨阳',
+        'real_name': dicts['real_name'],
         'identity': session.get_identity(request),
-        'email': 'thuwangcy@gmail.com',
-        'telephone_number': '17888802343',
-        'age': '20',
-        'gender': '男',
-        'address': '清华大学紫荆公寓二号楼411B',
-        'status': '做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心',
+        'email': dicts['email'],
+        'telephone_number': dicts['telephone_number'],
+        'age': dicts['age'],
+        'gender': dicts['gender'],
+        'address': dicts['address'],
+        'status': dicts['status'],
     }
     user_information_html = 'legalUser/information/user_information.html'
     return render_ajax(request, user_information_html, params, 'info-item-1')
@@ -234,16 +237,19 @@ def user_information(request):
 
 @check_identity('legalUser')
 def user_information_change(request):
+    username = session.get_username(request)
+    dicts = views.get_user_information_act(username)
+
     params = {
         'username': session.get_username(request),
-        'real_name': '王晨阳',
+        'real_name': dicts['real_name'],
         'identity': session.get_identity(request),
-        'email': 'thuwangcy@gmail.com',
-        'telephone_number': '17888802343',
-        'age': '20',
-        'gender': '男',
-        'address': '清华大学紫荆公寓二号楼411B',
-        'status': '做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心',
+        'email': dicts['email'],
+        'telephone_number': dicts['telephone_number'],
+        'age': dicts['age'],
+        'gender': dicts['gender'],
+        'address': dicts['address'],
+        'status': dicts['status'],
     }
     user_information_change_html = 'legalUser/information/user_information_change.html'
     return render_ajax(request, user_information_change_html, params, 'info-item-2')
