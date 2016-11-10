@@ -20,28 +20,16 @@ class Admin(models.Model):
 
 class User(models.Model):
     student_id = models.CharField(max_length = 20, primary_key = True)
+    username = models.CharField(max_length = 20, default = "ah")
     real_name = models.CharField(max_length = 20, default = "michael jackson")
+    identity = models.CharField(max_length = 20, default = "legalUser")
     password = models.CharField(max_length = 32, default = "00000000")
     age = models.CharField(max_length = 18, default = "18")
+    gender = models.CharField(max_length = 10, default = "")
     status = models.CharField(max_length = 400, default = "hello world")
     address = models.CharField(max_length = 400, default = "china")
-    tel = models.CharField(
-        max_length = 20,
-        validators = [
-            RegexValidator(
-                regex = r'^\d{3,12}$',
-                message = '请输入合法的电话号码'
-            )
-        ]
-    )
-    email = models.CharField(
-        max_length = 254,
-        validators = [
-            EmailValidator(
-                message = '请输入合法的邮件地址'
-            )
-        ]
-    )
+    tel = models.CharField(max_length = 20, default = "88888888")
+    email = models.CharField(max_length = 254, default = "")
 
     def __unicode__(self):
         return u'%s(%s)' % (self.user_id, self.real_name)

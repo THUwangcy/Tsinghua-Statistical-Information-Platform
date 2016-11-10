@@ -11,6 +11,79 @@ def createDefaultUser():
 		)
 	defaultUser.save()
 
+def createUser(dict):
+	tryUser = User.objects.filter(username = dict["username"])
+	if len(tryUser) != 0:
+		return
+	newUser = User(
+		student_id = dict["user_id"],
+		username = dict["username"],
+		identity = dict["identity"],
+		email = dict["email"],
+		real_name = dict["real_name"]
+		)
+	newUser.save()
+
+def userInfoChange(dict):
+	currentUser = User.objects.get(username = dict["username"])
+	currentKeys = dict.keys()
+	for key in currentKeys:
+		if key == "username":
+			continue
+		if key == "gender":
+			currentUser.gender = dict["gender"]
+		if key == "status":
+			currentUser.status = dict["status"]
+		if key == "address":
+			currentUser.address = dict["address"]
+		if key == "age":
+			currentUser.age = dict["age"]
+		if key == "telephone_number":
+			currentUser.tel = dict["telephone_number"]
+		if key == "email":
+			currentUser.email = dict["email"]
+	currentUser.save()
+
+def getUserInfo(myusername):
+	currentUser = User.objects.get(username = myusername)
+	return makeUserDict(currentUser)
+
+def makeUserDict(currentUser):
+	return_dict = {
+		"username" : currentUser.username,
+		"user_id" : currentUser.student_id,
+		"real_name" : currentUser.real_name,
+		"identity" : currentUser.identity,
+		"email" : currentUser.email,
+		"telephone_number" : currentUser.tel,
+		"age" : currentUser.age,
+		"gender" : currentUser.gender,
+		"status" : currentUser.status,
+		"address" : currentUser.address
+	}
+	return return_dict
+
+def getAllUser():
+	userlist = User.objects.all()
+	return userlist
+
+def getAllUserInfo():
+	userlist = getAllUser()
+	return_list = list()
+	for user in userlist:
+		return_list.append(makeUserDict(user))
+	return return_list
+
+def getAllQustionaireInfo():
+	userlist = getAllUser()
+	return_list = list()
+	for user in userlist:
+		currentlist = makeQuestionaireList(Questionaire.objects.filter(questionaire_user = user).filter(questionaire_status = "AL"))
+		for aquestionaire in currentlist:
+			aquestionaire["username"] = user.username
+		return_list.extend(currentlist)
+	return return_list
+
 def hasDefaultUser():
 	count = len(User.objects.filter(student_id = "1111111111"))
 	if count != 0:
