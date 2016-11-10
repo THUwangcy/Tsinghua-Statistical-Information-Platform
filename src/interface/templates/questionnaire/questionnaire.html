@@ -39,6 +39,7 @@
                 <input id="submitTime" value="none" name="submitTime" type="text" style="display: none ;">
                 <input id="ip" value="none" name="IP" type="text" style="display: none ;">
                 <input id="address" value="none" name="address" type="text" style="display: none ;">
+
                 <div class="control-group row">
                     <ol class="questions-list">
                         <li class="question last-question">
@@ -106,20 +107,26 @@
         });
     });
 
+
+    function checkform() {
+        getTime();
+        getIpPlace();
+    }
+
     function getTime()
     {
         var time = getDetailTime();
         var timeSubmit = $("#questionnaire_content").find("#submitTime");
         timeSubmit.val(time);
         //alert(time);
-        getIpPlace();
     }
     $("#questionnaire_content").ready(function () {
+
         var success_callback=function () {
             window.location.replace("/success");
         };
 
-        handleFormPost("#questionnaire-submit-form", "{% url 'api/qst_submit' %}", {
+        handleFormPost_publish("#questionnaire-submit-form", "{% url 'api/qst_submit' %}", {
             success_callback: function (data) {
                 if (data['status'] === 'ok') {
                     success_callback();
@@ -127,10 +134,6 @@
             }
         });
     });
-
-
-
-
 </script>
 
 {% endblock main-page %}

@@ -10,9 +10,11 @@
                       style="resize: vertical; width: 60%" rows="1"></textarea>
         </div>
 
-    <script>
-        $(document).ready(function(){
+    <script >
 
+        //alert("0");
+        $(document).ready(function(){
+          //  alert("1");
             var source_panel_body = $("#qst{{ questions_id }}");
             if('{{questions_title}}' != 'None')
                 source_panel_body.find("#fillin_title").html('{{questions_title}}');
@@ -20,22 +22,29 @@
             	source_panel_body.find("#fillin_field").attr('rows', '{{rows}}');
             if('{{hint}}' != 'None')
             	source_panel_body.find("#fillin_field").attr('placeholder', '{{hint}}');
-
+            //alert("2");
             //必答题星号
-            if('{{qst_must}}' == 'true')
+            if('{{qst_must}}' == 'true'){
                 source_panel_body.find("#must_qst").css("display", '');
+                source_panel_body.find("#fillin_field").attr("required",'');
+            }
 
+
+//            alert("3");
             //加载选框样式
             $('input').iCheck({
               checkboxClass: 'icheckbox_flat-green',
               radioClass: 'iradio_flat-green',
               increaseArea: '20%'
             });
-
+  //          alert("4");
             //判断是否是已填写的问卷
             if('{{ result }}' != '') {
                 source_panel_body.find("#fillin_field").html('{{ result }}');
             }
         });
+
+
+
     </script>
 {% endblock title %}

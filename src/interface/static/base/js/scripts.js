@@ -506,9 +506,125 @@ function handleFormPost(form_selector, post_url, params) {
             msg.fadeOut();
         });
 
+        form.submit(function (event) {
+
+            before_submit(event);
+            event.preventDefault();
+            form_groups.removeClass("has-error");
+
+            $.ajax({
+                type: "POST",
+                url: post_url,
+                data: form.serialize(),
+                success: function (data) {
+                //    alert(form.serialize());
+                    msg.removeClass("alert-danger alert-success");
+                    if (data.status === "ok") msg.addClass("alert-success");
+                    else msg.addClass("alert-danger");
+                    var message = success_msg(data);
+                    if (message === "") message = native_success_msg(data);
+                    if (message !== "" && message !== "#no_message#") {
+                        msg_text.html(message);
+                        msg.fadeIn();
+                    } else {
+                        msg.fadeOut();
+                    }
+
+                    if (data.hasOwnProperty("error_messages")) {
+                        var pos = -1;
+                        for (var field_name in data.error_messages) {
+                            var field = form_groups.has("[name='" + field_name + "']");
+                            field.addClass("has-error");
+                            field.find("span").html(data.error_messages[field_name]);
+                            var top = field.position().top;
+                            if (pos === -1 || pos > top) pos = top;
+                        }
+
+                        if ($("html, body").css("scroll-top") > pos) {
+                            $("html, body").animate({
+                                "scroll-top": pos
+                            }, "fast");
+                        }
+                    }
+
+                    success_callback(data);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert(xhr.responseText.substr(0, 2000000));
+                    console.log("post error");
+                    msg_text.html("提交申请遇到错误：" + textStatus + ": " + errorThrown);
+                    console.log(xhr.responseText.substr(0, 500));
+                    msg.fadeIn();
+
+                    error_callback(xhr, textStatus, errorThrown);
+                }
+            });
+        });
+    });
+}
+
+function handleFormPost_publish(form_selector, post_url, params) {
+    /*
+     params = {
+        success_callback(data):
+            Function to call when ajax POST returns success.
+        error_callback(xhr, textStatus, errorThrown):
+            Function to call when ajax POST returns error.
+        success_msg(data):
+            Function that returns message to display for success POST.
+            Note that though POST is successful, returned status maybe "error".
+            If returned message is empty, then the acutal message displayed
+                would be generated using "native_success_msg'. To override this
+                behavior, return "#no_message#" instead of empty string.
+     }
+     */
+    var form = $(form_selector);
+    form.ready(function () {
+        var msg = form.find(".form-error-msg");
+        var msg_text = msg.find("> div");
+        var form_groups = form.find(".form-group");
+
+        var method_input = form.find(".form-method");
+        form.find(".form-btn").click(function () {
+            method_input.attr("value", $(this).attr("value"));
+        });
+        form_groups.not(form_groups.has("span.help-block.with-errors"))
+            .append('<span class="help-block with-errors"></span>');
+
+        var native_success_msg = function (data) {
+            if (data.status === "ok") return "#no_message#";
+            if (data.status === "error") {
+                if (data.hasOwnProperty("error_messages"))
+                    return "#no_message#";
+                if (data.hasOwnProperty("error_message"))
+                    return data.error_message;
+            }
+            return "提交出错，请再次检查您填写的信息。"
+        };
+
+        var success_callback = $.noop,
+            error_callback = $.noop,
+            success_msg = native_success_msg,
+            before_submit = $.noop;
+        if (params.hasOwnProperty("success_callback"))
+            success_callback = params.success_callback;
+        if (params.hasOwnProperty("error_callback"))
+            error_callback = params.error_callback;
+        if (params.hasOwnProperty("success_msg"))
+            success_msg = params.success_msg;
+        if (params.hasOwnProperty("before_submit"))
+            before_submit = params.before_submit;
+
+        form_groups.find("input, textarea").focus(function () {
+            $(this).parent().removeClass("has-error");
+            msg.fadeOut();
+        });
+
         form.validator().submit(function (event) {
-            if(event.isDefaultPrevented())
+            if(event.isDefaultPrevented()){
                 return;
+            }
+
             before_submit(event);
             event.preventDefault();
             form_groups.removeClass("has-error");
