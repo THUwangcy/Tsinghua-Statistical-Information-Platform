@@ -506,10 +506,19 @@ def questionnaire_publish_question(request, type, act_id):
 def questionnaire(request, act_id):
     act_info = views.get_questionnaire_byID(act_id)
 
-    if act_info['act_status'] == 'pending':
+    status = act_info['act_status']
+    if status == 'already':
         type = act_info['act_type']
     else:
-        type = 'wrong' #需添加未发布问卷错误处理
+        if status == 'pending':
+            return render_ajax(request, 'questionnaire/err_visit.html', {
+                'qst_status': "问卷未发布"})
+        elif status == 'pause':
+            return render_ajax(request, 'questionnaire/err_visit.html', {
+                'qst_status': "问卷已截止"})
+        else:
+            return render_ajax(request, 'questionnaire/err_visit.html', {
+                'qst_status': "问卷不存在"})
 
     if type == 'enroll':
         type_name = u'报名/统计表'

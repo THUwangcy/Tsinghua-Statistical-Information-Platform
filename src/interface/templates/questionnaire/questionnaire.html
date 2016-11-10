@@ -40,7 +40,7 @@
                 <input id="ip" value="none" name="IP" type="text" style="display: none ;">
                 <input id="address" value="none" name="address" type="text" style="display: none ;">
                 <div class="modal-body">
-                    <div class="control-group row">
+                    <div class="control-group row" id="qst_list">
                         <ol class="questions-list">
                             <li class="question last-question">
 
@@ -51,7 +51,7 @@
                     
                 <div class="modal-footer">
                     <div id="submit-button-field">
-                            <button id="submit_btn" onclick="return getTime();" type="submit" class="btn btn-primary btn-block form-btn" style="font-size: 15px">
+                            <button id="submit_btn" onclick="return checkform();" type="submit" class="btn btn-primary btn-block form-btn" style="font-size: 15px">
                                 完成
                             </button>
                     </div>
@@ -105,15 +105,32 @@
         });
     });
 
+
+
+ //   $(function(){
+ //       $("#qst_list ol li").each(function(index){
+ //                  $(this).click(function(){
+                //$("#title .titsh").removeClass("titsh");
+                //$("#content .consh").removeClass("consh");
+                //$(this).addClass("titsh");
+                //$("#content > div:eq("+index+")").addClass("consh");
+            //})
+ //         });
+ //       });
+    function checkform() {
+        getTime();
+        getIpPlace();
+    }
+
     function getTime()
     {
         var time = getDetailTime();
         var timeSubmit = $("#questionnaire_content").find("#submitTime");
         timeSubmit.val(time);
         //alert(time);
-        getIpPlace();
     }
     $("#questionnaire_content").ready(function () {
+
         handleFormPost("#questionnaire-submit-form", "{% url 'api/qst_submit' %}", {
             success_callback: function (data) {
                 if (data['status'] === 'ok') {
@@ -122,9 +139,13 @@
             }
         });
     });
-
-
-
+    //加表单验证插件
+    //$(function () { $("input,select,textarea").not("[type=submit]").jqBootstrapValidation(); } );
+    //$("#questionnaire-submit-form").validate({
+    //    submitHandler:function(form) {
+    //    $(form).ajaxSubmit();
+    //    }
+    //    })
 
 </script>
 

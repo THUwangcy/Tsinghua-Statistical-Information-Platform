@@ -490,7 +490,11 @@ function handleFormPost(form_selector, post_url, params) {
             msg.fadeOut();
         });
 
-        form.submit(function (event) {
+        form.validator().submit(function (event) {
+            if(event.isDefaultPrevented()){
+                return;
+            }
+
             before_submit(event);
             event.preventDefault();
             form_groups.removeClass("has-error");
