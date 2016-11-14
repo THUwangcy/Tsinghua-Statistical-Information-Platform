@@ -7,13 +7,17 @@
 {% block content %}
     {% for app in items %}
         <tr>
-            <td style="color: #18bc9c">{{ app.name }}</td>
+            <td> 
+                <a class="fake-link" href="{% url 'questionnaire' app.id %}" target="_blank" >
+                    {{ app.name }}
+                </a>
+            </td>
             <td>{{ app.subscribe_time }}</td>
             <td>{{ app.description|linebreaksbr|truncatechars:100}}</td>
             <td style="color: #18bc9c">{{ app.publisher }}</td>
             <td style="text-align: right">
                 <a class="fake-link collapse-row" href="#app_all{{forloop.counter}}">
-                    <span class="fa fa-check-square-o fa-fw"></span> 操作
+                    <span class="fa fa-check-square-o fa-fw"></span> 操作&emsp;
                 </a>
             </td>
         </tr>
@@ -24,7 +28,7 @@
                 <div id="app_all{{forloop.counter}}" class="operation" style="display:none; width: 100%">
                     <ul>
                         <li style="width: 30%" align="center">
-                            <a class="fake-link" href="#" target =_blank >
+                            <a class="fake-link" href="{% url 'questionnaire' app.id %}" target="_blank" >
                                 <i class="fa fa-pencil-square-o fa-fw fa-2x" aria-hidden="true"></i>  查看活动
                             </a>
                         </li>
@@ -34,7 +38,7 @@
                             </a>
                         </li>
                         <li style="width: 30%" align="center">
-                            <a class="fake-link" href="javascript:showConfirmModal('删除活动', '确定要删除吗？', true)" >
+                            <a class="fake-link" href="javascript:remove_act('{{app.id}}', '{% url 'api/remove_act' %}', '#all-questionnaire-item');" >
                                 <i class="fa fa-trash fa-fw fa-2x" aria-hidden="true"></i> 删除活动
                             </a>
                         </li>
