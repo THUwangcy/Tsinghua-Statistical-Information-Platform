@@ -261,14 +261,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% if activities %}
-                            {% for activity in activities %}
+                        {% if sort_applications %}
+                            {% for app in sort_applications %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td><a class="fake-link" href="{% url 'questionnaire' activity.id %}" target="_blank">
-                                        {{ activity.name }}
+                                    <td><a class="fake-link" href="{% url 'questionnaire' app.id %}" target="_blank">
+                                        {{ app.name }}
                                     </a></td>
-                                    <td align="center">{{ activity.fillin}}</td>
+                                    <td align="center">{{ app.fillin}}</td>
                                 </tr>
                             {% endfor %}
                         {% else %}
