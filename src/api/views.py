@@ -177,6 +177,26 @@ def modify_qst(request):
     dict = request.POST.dict()
     for key in dict:
         file_object.writelines(key + ": " + dict[key] + "\n")
+
+    if 'option_num' in dict:
+        option_num = dict['option_num']
+        questions_id = dict['questions_id']
+        file_object.writelines(option_num + " " + questions_id)
+
+        for i in range(1, int(option_num) + 1):
+            img_name = 'qst' + str(questions_id) + '_option' + str(i)
+            img_field = 'option' + str(i) + '_img'
+
+            if img_field in request.FILES:
+                dict[img_field] = 'true'
+                file = request.FILES[img_field]
+                file_object.writelines(file.name)
+                with open(os.path.abspath('.') + '/interface/static/questionsImg/' + img_name, 'wb+') as destination:
+                    for chunk in file.chunks():
+                        destination.write(chunk)
+            else:
+                dict[img_field] = 'false'
+
     file_object.close()
     status = api.modifyQuestion(dict)
     return JsonResponse({

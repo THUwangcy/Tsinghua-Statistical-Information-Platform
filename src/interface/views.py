@@ -504,6 +504,8 @@ def statistics_question(request, act_id):
 def statistics_question_list(request, act_id, qst_type, qst_id):
     question_url = 'legalUser/statistics/questions/' + qst_type + '/' + qst_type + '_content.html'
     applications = views.get_statistics_of_question(qst_id)
+    for option in applications:
+        option['img_src'] = 'questionsImg/qst' + str(qst_id) + '_option' + str(option['id'])
     return render_sortable(request, applications, question_url, {
             'act_id': act_id
         })
@@ -533,8 +535,11 @@ def questionnaire_publish_question(request, type, act_id):
 
         'display_vote': request.GET.get('display_vote'),
         'ip_times': request.GET.get('ip_times'),
-        'day_times': request.GET.get('day_times')
+        'day_times': request.GET.get('day_times'),
+        'fillin_check': request.GET.get('fillin_check')
     }
+    file_object = open(os.path.abspath('.') + '/interface/st_database.txt', 'w')
+    file_object.writelines(params['fillin_check'])
     if request.GET.get('fillin_id') != None and request.GET.get('fillin_id') != '':
         fillin_result = views.get_result_of_question(act_id, request.GET.get('questions_id'), request.GET.get('fillin_id'))
         params['result'] = fillin_result

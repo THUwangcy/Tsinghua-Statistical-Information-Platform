@@ -12,7 +12,12 @@
                 &emsp;{{ option.id }}
             </td>
             <td style='vertical-align: middle;'>{{ option.content }}</td>
-            <td style='vertical-align: middle;'><img src="{% static 'test.jpg' %}" class="img-responsive left-block"/></td>
+            <td style='vertical-align: middle;'>
+                <img src="{% static option.img_src %}" class="img-responsive left-block"/>
+                {% if option.has_image == 'true' %}
+
+                {% endif %}
+            </td>
             <td></td>
             <td style='vertical-align: middle;'>&emsp;{{ option.count }}</td>
             <td style='vertical-align: middle;'>

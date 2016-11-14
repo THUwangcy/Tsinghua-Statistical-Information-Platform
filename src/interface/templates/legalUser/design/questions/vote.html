@@ -27,7 +27,7 @@
                     </td>
                     <td style='vertical-align: middle;'>候选1</td>
                     <td style='vertical-align: middle;'>
-                        <img src="{% static 'test.jpg' %}" class="img-responsive center-block"/>
+                        <img src="{% static 'sample1.jpg' %}" class="img-responsive center-block"/>
                     </td>
                     <td style='vertical-align: middle;'></td>
                     <td style='vertical-align: middle;'>0票&emsp;( 0% )</td>
@@ -39,7 +39,7 @@
                     </td>
                     <td style='vertical-align: middle;'>候选2</td>
                     <td style='vertical-align: middle;'>
-                        <img src="{% static 'test.jpg' %}" class="img-responsive center-block"/>
+                        <img src="{% static 'sample2.jpg' %}" class="img-responsive center-block"/>
                     </td>
                     <td style='vertical-align: middle;'></td>
                     <td style='vertical-align: middle;'>0票&emsp;( 0% )</td>
@@ -96,9 +96,12 @@
                 //加载人数限制
                 var statistics = new Array();
                 var percentage = new Array();
+
+                var has_image = new Array();
                 '{% for opt in statistics %}'
                     statistics['{{forloop.counter}}'] = '{{opt.count}}';
                     percentage['{{forloop.counter}}'] = '{{opt.percentage}}';
+                    has_image['{{forloop.counter}}'] = '{{opt.has_image}}';
                 '{% endfor %}'
                 
                 var option_name = 'option' + '{{ questions_id }}';
@@ -117,11 +120,19 @@
                         vote_num = '';
                         percent = '';
                     }
+
+                    var img_src = '';
+                    var img = "";
+            //        if(has_image[i] == 'true') {
+                        var src = "questionsImg/qst" + '{{ questions_id }}' + "_option" + i;
+                        img_src = '{% static src %}' + src;
+                        img = "<img src=" + img_src +  " class='img-responsive center-block'/>"
+            //        }
                    
                     var to_append = prefix + '<td><input type="checkbox" name=' + option_name + 
                                                   ' id=' + radio_id + ' value=' + radio_value + '></td>\
                                               <td>' + option_field + '</td>\
-                                              <td>' + '</td>\
+                                              <td>' + img + '</td>\
                                               <td>' + '</td>\
                                               <td>' + vote_num + percent + '</td>\
                                               </tr>';

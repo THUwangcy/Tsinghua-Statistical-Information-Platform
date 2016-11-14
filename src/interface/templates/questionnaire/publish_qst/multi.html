@@ -6,7 +6,7 @@
     <label id = "must_qst" style="color:red; display: none;">&nbsp;*</label>
     <label id = "select_hint"></label>
     <div id="checkbox-list">
-        <div class="checkbox">
+        <div class="checkbox" >
             <label>
             <input type="checkbox" name="qst{{ questions_id }}" id="optionsCheckbox1" value="option1" class="form-control">
                 <label for="this.prev();">选项 1</label>
@@ -20,8 +20,12 @@
             </label>
         </div>
     </div>
+    <textarea name="qst{{ questions_id }}" class="form-control"
+                      style="resize: vertical; width: 5%; opacity: ; position: absolute; z-index: 10;"
+                      rows="1" required disabled>123</textarea>
 
     <script>
+
         $(document).ready(function(){
 
             var source_panel_body = $("#qst{{ questions_id }}");
@@ -29,16 +33,22 @@
                 source_panel_body.find("#multi_title").html('{{questions_title}}');
 
             //必答题星号
-            if('{{qst_must}}' == 'true')
+            if('{{qst_must}}' == 'true') {
                 source_panel_body.find("#must_qst").css("display", '');
+                source_panel_body.find("textarea[name='qst{{ questions_id }}']").html('');
+                source_panel_body.find("textarea[name='qst{{ questions_id }}']").attr('disabled', false);
+            }
 
             //设置选择提示
             var select_hint = source_panel_body.find("#select_hint");
             if('{{min_selected}}' == 'None' || '{{min_selected}}' == '') {
+
                 if('{{max_selected}}' != 'None' && '{{max_selected}}' != '')
                     select_hint.html("&nbsp;[最多选择" + '{{max_selected}}' + "项]");
             }
             else {
+                source_panel_body.find("textarea[name='qst{{ questions_id }}']").html('');
+                source_panel_body.find("textarea[name='qst{{ questions_id }}']").attr('disabled', false);
                 if('{{max_selected}}' != 'None' && '{{max_selected}}' != '')
                     select_hint.html("&nbsp;[请选择" + '{{min_selected}}' + " - " + '{{max_selected}}' + "项]");
                 else
@@ -92,12 +102,53 @@
 
             }
 
+            source_panel_body.find("input[name='qst{{ questions_id }}']").click(function() {
+                alert("!!!");
+
+
+            });
+
+
+
             //加载选框样式
             $('input').iCheck({
               checkboxClass: 'icheckbox_flat-green',
               radioClass: 'iradio_flat-green',
               increaseArea: '20%'
             });
+
+            $('input').on('ifChecked', function(event){
+               // alert('qst{{ questions_id }}');
+                if('{{max_selected}}' != 'None' && '{{max_selected}}' != '') {
+                    source_panel_body.find("input[type='checkbox']").attr('disabled', true);
+
+                    if (source_panel_body.find("input[type='checkbox']:checked").length >= '{{max_selected}}') {
+                        source_panel_body.find("input[type='checkbox']:checked").attr('disabled', false);
+                    }
+                    else {
+                        source_panel_body.find("input[type='checkbox']").attr('disabled', false);
+                    }
+                 }
+
+                if('{{min_selected}}' != 'None' && '{{min_selected}}' != '') {
+
+                    source_panel_body.find("textarea").html('');
+                    source_panel_body.find("textarea").attr('disabled', false);
+
+                    if (source_panel_body.find("input[type='checkbox']:checked").length >= '{{min_selected}}') {
+                        source_panel_body.find("textarea").attr('disabled', true);
+                        source_panel_body.find("textarea").html('123');
+                    }
+
+                }
+                else {
+
+                     source_panel_body.find("textarea").attr('disabled', true);
+                     source_panel_body.find("textarea").html('123');
+                }
+            });
+        //    alert("input[name='qst{{ questions_id }}']");
+
         });
     </script>
 

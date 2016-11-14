@@ -1,3 +1,5 @@
+{% load staticfiles %}
+
 <div class="modal fade" id="vote-modal" tabindex="-1" role="dialog" aria-labelledby="vote-modal">
 	<div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -10,7 +12,7 @@
 
             <div class="modal-footer">
 
-                    <form id="vote-form" class="form form-vertical" role="form" data-toggle="validator">
+                    <form id="vote-form" class="form form-vertical" role="form" data-toggle="validator" enctype ="multipart/form-data">
                         {% csrf_token %}
                         <input name="status" value="none" type="text" style="display: none;">
                         <input name="questions_id" type="text" style="display: none;" value="{{id}}">
@@ -50,12 +52,13 @@
                                                       style="resize: vertical;">
                                     </div>
                                     <div class="col-xs-3 form-group">
-                                        <label class="control-label pull-left" >&nbsp;&nbsp;添加图片</label>
+                                        <label class="control-label pull-left">&nbsp;<span class="fa fa-photo fa-fw"></span>&nbsp;添加图片</label>
+
+                                        <input type="file" name="option1_img" id="option1_img" class="form-control fake-link"
+                                               style="opacity: 0; z-index: 10; position: absolute;"
+                                               accept="image/*" onchange="display_name(this);">
                                         
-                                        <button class="btn btn-primary" style="margin-left: 10px">
-                                            <span class="fa fa-photo fa-fw"></span>
-                                            &nbsp;添加图片
-                                        </button>
+                                        <input class="form-control" disabled="disable">
                                     </div>
                                 </div>
                                 <br>
@@ -102,7 +105,7 @@
                             </div>
                         </div>
                         <div id="submit-button-field">
-                            <button type="submit" class="btn btn-primary form-btn">
+                            <button type="submit" class="btn btn-primary form-btn" onclick="doUpload();">
                                 完成
                             </button>
                         </div>
@@ -140,6 +143,10 @@
             input_field.attr('name', id);
             input_field.attr('id', id);
 
+            var img_field = $(this).find("input[type=file]");
+            var img_name = 'option' + rank + '_img';
+            img_field.attr('name', img_name);
+            img_field.attr('id', img_name);
         })
     }
 
@@ -160,11 +167,11 @@
                                                       style="resize: vertical;">\
                                     </div>\
                                     <div class="col-xs-3 form-group">\
-                                        <label class="control-label pull-left" >&nbsp;&nbsp;添加图片</label>\
-                                        <button class="btn btn-primary" style="margin-left: 10px">\
-                                            <span class="fa fa-photo fa-fw"></span>\
-                                            &nbsp;添加图片\
-                                        </button>\
+                                        <label class="control-label pull-left">&nbsp;<span class="fa fa-photo fa-fw"></span>&nbsp;添加图片</label>\
+                                        <input type="file" name="option1_img" class="form-control fake-link"\
+                                               style="opacity: 0; z-index: 10; position: absolute;"\
+                                               accept="image/*" onchange="display_name(this);">\
+                                        <input class="form-control" disabled="disable">\
                                     </div>\
                                 </div>\
                                 <br>\
@@ -215,11 +222,20 @@
             var radio_id = "optionsCheckbox" + i;
             var radio_value = "option" + i;
             var vote_num = display_vote.is(':checked')? '0票&emsp;( 0% )' : '';
+
+            var img_field = modal.find("#option" + i + "_img").val();
+            var img_src = '';
+            var img = "";
+            if(img_field != '') {
+                var src = "questionsImg/qst" + '{{ id }}' + "_option" + i;
+                img_src = '{% static src %}' + src;
+                img = "<img src=" + img_src +  " class='img-responsive center-block'/>"
+            }
             
             var to_append = prefix + '<td><input type="checkbox" name=' + option_name + 
                                           ' id=' + radio_id + ' value=' + radio_value + '></td>\
                                       <td>' + option_field + '</td>\
-                                      <td>' + '</td>\
+                                      <td>' + img + '</td>\
                                       <td>' + '</td>\
                                       <td>' + vote_num + '</td>\
                                       </tr>';
@@ -253,6 +269,33 @@
           radioClass: 'iradio_flat-green',
           increaseArea: '20%'
         });
+    }
+
+    function doUpload() {
+        var formData = new FormData($( "#vote-form" )[0]);
+        $.ajax({
+            url: "{% url 'api/modify_qst' %}" ,
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data['status'] === 'ok') {
+                    modify_page();
+                    modal.modal('hide');
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert(xhr.responseText.substr(0, 2000000));
+            }
+        });
+    }
+
+    function display_name(obj) {
+        var fileName = $(obj).val().split('\\').pop();
+        $(obj).next().val(fileName);
     }
 
     modal.ready(function () {
@@ -297,16 +340,7 @@
             Add($(current_id));
             modal.find("#option" + i + "_field").val(source_panel_body.find("#optionsCheckbox" + i).parent().parent().next().html().trim());
 
-        } 
-
-        handleFormPost("#vote-form", "{% url 'api/modify_qst' %}", {
-            success_callback: function (data) {
-                if (data['status'] === 'ok') {
-                    modify_page();
-                    modal.modal('hide');
-                }
-            }
-        });
+        }
 
 		//重新加载选框样式
         $('input').iCheck({

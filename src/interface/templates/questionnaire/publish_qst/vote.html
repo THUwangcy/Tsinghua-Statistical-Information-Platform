@@ -80,9 +80,11 @@
                 //加载人数限制
                 var statistics = new Array();
                 var percentage = new Array();
+                var has_image = new Array();
                 '{% for opt in statistics %}'
                     statistics['{{forloop.counter}}'] = '{{opt.count}}';
                     percentage['{{forloop.counter}}'] = '{{opt.percentage}}';
+                    has_image['{{forloop.counter}}'] = '{{opt.has_image}}';
                 '{% endfor %}'
                 
                 var option_name = 'qst' + '{{ questions_id }}';
@@ -96,16 +98,24 @@
                     var vote_num = statistics[i] + "票";
                     var percent = "&emsp;( " + percentage[i] + "% )"
 
-                 /*   if('{{ display_vote }}' != 'true')
+                    if('{{ display_vote }}' != 'true')
                     {
                         vote_num = '';
                         percent = '';
-                    } */
+                    }
+
+                    var img_src = '';
+                    var img = "";
+            //        if(has_image[i] == 'true') {
+                        var src = "questionsImg/qst" + '{{ questions_id }}' + "_option" + i;
+                        img_src = '{% static src %}' + src;
+                        img = "<img src=" + img_src +  " class='img-responsive center-block'/>"
+            //        }
                    
                     var to_append = prefix + '<td><input type="checkbox" name=' + option_name + 
                                                   ' id=' + radio_id + ' value=' + radio_value + '></td>\
                                               <td>' + option_field + '</td>\
-                                              <td>' + '</td>\
+                                              <td>' + img + '</td>\
                                               <td>' + '</td>\
                                               <td>' + vote_num + percent + '</td>\
                                               </tr>';
