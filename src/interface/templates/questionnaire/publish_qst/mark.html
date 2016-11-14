@@ -1,4 +1,4 @@
-{% extends 'questionnaire/publish_qst/index.html' %}
+    {% extends 'questionnaire/publish_qst/index.html' %}
 
 {% block title%}
 
@@ -84,12 +84,16 @@
 
                     var option_maxium = statistics[i];
                     var left_num = left[i];
-                   
+
+                    var isDiasble='';
+                    if (left_num == 0){
+                        isDiasble=" disabled=true";
+                    }
                     var to_append = prefix + '<td>' + i + '</td>\
 		            						  <td>' + option_field + '</td>\
 		            						  <td>' + left_num + '</td>\
 		            						  <td>' + option_maxium + '</td>\
-		            						  <td><input type="checkbox" name=' + option_name + ' id=' + radio_id + ' value=' + radio_value + '></td>\
+		            						  <td><input type="checkbox" name=' + option_name + ' id=' + radio_id +isDiasble+ ' value=' + radio_value + '></td>\
 		            						  </tr>';
                     source_panel_body.find("#checkbox-list").append(to_append);
                 }

@@ -75,7 +75,12 @@
                     if (option_maxium != '') {
                         option_maxium = "【 剩余可选择次数: " + left_num + ' / ' + option_maxium + ' 】';
                     }
-                    var to_append = prefix + radio_id + ' value=' + radio_value + '>\
+                    var isDiasble='';
+                    if (left_num == 0){
+                        isDiasble=" disabled=true";
+                    }
+
+                    var to_append = prefix + radio_id + isDiasble + ' value=' + radio_value + '>\
                                         <label for="this.prev();">' + option_field + '</label\
                                         <label for="this.prev();">' + option_maxium + '</label>\
                                         </lable>\
