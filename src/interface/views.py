@@ -18,6 +18,7 @@ import session
 import _database
 from database import backend
 from api import views
+import application_sort
 from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from send_email import send_html_mail
@@ -63,7 +64,11 @@ def legalUser_dashboard(request):
     official_accounts = _database.get_official_accounts()
 
     activities = views.get_questionnaire_bySTATUS('already', username)
+    applications = views.get_all_questionnaire()
+    sort_applications = application_sort.application_sort(applications)
+
     articles_count = len(activities)
+
 
     #category = MessageCategory.ToAdmin
 
@@ -78,6 +83,7 @@ def legalUser_dashboard(request):
         'pending_applications': pending_applications,
         'official_accounts': official_accounts,
         'activities': activities,
+        'sort_applications': sort_applications,
         'articles_count': articles_count,
         'unprocessed_account': unprocessed_account,
         'category': category,
@@ -281,6 +287,9 @@ def guest_dashboard(request):
     official_accounts = _database.get_official_accounts()
 
     activities = views.get_questionnaire_bySTATUS('already', username)
+    applications = views.get_all_questionnaire()
+    sort_applications = application_sort.application_sort(applications)
+
     articles_count = len(activities)
 
     # category = MessageCategory.ToAdmin
@@ -295,6 +304,7 @@ def guest_dashboard(request):
         'pending_applications': pending_applications,
         'official_accounts': official_accounts,
         'activities': activities,
+        'sort_applications': sort_applications,
         'articles_count': articles_count,
         'unprocessed_account': unprocessed_account,
         'category': category,
@@ -356,6 +366,9 @@ def manager_dashboard(request):
     official_accounts = _database.get_official_accounts()
 
     activities = views.get_questionnaire_bySTATUS('already', username)
+    applications = views.get_all_questionnaire()
+    sort_applications = application_sort.application_sort(applications)
+
     articles_count = len(activities)
 
     # category = MessageCategory.ToAdmin
@@ -370,6 +383,7 @@ def manager_dashboard(request):
         'pending_applications': pending_applications,
         'official_accounts': official_accounts,
         'activities': activities,
+        'sort_applications': sort_applications,
         'articles_count': articles_count,
         'unprocessed_account': unprocessed_account,
         'category': category,
@@ -388,9 +402,6 @@ def manager_all_activities_list(request):
     applications = views.get_all_questionnaire()
     for app in applications:
         app['publisher'] = app['username']
-    output = open('asdfasdfasdfasd', 'w')
-    output.write(str(len(applications)))
-    output.close()
     return render_sortable(request, applications, 'manager/application/applications_content.html')
 
 

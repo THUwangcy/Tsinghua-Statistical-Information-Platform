@@ -37,18 +37,22 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>名称</th>
-                            <th style="min-width: 65px">填写数</th>
+                            <th style="width: 15%">名称</th>
+                            <th style="width: 15%">发布日期</th>
+                            <th style="width: 10000px">活动说明</th>
+                            <th style="width: 15%; min-width: 65px">填写数</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% if activities %}
-                            {% for activity in activities %}
+                        {% if sort_applications %}
+                            {% for activity in sort_applications %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td><a class="ajax-link fake-link" data-url="{% url 'test' %}">
+                                    <td><a class="ajax-link fake-link" href="{% url 'questionnaire' activity.id %}" target="_blank">
                                         {{ activity.name }}
                                     </a></td>
+                                    <td>{{ activity.subscribe_time }}</td>
+                                    <td>{{ activity.description|linebreaksbr|truncatechars:100}}</td>
                                     <td>{{ activity.fillin}}</td>
                                 </tr>
                             {% endfor %}
