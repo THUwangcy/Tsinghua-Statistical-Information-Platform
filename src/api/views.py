@@ -347,7 +347,21 @@ def get_statistics_of_question(qst_id):
 
 def notice_act(request):
     dicts = request.POST.dict()
+    notice = dicts['notice']
+    output = open('notice.txt', 'w')
+    output.write(notice)
+    output.close()
     return JsonResponse(dict(status='ok'))
+
+
+def get_notice():
+    try:
+        inputs = open('notice.txt', 'r')
+        notice = inputs.read()
+        inputs.close()
+        return notice
+    except:
+        return '暂无公告'
 
 #问卷提交函数 目前已实现 单选、填空
 #格式infomations如下
