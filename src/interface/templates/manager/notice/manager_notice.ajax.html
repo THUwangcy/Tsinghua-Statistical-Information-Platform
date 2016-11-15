@@ -40,7 +40,7 @@
     <div class="panel-body">
         <form method="post" id='notice_content'>
             {% csrf_token %}
-            <textarea rows="8" cols="10" maxlength="360"  name="notice" class="notice">{{ notice }}</textarea>
+            <textarea style="font-size:25px;" rows="6" cols="10" maxlength="360"  name="notice" class="notice">{{ notice }}</textarea>
             <hr>
             <input type="submit" value="确定" class="submit" />
         </form>
