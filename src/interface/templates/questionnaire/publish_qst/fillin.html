@@ -7,7 +7,7 @@
 
         <div class="row" style="text-align: left; padding-left:25px; padding-top: 10px;">
                 <textarea id="fillin_field" name="qst{{ questions_id }}" class="form-control"
-                      style="resize: vertical; width: 60%" rows="1"></textarea>
+                      style="resize: vertical; width: 60%" rows="1" ></textarea>
         </div>
 
     <script >
@@ -22,13 +22,19 @@
             	source_panel_body.find("#fillin_field").attr('rows', '{{rows}}');
             if('{{hint}}' != 'None')
             	source_panel_body.find("#fillin_field").attr('placeholder', '{{hint}}');
-            //alert("2");
             //必答题星号
             if('{{qst_must}}' == 'true'){
                 source_panel_body.find("#must_qst").css("display", '');
                 source_panel_body.find("#fillin_field").attr("required",'');
             }
+            if('{{ fillin_check }}'!=''){
+                var fill_type = '{{ fillin_check }}';
+                if(fill_type=='手机'){
 
+                }
+                    //source_panel_body.find("#fillin_field").attr("type",'email');
+                //pattern="Reg(ular )?Exp(ression)?"
+            }
 
 //            alert("3");
             //加载选框样式
