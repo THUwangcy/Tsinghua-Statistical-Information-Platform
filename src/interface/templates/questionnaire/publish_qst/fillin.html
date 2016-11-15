@@ -6,8 +6,8 @@
         <label id = "must_qst" style="color:red; display: none;">&nbsp;*</label>
 
         <div class="row" style="text-align: left; padding-left:25px; padding-top: 10px;">
-                <textarea id="fillin_field" name="qst{{ questions_id }}" class="form-control"
-                      style="resize: vertical; width: 60%" rows="1" ></textarea>
+                <input id="fillin_field" name="qst{{ questions_id }}" class="form-control"
+                      style="resize: vertical; width: 60%" rows="1" >
         </div>
 
     <script >
@@ -29,11 +29,14 @@
             }
             if('{{ fillin_check }}'!=''){
                 var fill_type = '{{ fillin_check }}';
-                if(fill_type=='手机'){
-
+                if(fill_type=='邮箱')
+                    source_panel_body.find("#fillin_field").attr("type",'email');
+                if(fill_type=='数字')
+                    source_panel_body.find("#fillin_field").attr("type",'number');
+                if(fill_type=='手机') {
+                    source_panel_body.find("#fillin_field").attr("type", 'tel');
+                    source_panel_body.find("#fillin_field").attr("type", 'tel');
                 }
-                    //source_panel_body.find("#fillin_field").attr("type",'email');
-                //pattern="Reg(ular )?Exp(ression)?"
             }
 
 //            alert("3");
