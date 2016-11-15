@@ -74,7 +74,7 @@ def legalUser_dashboard(request):
 
     unprocessed_account = _database.get_official_accounts_with_unprocessed_messages()
 
-    announcement = _database.get_announcement()
+    announcement = views.get_notice()
 
 
     category = 1
@@ -296,7 +296,7 @@ def guest_dashboard(request):
 
     unprocessed_account = _database.get_official_accounts_with_unprocessed_messages()
 
-    announcement = _database.get_announcement()
+    announcement = views.get_notice()
 
     category = 1
 
@@ -375,7 +375,7 @@ def manager_dashboard(request):
 
     unprocessed_account = _database.get_official_accounts_with_unprocessed_messages()
 
-    announcement = _database.get_announcement()
+    announcement = views.get_notice()
 
     category = 1
 
@@ -420,7 +420,8 @@ def manager_all_users_list(request):
 
 @check_identity('manager')
 def manager_notice(request):
-    params = {'notice': '这里是管理员发布的公告'}
+    announcement = views.get_notice()
+    params = {'notice': announcement}
     return render_ajax(request, 'manager/notice/manager_notice.html', params, 'notice-design-item')
 
 

@@ -50,10 +50,14 @@
 
 <script>
     $(document).ready(function () {
+            var jump_callback = function () {
+                window.location.replace('/manager');
+            };
+
             handleFormPost("#notice_content", "{% url 'api/notice_act' %}", {
                 success_callback: function (data) {
                     if (data['status'] === 'ok') {
-                        showConfirmModal('提示', '公告发布成功', true);
+                        showConfirmModal('提示', '公告发布成功', true, jump_callback);
                     }
                 }
             });
