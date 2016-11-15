@@ -22,7 +22,7 @@
         </div>
     </div>
     <textarea name="qst{{ questions_id }}" class="form-control"
-                      style="resize: vertical; width: 5%; opacity: 0; position: absolute; z-index: 10;"
+                      style="resize: vertical; width: 5%; opacity: 0; position: absolute; z-index: 0;"
                       rows="1" required disabled>123</textarea>
     <input name="max_selected" value="{{ max_selected }}" type="text" style="display: none;">
     <input name="min_selected" value="{{ min_selected }}" type="text" style="display: none;">
@@ -118,7 +118,11 @@
 
             $("input").on('ifChecked', function(event){
                
-                var source_panel_body = $(this).parent().parent().parent().parent().parent();
+                var source_panel_body = $(this);
+                if($(this).is('.mark') || $(this).is('.vote'))
+                    source_panel_body = $(this).parent().parent().parent().parent().parent().parent().parent();
+                else
+                    source_panel_body = $(this).parent().parent().parent().parent().parent();
                 var min_selected = source_panel_body.find("input[name='min_selected']").val();
                 var max_selected = source_panel_body.find("input[name='max_selected']").val();
                 var qst_must = source_panel_body.find("input[name='qst_must']").val();
@@ -150,7 +154,11 @@
 
             $("input").on('ifUnchecked', function(event){
                
-                var source_panel_body = $(this).parent().parent().parent().parent().parent();
+                var source_panel_body = $(this);
+                if($(this).is('.mark') || $(this).is('.vote'))
+                    source_panel_body = $(this).parent().parent().parent().parent().parent().parent().parent();
+                else
+                    source_panel_body = $(this).parent().parent().parent().parent().parent();
                 var min_selected = source_panel_body.find("input[name='min_selected']").val();
                 var max_selected = source_panel_body.find("input[name='max_selected']").val();
                 var qst_must = source_panel_body.find("input[name='qst_must']").val();

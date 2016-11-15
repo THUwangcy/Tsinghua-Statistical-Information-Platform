@@ -3,7 +3,7 @@
 
 {% block title %}
 	
-	<label for="name" id="vote_title">请在此输入投票标题</label>
+	<label for="name" id="vote_title" class="control-label">请在此输入投票标题</label>
     <label id = "must_qst" style="color:red; display: none;">&nbsp;*</label>
     <label id = "select_hint"></label>
     <div class="">
@@ -20,7 +20,7 @@
             <tbody  id="checkbox-list">
                 <tr class="row_option">
                     <td style='vertical-align: middle;'>
-                        <input type="checkbox" name="qst{{ questions_id }}" id="optionsCheckbox1" value="option1">
+                        <input type="checkbox" name="qst{{ questions_id }}" id="optionsCheckbox1" value="option1" class="vote">
                     </td>
                     <td style='vertical-align: middle;'>候选1</td>
                     <td style='vertical-align: middle;'>
@@ -32,7 +32,7 @@
                 </tr>
                 <tr class="row_option">
                     <td style='vertical-align: middle;'>
-                        <input type="checkbox" name="qst{{ questions_id }}" id="optionsCheckbox2" value="option2">
+                        <input type="checkbox" name="qst{{ questions_id }}" id="optionsCheckbox2" value="option2" class="vote">
                     </td>
                     <td style='vertical-align: middle;'>候选2</td>
                     <td style='vertical-align: middle;'>
@@ -44,6 +44,12 @@
             </tbody>
         </table>
     </div>
+    <textarea name="qst{{ questions_id }}" class="form-control"
+                      style="resize: vertical; width: 5%; opacity: 0; position: absolute; z-index: 0;"
+                      rows="1" required disabled>123</textarea>
+    <input name="max_selected" value="{{ max_selected }}" type="text" style="display: none;">
+    <input name="min_selected" value="{{ min_selected }}" type="text" style="display: none;">
+    <input name="qst_must" value="{{ qst_must }}" type="text" style="display: none;">
 
     <script>
         $(document).ready(function(){
@@ -53,8 +59,11 @@
                 source_panel_body.find("#vote_title").html('{{questions_title}}');
 
             //必答题星号
-            if('{{qst_must}}' == 'true')
+            if('{{qst_must}}' == 'true') {
                 source_panel_body.find("#must_qst").css("display", '');
+                source_panel_body.find("textarea[name='qst{{ questions_id }}']").html('');
+                source_panel_body.find("textarea[name='qst{{ questions_id }}']").attr('disabled', false);
+            }
 
             //设置选择提示
             var select_hint = source_panel_body.find("#select_hint");
@@ -63,6 +72,8 @@
                     select_hint.html("&nbsp;[最多选择" + '{{max_selected}}' + "项]");
             }
             else {
+                source_panel_body.find("textarea[name='qst{{ questions_id }}']").html('');
+                source_panel_body.find("textarea[name='qst{{ questions_id }}']").attr('disabled', false);
                 if('{{max_selected}}' != 'None' && '{{max_selected}}' != '')
                     select_hint.html("&nbsp;[请选择" + '{{min_selected}}' + " - " + '{{max_selected}}' + "项]");
                 else
@@ -113,7 +124,7 @@
             //        }
                    
                     var to_append = prefix + '<td><input type="checkbox" name=' + option_name + 
-                                                  ' id=' + radio_id + ' value=' + radio_value + '></td>\
+                                                  ' id=' + radio_id + ' value=' + radio_value + ' class="vote"></td>\
                                               <td>' + option_field + '</td>\
                                               <td>' + img + '</td>\
                                               <td>' + '</td>\
@@ -131,6 +142,73 @@
               checkboxClass: 'icheckbox_flat-green',
               radioClass: 'iradio_flat-green',
               increaseArea: '20%'
+            });
+
+            $("input").on('ifChecked', function(event){
+            //    alert("!!!");
+                var source_panel_body = $(this);
+                if($(this).is('.mark') || $(this).is('.vote'))
+                    source_panel_body = $(this).parent().parent().parent().parent().parent().parent().parent();
+                else
+                    source_panel_body = $(this).parent().parent().parent().parent().parent();
+                
+                alert(source_panel_body.find("textarea").html());
+                var min_selected = source_panel_body.find("input[name='min_selected']").val();
+                var max_selected = source_panel_body.find("input[name='max_selected']").val();
+                var qst_must = source_panel_body.find("input[name='qst_must']").val();
+                if (min_selected == 'None' || min_selected == '')
+                    min_selected = 0;
+                if (max_selected == 'None' || max_selected == '')
+                    max_selected = 1000;
+                if(qst_must == 'true')
+                    min_selected = 1;
+
+                var checked_num = source_panel_body.find("input[type='checkbox']:checked").length;
+                if(checked_num < max_selected && checked_num >= min_selected) {
+                    source_panel_body.find("input[type='checkbox']").attr('disabled', false);
+                    source_panel_body.find("textarea").attr('disabled', true);
+                    source_panel_body.find("textarea").html('123');
+                }
+                else if (checked_num == max_selected) {
+                    source_panel_body.find("input[type='checkbox']").attr('disabled', true);
+                    source_panel_body.find("input[type='checkbox']:checked").attr('disabled', false);
+                    source_panel_body.find("textarea").attr('disabled', true);
+                    source_panel_body.find("textarea").html('123');
+                }
+                else {
+                    source_panel_body.find("textarea").html('');
+                    source_panel_body.find("textarea").attr('disabled', false);
+                }
+
+            });
+
+            $("input").on('ifUnchecked', function(event){
+               
+                var source_panel_body = $(this);
+                if($(this).is('.mark') || $(this).is('.vote'))
+                    source_panel_body = $(this).parent().parent().parent().parent().parent().parent().parent();
+                else
+                    source_panel_body = $(this).parent().parent().parent().parent().parent();
+                var min_selected = source_panel_body.find("input[name='min_selected']").val();
+                var max_selected = source_panel_body.find("input[name='max_selected']").val();
+                var qst_must = source_panel_body.find("input[name='qst_must']").val();
+                if (min_selected == 'None' || min_selected == '')
+                    min_selected = 0;
+                if (max_selected == 'None' || max_selected == '')
+                    max_selected = 1000;
+                if(qst_must == 'true')
+                    min_selected = 1;
+
+                var checked_num = source_panel_body.find("input[type='checkbox']:checked").length;
+                if(checked_num <= max_selected && checked_num >= min_selected) {
+                    source_panel_body.find("input[type='checkbox']").attr('disabled', false);
+                    source_panel_body.find("textarea").attr('disabled', true);
+                    source_panel_body.find("textarea").html('123');
+                }
+                else {
+                    source_panel_body.find("textarea").html('');
+                    source_panel_body.find("textarea").attr('disabled', false);
+                }
             });
         });
     </script>
