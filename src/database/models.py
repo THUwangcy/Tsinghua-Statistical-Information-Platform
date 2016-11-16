@@ -66,6 +66,7 @@ class Questionaire(models.Model):
     questionaire_numOfFilled = models.IntegerField(default = 0)
     questionaire_haveMaxTime = models.BooleanField(default = False)
     questionaire_maxTime = models.IntegerField(default = 0)
+    questionaire_md5 = models.CharField(null = True)
 
     def __unicode__(self):
         return self.id + self.questionaire_title
