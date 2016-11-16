@@ -278,7 +278,7 @@ th.th-sortable {
 @media screen and (max-width: 767px) {
 
     .main {
-        padding-top: 70px;
+        padding-top: 10px;
     }
 
     #left-column {
