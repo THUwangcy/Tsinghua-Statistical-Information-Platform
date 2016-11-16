@@ -8,6 +8,7 @@
         <div class="row" style="text-align: left; padding-left:25px; padding-top: 10px;">
                 <input id="fillin_field" name="qst{{ questions_id }}" class="form-control"
                       style="resize: vertical; width: 60%" rows="1"  >
+                <div class="help-block with-errors"></div>
         </div>
 
     <script >
@@ -31,25 +32,31 @@
                 var fill_type = '{{ fillin_check }}';
                 if(fill_type=='邮箱'){
                     source_panel_body.find("#fillin_field").attr("type",'email');
+                    source_panel_body.find("#fillin_field").attr("data-error",'请填写正确的邮箱');
                 }
                 if(fill_type=='整数') {
                     source_panel_body.find("#fillin_field").attr("type",'number');
+                    source_panel_body.find("#fillin_field").attr("data-error",'请填写整数');
                 }
                 if(fill_type=='小数'){
                     source_panel_body.find("#fillin_field").attr("type",'text');
                     source_panel_body.find("#fillin_field").attr("pattern",'^\\d+(\\.\\d+)?$');
+                    source_panel_body.find("#fillin_field").attr("data-error",'请填写小数（包含整数）');
                 }
                 if(fill_type=='手机') {
                     source_panel_body.find("#fillin_field").attr("type",'text');
                     source_panel_body.find("#fillin_field").attr("pattern",'^\\d{11}$');
+                    source_panel_body.find("#fillin_field").attr("data-error",'请填写正确的手机号');
                 }
                 if(fill_type=='身份证号') {
                     source_panel_body.find("#fillin_field").attr("type",'text');
                     source_panel_body.find("#fillin_field").attr("pattern",'^\\d{18}$');
+                    source_panel_body.find("#fillin_field").attr("data-error",'请填写身份证号');
                 }
-                if(fill_type=='身份证号') {
+                if(fill_type=='学号') {
                     source_panel_body.find("#fillin_field").attr("type",'text');
                     source_panel_body.find("#fillin_field").attr("pattern",'^\\d{10}$');
+                    source_panel_body.find("#fillin_field").attr("data-error",'请填写学号');
                 }
 
             }
