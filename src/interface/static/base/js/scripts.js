@@ -327,7 +327,7 @@ function loadContentOn(container, url, params, load_params, callback) {
                     <span class="fa fa-spinner fa-pulse fa-3x"></span>\
                 </div>');
         }
-    }, 1000);
+    }, 100);
     
 
     $.ajax({
