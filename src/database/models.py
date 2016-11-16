@@ -103,7 +103,7 @@ class Question(models.Model):
     question_displayVotes = models.BooleanField(default = False)
     question_ipTimes = models.IntegerField(null = True)
     question_dayTimes = models.IntegerField(null = True)
-    question_hasPicture = models.IntegerField(default = False)
+
     def __unicode__(self):
         return self.question_text
 
@@ -112,6 +112,7 @@ class Choice(models.Model):
     choice_text = models.CharField(max_length = 200)
     choice_order = models.IntegerField(default = 0)
     choice_limit = models.IntegerField(null = True)
+    choice_hasPicture = models.BooleanField(default = False)
     votes = models.IntegerField(default = 0)
 
     def __unicode__(self):
