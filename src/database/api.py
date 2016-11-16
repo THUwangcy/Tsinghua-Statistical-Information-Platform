@@ -126,6 +126,53 @@ def createNewQuestionaire(dict):
 	currentQuestionaire.save()
 	currentQuestionaire.questionaire_md5 = md5encode(str(currentQuestionaire.id) + currentQuestionaire.questionaire_time)
 	currentQuestionaire.save()
+	if currentQuestionaire.questionaire_type == "VO":
+		dict = {
+			"act_id" : currentQuestionaire.questionaire_md5,
+			"qst_type" : "vote",
+			"qst_rank" : 1
+		}
+		createNewQuestion(dict)
+	if currentQuestionaire.questionaire_type == "LW":
+		dict = {
+			"act_id" : currentQuestionaire.questionaire_md5,
+			"qst_type" : "fillin",
+			"qst_rank" : 1
+		}
+		qid = createNewQuestion(dict)["id"]
+		mddict = {
+			"questions_id" : qid,
+			"qst_title" : u"你的名字",
+			"fillin_row" : 1,
+			"fillin_hint" : "",
+			"fillin_check" : u"文本",
+			"qst_type" : "fillin",
+			"must" : "true"
+		}
+		modifyQuestion(mddict)
+		dict = {
+			"act_id" : currentQuestionaire.questionaire_md5,
+			"qst_type" : "fillin",
+			"qst_rank" : 2
+		}
+		qid = createNewQuestion(dict)["id"]
+		mddict = {
+			"questions_id" : qid,
+			"qst_title" : u"你的联系方式",
+			"fillin_row" : 1,
+			"fillin_hint" : "",
+			"fillin_check" : u"文本",
+			"qst_type" : "fillin",
+			"must" : "true"
+		}
+		modifyQuestion(mddict)
+		dict = {
+			"act_id" : currentQuestionaire.questionaire_md5,
+			"qst_type" : "mark",
+			"qst_rank" : 3
+		}
+		createNewQuestion(dict)
+		
 	return_dict = {
 		"status" : "ok",
 		"id" : currentQuestionaire.questionaire_md5
@@ -168,7 +215,7 @@ def createNewQuestion(dict):
 		)
 
 	currentQuestion.save()
-	if ((switcher[thetype] == "SI") or (switcher[thetype] == "MU") or (switcher[thetype] == "VO") or (switcher[thetype] == "VO")):
+	if ((switcher[thetype] == "SI") or (switcher[thetype] == "MU") or (switcher[thetype] == "VO") or (switcher[thetype] == "MA")):
 		currentQuestion.question_choices = 2
 		currentQuestion.save()
 		option1 = Choice(
@@ -181,14 +228,16 @@ def createNewQuestion(dict):
 			choice_text = u'选项2',
 			choice_order= 2
 			)
-		if (switcher[thetype] == "VO"):
+		if (switcher[thetype] == "MA"):
 			option1.choice_text = "10:00-11:00"
 			option1.choice_limit = 5
 			option2.choice_text = "11:00-12:00"
 			option2.choice_limit = 7
-		if (switcher[thetype] == "MA"):
+		if (switcher[thetype] == "VO"):
 			option1.choice_text = u"选项1"
 			option2.choice_text = u"选项2"
+			option1.choice_hasPicture = True
+			option2.choice_hasPicture = True
 		option1.save()
 		option2.save()
 	return_dict = {
@@ -368,6 +417,10 @@ def modifyQuestion(dict):
 				"text" : dict["option" + str(i + 1) + "_field"],
 				"question_id" : currentQuestion.id
 			}
+			if dict["qst_type"] == "vote":
+				pass_dict["has_picture"] = dict["option" + str(i + 1) + "_img"]
+			else:
+				pass_dict["has_picture"] = ""
 			if ("option" + str(i + 1) + "_maxium") in questionKeys:
 				pass_dict["limit"] = dict["option" + str(i + 1) + "_maxium"]
 			else:
@@ -388,6 +441,11 @@ def makeNewChoice(dict):
 		)
 	if dict["limit"] != "":
 		currentChoice.choice_limit = int(dict["limit"])
+	if dict["has_picture"] != "":
+		if dict["has_picture"] == "true":
+			currentChoice.choice_hasPicture = True
+		else:
+			currentChoice.choice_hasPicture = False
 	currentChoice.save()
 
 def getQuestionaireByID(qid):
@@ -600,6 +658,11 @@ def getStatisticsOfQuestion(qst_id):
 				dict["max"] = str(oneChoice.choice_limit)
 				answers = Answer.objects.filter(answer_choice = oneChoice)
 				dict["left"] = str(oneChoice.choice_limit - len(answers))
+			if oneChoice.choice_hasPicture != None:
+				if oneChoice.choice_hasPicture == True:
+					dict["has_image"] = "true"
+				else:
+					dict["has_image"] = "false"
 			returnList.append(dict)
 	return returnList
 
