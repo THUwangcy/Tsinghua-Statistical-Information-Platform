@@ -43,12 +43,12 @@ urlpatterns = [
 
     #design
     url(r'^legalUser/design/(\w+)/?$', 'interface.views.legalUser_show_applications', name='legalUser/design'),
-    url(r'^legalUser/design/(\w+)/([0-9]+)/?$', 'interface.views.legalUser_design', name='legalUser/design/id'),
-    url(r'^legalUser/design/(\w+)/([0-9]+)/question/?$', 'interface.views.legalUser_design_question',
+    url(r'^legalUser/design/(\w+)/([0-9a-zA-Z]+)/?$', 'interface.views.legalUser_design', name='legalUser/design/id'),
+    url(r'^legalUser/design/(\w+)/([0-9a-zA-Z]+)/question/?$', 'interface.views.legalUser_design_question',
         name='legalUser/design/question'),
 
     url(r'^guest/design/(\w+)/?$', 'interface.views.guest_show_applications', name='guest/design'),
-    url(r'^guest/design/(\w+)/([0-9]+)/?$', 'interface.views.guest_design', name='guest/design/id'),
+    url(r'^guest/design/(\w+)/([0-9a-zA-Z]+)/?$', 'interface.views.guest_design', name='guest/design/id'),
 
     #modal
     url(r'^modal/?$', 'interface.views.show_modal', name='legalUser/modal'),
@@ -86,9 +86,9 @@ urlpatterns = [
     url(r'^legalUser/information/change/?$', 'interface.views.user_information_change', name='legalUser/information_change'),
 
     #questionnaire
-    url(r'^questionnaire/([0-9]+)/?$', 'interface.views.questionnaire', name='questionnaire'),
-    url(r'^questionnaire/(\w+)/([0-9]+)/publish_qst/?$', 'interface.views.questionnaire_publish_question', name='questionnaire/publish_qst'),
-    url(r'^fillin/questionnaire/([0-9]+)/([0-9]+)/?$', 'interface.views.fillin_questionnaire', name='fillin/questionnaire'),
+    url(r'^questionnaire/([0-9a-zA-Z]+)/?$', 'interface.views.questionnaire', name='questionnaire'),
+    url(r'^questionnaire/(\w+)/([0-9a-zA-Z]+)/publish_qst/?$', 'interface.views.questionnaire_publish_question', name='questionnaire/publish_qst'),
+    url(r'^fillin/questionnaire/([0-9a-zA-Z]+)/([0-9a-zA-Z]+)/?$', 'interface.views.fillin_questionnaire', name='fillin/questionnaire'),
 
     #guest
     url(r'^guest/?$', 'interface.views.guest', name='guest'),
@@ -102,12 +102,12 @@ urlpatterns = [
 
     #statistics
     url(r'^statistics/?$', 'interface.views.show_statistics_choose', name='statistics'),
-    url(r'^statistics/([0-9]+)/?$', 'interface.views.show_statistics', name='statistics/id'),
-    url(r'^statistics/([0-9]+)/participants', 'interface.views.show_participants_list', name='statistics/participants'),
-    url(r'^statistics/([0-9]+)/question/?$', 'interface.views.statistics_question', name='statistics/question'),
-    url(r'^statistics/([0-9]+)/question/list/(\w+)/([0-9]+)/?$', 'interface.views.statistics_question_list', name='statistics/question/list'),
-    url(r'^statistics/([0-9]+)/question/([0-9]+)/charts/?$', 'interface.views.show_charts', name='statistics/charts'),
+    url(r'^statistics/([0-9a-zA-Z]+)/?$', 'interface.views.show_statistics', name='statistics/id'),
+    url(r'^statistics/([0-9a-zA-Z]+)/participants', 'interface.views.show_participants_list', name='statistics/participants'),
+    url(r'^statistics/([0-9a-zA-Z]+)/question/?$', 'interface.views.statistics_question', name='statistics/question'),
+    url(r'^statistics/([0-9a-zA-Z]+)/question/list/(\w+)/([0-9a-zA-Z]+)/?$', 'interface.views.statistics_question_list', name='statistics/question/list'),
+    url(r'^statistics/([0-9a-zA-Z]+)/question/([0-9a-zA-Z]+)/charts/?$', 'interface.views.show_charts', name='statistics/charts'),
 
     #guest_management
-    url(r'^guest/statistics/([0-9]+)/?$', 'interface.views.guest_statistics', name='guest/statistics/id'),
+    url(r'^guest/statistics/([0-9a-zA-Z]+)/?$', 'interface.views.guest_statistics', name='guest/statistics/id'),
 ]

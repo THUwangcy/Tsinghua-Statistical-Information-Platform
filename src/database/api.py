@@ -124,7 +124,7 @@ def createNewQuestionaire(dict):
 		questionaire_user = User.objects.get(student_id = dict["user_id"])
 		)
 	currentQuestionaire.save()
-	currentQuestionaire.questionaire_md5 = md5encode(str(currentQuestionaire.id) + questionaire_user + questionaire_time)
+	currentQuestionaire.questionaire_md5 = md5encode(str(currentQuestionaire.id) + currentQuestionaire.questionaire_time)
 	currentQuestionaire.save()
 	return_dict = {
 		"status" : "ok",
@@ -157,18 +157,18 @@ def createNewQuestion(dict):
 		"mark" : "MA",
 		"sort" : "SO"
 	}
-	order = len(Question.objects.filter(questionaire_id__qusetionaire_md5 = dict["act_id"])) + 1
+	order = len(Question.objects.filter(questionaire_id__questionaire_md5 = dict["act_id"])) + 1
 	currentQuestionaire = Questionaire.objects.get(questionaire_md5 = dict["act_id"])
 	currentQuestionaire.questionaire_numOfQues = currentQuestionaire.questionaire_numOfQues + 1
 	currentQuestionaire.save()
 	currentQuestion = Question(
-		questionaire_id = Questionaire.objects.get(id = dict["act_id"]),
+		questionaire_id = Questionaire.objects.get(questionaire_md5 = dict["act_id"]),
 		question_type = switcher[thetype],
 		question_order = dict["qst_rank"]
 		)
 
 	currentQuestion.save()
-	if ((switcher[thetype] == "SI") or (switcher[thetype] == "MU")):
+	if ((switcher[thetype] == "SI") or (switcher[thetype] == "MU") or (switcher[thetype] == "VO") or (switcher[thetype] == "VO")):
 		currentQuestion.question_choices = 2
 		currentQuestion.save()
 		option1 = Choice(
@@ -181,6 +181,14 @@ def createNewQuestion(dict):
 			choice_text = u'选项2',
 			choice_order= 2
 			)
+		if (switcher[thetype] == "VO"):
+			option1.choice_text = "10:00-11:00"
+			option1.choice_limit = 5
+			option2.choice_text = "11:00-12:00"
+			option2.choice_limit = 7
+		if (switcher[thetype] == "MA"):
+			option1.choice_text = u"选项1"
+			option2.choice_text = u"选项2"
 		option1.save()
 		option2.save()
 	return_dict = {
@@ -227,7 +235,7 @@ def operateQuestion(dict):
 	if dict['operation'] == "UP":
 		relatedQuestion = Question.objects.get(
 			question_order = currentQuestion.question_order - 1,
-			questionaire_id__id = dict["act_id"]
+			questionaire_id__questionaire_md5 = dict["act_id"]
 			)
 		currentQuestion.question_order = currentQuestion.question_order - 1
 		relatedQuestion.question_order = relatedQuestion.question_order + 1
@@ -236,19 +244,19 @@ def operateQuestion(dict):
 	if dict['operation'] == "DOWN":
 		relatedQuestion = Question.objects.get(
 			question_order = currentQuestion.question_order + 1,
-			questionaire_id__id = dict["act_id"]
+			questionaire_id__questionaire_md5 = dict["act_id"]
 			)
 		currentQuestion.question_order = currentQuestion.question_order + 1
 		relatedQuestion.question_order = relatedQuestion.question_order - 1
 		currentQuestion.save()
 		relatedQuestion.save()
 	if dict['operation'] == "REMOVE":
-		currentQuestionaire = Questionaire.objects.get(id = dict["act_id"])
+		currentQuestionaire = Questionaire.objects.get(questionaire_md5 = dict["act_id"])
 		currentQuestionaire.questionaire_numOfQues = currentQuestionaire.questionaire_numOfQues - 1
 		currentQuestionaire.save()
 		relatedQuestionSet = Question.objects.filter(
 			question_order__gte = currentQuestion.question_order,
-			questionaire_id__id = dict["act_id"]
+			questionaire_id__questionaire_md5 = dict["act_id"]
 			)
 		currentQuestion.delete()
 		for relatedQuestion in relatedQuestionSet:
@@ -327,6 +335,8 @@ def modifyQuestion(dict):
 	questionKeys = dict.keys()
 	if "must" in questionKeys:
 		currentQuestion.question_mustfill = True
+	else:
+		currentQuestion.question_mustfill = False
 	currentQuestion.save()
 	if dict["qst_type"] != "fillin":
 		oldChoiceList = Choice.objects.filter(question = currentQuestion)
@@ -337,9 +347,13 @@ def modifyQuestion(dict):
 		if "min_selected" in questionKeys:
 			if dict["min_selected"] != "":
 				currentQuestion.question_minfill = int(dict["min_selected"])
+			else:
+				currentQuestion.question_minfill = None
 		if "max_selected" in questionKeys:
 			if dict["max_selected"] != "":
 				currentQuestion.question_maxfill = int(dict["max_selected"])
+			else:
+				currentQuestion.question_maxfill = None
 		if dict["qst_type"] == "vote":
 			if "display_vote" in questionKeys:
 				currentQuestion.question_displayVotes = True
@@ -377,7 +391,7 @@ def makeNewChoice(dict):
 	currentChoice.save()
 
 def getQuestionaireByID(qid):
-	currentQuestionaire = Questionaire.objects.get(question_md5 = qid)
+	currentQuestionaire = Questionaire.objects.get(questionaire_md5 = qid)
 	return_dict = dict()
 	type_switcher = {
 		"VO" : "vote",
@@ -402,7 +416,7 @@ def getQuestionaireByID(qid):
 
 def getQuestionsByQuestionaire(qid):
 	returnList = list()
-	currentQuestionList = Question.objects.filter(questionaire_id__qusetionaire_md5 = qid)
+	currentQuestionList = Question.objects.filter(questionaire_id__questionaire_md5 = qid)
 	for question in currentQuestionList:
 		currentQuestionDict = makeQuestionDict(question)
 		returnList.append(currentQuestionDict)
@@ -457,7 +471,7 @@ def makeQuestionDict(qst):
 	return return_dict
 
 def fillQuestionaire(dict):
-	currentQuestionaire = Questionaire.objects.get(questionaire_md5 = int(dict["act_id"]))
+	currentQuestionaire = Questionaire.objects.get(questionaire_md5 = dict["act_id"])
 	currentQuestionaire.questionaire_numOfFilled = currentQuestionaire.questionaire_numOfFilled + 1
 	currentQuestionaire.save()
 	currentQuestionList = Question.objects.filter(questionaire_id = currentQuestionaire)

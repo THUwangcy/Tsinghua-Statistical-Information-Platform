@@ -66,7 +66,7 @@ class Questionaire(models.Model):
     questionaire_numOfFilled = models.IntegerField(default = 0)
     questionaire_haveMaxTime = models.BooleanField(default = False)
     questionaire_maxTime = models.IntegerField(default = 0)
-    questionaire_md5 = models.CharField(null = True)
+    questionaire_md5 = models.CharField(max_length = 100, null = True)
 
     def __unicode__(self):
         return self.id + self.questionaire_title
@@ -103,6 +103,7 @@ class Question(models.Model):
     question_displayVotes = models.BooleanField(default = False)
     question_ipTimes = models.IntegerField(null = True)
     question_dayTimes = models.IntegerField(null = True)
+    question_hasPicture = models.IntegerField(default = False)
     def __unicode__(self):
         return self.question_text
 
