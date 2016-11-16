@@ -73,6 +73,7 @@
 
                     'fillin_id': '{{ fillin_id }}',
 
+
                     'qst_must': '{{ qst.qst_must }}',
                     'min_selected': '{{ qst.min_selected }}',
                     'max_selected': '{{ qst.max_selected }}',
@@ -83,7 +84,6 @@
                     'fillin_check': '{{ qst.check }}'
 
                 }
-            //    alert("{{ qst.min_selected }}" + '.');
                 loadContentOn($(".last-question"), "{% url 'questionnaire/publish_qst' type act_id%}", pre_info_param, {anim: false, scroll: false});
                 $(".last-question").removeClass("last-question");
                 $(".questions-list").append('<li class="question last-question">\
@@ -109,17 +109,13 @@
     });
 
 
-    function checkform() {
-        getTime();
-        getIpPlace();
-    }
-
     function getTime()
     {
         var time = getDetailTime();
         var timeSubmit = $("#questionnaire_content").find("#submitTime");
         timeSubmit.val(time);
         //alert(time);
+        getIpPlace();
     }
     $("#questionnaire_content").ready(function () {
 

@@ -1,4 +1,4 @@
-{% extends 'questionnaire/publish_qst/index.html' %}
+    {% extends 'questionnaire/publish_qst/index.html' %}
 
 {% block title%}
 
@@ -96,7 +96,11 @@
 
                     var option_maxium = statistics[i];
                     var left_num = left[i];
-                   
+
+                    var isDiasble='';
+                    if (left_num == 0){
+                        isDiasble=" disabled=true";
+                    }
                     var to_append = prefix + '<td>' + i + '</td>\
 		            						  <td>' + option_field + '</td>\
 		            						  <td>' + left_num + '</td>\
