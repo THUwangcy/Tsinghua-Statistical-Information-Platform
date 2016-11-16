@@ -55,8 +55,17 @@
         padding: 0;
     }
     html,body { height: 100%;}
-    .wrap{
-        min-height: 100%;
+
+    @media screen and (min-width: 768px) {
+        .wrap{
+            min-height: 100%;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .wrap{
+            min-height: 87%;
+        }
     }
     .main{
         padding-bottom: 60px;
@@ -88,14 +97,25 @@
                 -->
             {% endblock subtitle %}
         </div>
+        
+    </div>
+    <!-- /container -->
+</div>
+
+<div id="top-nav" class="navbar navbar-default navbar-static-top visible-xs">
+    <div class="container-fluid">
+        <!--[if IE]>
+        <div class="alert alert-info" style="text-align: center;">
+            如果页面显示不正确，请尝试<b>使用较新版本的IE浏览器</b>、<b>关闭浏览器的IE兼容模式</b>，或者<b>使用Chrome浏览器</b>访问网站。
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <![endif]-->
+
         <ul class="nav navbar-nav navbar-right">
             <li class="pull-left visible-xs">
-                <a id="left-column-toggle" class="fake-link">
-                    <i class="fa fa-navicon fa-fw"></i>
-                </a>
-            </li>
-            <li class="pull-left visible-xs">
-                <a style="font-size: 18px; color: #18bc9c">
+                <a style="font-size: 16px; color: #18bc9c">
                     <strong>
                         {% block itemtitle %}
                         {% endblock itemtitle %}

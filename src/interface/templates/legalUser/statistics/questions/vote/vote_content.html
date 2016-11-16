@@ -13,9 +13,9 @@
             </td>
             <td style='vertical-align: middle;'>{{ option.content }}</td>
             <td style='vertical-align: middle;'>
-                <img src="{% static option.img_src %}" class="img-responsive left-block"/>
+                
                 {% if option.has_image == 'true' %}
-
+                    <img src="{% static option.img_src %}" class="img-responsive left-block"/>
                 {% endif %}
             </td>
             <td></td>

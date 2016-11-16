@@ -123,11 +123,11 @@
 
                     var img_src = '';
                     var img = "";
-            //        if(has_image[i] == 'true') {
+                    if(has_image[i] == 'true') {
                         var src = "questionsImg/qst" + '{{ questions_id }}' + "_option" + i;
                         img_src = '{% static src %}' + src;
                         img = "<img src=" + img_src +  " class='img-responsive center-block'/>"
-            //        }
+                    }
                    
                     var to_append = prefix + '<td><input type="checkbox" name=' + option_name + 
                                                   ' id=' + radio_id + ' value=' + radio_value + '></td>\
