@@ -7,7 +7,7 @@
 
         <div class="row" style="text-align: left; padding-left:25px; padding-top: 10px;">
                 <input id="fillin_field" name="qst{{ questions_id }}" class="form-control"
-                      style="resize: vertical; width: 60%" rows="1" >
+                      style="resize: vertical; width: 60%" rows="1"  >
         </div>
 
     <script >
@@ -29,14 +29,29 @@
             }
             if('{{ fillin_check }}'!=''){
                 var fill_type = '{{ fillin_check }}';
-                if(fill_type=='邮箱')
+                if(fill_type=='邮箱'){
                     source_panel_body.find("#fillin_field").attr("type",'email');
-                if(fill_type=='数字')
-                    source_panel_body.find("#fillin_field").attr("type",'number');
-                if(fill_type=='手机') {
-                    source_panel_body.find("#fillin_field").attr("type", 'tel');
-                    source_panel_body.find("#fillin_field").attr("type", 'tel');
                 }
+                if(fill_type=='整数') {
+                    source_panel_body.find("#fillin_field").attr("type",'number');
+                }
+                if(fill_type=='小数'){
+                    source_panel_body.find("#fillin_field").attr("type",'text');
+                    source_panel_body.find("#fillin_field").attr("pattern",'^\\d+(\\.\\d+)?$');
+                }
+                if(fill_type=='手机') {
+                    source_panel_body.find("#fillin_field").attr("type",'text');
+                    source_panel_body.find("#fillin_field").attr("pattern",'^\\d{11}$');
+                }
+                if(fill_type=='身份证号') {
+                    source_panel_body.find("#fillin_field").attr("type",'text');
+                    source_panel_body.find("#fillin_field").attr("pattern",'^\\d{18}$');
+                }
+                if(fill_type=='身份证号') {
+                    source_panel_body.find("#fillin_field").attr("type",'text');
+                    source_panel_body.find("#fillin_field").attr("pattern",'^\\d{10}$');
+                }
+
             }
 
 //            alert("3");
