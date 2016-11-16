@@ -299,6 +299,7 @@
     }
 
     modal.ready(function () {
+        reloadID();
         var source_panel_body = $("#qst{{ id }}");
         title_field.val(source_panel_body.find("#vote_title").text().trim());
         option_field1.val(source_panel_body.find("#optionsCheckbox1").parent().parent().next().html().trim());

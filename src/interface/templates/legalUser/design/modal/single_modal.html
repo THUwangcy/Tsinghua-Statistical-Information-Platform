@@ -194,6 +194,7 @@
 
 
     modal.ready(function () {
+        reloadID();
         var source_panel_body = $("#qst{{ id }}");
         title_field.val(source_panel_body.find("#single_title").text().trim());
         option_field1.val(source_panel_body.find("#optionsRadios1").parent().next().html().trim());
