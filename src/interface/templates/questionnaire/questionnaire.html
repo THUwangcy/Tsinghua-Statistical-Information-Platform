@@ -128,6 +128,8 @@
             success_callback: function (data) {
                 if (data['status'] === 'ok') {
                     success_callback();
+                }else if(data['status'] === 'repeat'){
+                    showConfirmModal('提示', '你已提交过问卷', true);
                 }
             }
         });

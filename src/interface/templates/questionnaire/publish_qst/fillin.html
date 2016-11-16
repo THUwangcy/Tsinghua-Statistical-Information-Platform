@@ -50,7 +50,7 @@
                 }
                 if(fill_type=='身份证号') {
                     source_panel_body.find("#fillin_field").attr("type",'text');
-                    source_panel_body.find("#fillin_field").attr("pattern",'^\\d{18}$');
+                    source_panel_body.find("#fillin_field").attr("pattern",'^(\\d{15}|\\d{17}(\\d|X|x))$');
                     source_panel_body.find("#fillin_field").attr("data-error",'请填写身份证号');
                 }
                 if(fill_type=='学号') {
