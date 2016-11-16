@@ -6,16 +6,16 @@ class createDefaultUserTest(TestCase):
 		return
 	def test_logic(self):
 		print type(User.objects.filter(student_id = "1111111111"))
-		print len(User.objects.filter(student_id = "1111111111"))
+		self.assertEqual(0, len(User.objects.filter(student_id = "1111111111")))
 		createDefaultUser();
 
 class hasDefaultUserTest(TestCase):
 	def setUp(self):
 		return
 	def test(self):
-		print len(User.objects.filter(student_id = "1111111111"))
+		self.assertEqual(0, len(User.objects.filter(student_id = "1111111111")))
 		createDefaultQuestionaire()
-		print len(User.objects.filter(student_id = "1111111111"))
+		self.assertEqual(1, len(User.objects.filter(student_id = "1111111111")))
 
 class createNewQuestionaireTest(TestCase):
 	def setUp(self):
