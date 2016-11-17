@@ -100,7 +100,7 @@ class Question(models.Model):
     question_mustfill = models.BooleanField(default = False)
     question_minfill = models.IntegerField(null = True)
     question_maxfill = models.IntegerField(null = True)
-    question_displayVotes = models.BooleanField(default = False)
+    question_displayVotes = models.BooleanField(default = True)
     question_ipTimes = models.IntegerField(null = True)
     question_dayTimes = models.IntegerField(null = True)
 

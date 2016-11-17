@@ -126,7 +126,12 @@ def createNewQuestionaire(dict):
 	currentQuestionaire.save()
 	currentQuestionaire.questionaire_md5 = md5encode(str(currentQuestionaire.id) + currentQuestionaire.questionaire_time)
 	currentQuestionaire.save()
+	if currentQuestionaire.questionaire_type == "SU":
+		currentQuestionaire.questionaire_title = u"XX活动报名"
+		currentQuestionaire.save()
 	if currentQuestionaire.questionaire_type == "VO":
+		currentQuestionaire.questionaire_title = u"票选最xxxx"
+		currentQuestionaire.save()
 		dict = {
 			"act_id" : currentQuestionaire.questionaire_md5,
 			"qst_type" : "vote",
@@ -134,6 +139,8 @@ def createNewQuestionaire(dict):
 		}
 		createNewQuestion(dict)
 	if currentQuestionaire.questionaire_type == "LW":
+		currentQuestionaire.questionaire_title = u"XX实验志愿者招募"
+		currentQuestionaire.save()
 		dict = {
 			"act_id" : currentQuestionaire.questionaire_md5,
 			"qst_type" : "fillin",
@@ -236,8 +243,8 @@ def createNewQuestion(dict):
 		if (switcher[thetype] == "VO"):
 			option1.choice_text = u"选项1"
 			option2.choice_text = u"选项2"
-			option1.choice_hasPicture = True
-			option2.choice_hasPicture = True
+			option1.choice_hasPicture = False
+			option2.choice_hasPicture = False
 		option1.save()
 		option2.save()
 	return_dict = {
@@ -392,7 +399,6 @@ def modifyQuestion(dict):
 		for choice in oldChoiceList:
 			choice.delete()
 		currentQuestion.question_choices = dict["option_num"]
-		currentQuestion.question_maxfill = currentQuestion.question_choices
 		if "min_selected" in questionKeys:
 			if dict["min_selected"] != "":
 				currentQuestion.question_minfill = int(dict["min_selected"])
@@ -504,7 +510,7 @@ def makeQuestionDict(qst):
 		return_dict["check"] = qst.question_fillincheck
 	else:
 		return_dict["option_num"] = qst.question_choices
-		if qst.question_type == "MU":
+		if ((qst.question_type == "MU") or (qst.question_type == "VO") or(qst.question_type == "MA")):
 			if qst.question_maxfill != None:
 				return_dict["max_selected"] = qst.question_maxfill
 			if qst.question_minfill != None:
@@ -607,7 +613,7 @@ def getQuestionFill(act_id, qst_id, fillin_id):
 	if currentQuestion.question_type == "SI":
 		cA = Answer.objects.get(answer_filler = currentFiller, answer_question = currentQuestion)
 		return cA.answer_choice.choice_order
-	if currentQuestion.question_type == "MU":
+	if ((currentQuestion.question_type == "MU") or (currentQuestion.question_type == "MA") or (currentQuestion.question_type == "VO")):
 		returnList = list()
 		#print "?????"
 		for answer in currentAnswer:
