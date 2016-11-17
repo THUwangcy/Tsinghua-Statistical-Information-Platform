@@ -66,6 +66,10 @@
         .wrap{
             min-height: 87%;
         }
+
+        .main {
+            padding-top: 0px;
+        }
     }
     .main{
         padding-bottom: 60px;
@@ -115,11 +119,12 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li class="pull-left visible-xs">
-                <a style="font-size: 16px; color: #18bc9c">
-                    <strong>
-                        {% block itemtitle %}
-                        {% endblock itemtitle %}
-                    </strong>
+                <a style="font-size: 16px;" href="{% url 'legalUser/login' %}">
+                        清华大学信息化统计平台&nbsp;&gt;
+                        <span style="color:">
+                            {% block itemtitle %}
+                            {% endblock itemtitle %}
+                        </sspan>
                 </a>
             </li>
             {% block right-toggle %}

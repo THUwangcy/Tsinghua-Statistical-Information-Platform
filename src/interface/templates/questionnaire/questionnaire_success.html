@@ -233,7 +233,7 @@ h1 {
 	font-size: 1.9em;
 }
 .login {
-	padding: 2em 0 0;
+	padding: 4em 0 0;
 }
 }
 </style>
@@ -243,11 +243,17 @@ h1 {
 	<div class="main">
 		<div class="login">
 			<div class="inset">
-                    <br>
+				<img src="{% static 'image/logo.png' %}"/>
+                    <hr>
                     <h2><strong>问卷填写成功</strong></h2>
-                    <a href="{% url 'legalUser/login' %}">来自清华大学信息化统计平台</a>
-				</div>
+                    <a href="{% url 'legalUser/login' %}">copyright@ 清华大学信息化统计平台</a>
 			</div>
+			<div align="center" style="font-size: 8px;">
+				<br>
+                copyright@ whyNotDance-关于-联系我们
+            </div>
 		</div>
+
+	</div>
 </body>
 </html>

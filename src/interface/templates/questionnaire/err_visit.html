@@ -233,21 +233,28 @@ h1 {
 	font-size: 1.9em;
 }
 .login {
-	padding: 2em 0 0;
+	padding: 4em 0 0;
 }
 }
 </style>
 
 </head>
 <body>
-	<div class="main">
+    <div class="main">
 		<div class="login">
 			<div class="inset">
-                <br>
-                <h2><strong id="qst_status" >{{ qst_status }}</strong></h2>
+				<img src="{% static 'image/logo.png' %}"/>
+                    <hr>
+                    <h2><strong id="qst_status" >{{ qst_status }}</strong></h2>
+                    <a href="{% url 'legalUser/login' %}">copyright@ 清华大学信息化统计平台</a>
+			</div>
+			<div align="center" style="font-size: 8px;">
+				<br>
+                copyright@ whyNotDance-关于-联系我们
             </div>
-        </div>
-    </div>
+		</div>
+
+	</div>
 </body>
 </html>
 
