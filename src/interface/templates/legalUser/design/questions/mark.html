@@ -8,27 +8,24 @@
 	    <table class="table table-striped">
 	        <thead>
 	        <tr>
-	        	<th>序号</th>
+	        	<th>#</th>
 	            <th>时间段</th>
 	            <th>剩余人数</th>
 	            <th>人数上限</th>
-	            <th></th>
 	        </tr>
 	        </thead>
 	        <tbody  id="checkbox-list">
                 <tr class="row_option">
-                	<td>1</td>
+                	<td><input type="checkbox" name="option{{ questions_id }}" id="optionsCheckbox1" value="option1"></td>
                     <td>10:00 - 11:00</td>
-                    <td>2</td>
                     <td>5</td>
-                    <td><input type="checkbox" name="option{{ questions_id }}" id="optionsCheckbox1" value="option1"></td>
+                    <td>5</td>
                 </tr>
                 <tr class="row_option">
-                	<td>2</td>
+                	<td><input type="checkbox" name="option{{ questions_id }}" id="optionsCheckbox2" value="option2"></td>
                     <td>11:00 - 12:00</td>
-                    <td>4</td>
                     <td>7</td>
-                    <td><input type="checkbox" name="option{{ questions_id }}" id="optionsCheckbox2" value="option2"></td>
+                    <td>7</td>
                 </tr>
 	        </tbody>
 	    </table>
@@ -81,11 +78,10 @@
 
                     var option_maxium = statistics[i];
                    
-                    var to_append = prefix + '<td>' + i + '</td>\
+                    var to_append = prefix + '<td><input type="checkbox" name=' + option_name + ' id=' + radio_id + ' value=' + radio_value + '></td>\
 		            						  <td>' + option_field + '</td>\
 		            						  <td>' + option_maxium + '</td>\
 		            						  <td>' + option_maxium + '</td>\
-		            						  <td><input type="checkbox" name=' + option_name + ' id=' + radio_id + ' value=' + radio_value + '></td>\
 		            						  </tr>';
                     source_panel_body.find("#checkbox-list").append(to_append);
                 }

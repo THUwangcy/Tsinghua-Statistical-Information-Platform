@@ -11,10 +11,16 @@
             <thead>
             <tr>
                 <th style="width: 10%"></th>
-                <th style="width: 15%"></th>
-                <th></th>
+
+                <th style="width: 50%" class="visible-xs"></th>
+                <th sytle="width: 20%" class="hidden-xs"></th>
+
+                <th style="width: 45%" class="hidden-xs"></th>
+
                 <th style="width: 5%"></th>
-                <th style="width: 20%"></th>
+
+                <th style="width: 35%" class="visible-xs"></th>
+                <th style="width: 20%" class="hidden-xs"></th>
             </tr>
             </thead>
             <tbody  id="checkbox-list">
@@ -23,7 +29,7 @@
                         <input type="checkbox" name="qst{{ questions_id }}" id="optionsCheckbox1" value="option1" class="vote">
                     </td>
                     <td style='vertical-align: middle;'>候选1</td>
-                    <td style='vertical-align: middle;'>
+                    <td style='vertical-align: middle;' class="hidden-xs">
                         <img src="{% static 'test.jpg' %}" class="img-responsive center-block"/>
                     </td>
                     <td style='vertical-align: middle;'></td>
@@ -35,7 +41,7 @@
                         <input type="checkbox" name="qst{{ questions_id }}" id="optionsCheckbox2" value="option2" class="vote">
                     </td>
                     <td style='vertical-align: middle;'>候选2</td>
-                    <td style='vertical-align: middle;'>
+                    <td style='vertical-align: middle;' class="hidden-xs">
                         <img src="{% static 'test.jpg' %}" class="img-responsive center-block"/>
                     </td>
                     <td style='vertical-align: middle;'></td>
@@ -43,6 +49,10 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+
+    <div class="visible-xs">
+
     </div>
     <textarea name="qst{{ questions_id }}" class="form-control"
                       style="resize: vertical; width: 5%; opacity: 0; position: absolute; z-index: 0;"
@@ -107,7 +117,7 @@
                     var radio_value = "option" + i;
 
                     var vote_num = statistics[i] + "票";
-                    var percent = "&emsp;( " + percentage[i] + "% )"
+                    var percent = "&nbsp;( " + percentage[i] + "% )"
 
                     if('{{ display_vote }}' != 'true')
                     {
@@ -117,18 +127,20 @@
 
                     var img_src = '';
                     var img = "";
+                    var img_xs = "";
                     if(has_image[i] == 'true') {
                         var src = "questionsImg/qst" + '{{ questions_id }}' + "_option" + i;
                         img_src = '{% static src %}' + src;
                         img = "<img src=" + img_src +  " class='img-responsive center-block'/>"
+                        img_xs = "<img src=" + img_src +  " class='img-responsive center-block visible-xs' style='padding-top:10px'/>"
                     }
                    
                     var to_append = prefix + '<td><input type="checkbox" name=' + option_name + 
                                                   ' id=' + radio_id + ' value=' + radio_value + ' class="vote"></td>\
-                                              <td>' + option_field + '</td>\
-                                              <td>' + img + '</td>\
+                                              <td>' + option_field + ' <br> ' + img_xs + '</td>\
+                                              <td class="hidden-xs">' + img + '</td>\
                                               <td>' + '</td>\
-                                              <td>' + vote_num + percent + '</td>\
+                                              <td>' + vote_num + percent + ' </td>\
                                               </tr>';
                     source_panel_body.find("#checkbox-list").append(to_append);
                 }

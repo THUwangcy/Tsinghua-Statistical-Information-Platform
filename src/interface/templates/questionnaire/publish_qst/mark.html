@@ -13,23 +13,20 @@
 	            <th>时间段</th>
 	            <th>余量</th>
 	            <th>总量</th>
-	            <th></th>
 	        </tr>
 	        </thead>
 	        <tbody  id="checkbox-list">
                 <tr class="row_option">
-                	<td>1</td>
+                	<td><input type="checkbox" name="qst{{ questions_id }}" id="optionsCheckbox1" value="option1" class="mark"></td>
                     <td>10:00 - 11:00</td>
                     <td>2</td>
                     <td>5</td>
-                    <td><input type="checkbox" name="qst{{ questions_id }}" id="optionsCheckbox1" value="option1" class="mark"></td>
                 </tr>
                 <tr class="row_option">
-                	<td>2</td>
+                	<td><input type="checkbox" name="qst{{ questions_id }}" id="optionsCheckbox2" value="option2" class="mark"></td>
                     <td>11:00 - 12:00</td>
                     <td>4</td>
                     <td>7</td>
-                    <td><input type="checkbox" name="qst{{ questions_id }}" id="optionsCheckbox2" value="option2" class="mark"></td>
                 </tr>
 	        </tbody>
 	    </table>
@@ -103,11 +100,10 @@
                         isDisable=" disabled=true";
                     }
 
-                    var to_append = prefix + '<td>' + i + '</td>\
+                    var to_append = prefix + '<td><input type="checkbox" name=' + option_name + ' id=' + radio_id + ' value=' + radio_value + isDisable + ' class="mark"></td>\
 		            						  <td>' + option_field + '</td>\
 		            						  <td>' + left_num + '</td>\
 		            						  <td>' + option_maxium + '</td>\
-		            						  <td><input type="checkbox" name=' + option_name + ' id=' + radio_id + ' value=' + radio_value + isDisable + ' class="mark"></td>\
 		            						  </tr>';
                     source_panel_body.find("#checkbox-list").append(to_append);
                 }
