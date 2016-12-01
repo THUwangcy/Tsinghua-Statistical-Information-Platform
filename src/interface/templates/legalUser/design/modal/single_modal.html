@@ -84,6 +84,7 @@
     var title_field = modal.find("#single_title_field")
     var option_field1 = modal.find("#option1_field");
     var must_option = modal.find("#must_field");
+    var maxium_field1 = modal.find("#option1_maxium");
 
     //重新加载每个选项输入框的id和name，方便之后表单serilize
     function reloadID() {
@@ -202,7 +203,7 @@
         if(option1_maxium.length != 0) {
             var content = option1_maxium.html().trim();
             content = content.substr(content.indexOf('/') + 2, content.indexOf('】') - content.indexOf('/') - 2);
-            modal.find("#option1_maxium").val(content);
+            maxium_field1.val(parseInt(content));
         }
 
         //必答题设置

@@ -230,7 +230,7 @@
         if(option1_maxium.length != 0) {
             var content = option1_maxium.html().trim();
             content = content.substr(content.indexOf('/') + 2, content.indexOf('】') - content.indexOf('/') - 2);
-            modal.find("#option1_maxium").val(content);
+            modal.find("#option1_maxium").val(parseInt(content));
         }
 
         //必答题设置

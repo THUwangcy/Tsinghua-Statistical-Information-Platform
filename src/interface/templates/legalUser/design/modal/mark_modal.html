@@ -110,6 +110,7 @@
 
             var input_maxium = $(this).find(".form-control").last();
             var maxium_id = 'option' + rank + '_maxium';
+        //    alert(maxium_id);
             input_field.attr('name', id);
             input_field.attr('id', id);
             input_maxium.attr('name', maxium_id);
@@ -178,12 +179,11 @@
 
             var option_maxium = modal.find("#option" + i + "_maxium").val();
             
-            var to_append = prefix + '<td>' + i + '</td>\
-            						  <td>' + option_field + '</td>\
-            						  <td>' + option_maxium + '</td>\
-            						  <td>' + option_maxium + '</td>\
-            						  <td><input type="checkbox" name=' + option_name + ' id=' + radio_id + ' value=' + radio_value + '></td>\
-            						  </tr>';
+            var to_append = prefix + '<td><input type="checkbox" name=' + option_name + ' id=' + radio_id + ' value=' +                                                                 radio_value + ' class="mark"></td>\
+                                      <td>' + option_field + '</td>\
+                                      <td>' + option_maxium + '</td>\
+                                      <td>' + option_maxium + '</td>\
+                                      </tr>';
        
             source_panel_body.find("#checkbox-list").append(to_append);
         }
@@ -220,11 +220,11 @@
         reloadID();
         var source_panel_body = $("#qst{{ id }}");
         title_field.val(source_panel_body.find("#mark_title").text().trim());
-        option_field1.val(source_panel_body.find("#optionsCheckbox1").parent().parent().prev().prev().prev().html().trim());
+        option_field1.val(source_panel_body.find("#optionsCheckbox1").parent().parent().next().html().trim());
         //设置第一个选项的限制人数
-        var option1_maxium = source_panel_body.find("#optionsCheckbox1").parent().parent().prev();
+        var option1_maxium = source_panel_body.find("#optionsCheckbox1").parent().parent().next().next();
         if(option1_maxium.length != 0) {
-            modal.find("#option1_maxium").val(option1_maxium.html().trim());
+            modal.find("#option1_maxium").val(parseInt(option1_maxium.html().trim()));
         }
 	
         //必答题设置
@@ -253,10 +253,10 @@
             var current_rank = i - 1;
             var current_id = '#option' + current_rank + '_field';
             Add($(current_id));
-            modal.find("#option" + i + "_field").val(source_panel_body.find("#optionsCheckbox" + i).parent().parent().prev().prev().prev().html().trim());
+            modal.find("#option" + i + "_field").val(source_panel_body.find("#optionsCheckbox" + i).parent().parent().next().html().trim());
 
             //设置选项限制人数
-            var maxium_field = source_panel_body.find("#optionsCheckbox" + i).parent().parent().prev();
+            var maxium_field = source_panel_body.find("#optionsCheckbox" + i).parent().parent().next().next();
             if(maxium_field.length != 0) {
                 var content = maxium_field.html().trim();
                 modal.find("#option" + i + "_maxium").val(parseInt(content));
