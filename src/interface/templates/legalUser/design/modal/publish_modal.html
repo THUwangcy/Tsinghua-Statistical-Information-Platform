@@ -118,8 +118,8 @@
 
     modal.ready(function () {
 
-        var questionnaire_url = "http://127.0.0.1:8000" + "{% url 'questionnaire' id %}";
-        var management_url = "http://127.0.0.1:8000" + "{% url 'guest/statistics/id' id %}";
+        var questionnaire_url = "http://52.187.34.62:8000" + "{% url 'questionnaire' id %}";
+        var management_url = "http://52.187.34.62:8000" + "{% url 'guest/statistics/id' id %}";
         url_field.val(questionnaire_url); 
         manage_field.val(management_url);
         $('#qrcode').qrcode(questionnaire_url);

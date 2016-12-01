@@ -28,92 +28,10 @@
 <hr class="hidden-xs">
 <div class="row">
     <div class="col-md-9">
+        
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4>待发布报名<span class="badge pull-right">{{ pending_applications|length }}</span></h4></div>
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table class="table table-striped" id="pending-table">
-                        <thead>
-                        <tr>
-                            <th style="width: 5%">#</th>
-                            <th style="width: 20%">活动名称</th>
-                            <th style="width: 20%">上次修改</th>
-                            <th style="width: 35%">活动说明</th>
-                            <th>
-                                <div style="width: 10%"></div>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% if pending_applications %}
-                            {% for app in pending_applications %}
-                                <tr>
-                                    <td>{{ forloop.counter }}</td>
-                                    <td><a class="ajax-link fake-link"
-                                           href="javascript:loadContent('{% url 'legalUser/design/id' app.type app.id%}',
-                                                     {}, '#' + '{{app.type}}' + '-design-item')">
-                                        {{ app.name }} </a>
-                                    </td>
-                                    <td>{{ app.subscribe_time }}</td>
-                                    <td>{{ app.description|linebreaksbr|truncatechars:100 }}</td>
-                                    <td>
-                                        <a class="fake-link collapse-row pull-right" href="#pending{{forloop.counter}}">
-                                            <span class="fa fa-check-square-o fa-fw"></span> 操作&emsp;
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr></tr>
-
-                                <tr class="collapse-row" >
-                                    <td  colspan="6" style="display:none;" id="pending{{forloop.counter}}_td">
-                                        <div id="pending{{forloop.counter}}" class="operation" style="display:none; width: 100%">
-                                            <ul>
-                                                <li style="width: 33%" align="center">
-                                                    <a class="fake-link" href="javascript:loadContent('{% url 'legalUser/design/id' app.type app.id%}',
-                                                     {}, '#' + '{{app.type}}' + '-design-item')" >
-                                                        <i class="fa fa-pencil-square-o fa-fw fa-2x" aria-hidden="true"></i> 修改
-                                                    </a>
-                                                </li>
-                                                <li style="width: 33%" align="center">
-                                                    <a class="fake-link" href="javascript:publish_act('{{ app.id }}', '{% url 'api/publish_act' %}', '{% url 'legalUser/modal' %}')" >
-                                                        <i class="fa fa-file-text-o fa-fw fa-2x" aria-hidden="true"></i> 发布
-                                                    </a>
-                                                </li>
-                                                <li style="width: 33%" align="center">
-                                                    <a class="fake-link" href="javascript:remove_act('{{app.id}}', '{% url 'api/remove_act' %}', '#dashboard-item')">
-                                                        <i class="fa fa-trash fa-fw fa-2x" aria-hidden="true"></i> 删除
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr></tr> <tr></tr>
-                            {% endfor %}
-                        {% else %}
-                            <tr>
-                                <td colspan="6" style="text-align: center">无待发布报名</td>
-                            </tr>
-                        {% endif %}
-                        </tbody>
-                    </table>
-                </div>
-                {% if show_all_pending_applications %}
-                    <hr style="margin-top: 0">
-                    <ul class="list-inline pull-right">
-                        <li><a class="ajax-link" data-url="{% url 'test' %}">
-                            <span class="fa fa-ellipsis-h fa-fw"></span> 查看所有
-                        </a></li>
-                    </ul>
-                {% endif %}
-            </div>
-        </div>
-        <hr>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4>我发布的报名</h4>
+                <h4>我发布的报名<span class="badge pull-right">{{ activities|length }}</span></h4>
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
@@ -152,7 +70,7 @@
                                     </td>
                                     <td>
                                         <a class="fake-link collapse-row pull-right" href="#already{{forloop.counter}}">
-                                            <span class="fa fa-check-square-o fa-fw"></span> 操作&emsp;
+                                            <span class="fa fa-wrench fa-fw"></span> 操作&emsp;
                                         </a>
                                     </td>
                                 </tr>
@@ -163,22 +81,22 @@
                                         <div id="already{{forloop.counter}}" class="operation" style="display:none; width: 100%">
                                             <ul>
                                                 <li style="width: 24%" align="center">
-                                                    <a class="fake-link" href="javascript:stop_act('{{activity.id}}', '{% url 'api/stop_act' %}', '#dashboard-item')">
+                                                    <a class="fake-link" href="javascript:stop_act('{{activity.id}}', '{% url 'api/stop_act' %}', '#dashboard-item');">
                                                         <i class="fa fa-pause fa-fw fa-2x" aria-hidden="true"></i>停止
                                                     </a>
                                                 </li>
                                                 <li style="width: 24%" align="center">
-                                                    <a class="fake-link" href="javascript:showModal('{% url 'legalUser/modal' %}', 'publish-modal', {'modal_type': 'publish','id': {{activity.id}} })" >
+                                                    <a class="fake-link" href="javascript:showModal('{% url 'legalUser/modal' %}', 'publish-modal', {'modal_type': 'publish','id': {{activity.id}} });" >
                                                         <i class="fa fa-share-square-o fa-fw fa-2x" aria-hidden="true"></i> 分享
                                                     </a>
                                                 </li>
                                                 <li style="width: 24%" align="center">
-                                                    <a class="fake-link" href="javascript:loadContent('{% url 'statistics/id' activity.id %}', {}, '#statistics-list-item')" >
+                                                    <a class="fake-link" href="javascript:loadContent('{% url 'statistics/id' activity.id %}', {}, '#statistics-list-item');" >
                                                         <i class="fa fa-bar-chart-o fa-fw fa-2x" aria-hidden="true"></i> 结果
                                                     </a>
                                                 </li>
                                                 <li style="width: 24%" align="center">
-                                                    <a class="fake-link" href="javascript:remove_act('{{activity.id}}', '{% url 'api/remove_act' %}', '#dashboard-item')" >
+                                                    <a class="fake-link" href="javascript:remove_act('{{activity.id}}', '{% url 'api/remove_act' %}', '#dashboard-item');" >
                                                         <i class="fa fa-trash fa-fw fa-2x" aria-hidden="true"></i> 删除
                                                     </a>
                                                 </li>
@@ -198,6 +116,90 @@
                 </div>
             </div>
         </div>
+        <hr>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>待发布报名</h4></div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="pending-table">
+                        <thead>
+                        <tr>
+                            <th style="width: 5%">#</th>
+                            <th style="width: 20%">活动名称</th>
+                            <th style="width: 20%">上次修改</th>
+                            <th style="width: 35%">活动说明</th>
+                            <th>
+                                <div style="width: 10%"></div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if pending_applications %}
+                            {% for app in pending_applications %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td><a class="ajax-link fake-link"
+                                           href="javascript:loadContent('{% url 'legalUser/design/id' app.type app.id%}',
+                                                     {}, '#' + '{{app.type}}' + '-design-item');">
+                                        {{ app.name }} </a>
+                                    </td>
+                                    <td>{{ app.subscribe_time }}</td>
+                                    <td>{{ app.description|linebreaksbr|truncatechars:100 }}</td>
+                                    <td>
+                                        <a class="fake-link collapse-row pull-right" href="#pending{{forloop.counter}}">
+                                            <span class="fa fa-wrench fa-fw"></span> 操作&emsp;
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr></tr>
+
+                                <tr class="collapse-row" >
+                                    <td  colspan="6" style="display:none;" id="pending{{forloop.counter}}_td">
+                                        <div id="pending{{forloop.counter}}" class="operation" style="display:none; width: 100%">
+                                            <ul>
+                                                <li style="width: 33%" align="center">
+                                                    <a class="fake-link" href="javascript:loadContent('{% url 'legalUser/design/id' app.type app.id%}',
+                                                     {}, '#' + '{{app.type}}' + '-design-item');" >
+                                                        <i class="fa fa-pencil-square-o fa-fw fa-2x" aria-hidden="true"></i> 修改
+                                                    </a>
+                                                </li>
+                                                <li style="width: 33%" align="center">
+                                                    <a class="fake-link" href="javascript:publish_act('{{ app.id }}', '{% url 'api/publish_act' %}', '{% url 'legalUser/modal' %}');" >
+                                                        <i class="fa fa-file-text-o fa-fw fa-2x" aria-hidden="true"></i> 发布
+                                                    </a>
+                                                </li>
+                                                <li style="width: 33%" align="center">
+                                                    <a class="fake-link" href="javascript:remove_act('{{app.id}}', '{% url 'api/remove_act' %}', '#dashboard-item');">
+                                                        <i class="fa fa-trash fa-fw fa-2x" aria-hidden="true"></i> 删除
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr></tr> <tr></tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6" style="text-align: center">无待发布报名</td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                {% if show_all_pending_applications %}
+                    <hr style="margin-top: 0">
+                    <ul class="list-inline pull-right">
+                        <li><a class="ajax-link" data-url="{% url 'test' %}">
+                            <span class="fa fa-ellipsis-h fa-fw"></span> 查看所有
+                        </a></li>
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+        
     </div>
     <!--/col-->
     <div class="col-md-3">
@@ -217,7 +219,7 @@
                 </div>
             {% endif %}
         </div>
-
+<!--
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4>站内消息</h4></div>
@@ -243,6 +245,7 @@
                 });
             </script>
         </div>
+-->
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4>近期热门活动</h4>
@@ -258,14 +261,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% if activities %}
-                            {% for activity in activities %}
+                        {% if sort_applications %}
+                            {% for app in sort_applications %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td><a class="fake-link" href="{% url 'questionnaire' activity.id %}" target="_blank">
-                                        {{ activity.name }}
+                                    <td><a class="fake-link" href="{% url 'questionnaire' app.id %}" target="_blank">
+                                        {{ app.name }}
                                     </a></td>
-                                    <td align="center">{{ activity.fillin}}</td>
+                                    <td align="center">{{ app.fillin}}</td>
                                 </tr>
                             {% endfor %}
                         {% else %}

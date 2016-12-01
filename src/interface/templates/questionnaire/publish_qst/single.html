@@ -3,9 +3,9 @@
 {% block title%}
 
     <label for="name" id="single_title" class="control-label" >请在此输入问题标题</label>
+    <label id = "must_qst" style="color:red; display: none;">&nbsp;*</label>
     <div id="radio-list">
         <div class="radio">
-            &emsp;
             <label>
             <input type="radio" name="option{{ questions_id }}" id="optionsRadios1" value="option1" class="form-control">
                 <label for="this.prev();">选项 1</label>
@@ -13,7 +13,6 @@
         </div>
 
         <div class="radio">
-            &emsp;
             <label>
             <input type="radio" name="option{{ questions_id }}" id="optionsRadios2" value="option2" class="form-control">
                 <label for="this.prev();">选项 2</label>
@@ -27,16 +26,27 @@
             if('{{questions_title}}' != 'None')
                 source_panel_body.find("#single_title").html('{{questions_title}}');
 
+            //必答题星号
+            if('{{qst_must}}' == 'true')
+                source_panel_body.find("#must_qst").css("display", '');
+
             if('{{option}}' != 'None')
             {
                 //全删除
                 source_panel_body.find(".radio").each(function() {
                     $(this).remove();
                 });
+
+                //加载人数限制
+                var statistics = new Array();
+                var left = new Array();
+                '{% for opt in statistics %}'
+                    statistics['{{forloop.counter}}'] = '{{opt.max}}';
+                    left['{{forloop.counter}}'] = '{{opt.left}}';
+                '{% endfor %}'
                 
                 var option_name = 'qst' + '{{ questions_id }}';
                 var prefix = '<div class="radio">\
-                                &emsp;\
                                 <label>\
                                 <input class="form-control" type="radio" name=' + option_name + ' id=';
                 //一个一个加选项
@@ -44,8 +54,20 @@
                     var option_field = '{{option}}'.split('###')[(i - 1) * 2 + 1];
                     var radio_id = "optionsRadios" + i;
                     var radio_value = "option" + i;
-                    var to_append = prefix + radio_id + ' value=' + radio_value + '>\
+
+                    var option_maxium = statistics[i];
+                    var left_num = left[i];
+                    if (option_maxium != '') {
+                        option_maxium = "【 剩余可选择次数: " + left_num + ' / ' + option_maxium + ' 】';
+                    }
+                    var isDiasble='';
+                    if (left_num == 0){
+                        isDiasble=" disabled=true";
+                    }
+
+                    var to_append = prefix + radio_id + isDiasble +' value=' + radio_value + '>\
                                         <label for="this.prev();">' + option_field + '</label\
+                                        <label for="this.prev();">' + option_maxium + '</label>\
                                         </lable>\
                                     </div>';
                     source_panel_body.find("#radio-list").append(to_append);

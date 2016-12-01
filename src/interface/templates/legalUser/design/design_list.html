@@ -22,7 +22,7 @@
             <hr>
             <a class="fake-link collapse-row pull-right"
                href="#" onclick="return Edit_title();">
-                <span class="fa fa-check-square-o fa-fw"></span> 编辑&emsp;
+                <span class="fa fa-pencil fa-fw"></span> 编辑&emsp;
             </a>
         </div>
 
@@ -50,7 +50,15 @@
                     'option_num': '{{qst.option_num}}',
                     'option': '{{qst.option}}',
                     'rows': '{{qst.rows}}',
-                    'hint': '{{qst.hint}}'
+                    'hint': '{{qst.hint}}',
+
+                    'qst_must': '{{ qst.qst_must }}',
+                    'min_selected': '{{ qst.min_selected }}',
+                    'max_selected': '{{ qst.max_selected }}',
+
+                    'display_vote': '{{ qst.display_vote }}',
+                    'ip_times': '{{ qst.ip_times }}',
+                    'day_times': '{{ qst.day_times }}'
                 }
 
                 loadContentOn($(".last-question"), "{% url 'legalUser/design/question' type act_id%}", pre_info_param, {anim: false, scroll: false});
@@ -87,7 +95,8 @@
         heading.hover(function(){
             $heading_panel.removeClass("panel-default");
             $heading_panel.addClass("panel-success");
-            $("#collapse-heading").slideDown("fast");
+            setTimeout(function(){$("#collapse-heading").slideDown("fast");}, 0);
+            
         }, 
         function(){
             $heading_panel.removeClass("panel-success");

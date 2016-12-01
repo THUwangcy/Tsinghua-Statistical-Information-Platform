@@ -6,7 +6,6 @@
     <label id = "must_qst" style="color:red; display: none;">&nbsp;*</label>
     <div id="radio-list">
         <div class="radio">
-            &emsp;
             <label>
             <input type="radio" name="option{{ questions_id }}" id="optionsRadios1" value="option1">
                 <label for="this.prev();">选项 1</label>
@@ -14,7 +13,6 @@
         </div>
 
         <div class="radio">
-            &emsp;
             <label>
             <input type="radio" name="option{{ questions_id }}" id="optionsRadios2" value="option2">
                 <label for="this.prev();">选项 2</label>
@@ -50,7 +48,6 @@
                 
                 var option_name = 'option' + '{{ questions_id }}';
                 var prefix = '<div class="radio">\
-                                &emsp;\
                                 <label>\
                                 <input type="radio" name=' + option_name + ' id=';
                 //一个一个加选项

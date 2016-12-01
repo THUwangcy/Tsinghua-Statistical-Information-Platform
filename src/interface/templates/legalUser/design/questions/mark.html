@@ -1,3 +1,100 @@
 {% extends 'legalUser/design/questions/index.html' %}
 
-{% block title%}评分题{% endblock title %}
+{% block title%}
+	<label for="name" id="mark_title">请在此输入项目名称</label>
+    <label id = "must_qst" style="color:red; display: none;">&nbsp;*</label>
+    <label id = "select_hint"></label>
+    <div class="table-responsive">
+	    <table class="table table-striped">
+	        <thead>
+	        <tr>
+	        	<th>#</th>
+	            <th>时间段</th>
+	            <th>剩余人数</th>
+	            <th>人数上限</th>
+	        </tr>
+	        </thead>
+	        <tbody  id="checkbox-list">
+                <tr class="row_option">
+                	<td><input type="checkbox" name="option{{ questions_id }}" id="optionsCheckbox1" value="option1"></td>
+                    <td>10:00 - 11:00</td>
+                    <td>5</td>
+                    <td>5</td>
+                </tr>
+                <tr class="row_option">
+                	<td><input type="checkbox" name="option{{ questions_id }}" id="optionsCheckbox2" value="option2"></td>
+                    <td>11:00 - 12:00</td>
+                    <td>7</td>
+                    <td>7</td>
+                </tr>
+	        </tbody>
+	    </table>
+	</div>
+
+    <script>
+        $(document).ready(function(){
+
+            var source_panel_body = $("#qst{{ questions_id }}");
+            if('{{questions_title}}' != 'None')
+                source_panel_body.find("#mark_title").html('{{questions_title}}');
+
+            //必答题星号
+            if('{{qst_must}}' == 'true')
+                source_panel_body.find("#must_qst").css("display", '');
+
+            //设置选择提示
+            var select_hint = source_panel_body.find("#select_hint");
+            if('{{min_selected}}' == 'None' || '{{min_selected}}' == '') {
+                if('{{max_selected}}' != 'None' && '{{max_selected}}' != '')
+                    select_hint.html("&nbsp;[最多选择" + '{{max_selected}}' + "项]");
+            }
+            else {
+                if('{{max_selected}}' != 'None' && '{{max_selected}}' != '')
+                    select_hint.html("&nbsp;[请选择" + '{{min_selected}}' + " - " + '{{max_selected}}' + "项]");
+                else
+                    select_hint.html("&nbsp;[至少选择" + '{{min_selected}}' + "项]")
+            }
+
+            if('{{option}}' != 'None')
+            {
+                //全删除
+                source_panel_body.find(".row_option").each(function() {
+                    $(this).remove();
+                });
+
+                //加载人数限制
+                var statistics = new Array();
+                '{% for opt in statistics %}'
+                    statistics['{{forloop.counter}}'] = '{{opt.max}}';
+                '{% endfor %}'
+                
+                var option_name = 'option' + '{{ questions_id }}';
+                var prefix = '<tr class="row_option">';
+                //一个一个加选项
+                for(i = 1; i <= '{{option_num}}'; i ++) {
+                    var option_field = '{{option}}'.split('###')[(i - 1) * 2 + 1];
+                    var radio_id = "optionsCheckbox" + i;
+                    var radio_value = "option" + i;
+
+                    var option_maxium = statistics[i];
+                   
+                    var to_append = prefix + '<td><input type="checkbox" name=' + option_name + ' id=' + radio_id + ' value=' + radio_value + '></td>\
+		            						  <td>' + option_field + '</td>\
+		            						  <td>' + option_maxium + '</td>\
+		            						  <td>' + option_maxium + '</td>\
+		            						  </tr>';
+                    source_panel_body.find("#checkbox-list").append(to_append);
+                }
+
+            }
+
+            //加载选框样式
+            $('input').iCheck({
+              checkboxClass: 'icheckbox_flat-green',
+              radioClass: 'iradio_flat-green',
+              increaseArea: '20%'
+            });
+        });
+    </script>
+
+{% endblock title %}

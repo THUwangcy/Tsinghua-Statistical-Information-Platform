@@ -23,6 +23,10 @@ from django.utils import timezone
 from interface import _database
 from interface import send_email
 
+import urllib
+import urllib2
+import thread
+
 # Create your views here.
 
 
@@ -108,7 +112,36 @@ def save_act(request):
 
 def publish_act(request):
     file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
-    Act_id = request.GET['act_id']
+    act_id = request.GET['act_id']
+
+    content = {}
+    try:
+        questionnaire_url = request.GET['questionnaire_url']
+        manage_url = request.GET['management_url']
+        content = {
+            'email': session.get_email(request),
+            'manage_url': manage_url,
+            'questionnaire_url': questionnaire_url,
+        }
+    except:
+        pass
+
+    try:
+        thread.start_new_thread(send_email.send_html_mail, ("来自清华大学信息化统计平台", content, [session.get_email(request), ], ))
+        # send_email.send_html_mail("来自清华大学信息化统计平台", content, [session.get_email(request), ])
+    except:
+        pass
+
+    file_object.writelines("Publish: " + act_id + "\n")
+    status = api.publishQuestionaire(request.GET.dict())
+
+    session.del_email(request)
+    return JsonResponse({
+        'status': status,
+    })
+
+
+def email_act(request):
     questionnaire_url = request.GET['questionnaire_url']
     manage_url = request.GET['management_url']
     content = {
@@ -116,11 +149,15 @@ def publish_act(request):
         'manage_url': manage_url,
         'questionnaire_url': questionnaire_url,
     }
-    send_email.send_html_mail("来自清华大学信息化统计平台", content, [session.get_email(request),])
-    file_object.writelines("Publish: " + Act_id + "\n")
-    status = api.publishQuestionaire(request.GET.dict())
+    try:
+        thread.start_new_thread(send_email.send_html_mail, ("来自清华大学信息化统计平台", content, [session.get_email(request), ], ))
+        # send_email.send_html_mail("来自清华大学信息化统计平台", content, [session.get_email(request), ])
+    except:
+        pass
+
+    session.del_email(request)
     return JsonResponse({
-        'status': status,
+        'status': 'ok'
     })
 
 
@@ -135,11 +172,31 @@ def register_email(request):
 #--------------------------------------------------------------------------------------#
 
 def modify_qst(request):
-    file_object = open(os.path.abspath('.') + '/interface/static_database.txt' , 'w')
+    file_object = open(os.path.abspath('.') + '/interface/stat_database.txt' , 'w')
 
     dict = request.POST.dict()
     for key in dict:
-        file_object.writelines(key + ": " + dict[key] + "233\n")
+        file_object.writelines(key + ": " + dict[key] + "\n")
+
+    if 'option_num' in dict:
+        option_num = dict['option_num']
+        questions_id = dict['questions_id']
+        file_object.writelines(option_num + " " + questions_id)
+
+        for i in range(1, int(option_num) + 1):
+            img_name = 'qst' + str(questions_id) + '_option' + str(i)
+            img_field = 'option' + str(i) + '_img'
+
+            if img_field in request.FILES:
+                dict[img_field] = 'true'
+                file = request.FILES[img_field]
+                file_object.writelines(file.name)
+                with open(os.path.abspath('.') + '/interface/static/questionsImg/' + img_name, 'wb+') as destination:
+                    for chunk in file.chunks():
+                        destination.write(chunk)
+            else:
+                dict[img_field] = 'false'
+
     file_object.close()
     status = api.modifyQuestion(dict)
     return JsonResponse({
@@ -164,35 +221,75 @@ def create_new_notice(request):
 
 def info_change_act(request):
     dicts = request.POST.dict()
+    dicts["username"] = session.get_username(request)
+    # 给徐子南, 在这丢一个dict给后端，后端根据dict中的username修改用户信息
+    # 只修改dict中有的key 的value, 没有的key不修改
+    status = api.userInfoChange(dicts)
     output = open('info_change.txt', 'w')
-    infomations=""
-    for key, value in dicts.items():
-        infomations += "\"%s\":\"%s\"" % (key, value)
-        infomations += "\n"
-    output.write(infomations)
-    return JsonResponse(dict(status='ok'))
-
-
-def login_act(request):
-    dicts = request.POST.dict()
-    output = open('log_info.txt', 'w')
     information = ""
     for key, value in dicts.items():
         information += "\"%s\":\"%s\"" % (key, value)
         information += "\n"
     output.write(information)
+    return JsonResponse(dict(status='ok'))
+
+
+def login_act(request):
+    dicts = request.POST.dict()
     username = dicts['log_username']
     password = dicts['log_password']
-    if username == 'admin' and password == '123456':
-        identity = 'legalUser'
-        session.add_session(request, username=username, identity=identity)
-    elif username == 'manager' and password == '123456':
+    if username == 'manager' and password == '123456':
         identity = 'manager'
         session.add_session(request, username=username, identity=identity)
+    elif username == 'admin' and password == '123456':
+        identity = 'legalUser'
+        session.add_session(request, username=username, identity=identity, student_id='1111111111')
     else:
-        return JsonResponse(dict(status='wrong username or password'))
+        data = {
+            'id': username,
+            'pw': password,
+        }
+        url = 'http://student.tsinghua.edu.cn/api/temp_login'
+        post_data = urllib.urlencode(data)
+
+        req = urllib2.urlopen(url, post_data)
+        content = req.read()
+
+        user_data = {}
+
+        try:
+            user = json.loads(content)
+            user_data['username'] = user['yhm']
+            user_data['real_name'] = user['xm']
+            user_data['user_id'] = user['zjh']
+            user_data['email'] = user['email']
+            identity = 'legalUser'
+            user_data['identity'] = identity
+            # 给徐子南, 在这把字典user_data丢给后端
+            api.createUser(user_data)
+            session.add_session(request, username=user_data['username'],
+                                identity=identity, student_id=user_data['user_id'])
+        except:
+            return JsonResponse(dict(status='wrong username or password'))
     return JsonResponse(dict(status='ok', identity=identity))
 
+
+def get_user_information_act(username):
+    # 给徐子南, 在这通过丢一个username个后端获取用户信息dict
+    dicts = api.getUserInfo(username)
+    return dicts
+
+
+def get_all_user():
+    # 给徐子南, 这里丢回一个list, list中是所有用户的用户信息dict
+    all_user = api.getAllUserInfo()
+    return all_user
+
+
+def get_all_questionnaire():
+    # 给徐子南，这里丢回一个list, list中是所有问卷的问卷信息
+    all_questionnaire = api.getAllQustionaireInfo()
+    return all_questionnaire
 
 
 def get_questionnaire_byID(act_id):
@@ -233,6 +330,12 @@ def get_questionnaire_bySTATUS(status, username):
                     'icon': 'fa-cogs',
                     'name': u'待发布'
                  }
+        elif item['status'] == 'pause':
+            item['status_display'] = {
+                    'colorclass': 'danger',
+                    'icon': 'fa-pause',
+                    'name': u'已暂停'
+                 }
         file_object.writelines("\n")
     file_object.close()
 #   if status == 'pending':
@@ -264,7 +367,21 @@ def get_statistics_of_question(qst_id):
 
 def notice_act(request):
     dicts = request.POST.dict()
+    notice = dicts['notice']
+    output = open('notice.txt', 'w')
+    output.write(notice)
+    output.close()
     return JsonResponse(dict(status='ok'))
+
+
+def get_notice():
+    try:
+        inputs = open('notice.txt', 'r')
+        notice = inputs.read()
+        inputs.close()
+        return notice
+    except:
+        return '暂无公告'
 
 #问卷提交函数 目前已实现 单选、填空
 #格式infomations如下
@@ -298,7 +415,17 @@ def stop_act(request):
     file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
     Act_id = request.GET['act_id']
     file_object.writelines("Stop: " + Act_id + "\n")
-    status = 'ok'
+
+    status = api.stopQuestionaire(request.GET.dict())
+    return JsonResponse({
+        'status': status,
+    })
+
+def resume_act(request):
+    file_object = open(os.path.abspath('.') + '/interface/static_database.txt', 'w')
+    Act_id = request.GET['act_id']
+    file_object.writelines("Resume: " + Act_id + "\n")
+    status = api.publishQuestionaire(request.GET.dict())
     return JsonResponse({
         'status': status,
     })
@@ -360,6 +487,10 @@ def get_columnChart_json(act_id, qst_id):
         tableData['chart']['subCaption'] = u'单选题'
     elif question['qst_type'] == 'multi':
         tableData['chart']['subCaption'] = u'多选题'
+    elif question['qst_type'] == 'mark':
+        tableData['chart']['subCaption'] = u'招募题'
+    elif question['qst_type'] == 'vote':
+        tableData['chart']['subCaption'] = u'投票题'
     else:
         tableData = {}
 
@@ -386,6 +517,7 @@ def get_pieChart_json(act_id, qst_id):
             'subCaption': question['qst_type'],
             'showLegend': '1',
             'legendItemFontSize': '12',
+            "startingAngle": "310",
         },
         'data': []
     }
@@ -400,6 +532,10 @@ def get_pieChart_json(act_id, qst_id):
         tableData['chart']['subCaption'] = u'单选题'
     elif question['qst_type'] == 'multi':
         tableData['chart']['subCaption'] = u'多选题'
+    elif question['qst_type'] == 'mark':
+        tableData['chart']['subCaption'] = u'招募题'
+    elif question['qst_type'] == 'vote':
+        tableData['chart']['subCaption'] = u'投票题'
     else:
         tableData = {}
 
@@ -438,6 +574,10 @@ def get_barChart_json(act_id, qst_id):
         tableData['chart']['subCaption'] = u'单选题'
     elif question['qst_type'] == 'multi':
         tableData['chart']['subCaption'] = u'多选题'
+    elif question['qst_type'] == 'mark':
+        tableData['chart']['subCaption'] = u'招募题'
+    elif question['qst_type'] == 'vote':
+        tableData['chart']['subCaption'] = u'投票题'
     else:
         tableData = {}
 
@@ -487,6 +627,10 @@ def get_circleChart_json(act_id, qst_id):
         tableData['chart']['subCaption'] = u'单选题'
     elif question['qst_type'] == 'multi':
         tableData['chart']['subCaption'] = u'多选题'
+    elif question['qst_type'] == 'mark':
+        tableData['chart']['subCaption'] = u'招募题'
+    elif question['qst_type'] == 'vote':
+        tableData['chart']['subCaption'] = u'投票题'
     else:
         tableData = {}
 

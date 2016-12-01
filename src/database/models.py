@@ -20,28 +20,18 @@ class Admin(models.Model):
 
 class User(models.Model):
     student_id = models.CharField(max_length = 20, primary_key = True)
+    username = models.CharField(max_length = 20, default = "ah")
     real_name = models.CharField(max_length = 20, default = "michael jackson")
+
+    identity = models.CharField(max_length = 20, default = "legalUser")
     password = models.CharField(max_length = 32, default = "00000000")
+
     age = models.CharField(max_length = 18, default = "18")
+    gender = models.CharField(max_length = 10, default = "")
     status = models.CharField(max_length = 400, default = "hello world")
     address = models.CharField(max_length = 400, default = "china")
-    tel = models.CharField(
-        max_length = 20,
-        validators = [
-            RegexValidator(
-                regex = r'^\d{3,12}$',
-                message = '请输入合法的电话号码'
-            )
-        ]
-    )
-    email = models.CharField(
-        max_length = 254,
-        validators = [
-            EmailValidator(
-                message = '请输入合法的邮件地址'
-            )
-        ]
-    )
+    tel = models.CharField(max_length = 20, default = "88888888")
+    email = models.CharField(max_length = 254, default = "")
 
     def __unicode__(self):
         return u'%s(%s)' % (self.user_id, self.real_name)
@@ -58,10 +48,12 @@ class Questionaire(models.Model):
     INIT = "IN"
     SAVED = "SA"
     LAUNCHED = "LA"
+    PAUSE = "PA"
     STATUS = (
         (INIT, "initial"),
         (SAVED, "saved"),
-        (LAUNCHED, "lauched")
+        (LAUNCHED, "lauched"),
+        (PAUSE, "pause")
         )
     questionaire_user = models.ForeignKey(User)
     questionaire_title = models.CharField(max_length = 30)
@@ -74,6 +66,7 @@ class Questionaire(models.Model):
     questionaire_numOfFilled = models.IntegerField(default = 0)
     questionaire_haveMaxTime = models.BooleanField(default = False)
     questionaire_maxTime = models.IntegerField(default = 0)
+    questionaire_md5 = models.CharField(max_length = 100, null = True)
 
     def __unicode__(self):
         return self.id + self.questionaire_title
@@ -100,13 +93,16 @@ class Question(models.Model):
     question_type = models.CharField(max_length = 2, choices = TYPES, default = FILLIN)
     question_order = models.IntegerField(default = 1)
     question_choices = models.IntegerField(default = 0)
-    pub_date = models.DateTimeField('date published', null = True)
+    question_time = models.CharField(max_length = 20, default = "2016")
     question_fillinrow = models.IntegerField(default = 1)
     question_fillinhint = models.CharField(max_length = 200, default = u"文本")
     question_fillincheck = models.CharField(max_length = 100, default = "")
     question_mustfill = models.BooleanField(default = False)
-    question_minfill = models.IntegerField(default = 0)
-    question_maxfill = models.IntegerField(default = 2)
+    question_minfill = models.IntegerField(null = True)
+    question_maxfill = models.IntegerField(null = True)
+    question_displayVotes = models.BooleanField(default = True)
+    question_ipTimes = models.IntegerField(null = True)
+    question_dayTimes = models.IntegerField(null = True)
 
     def __unicode__(self):
         return self.question_text
@@ -115,6 +111,8 @@ class Choice(models.Model):
     question = models.ForeignKey(Question)
     choice_text = models.CharField(max_length = 200)
     choice_order = models.IntegerField(default = 0)
+    choice_limit = models.IntegerField(null = True)
+    choice_hasPicture = models.BooleanField(default = False)
     votes = models.IntegerField(default = 0)
 
     def __unicode__(self):

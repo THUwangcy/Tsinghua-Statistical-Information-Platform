@@ -1,3 +1,196 @@
-{% extends 'questionnaire/publish_qst/index.html' %}
+    {% extends 'questionnaire/publish_qst/index.html' %}
 
-{% block title%}评分题{% endblock title %}
+{% block title%}
+
+	<label for="name" id="mark_title" class="control-label">请在此输入项目名称</label>
+    <label id = "must_qst" style="color:red; display: none;">&nbsp;*</label>
+    <label id = "select_hint"></label>
+    <div class="table-responsive">
+	    <table class="table table-striped">
+	        <thead>
+	        <tr>
+	        	<th>#</th>
+	            <th>时间段</th>
+	            <th>余量</th>
+	            <th>总量</th>
+	        </tr>
+	        </thead>
+	        <tbody  id="checkbox-list">
+                <tr class="row_option">
+                	<td><input type="checkbox" name="qst{{ questions_id }}" id="optionsCheckbox1" value="option1" class="mark"></td>
+                    <td>10:00 - 11:00</td>
+                    <td>2</td>
+                    <td>5</td>
+                </tr>
+                <tr class="row_option">
+                	<td><input type="checkbox" name="qst{{ questions_id }}" id="optionsCheckbox2" value="option2" class="mark"></td>
+                    <td>11:00 - 12:00</td>
+                    <td>4</td>
+                    <td>7</td>
+                </tr>
+	        </tbody>
+	    </table>
+	</div>
+    <textarea name="qst{{ questions_id }}" class="form-control"
+                      style="resize: vertical; width: 5%; opacity: 0; position: absolute; z-index: 0;"
+                      rows="1" required disabled>123</textarea>
+    <input name="max_selected" value="{{ max_selected }}" type="text" style="display: none;">
+    <input name="min_selected" value="{{ min_selected }}" type="text" style="display: none;">
+    <input name="qst_must" value="{{ qst_must }}" type="text" style="display: none;">
+
+
+    <script>
+        $(document).ready(function(){
+
+            var source_panel_body = $("#qst{{ questions_id }}");
+            if('{{questions_title}}' != 'None')
+                source_panel_body.find("#mark_title").html('{{questions_title}}');
+
+            //必答题星号
+            if('{{qst_must}}' == 'true') {
+                source_panel_body.find("#must_qst").css("display", '');
+                source_panel_body.find("textarea[name='qst{{ questions_id }}']").html('');
+                source_panel_body.find("textarea[name='qst{{ questions_id }}']").attr('disabled', false);
+            }
+
+            //设置选择提示
+            var select_hint = source_panel_body.find("#select_hint");
+            if('{{min_selected}}' == 'None' || '{{min_selected}}' == '') {
+                if('{{max_selected}}' != 'None' && '{{max_selected}}' != '')
+                    select_hint.html("&nbsp;[最多选择" + '{{max_selected}}' + "项]");
+            }
+            else {
+                source_panel_body.find("textarea[name='qst{{ questions_id }}']").html('');
+                source_panel_body.find("textarea[name='qst{{ questions_id }}']").attr('disabled', false);
+                if('{{max_selected}}' != 'None' && '{{max_selected}}' != '')
+                    select_hint.html("&nbsp;[请选择" + '{{min_selected}}' + " - " + '{{max_selected}}' + "项]");
+                else
+                    select_hint.html("&nbsp;[至少选择" + '{{min_selected}}' + "项]")
+            }
+
+            if('{{option}}' != 'None')
+            {
+                //全删除
+                source_panel_body.find(".row_option").each(function() {
+                    $(this).remove();
+                });
+
+                //加载人数限制
+                var statistics = new Array();
+                var left = new Array();
+                '{% for opt in statistics %}'
+                    statistics['{{forloop.counter}}'] = '{{opt.max}}';
+                    left['{{forloop.counter}}'] = '{{opt.left}}';
+                '{% endfor %}'
+                
+                var option_name = 'qst' + '{{ questions_id }}';
+                var prefix = '<tr class="row_option">';
+                //一个一个加选项
+                for(i = 1; i <= '{{option_num}}'; i ++) {
+                    var option_field = '{{option}}'.split('###')[(i - 1) * 2 + 1];
+                    var radio_id = "optionsCheckbox" + i;
+                    var radio_value = "option" + i;
+
+                    var option_maxium = statistics[i];
+                    var left_num = left[i];
+
+                    var isDisable='';
+                    
+                    if (left_num <= 0 && left_num != ''){
+                        isDisable=" disabled=true";
+                    }
+
+                    var to_append = prefix + '<td><input type="checkbox" name=' + option_name + ' id=' + radio_id + ' value=' + radio_value + isDisable + ' class="mark"></td>\
+		            						  <td>' + option_field + '</td>\
+		            						  <td>' + left_num + '</td>\
+		            						  <td>' + option_maxium + '</td>\
+		            						  </tr>';
+                    source_panel_body.find("#checkbox-list").append(to_append);
+                }
+
+                //判断是否是已填写的问卷
+                if('{{ result }}' != '') {
+                    '{% for res in result %}'
+                        source_panel_body.find("#optionsCheckbox" + '{{ res }}').attr("checked",'checked');
+                    '{% endfor %}'
+                }
+
+            }
+
+            //加载选框样式
+            $('input').iCheck({
+              checkboxClass: 'icheckbox_flat-green',
+              radioClass: 'iradio_flat-green',
+              increaseArea: '20%'
+            });
+
+            $("input").on('ifChecked', function(event){
+            //    alert("!!!");
+                var source_panel_body = $(this);
+                if($(this).is('.mark') || $(this).is('.vote'))
+                    source_panel_body = $(this).parent().parent().parent().parent().parent().parent().parent();
+                else
+                    source_panel_body = $(this).parent().parent().parent().parent().parent();
+                
+            //    alert(source_panel_body.find("textarea").html());
+                var min_selected = source_panel_body.find("input[name='min_selected']").val();
+                var max_selected = source_panel_body.find("input[name='max_selected']").val();
+                var qst_must = source_panel_body.find("input[name='qst_must']").val();
+                if (min_selected == 'None' || min_selected == '')
+                    min_selected = 0;
+                if (max_selected == 'None' || max_selected == '')
+                    max_selected = 1000;
+                if(qst_must == 'true')
+                    min_selected = 1;
+
+                var checked_num = source_panel_body.find("input[type='checkbox']:checked").length;
+                if(checked_num < max_selected && checked_num >= min_selected) {
+                    source_panel_body.find("input[type='checkbox']").attr('disabled', false);
+                    source_panel_body.find("textarea").attr('disabled', true);
+                    source_panel_body.find("textarea").html('123');
+                }
+                else if (checked_num == max_selected) {
+                    source_panel_body.find("input[type='checkbox']").attr('disabled', true);
+                    source_panel_body.find("input[type='checkbox']:checked").attr('disabled', false);
+                    source_panel_body.find("textarea").attr('disabled', true);
+                    source_panel_body.find("textarea").html('123');
+                }
+                else {
+                    source_panel_body.find("textarea").html('');
+                    source_panel_body.find("textarea").attr('disabled', false);
+                }
+
+            });
+
+            $("input").on('ifUnchecked', function(event){
+               
+                var source_panel_body = $(this);
+                if($(this).is('.mark') || $(this).is('.vote'))
+                    source_panel_body = $(this).parent().parent().parent().parent().parent().parent().parent();
+                else
+                    source_panel_body = $(this).parent().parent().parent().parent().parent();
+                var min_selected = source_panel_body.find("input[name='min_selected']").val();
+                var max_selected = source_panel_body.find("input[name='max_selected']").val();
+                var qst_must = source_panel_body.find("input[name='qst_must']").val();
+                if (min_selected == 'None' || min_selected == '')
+                    min_selected = 0;
+                if (max_selected == 'None' || max_selected == '')
+                    max_selected = 1000;
+                if(qst_must == 'true')
+                    min_selected = 1;
+
+                var checked_num = source_panel_body.find("input[type='checkbox']:checked").length;
+                if(checked_num <= max_selected && checked_num >= min_selected) {
+                    source_panel_body.find("input[type='checkbox']").attr('disabled', false);
+                    source_panel_body.find("textarea").attr('disabled', true);
+                    source_panel_body.find("textarea").html('123');
+                }
+                else {
+                    source_panel_body.find("textarea").html('');
+                    source_panel_body.find("textarea").attr('disabled', false);
+                }
+            });
+        });
+    </script>
+
+{% endblock title %}

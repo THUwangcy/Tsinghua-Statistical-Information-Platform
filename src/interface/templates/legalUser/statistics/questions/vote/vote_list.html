@@ -1,0 +1,27 @@
+{% extends 'common/sortable.html' %}
+
+{% block title %}{{questions_title}}&nbsp;&nbsp;[投票题]{% endblock title %}
+
+{% block defaults %}
+    url: "{% url 'statistics/question/list' act_id questions_type questions_id %}",
+    sort_by: "id",
+    sort_order: "asc",
+    search_field: "id"
+{% endblock defaults %}
+
+{% block head %}
+    <th class="th-sortable" data-key="id" style="width: 10%; min-width: 20px">
+        编号
+    </th>
+    <th class="th-sortable" data-key="content" style="width: 18%; min-width: 50px">
+        选项
+    </th>
+    <th data-key="content" style="width: 27%;"></th>
+    <th style="width: 5%;"></th>
+    <th class="th-sortable" data-key="count" style="width: 10%">
+        票数
+    </th>
+    <th class="th-sortable" data-key="percentage" style="width: 30%">
+        比例
+    </th>
+{% endblock head %}

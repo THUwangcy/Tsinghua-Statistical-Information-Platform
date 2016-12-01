@@ -32,11 +32,16 @@
         //刷新中间问卷的最后一个问题
         refreshTable = function (callback) {
             
+            callback = function() {
+                $.scrollTo($(".last-question"), 200, {offset: -removePx($(".main").css("padding-top"))});
+            }
+
             loadContentOn($(".last-question"), "{% url 'legalUser/design/question' type act_id%}", questions_params, {anim: false, scroll: false}, callback);
             $(".last-question").removeClass("last-question");
             $(".questions-list").append('<li class="question last-question">\
                                             \
                                          </li>');
+            
         };
 
         
@@ -88,16 +93,29 @@
                 }
             });
         })
-        $this.find("#publish_btn").click(function() {
-            var email_callback = function() {
-                params = {
-                    'modal_type': 'email',
-                    'id': '{{ act_id }}',
-                }
-                showModal("{% url 'legalUser/modal' %}", 'email-modal', params);
-            }
 
-            showConfirmModal("提示", "确定要发布吗？", false, email_callback);
+        $this.find("#publish_btn").click(function() {
+            var publish_callback = function() {
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'api/publish_act' %}",
+                    data: {
+                        'act_id': "{{ act_id }}",
+                    },
+                    success: function(data) {
+                        params = {
+                            'modal_type': 'publish',
+                            'id': '{{ act_id }}',
+                        }
+                        showModal("{% url 'legalUser/modal' %}", 'publish-modal', params);
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        alert(xhr.responseText.substr(0, 500));
+                    }
+                });
+            };
+
+            showConfirmModal("提示", "确定要发布吗？", false, publish_callback);
         })
 
 
@@ -125,7 +143,7 @@
     </div>
     <div class="col-md-2 container right-column">
 
-        <ul class="nav nav-stacked nav-pills affix">
+        <ul class="nav nav-stacked nav-pills affix" id="right">
             <li id="single-question" class="nav-header ">
                 <a class="fake-link"><i class="fa fa-dot-circle-o fa-fw"></i>　单选题</a>
             </li>
@@ -143,11 +161,7 @@
             </li>
             <hr>
             <li id="mark-question" class="nav-header">
-                <a class="fake-link"><i class="fa fa-heart-o fa-fw"></i>　评分题</a>
-            </li>
-            <hr>
-            <li id="sort-question" class="nav-header">
-                <a class="fake-link"><i class="fa fa-list-ol fa-fw"></i>　排序题</a>
+                <a class="fake-link"><i class="fa fa-calendar-check-o fa-fw"></i>　招募题</a>
             </li>
             <hr>
             <br>
@@ -158,6 +172,7 @@
             <li align="center">
                 <button type="button" class="btn btn-default btn-block" id="publish_btn" style="font-size: 15px;">发布</button>
             </li>
+            
 
         </ul>
 

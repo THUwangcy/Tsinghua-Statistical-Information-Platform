@@ -1,4 +1,23 @@
 
+//继续问卷
+function resume_act(act_id, url, item) {
+    var callback = function() {
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: "&act_id=" + act_id,
+            success: function(data) {
+                loadContentOfItem(item, {anim: false, scroll: false});
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert(xhr.responseText);
+            }
+        });
+    }
+    showConfirmModal('继续收集', '要继续收集问卷吗？', false, callback);
+}
+
+
 //停止问卷
 function stop_act(act_id, url, item) {
     var callback = function() {
@@ -36,7 +55,7 @@ function remove_act(act_id, url, item) {
     showConfirmModal('删除报名', '确定要删除吗？', false, callback);
 }
 
-//发布问卷
+
 function publish_act(act_id, url, modal_url) {
     var publish_callback = function() {
         $.ajax({
@@ -46,19 +65,32 @@ function publish_act(act_id, url, modal_url) {
             success: function(data) {
                 params = {
                     'modal_type': 'publish',
-                    'id': act_id ,
+                    'id': act_id 
                 };
-
                 showModal(modal_url, 'publish-modal', params);
-
             },
             error: function (xhr, textStatus, errorThrown) {
                 alert(xhr.responseText.substr(0, 500));
             }
         });
-    }
+   }
+   
+   showConfirmModal("提示", "确定要发布吗？", false, publish_callback);
+}
 
-    showConfirmModal("提示", "确定要发布吗？", false, publish_callback);
+
+//新发布问卷入口, 代替了原来的publish_act
+function email_act(act_id, modal_url){
+    var email_callback = function () {
+        params = {
+                    'modal_type': 'email',
+                    'id': act_id,
+                };
+
+        showModal(modal_url, 'email-modal', params);
+    };
+
+    showConfirmModal("提示", "确定要发布吗？", false, email_callback);
 }
 
 // deal with csrf tokens when using ajax
@@ -295,7 +327,7 @@ function loadContentOn(container, url, params, load_params, callback) {
                     <span class="fa fa-spinner fa-pulse fa-3x"></span>\
                 </div>');
         }
-    }, 1000);
+    }, 100);
     
 
     $.ajax({
@@ -328,35 +360,61 @@ function loadContentOn(container, url, params, load_params, callback) {
 }
 
 function loadContentOfItem(item, load_params, callback) {
-    var act_id = $(item).attr("id");
-    var is_design = act_id.indexOf("design-item");
-    var append = "";
+    var username = '';
+    var user_id = '1111111111';
+    var get_username_callback = function() {
+        var act_id = $(item).attr("id");
+        var is_design = act_id.indexOf("design-item");
+        var append = "";
 
-    if(is_design > 0)
-    {
-        act_id = act_id.substr(0, is_design - 1);
-        var post_url;
-        post_url = $(item).data("source");
-        $.ajax({
-            type: "GET",
-            url: post_url,
-            data: "&act_type=" + act_id + "&time=" + getTime() + "&user_id=1111111111",
-            success: function(data) {
-                if(data['status'] == 'ok'){
-                    append = data['id'];
-                    loadContent($(item).data("url") + '/' + append, {}, item, load_params, callback);
+        if(is_design > 0)
+        {
+            act_id = act_id.substr(0, is_design - 1);
+            var post_url;
+            post_url = $(item).data("source");
+            $.ajax({
+                type: "GET",
+                url: post_url,
+                data: "&act_type=" + act_id + "&time=" + getTime() + "&user_id=" + user_id + "&username=" + username,
+                success: function(data) {
+                    if(data['status'] == 'ok'){
+                        append = data['id'];
+                        
+                     //   alert(username);
+                        loadContent($(item).data("url") + '/' + append, {}, item, load_params, callback);
+                    }
+                        
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert(xhr.responseText.substr(0, 500));
+
                 }
-                    
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                alert(xhr.responseText.substr(0, 500));
-
-            }
-        });
-        
+            });
+            
+        }
+        else
+            loadContent($(item).data("url"), {}, item, load_params, callback);
     }
-    else
-        loadContent($(item).data("url"), {}, item, load_params, callback);
+
+    $.ajax({
+        url: '/get_username',
+        type: "GET",
+        success: function (data) {
+            if(data["status"] == 'OK') {
+                username = data["username"];
+                user_id = data["user_id"];
+                get_username_callback();
+            }
+            else {
+                username = "no username!";
+                get_username_callback();
+            //    alert("no username!");
+            }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+                alert(xhr.responseText);
+        }
+    });
 }
 
 function getTime() {
@@ -449,6 +507,124 @@ function handleFormPost(form_selector, post_url, params) {
         });
 
         form.submit(function (event) {
+
+            before_submit(event);
+            event.preventDefault();
+            form_groups.removeClass("has-error");
+
+            $.ajax({
+                type: "POST",
+                url: post_url,
+                data: form.serialize(),
+                success: function (data) {
+                //    alert(form.serialize());
+                    msg.removeClass("alert-danger alert-success");
+                    if (data.status === "ok") msg.addClass("alert-success");
+                    else msg.addClass("alert-danger");
+                    var message = success_msg(data);
+                    if (message === "") message = native_success_msg(data);
+                    if (message !== "" && message !== "#no_message#") {
+                        msg_text.html(message);
+                        msg.fadeIn();
+                    } else {
+                        msg.fadeOut();
+                    }
+
+                    if (data.hasOwnProperty("error_messages")) {
+                        var pos = -1;
+                        for (var field_name in data.error_messages) {
+                            var field = form_groups.has("[name='" + field_name + "']");
+                            field.addClass("has-error");
+                            field.find("span").html(data.error_messages[field_name]);
+                            var top = field.position().top;
+                            if (pos === -1 || pos > top) pos = top;
+                        }
+
+                        if ($("html, body").css("scroll-top") > pos) {
+                            $("html, body").animate({
+                                "scroll-top": pos
+                            }, "fast");
+                        }
+                    }
+
+                    success_callback(data);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert(xhr.responseText.substr(0, 2000000));
+                    console.log("post error");
+                    msg_text.html("提交申请遇到错误：" + textStatus + ": " + errorThrown);
+                    console.log(xhr.responseText.substr(0, 500));
+                    msg.fadeIn();
+
+                    error_callback(xhr, textStatus, errorThrown);
+                }
+            });
+        });
+    });
+}
+
+function handleFormPost_publish(form_selector, post_url, params) {
+    /*
+     params = {
+        success_callback(data):
+            Function to call when ajax POST returns success.
+        error_callback(xhr, textStatus, errorThrown):
+            Function to call when ajax POST returns error.
+        success_msg(data):
+            Function that returns message to display for success POST.
+            Note that though POST is successful, returned status maybe "error".
+            If returned message is empty, then the acutal message displayed
+                would be generated using "native_success_msg'. To override this
+                behavior, return "#no_message#" instead of empty string.
+     }
+     */
+    var form = $(form_selector);
+    form.ready(function () {
+        var msg = form.find(".form-error-msg");
+        var msg_text = msg.find("> div");
+        var form_groups = form.find(".form-group");
+
+        var method_input = form.find(".form-method");
+        form.find(".form-btn").click(function () {
+            method_input.attr("value", $(this).attr("value"));
+        });
+        form_groups.not(form_groups.has("span.help-block.with-errors"))
+            .append('<span class="help-block with-errors"></span>');
+
+        var native_success_msg = function (data) {
+            if (data.status === "ok") return "#no_message#";
+            if (data.status === "error") {
+                if (data.hasOwnProperty("error_messages"))
+                    return "#no_message#";
+                if (data.hasOwnProperty("error_message"))
+                    return data.error_message;
+            }
+            return "提交出错，请再次检查您填写的信息。"
+        };
+
+        var success_callback = $.noop,
+            error_callback = $.noop,
+            success_msg = native_success_msg,
+            before_submit = $.noop;
+        if (params.hasOwnProperty("success_callback"))
+            success_callback = params.success_callback;
+        if (params.hasOwnProperty("error_callback"))
+            error_callback = params.error_callback;
+        if (params.hasOwnProperty("success_msg"))
+            success_msg = params.success_msg;
+        if (params.hasOwnProperty("before_submit"))
+            before_submit = params.before_submit;
+
+        form_groups.find("input, textarea").focus(function () {
+            $(this).parent().removeClass("has-error");
+            msg.fadeOut();
+        });
+
+        form.validator().submit(function (event) {
+            if(event.isDefaultPrevented()){
+                return;
+            }
+
             before_submit(event);
             event.preventDefault();
             form_groups.removeClass("has-error");
@@ -584,7 +760,6 @@ function showModal(url, id, params) {
                 modal.remove();
             });
             modal.modal();
-
             resizeComponents();
             loadComplete();
         },
@@ -739,12 +914,17 @@ function initLeftColumn() {
 }
 
 function resizeComponents() {
+
     var left_column = $("#left-column");
+    var right_column = $("#right");
+    
     // set page min height according to left column
-    var height = left_column.outerHeight(true);
+    var height = left_column.outerHeight(true) > right_column.outerHeight(true)? 
+                    left_column.outerHeight(true): right_column.outerHeight(true);
+//    alert(height);
     $("html, body").css("min-height", height);
     $("#main-page").css({
-        "min-height": height
+        "min-height": height + 70
     });
     $(".column-container").scroll();
 
@@ -755,22 +935,29 @@ function resizeComponents() {
     }
 }
 
-function get_username() {
+function get_username(user_id) {
+    var username = '';
+    var success_callback = function() {
+        user_id = username;
+    }
     $.ajax({
         url: '/get_username',
-        type: "POST",
+        type: "GET",
         success: function (data) {
             if(data["status"] == 'OK') {
-                return data["username"];
+                username = data["username"];
+                success_callback();
             }
             else {
+                username = "no username!";
                 alert("no username!");
             }
         },
         error: function (xhr, textStatus, errorThrown) {
                 alert(xhr.responseText);
         }
-    })
+    });
+    
 }
 
 function drawCharts(selected_charts) {

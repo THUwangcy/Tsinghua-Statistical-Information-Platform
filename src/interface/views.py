@@ -18,6 +18,7 @@ import session
 import _database
 from database import backend
 from api import views
+import application_sort
 from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from send_email import send_html_mail
@@ -63,13 +64,17 @@ def legalUser_dashboard(request):
     official_accounts = _database.get_official_accounts()
 
     activities = views.get_questionnaire_bySTATUS('already', username)
+    applications = views.get_all_questionnaire()
+    sort_applications = application_sort.application_sort(applications)
+
     articles_count = len(activities)
+
 
     #category = MessageCategory.ToAdmin
 
     unprocessed_account = _database.get_official_accounts_with_unprocessed_messages()
 
-    announcement = _database.get_announcement()
+    announcement = views.get_notice()
 
 
     category = 1
@@ -78,6 +83,7 @@ def legalUser_dashboard(request):
         'pending_applications': pending_applications,
         'official_accounts': official_accounts,
         'activities': activities,
+        'sort_applications': sort_applications,
         'articles_count': articles_count,
         'unprocessed_account': unprocessed_account,
         'category': category,
@@ -135,7 +141,7 @@ def legalUser_design(request, type, act_id):
         type_icon = 'fa-tasks'
     elif type == 'recruit':
         type_name = u'实验室招募'
-        type_icon = 'fa-check'
+        type_icon = 'fa-calendar-check-o'
     elif type == 'vote':
         type_name = u'投票'
         type_icon = 'fa-list-alt'
@@ -161,6 +167,14 @@ def legalUser_design_question(request, type, act_id):
         'option': request.GET.get('option'),
         'rows': request.GET.get('rows'),
         'hint': request.GET.get('hint'),
+
+        'qst_must': request.GET.get('qst_must'),
+        'min_selected': request.GET.get('min_selected'),
+        'max_selected': request.GET.get('max_selected'),
+
+        'display_vote': request.GET.get('display_vote'),
+        'ip_times': request.GET.get('ip_times'),
+        'day_times': request.GET.get('day_times'),
         'statistics': statistics
     }
     params['act_type'] = type
@@ -175,6 +189,27 @@ def show_modal(request):
             'qst_type': modal_type,
             'id': id,
         })
+
+
+def show_info_modal(request):
+    modal_type = request.GET['modal_type']
+    username = request.GET['username']
+
+    dicts = views.get_user_information_act(username)
+
+    params = {
+        'username': username,
+        'real_name': dicts['real_name'],
+        'identity': 'legalUser',
+        'email': dicts['email'],
+        'telephone_number': dicts['telephone_number'],
+        'age': dicts['age'],
+        'gender': dicts['gender'],
+        'address': dicts['address'],
+        'status': dicts['status'],
+    }
+
+    return render(request, 'legalUser/design/modal/' + modal_type + '_modal.html', params)
 
 
 def log_off(request):
@@ -193,16 +228,19 @@ def login_page(request):
 
 @check_identity('legalUser')
 def user_information(request):
+    username = session.get_username(request)
+    dicts = views.get_user_information_act(username)
+
     params = {
         'username': session.get_username(request),
-        'real_name': '王晨阳',
+        'real_name': dicts['real_name'],
         'identity': session.get_identity(request),
-        'email': 'thuwangcy@gmail.com',
-        'telephone_number': '17888802343',
-        'age': '20',
-        'gender': '男',
-        'address': '清华大学紫荆公寓二号楼411B',
-        'status': '做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心',
+        'email': dicts['email'],
+        'telephone_number': dicts['telephone_number'],
+        'age': dicts['age'],
+        'gender': dicts['gender'],
+        'address': dicts['address'],
+        'status': dicts['status'],
     }
     user_information_html = 'legalUser/information/user_information.html'
     return render_ajax(request, user_information_html, params, 'info-item-1')
@@ -210,16 +248,19 @@ def user_information(request):
 
 @check_identity('legalUser')
 def user_information_change(request):
+    username = session.get_username(request)
+    dicts = views.get_user_information_act(username)
+
     params = {
         'username': session.get_username(request),
-        'real_name': '王晨阳',
+        'real_name': dicts['real_name'],
         'identity': session.get_identity(request),
-        'email': 'thuwangcy@gmail.com',
-        'telephone_number': '17888802343',
-        'age': '20',
-        'gender': '男',
-        'address': '清华大学紫荆公寓二号楼411B',
-        'status': '做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心做大作业真TM开心',
+        'email': dicts['email'],
+        'telephone_number': dicts['telephone_number'],
+        'age': dicts['age'],
+        'gender': dicts['gender'],
+        'address': dicts['address'],
+        'status': dicts['status'],
     }
     user_information_change_html = 'legalUser/information/user_information_change.html'
     return render_ajax(request, user_information_change_html, params, 'info-item-2')
@@ -246,13 +287,16 @@ def guest_dashboard(request):
     official_accounts = _database.get_official_accounts()
 
     activities = views.get_questionnaire_bySTATUS('already', username)
+    applications = views.get_all_questionnaire()
+    sort_applications = application_sort.application_sort(applications)
+
     articles_count = len(activities)
 
     # category = MessageCategory.ToAdmin
 
     unprocessed_account = _database.get_official_accounts_with_unprocessed_messages()
 
-    announcement = _database.get_announcement()
+    announcement = views.get_notice()
 
     category = 1
 
@@ -260,6 +304,7 @@ def guest_dashboard(request):
         'pending_applications': pending_applications,
         'official_accounts': official_accounts,
         'activities': activities,
+        'sort_applications': sort_applications,
         'articles_count': articles_count,
         'unprocessed_account': unprocessed_account,
         'category': category,
@@ -321,13 +366,16 @@ def manager_dashboard(request):
     official_accounts = _database.get_official_accounts()
 
     activities = views.get_questionnaire_bySTATUS('already', username)
+    applications = views.get_all_questionnaire()
+    sort_applications = application_sort.application_sort(applications)
+
     articles_count = len(activities)
 
     # category = MessageCategory.ToAdmin
 
     unprocessed_account = _database.get_official_accounts_with_unprocessed_messages()
 
-    announcement = _database.get_announcement()
+    announcement = views.get_notice()
 
     category = 1
 
@@ -335,6 +383,7 @@ def manager_dashboard(request):
         'pending_applications': pending_applications,
         'official_accounts': official_accounts,
         'activities': activities,
+        'sort_applications': sort_applications,
         'articles_count': articles_count,
         'unprocessed_account': unprocessed_account,
         'category': category,
@@ -350,7 +399,9 @@ def manager_all_activities(request):
 
 @check_identity('manager')
 def manager_all_activities_list(request):
-    applications = _database.get_activities()
+    applications = views.get_all_questionnaire()
+    for app in applications:
+        app['publisher'] = app['username']
     return render_sortable(request, applications, 'manager/application/applications_content.html')
 
 
@@ -361,13 +412,16 @@ def manager_all_users(request):
 
 @check_identity('manager')
 def manager_all_users_list(request):
-    applications = _database.get_users()
+    applications = views.get_all_user()
+    for app in applications:
+        app['name'] = app['username']
     return render_sortable(request, applications, 'manager/application_2/applications_content.html')
 
 
 @check_identity('manager')
 def manager_notice(request):
-    params = {'notice': '这里是管理员发布的公告'}
+    announcement = views.get_notice()
+    params = {'notice': announcement}
     return render_ajax(request, 'manager/notice/manager_notice.html', params, 'notice-design-item')
 
 
@@ -462,6 +516,8 @@ def statistics_question(request, act_id):
 def statistics_question_list(request, act_id, qst_type, qst_id):
     question_url = 'legalUser/statistics/questions/' + qst_type + '/' + qst_type + '_content.html'
     applications = views.get_statistics_of_question(qst_id)
+    for option in applications:
+        option['img_src'] = 'questionsImg/qst' + str(qst_id) + '_option' + str(option['id'])
     return render_sortable(request, applications, question_url, {
             'act_id': act_id
         })
@@ -470,6 +526,7 @@ def statistics_question_list(request, act_id, qst_type, qst_id):
 #questionnaire
 def questionnaire_publish_question(request, type, act_id):
     question_url = 'questionnaire/publish_qst/' + request.GET.get('questions_type') + '.html'
+    statistics = views.get_statistics_of_question(request.GET.get('questions_id'))
     params = {}
     params = {
         'questions_type': request.GET.get('questions_type'),
@@ -479,8 +536,22 @@ def questionnaire_publish_question(request, type, act_id):
         'option': request.GET.get('option'),
         'rows': request.GET.get('rows'),
         'hint': request.GET.get('hint'),
-        'fillin_id': request.GET.get('fillin_id')
+
+        'statistics': statistics,
+
+        'qst_must': request.GET.get('qst_must'),
+        'min_selected': request.GET.get('min_selected'),
+        'max_selected': request.GET.get('max_selected'),
+
+        'fillin_id': request.GET.get('fillin_id'),
+
+        'display_vote': request.GET.get('display_vote'),
+        'ip_times': request.GET.get('ip_times'),
+        'day_times': request.GET.get('day_times'),
+        'fillin_check': request.GET.get('fillin_check')
     }
+    file_object = open(os.path.abspath('.') + '/interface/st_database.txt', 'w')
+    file_object.writelines(params['fillin_check'])
     if request.GET.get('fillin_id') != None and request.GET.get('fillin_id') != '':
         fillin_result = views.get_result_of_question(act_id, request.GET.get('questions_id'), request.GET.get('fillin_id'))
         params['result'] = fillin_result
@@ -495,10 +566,19 @@ def questionnaire_publish_question(request, type, act_id):
 def questionnaire(request, act_id):
     act_info = views.get_questionnaire_byID(act_id)
 
-    if act_info['act_status'] == 'pending':
+    status = act_info['act_status']
+    if status == 'already':
         type = act_info['act_type']
     else:
-        type = 'wrong' #需添加未发布问卷错误处理
+        if status == 'pending':
+            return render_ajax(request, 'questionnaire/err_visit.html', {
+                'qst_status': "问卷未发布"})
+        elif status == 'pause':
+            return render_ajax(request, 'questionnaire/err_visit.html', {
+                'qst_status': "问卷已截止"})
+        else:
+            return render_ajax(request, 'questionnaire/err_visit.html', {
+                'qst_status': "问卷不存在"})
 
     if type == 'enroll':
         type_name = u'报名/统计表'
@@ -528,6 +608,10 @@ def fillin_questionnaire(request, act_id, fillin_id):
         'fillin_id': fillin_id,
         'type': 'pending'
     })
+
+
+def fill_in_success(request):
+    return render(request, 'questionnaire/questionnaire_success.html')
 
 
 #----------------------------分割线--------------------------------#
@@ -641,7 +725,10 @@ def get_pagination(item_total, item_per_page, cur):
 
 def get_username(request):
     username = session.get_username(request)
-    if username == 'none':
+    user_id = session.get_student_id(request)
+    file_object = open(os.path.abspath('.') + '/interface/stat_database.txt' , 'w')
+    file_object.writelines(username + "\n")
+    if username == 'none' or user_id == 'none':
         return JsonResponse({
             'status': 'wrong',
         })
@@ -649,4 +736,5 @@ def get_username(request):
         return JsonResponse({
             'status': 'OK',
             'username': username,
+            'user_id' : user_id,
         })
