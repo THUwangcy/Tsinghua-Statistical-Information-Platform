@@ -19,6 +19,10 @@
             </label>
         </div>
     </div>
+    <textarea name="qst{{ questions_id }}" class="form-control"
+                      style="resize: vertical; width: 5%; opacity: 0; position: absolute; z-index: 0;"
+                      rows="1" required disabled>123</textarea>
+    <input name="qst_must" value="{{ qst_must }}" type="text" style="display: none;">
 
     <script>
         $(document).ready(function(){
@@ -27,8 +31,12 @@
                 source_panel_body.find("#single_title").html('{{questions_title}}');
 
             //必答题星号
-            if('{{qst_must}}' == 'true')
+            if('{{qst_must}}' == 'true') {
                 source_panel_body.find("#must_qst").css("display", '');
+                source_panel_body.find("textarea[name='qst{{ questions_id }}']").html('');
+                source_panel_body.find("textarea[name='qst{{ questions_id }}']").attr('disabled', false);
+            }
+                
 
             if('{{option}}' != 'None')
             {
@@ -61,7 +69,7 @@
                         option_maxium = "【 剩余可选择次数: " + left_num + ' / ' + option_maxium + ' 】';
                     }
                     var isDiasble='';
-                    if (left_num == 0){
+                    if (left_num == 0 && left_num != ''){
                         isDiasble=" disabled=true";
                     }
 
@@ -86,6 +94,53 @@
               radioClass: 'iradio_flat-green',
               increaseArea: '20%'
             });
+
+
+
+            $("input").on('ifChecked', function(event){
+                var source_panel_body = $(this);
+                if($(this).is('.mark') || $(this).is('.vote'))
+                    source_panel_body = $(this).parent().parent().parent().parent().parent().parent().parent();
+                else
+                    source_panel_body = $(this).parent().parent().parent().parent().parent();
+                var min_selected = source_panel_body.find("input[name='min_selected']").val();
+                var max_selected = source_panel_body.find("input[name='max_selected']").val();
+                var qst_must = source_panel_body.find("input[name='qst_must']").val();
+                if (min_selected == 'None' || min_selected == '')
+                    min_selected = 0;
+                if (max_selected == 'None' || max_selected == '')
+                    max_selected = 1000;
+                if(qst_must == 'true')
+                    min_selected = 1;
+
+                
+                var checked_num = source_panel_body.find("input[type='checkbox']:checked").length;
+                if(checked_num < max_selected && checked_num >= min_selected) {
+                    source_panel_body.find("input[type='checkbox']").attr('disabled', false);
+                    source_panel_body.find("textarea").attr('disabled', true);
+                    source_panel_body.find("textarea").html('123');
+
+                }
+                else if (checked_num == max_selected) {
+                    source_panel_body.find("input[type='checkbox']").attr('disabled', true);
+                    source_panel_body.find("input[type='checkbox']:checked").attr('disabled', false);
+                    source_panel_body.find("textarea").attr('disabled', true);
+                    source_panel_body.find("textarea").html('123');
+                }
+                else {
+                    source_panel_body.find("textarea").html('');
+                    source_panel_body.find("textarea").attr('disabled', false);
+                }
+
+                var radio_num = source_panel_body.find("input[type='radio']:checked").length;
+                if(radio_num != 0) {
+
+                    source_panel_body.find("textarea").html('123');
+                    source_panel_body.find("textarea").attr('disabled', true);
+                }
+
+            });
+
         });
     </script>
 

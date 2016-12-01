@@ -123,7 +123,6 @@
             });
 
             $("input").on('ifChecked', function(event){
-               
                 var source_panel_body = $(this);
                 if($(this).is('.mark') || $(this).is('.vote'))
                     source_panel_body = $(this).parent().parent().parent().parent().parent().parent().parent();
