@@ -13,9 +13,9 @@ Team members:
 徐子南      
 
 
-###Live Demo     
+# Live Demo:     
 
-[52.187.34.62:8080](52.187.34.62:8080)
+[https://52.187.34.62:8080](https://52.187.34.62:8080)
 
 
 # Project Environment:
@@ -24,9 +24,9 @@ Python 2.7.10
 
 Django 1.8.4
 
-![image](imgs/logo_.png)
+![image](imgs/logo_small.png)
 
-
+# Project Overview:      
 
 ### 项目目录：       
     - .git ...............git管理目录             
@@ -43,7 +43,7 @@ Django 1.8.4
 
 ###清新简洁的界面         
     
-![image](imgs/mainUI.jpeg)
+![image](imgs/mainUI.png)
 
 ###完善的问卷发布功能         
         
